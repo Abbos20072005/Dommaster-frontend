@@ -1,10 +1,10 @@
-import { BenefitsSection, EcosystemSection, ProductsSection } from './_components';
+import { BannerCarousel, PopularCategories, ProductsSection } from './_components';
 
 const Home = () => {
   return (
     <>
-      <EcosystemSection />
-      <BenefitsSection />
+      <PopularCategories />
+      <BannerCarousel />
       <ProductsSection />
     </>
   );

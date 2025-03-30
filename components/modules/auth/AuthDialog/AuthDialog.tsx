@@ -13,7 +13,7 @@ import {
   DialogTrigger
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent } from '@/components/ui/tabs';
-import { Link } from '@/i18n/routing';
+import { Link } from '@/i18n/navigation';
 
 import { LoginForm } from './components/LoginForm';
 import { RegisterForm } from './components/RegisterForm';

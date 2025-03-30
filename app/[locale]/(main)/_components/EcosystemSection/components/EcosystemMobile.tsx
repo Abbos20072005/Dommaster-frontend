@@ -4,8 +4,8 @@ import { BaseLayout } from '@/components/layout';
 
 export const EcosystemMobile = () => {
   return (
-    <BaseLayout>
-      <div className='grid grid-cols-3 items-center gap-3 md:hidden'>
+    <BaseLayout className='md:hidden'>
+      <div className='grid grid-cols-3 items-center gap-3'>
         {Array.from({ length: 9 }).map((_, i) => (
           <div key={i} className='flex flex-col items-center gap-1'>
             <Image

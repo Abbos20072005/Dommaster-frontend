@@ -14,7 +14,7 @@ const PasswordInput = ({ className, disabled, ...props }: Props) => {
     <div className={cn('relative rounded-md', className)}>
       <Input disabled={disabled} type={showPassword ? 'text' : 'password'} {...props} />
       <Button
-        className='text-muted-foreground absolute top-1/2 right-1 h-6 w-6 -translate-y-1/2 rounded-md'
+        className='text-muted-foreground absolute top-1/2 right-2 h-6 w-6 -translate-y-1/2 rounded-md'
         disabled={disabled}
         size='icon'
         type='button'

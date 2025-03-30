@@ -6,7 +6,7 @@ interface User {
   phone_number: string;
 }
 
-type UserResponse = BaseResponse<User>;
+type UserResponse = ApiResponse<User>;
 
 interface UserPatchRequest {
   email?: string;

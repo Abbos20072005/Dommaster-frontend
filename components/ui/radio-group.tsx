@@ -1,114 +1,45 @@
 'use client';
 
-import type {
-  RadioGroupProps as AriaRadioGroupProps,
-  RadioProps as AriaRadioProps,
-  ValidationResult as AriaValidationResult
-} from 'react-aria-components';
-
-import { Circle } from 'lucide-react';
-import {
-  Radio as AriaRadio,
-  RadioGroup as AriaRadioGroup,
-  composeRenderProps,
-  Text
-} from 'react-aria-components';
+import * as RadioGroupPrimitive from '@radix-ui/react-radio-group';
+import { CircleIcon } from 'lucide-react';
+import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-import { FieldError, Label, labelVariants } from './field';
-
-const RadioGroup = ({ className, ...props }: AriaRadioGroupProps) => {
+const RadioGroup = ({
+  className,
+  ...props
+}: React.ComponentProps<typeof RadioGroupPrimitive.Root>) => {
   return (
-    <AriaRadioGroup
-      className={composeRenderProps(className, (className, renderProps) =>
-        cn(
-          'group/radiogroup flex flex-col flex-wrap gap-2',
-          renderProps.orientation === 'horizontal' && 'flex-row items-center',
-          className
-        )
-      )}
+    <RadioGroupPrimitive.Root
+      className={cn('grid gap-3', className)}
+      data-slot='radio-group'
       {...props}
     />
   );
-};
-
-const Radio = ({ className, children, ...props }: AriaRadioProps) => {
-  return (
-    <AriaRadio
-      className={composeRenderProps(className, (className) =>
-        cn(
-          'group/radio flex items-center gap-x-2',
-          /* Disabled */
-          'data-[disabled]:cursor-not-allowed data-[disabled]:opacity-70',
-          labelVariants,
-          className
-        )
-      )}
-      {...props}
-    >
-      {composeRenderProps(children, (children, renderProps) => (
-        <>
-          <span
-            className={cn(
-              'jolly-Radio border-primary text-primary ring-offset-background flex aspect-square size-4 items-center justify-center rounded-full border',
-              /* Focus */
-              'group-data-[focused]/radio:outline-none',
-              /* Focus Visible */
-              'group-data-[focus-visible]/radio:ring-ring group-data-[focus-visible]/radio:ring-2 group-data-[focus-visible]/radio:ring-offset-2',
-              /* Disabled */
-              'group-data-[disabled]/radio:cursor-not-allowed group-data-[disabled]/radio:opacity-50',
-              /* Invalid */
-              'group-data-[invalid]/radio:border-destructive'
-            )}
-          >
-            {renderProps.isSelected && <Circle className='size-2.5 fill-current text-current' />}
-          </span>
-          {children}
-        </>
-      ))}
-    </AriaRadio>
-  );
-};
-
-interface JollyRadioGroupProps extends AriaRadioGroupProps {
-  description?: string;
-  errorMessage?: ((validation: AriaValidationResult) => string) | string;
-  label?: string;
 }
 
-const JollyRadioGroup = ({
-  label,
-  description,
+const RadioGroupItem = ({
   className,
-  errorMessage,
-  children,
   ...props
-}: JollyRadioGroupProps) => {
+}: React.ComponentProps<typeof RadioGroupPrimitive.Item>) => {
   return (
-    <RadioGroup
-      className={composeRenderProps(className, (className) =>
-        cn('group/radiogroup flex-col items-start', className)
+    <RadioGroupPrimitive.Item
+      className={cn(
+        'border-input text-primary focus-visible:border-ring focus-visible:ring-ring/50 aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:bg-input/30 aspect-square size-4 shrink-0 rounded-full border shadow-xs transition-[color,box-shadow] outline-none focus-visible:ring-[3px] disabled:cursor-not-allowed disabled:opacity-50',
+        className
       )}
+      data-slot='radio-group-item'
       {...props}
     >
-      {composeRenderProps(children, (children) => (
-        <>
-          <Label>{label}</Label>
-          <div className='flex flex-col flex-wrap gap-2 group-data-[orientation=horizontal]/radiogroup:flex-row'>
-            {children}
-          </div>
-          {description && (
-            <Text className='text-muted-foreground text-sm' slot='description'>
-              {description}
-            </Text>
-          )}
-          <FieldError>{errorMessage}</FieldError>
-        </>
-      ))}
-    </RadioGroup>
+      <RadioGroupPrimitive.Indicator
+        className='relative flex items-center justify-center'
+        data-slot='radio-group-indicator'
+      >
+        <CircleIcon className='fill-primary absolute top-1/2 left-1/2 size-2 -translate-x-1/2 -translate-y-1/2' />
+      </RadioGroupPrimitive.Indicator>
+    </RadioGroupPrimitive.Item>
   );
-};
+}
 
-export { JollyRadioGroup, Radio, RadioGroup };
-export type { JollyRadioGroupProps };
+export { RadioGroup, RadioGroupItem };

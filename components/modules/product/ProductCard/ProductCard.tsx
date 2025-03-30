@@ -1,3 +1,4 @@
+import { EllipsisVerticalIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React from 'react';
@@ -7,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Ratings } from '@/components/ui/rating';
 import { cn } from '@/lib/utils';
 
-import { ProductImages } from './components';
+import { ProductImages, ProductPrice } from './components';
 
 type Props = React.ComponentProps<'div'> & {
   product: Product;
@@ -19,25 +20,44 @@ export const ProductCard = ({ product, className, setLockParentScroll, ...props 
   const [cartCount, setCartCount] = React.useState(1);
 
   return (
-    <div className={cn('group/product size-full overflow-hidden rounded-lg', className)} {...props}>
-      <Link href={`product/${product.id}`} aria-label={product.title}>
+    <div className={cn('group/product size-full rounded-lg', className)} {...props}>
+      <Link href={`/product/${product.id}`} aria-label={product.title}>
         <ProductImages product={product} setLockParentScroll={setLockParentScroll} />
         <span className='sr-only'>{product.title}</span>
       </Link>
       <div>
-        <div className='flex items-center justify-between py-1'>
-          <Link href={`product/${product.id}/reviews`}>
-            <Ratings className='gap-1' rating={4.3} classNameIcon='text-primary size-4' />
+        <div className='py-1'>
+          <Link href={{ pathname: `/product/${product.id}`, query: { tab: 'reviews' } }}>
+            <Ratings
+              className='gap-0.5 md:gap-1'
+              rating={product.rating}
+              classNameIcon='text-secondary size-3 md:size-4'
+            />
           </Link>
-          <p className='text-muted-foreground text-xs'>1349879</p>
         </div>
-        <Link href={`product/${product.id}`}>
-          <span className='line-clamp-4 min-h-24 text-sm'>{product.title}</span>
+        <Link href={`/product/${product.id}`}>
+          <span className='line-clamp-4 min-h-24 text-sm leading-5'>{product.title}</span>
         </Link>
       </div>
-      <div className='grid grid-cols-2 gap-2'>
-        <Button size='sm'>{t('To cart')}</Button>
-        <CartCounter maxValue={product.product_count} value={cartCount} onChange={setCartCount} />
+      <div>
+        <ProductPrice product={product} />
+        <div className='grid gap-2 pb-6 md:grid-cols-2'>
+          <div className='flex gap-2'>
+            <Button className='flex-1' size='sm'>
+              {t('To cart')}
+            </Button>
+            <Button className='md:hidden' size='iconSm' variant='outline'>
+              <EllipsisVerticalIcon />
+            </Button>
+          </div>
+          <div className='hidden md:block'>
+            <CartCounter
+              maxValue={product.product_count}
+              value={cartCount}
+              onChange={setCartCount}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

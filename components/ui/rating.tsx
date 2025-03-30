@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 interface RatingsProps extends React.HTMLAttributes<HTMLDivElement> {
   classNameIcon?: string;
   Icon?: React.ComponentType<any>;
-  rating: number;
+  rating: number | null;
   totalStars?: number;
 }
 
@@ -18,6 +18,8 @@ const Ratings = ({
   Icon = Star,
   ...props
 }: RatingsProps) => {
+  rating = rating ?? 0;
+
   if (rating > totalStars) {
     throw new Error('Rating cannot be greater than totalStars');
   }

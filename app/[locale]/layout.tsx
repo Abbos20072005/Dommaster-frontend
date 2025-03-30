@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 
-import { NextIntlClientProvider } from 'next-intl';
-import { getMessages } from 'next-intl/server';
+import { hasLocale, NextIntlClientProvider } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
 import type { Locale } from '@/i18n/routing';
 
-import { AppFooter, AppHeader } from '@/components/layout';
+import { AppFooter, AppHeader, BottomNav } from '@/components/layout';
 import { Providers } from '@/components/Providers';
 import { routing } from '@/i18n/routing';
 
@@ -24,25 +24,30 @@ const fontMono = Roboto_Mono({
   subsets: ['latin', 'cyrillic']
 });
 
-export const metadata: Metadata = {
-  title: 'Dommaster',
-  description: 'Dommaster'
-};
-
-const RootLayout = async ({
-  children,
-  params
-}: Readonly<{
+interface Props {
   children: React.ReactNode;
   params: Promise<{ locale: Locale }>;
-}>) => {
-  const { locale } = await params;
+}
 
-  if (!routing.locales.includes(locale)) {
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return {
+    title: {
+      default: `${t('Materials for construction in Dommaster')} - ${t('buy in Tashkent, optimal prices in the internet store Dommaster')}`,
+      template: `%s - ${t('buy in Tashkent, optimal prices in the internet store Dommaster')}`
+    },
+    description: 'Dommaster'
+  };
+}
+
+const RootLayout = async ({ children, params }: Readonly<Props>) => {
+  // Ensure that the incoming `locale` is valid
+  const { locale } = await params;
+  if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
 
-  const messages = await getMessages();
   return (
     <html
       className={`${fontSans.variable} ${fontMono.variable} antialiased`}
@@ -50,13 +55,14 @@ const RootLayout = async ({
       suppressHydrationWarning
     >
       <Providers>
-        <NextIntlClientProvider messages={messages}>
-          <body>
-            <div className='flex min-h-svh flex-col'>
+        <NextIntlClientProvider>
+          <body className='flex h-screen flex-col md:block md:h-auto md:min-h-screen'>
+            <div className='flex h-full flex-1 flex-col overflow-y-auto md:overflow-y-visible'>
               <AppHeader />
-              <main className='w-full flex-grow'>{children}</main>
+              <main className='w-full flex-1 flex-grow'>{children}</main>
+              <AppFooter />
             </div>
-            <AppFooter />
+            <BottomNav />
           </body>
         </NextIntlClientProvider>
       </Providers>

@@ -1,5 +1,5 @@
 import { BaseLayout } from '@/components/layout';
-import { Link } from '@/i18n/routing';
+import { Link } from '@/i18n/navigation';
 
 export const BenefitsSection = () => {
   return (

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { router } from 'next/client';
+// import { router } from 'next/client';
 
 import { useAuthStore } from '@/utils/stores';
 
@@ -17,20 +17,20 @@ api.interceptors.request.use((config) => {
 });
 
 api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error) {
-      if (error.response?.status === 401) {
-        useAuthStore.getState().auth.reset();
-        router.push('/login');
-      }
-      if (error.response?.status === 500) {
-        router.push('/500');
-      } else if (error.response?.status === 403) {
-        router.push('/403');
-      }
-    }
-  }
+  (response) => response
+  // (error) => {
+  //   if (error) {
+  //     if (error.response?.status === 401) {
+  //       useAuthStore.getState().auth.reset();
+  //       router.push('/login');
+  //     }
+  //     if (error.response?.status === 500) {
+  //       router.push('/500');
+  //     } else if (error.response?.status === 403) {
+  //       router.push('/403');
+  //     }
+  //   }
+  // }
 );
 
 export { api };

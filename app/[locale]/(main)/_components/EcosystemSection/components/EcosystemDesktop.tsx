@@ -2,12 +2,12 @@ import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
 import { Card, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from '@/i18n/routing';
+import { Link } from '@/i18n/navigation';
 
 export const EcosystemDesktop = () => {
   return (
-    <BaseLayout>
-      <div className='hidden grid-cols-5 gap-3 lg:grid'>
+    <BaseLayout className='hidden lg:block'>
+      <div className='grid grid-cols-5 gap-3'>
         <div className='col-span-2 grid grid-cols-2 gap-3'>
           <Card className='hover:bg-background relative col-span-2 transition-all hover:shadow-md'>
             <Link href='#'>

@@ -25,8 +25,13 @@ export const ProductList = ({ view = 'carousel', products }: Props) => {
 
   return (
     <div>
-      {view === 'grid' &&
-        products.map((product) => <ProductCard key={product.id} product={product} />)}
+      {view === 'grid' && (
+        <div className='grid grid-cols-2 gap-2 sm:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] md:gap-4'>
+          {products.map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
+      )}
       {view === 'carousel' && (
         <Carousel setApi={setApi}>
           <CarouselContent>

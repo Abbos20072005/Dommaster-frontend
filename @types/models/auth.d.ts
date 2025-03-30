@@ -4,7 +4,7 @@ interface LoginRequest {
   phone_number?: string;
 }
 
-type LoginResponse = BaseResponse<{
+type LoginResponse = ApiResponse<{
   access_token: string;
   refresh_token: string;
 }>;
@@ -14,7 +14,7 @@ interface RegisterRequest {
   phone_number: string;
 }
 
-type RegisterResponse = BaseResponse<{
+type RegisterResponse = ApiResponse<{
   access_token: string;
   refresh_token: string;
 }>;

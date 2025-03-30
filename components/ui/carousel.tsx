@@ -173,7 +173,7 @@ const CarouselPrevious = ({
   return (
     <Button
       className={cn(
-        'absolute hidden size-10 rounded-full shadow-md disabled:hidden md:flex',
+        'absolute hidden size-10 rounded-full shadow-sm disabled:hidden md:flex',
         orientation === 'horizontal'
           ? 'top-1/2 -left-4 -translate-y-1/2'
           : '-top-5 left-1/2 -translate-x-1/2 rotate-90',
@@ -203,7 +203,7 @@ const CarouselNext = ({
   return (
     <Button
       className={cn(
-        'absolute hidden size-10 rounded-full shadow-md disabled:hidden md:flex',
+        'absolute hidden size-10 rounded-full shadow-sm disabled:hidden md:flex',
         orientation === 'horizontal'
           ? 'top-1/2 -right-4 -translate-y-1/2'
           : '-bottom-5 left-1/2 -translate-x-1/2 rotate-90',

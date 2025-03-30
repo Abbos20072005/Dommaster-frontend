@@ -1,45 +1,43 @@
-import { CommandIcon } from 'lucide-react';
 import React from 'react';
 
+import { BaseLayout } from '@/components/layout';
 import { Separator } from '@/components/ui/separator';
-import { Link } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
+
+import { Links, MobileAppLinks, Socials } from './components';
 
 interface Props extends React.ComponentProps<'footer'> {}
 
 export const AppFooter = ({ className, children, ...props }: Props) => {
   return (
-    <footer className={cn('bg-muted border-t', className)} {...props}>
-      <div className='mx-auto max-w-7xl px-4 py-10 md:py-20'>
-        <div className='flex flex-col items-start justify-between gap-8 md:gap-12 lg:flex-row'>
+    <footer className={cn('bg-muted py-6 md:py-10 lg:pt-14', className)} {...props}>
+      <BaseLayout className='!py-0'>
+        <div className='flex flex-col justify-between gap-6 lg:flex-row'>
           <div>
-            <Link href='/' className='flex items-center gap-2'>
-              <CommandIcon />
-              <span className='text-2xl font-medium'>CDE</span>
-            </Link>
-            <p className='text-muted-foreground mt-6 text-lg font-medium'>
-              The best platform for learning.
-            </p>
+            <div className='mb-5'>
+              <div className='mb-3 text-sm font-medium'>Возник вопрос? Звоните</div>
+              <a href='tel:+998712099944' className='text-2xl font-semibold'>
+                +998 71 209 99 44
+              </a>
+            </div>
+
+            <Socials />
           </div>
-          <div className='flex flex-col gap-6 md:gap-12 lg:flex-row'>
-            <Link href='/courses' className='hover:text-primary text-xl font-medium'>
-              Courses
-            </Link>
-            <Link href='/profile' className='hover:text-primary text-xl font-medium'>
-              Profile
-            </Link>
-            <Link href='/history' className='hover:text-primary text-xl font-medium'>
-              History
-            </Link>
-          </div>
+
+          <Links />
+
+          <MobileAppLinks />
         </div>
 
         <Separator className='my-6 md:my-10' />
 
         <div className='flex flex-col justify-between gap-6 lg:flex-row'>
-          <p>© 2025 Platform «CDE»</p>
+          <p className='text-muted-foreground max-w-3xl text-center text-sm lg:text-left'>
+            {new Date().getFullYear()} ©dommaster.uz. Все права защищены. Указанная стоимость
+            товаров и условия их приобретения действительны по состоянию на текущую дату
+          </p>
         </div>
-      </div>
+      </BaseLayout>
     </footer>
   );
 };
