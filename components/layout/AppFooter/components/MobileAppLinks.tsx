@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import React from 'react';
 
 export const MobileAppLinks = () => {
@@ -16,24 +17,30 @@ export const MobileAppLinks = () => {
           <br /> чтобы скачать приложение.
         </p>
         <div className='mt-4 flex justify-between'>
-          <img
+          <Image
             alt='QR'
             className='block size-[145px]'
+            height={145}
             src='https://media.obi.ru/media/wysiwyg/footer-app/qr.png'
+            width={145}
           />
           <div className='shrink-0 space-y-2'>
             <a href='#' className='block'>
-              <img
+              <Image
                 alt='App Store'
                 className='h-[35px] w-[110px]'
+                height={35}
                 src='https://media.obi.ru/media/wysiwyg/footer-app/google-play.png'
+                width={110}
               />
             </a>
             <a href='#' className='block'>
-              <img
+              <Image
                 alt='App Store'
                 className='h-[35px] w-[110px]'
+                height={35}
                 src='https://media.obi.ru/media/wysiwyg/footer-app/appstore.png'
+                width={110}
               />
             </a>
           </div>

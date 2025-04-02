@@ -12,33 +12,14 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel';
 
-const banners = [
-  {
-    id: 1,
-    image: {
-      url: 'https://mini-io-api.texnomart.uz/newcontent/slider/353/xAv9zeSr5NdTLAtVxLqpQibPdMIkwBNylsl0JafB.webp'
-    }
-  },
-  {
-    id: 2,
-    image: {
-      url: 'https://mini-io-api.texnomart.uz/newcontent/slider/352/Tgo003ulJyVrqnTMs0KmKdEdgwc0Z8cYaJEXTEA0.webp'
-    }
-  },
-  {
-    id: 3,
-    image: {
-      url: 'https://mini-io-api.texnomart.uz/newcontent/slider/359/EMaIRCiVucM3636IX6vhOhlIyyUmwPxjAIS43NvS.webp'
-    }
-  }
-];
+import { banners } from './data';
 
 export const BannerCarousel = () => {
   return (
     <BaseLayout className='px-0 md:px-4'>
       <Carousel plugins={[Autoplay({ delay: 4000 })]} opts={{ loop: true }}>
         <CarouselContent className='-ml-2 md:-ml-4'>
-          {banners.map((banner) => (
+          {banners.map((banner, index) => (
             <CarouselItem key={banner.id} className='basis-[90%] pl-2 md:basis-full md:pl-4'>
               <a
                 href={banner.image.url}
@@ -49,9 +30,10 @@ export const BannerCarousel = () => {
                 <Image
                   alt='banner'
                   className='size-full rounded-lg object-cover md:rounded-xl'
-                  height={400}
+                  height={413}
                   src={banner.image.url}
-                  width={1200}
+                  width={1240}
+                  priority={index === 0}
                 />
               </a>
             </CarouselItem>

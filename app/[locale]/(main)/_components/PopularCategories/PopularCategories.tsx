@@ -1,4 +1,5 @@
 import { MoveRightIcon } from 'lucide-react';
+import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
 import {
@@ -88,10 +89,12 @@ export const PopularCategories = () => {
                 className='relative block size-full rounded-md px-4 py-3'
               >
                 <div className='text-sm font-semibold'>{item.title}</div>
-                <img
+                <Image
                   alt={item.title}
                   className='bg-muted absolute inset-0 z-[-1] size-full rounded-lg'
+                  height={192}
                   src={item.image.url}
+                  width={128}
                 />
               </Link>
             </CarouselItem>

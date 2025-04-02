@@ -2,6 +2,7 @@
 
 import { HandPlatterIcon, HeartIcon, ShoppingCartIcon, UserCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import React from 'react';
 
 import { AuthDialog } from '@/components/modules/auth';
@@ -27,10 +28,13 @@ export const HeaderMiddle = () => {
       <div className='mx-auto flex h-20 max-w-[1272px] items-center gap-4 px-2 md:px-4'>
         <Link href='/'>
           <div className='flex items-center justify-center gap-1'>
-            <img
+            <Image
               alt='dommaster'
               className='animate-spin-y w-10 pb-1 duration-[5s]'
+              height={26}
               src='/logo.png'
+              width={40}
+              priority
             />
             <span className='text-2xl font-bold'>
               <span className='text-secondary'>DOM</span>
