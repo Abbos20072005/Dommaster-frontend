@@ -5,6 +5,7 @@ interface Product {
   images: string[];
   product_count: number;
   rating: number | null;
+  reviews: Review[];
   reviews_count: number;
   title: string;
   breadcrumbs: {

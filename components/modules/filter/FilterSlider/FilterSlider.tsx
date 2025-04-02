@@ -23,12 +23,18 @@ export const FilterSlider = ({ filter }: Props) => {
   const [maxInput, setMaxInput] = React.useState<string>(String(sliderRange[1]));
   const mounted = useMounted();
 
+  React.useEffect(() => {
+    console.log(sliderRange);
+    setMinInput(String(sliderRange[0]));
+    setMaxInput(String(sliderRange[1]));
+  }, [...sliderRange]);
+
   if (!mounted) return null;
 
   return (
     <div className='space-y-3'>
       <h3 className='text-sm font-bold'>{filter.name}</h3>
-      <div className='flex gap-3'>
+      <div className='grid grid-cols-2 gap-3'>
         <div className='grid gap-1'>
           <Label className='text-muted-foreground font-normal' htmlFor='min'>
             {t('From')}

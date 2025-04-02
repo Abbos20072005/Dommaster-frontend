@@ -4,6 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { NuqsAdapter } from 'nuqs/adapters/react';
 import React from 'react';
 
+import { TooltipProvider } from '@/components/ui/tooltip';
 import { getQueryClient } from '@/utils/getQueryClient';
 
 export const Providers = ({ children }: React.PropsWithChildren) => {
@@ -11,7 +12,9 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <NuqsAdapter>{children}</NuqsAdapter>
+      <NuqsAdapter>
+        <TooltipProvider>{children}</TooltipProvider>
+      </NuqsAdapter>
     </QueryClientProvider>
   );
 };

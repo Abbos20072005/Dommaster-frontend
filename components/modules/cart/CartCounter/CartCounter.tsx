@@ -57,7 +57,7 @@ export const CartCounter = ({ value, onChange, maxValue }: Props) => {
         className='h-full min-w-0 flex-1 text-center outline-none'
         value={inputValue}
         autoComplete='off'
-        inputMode='numeric'
+        inputMode='decimal'
         onBlur={handleBlur}
         onChange={handleChange}
         onFocus={handleFocus}

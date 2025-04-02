@@ -8,7 +8,12 @@ import { Card } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
-import { ProductDescription, ProductDetails, ProductProperties } from './components';
+import {
+  ProductDescription,
+  ProductDetails,
+  ProductProperties,
+  ProductReviews
+} from './components';
 import { useProductBody } from './hooks';
 
 export const ProductBody = () => {
@@ -45,6 +50,7 @@ export const ProductBody = () => {
         </TabsTrigger>
         <TabsTrigger size='lg' value='reviews' variant='underline'>
           {t('Reviews')}
+          {state.product.reviews_count && `: ${state.product.reviews_count}`}
         </TabsTrigger>
         <TabsTrigger size='lg' value='questions' variant='underline'>
           {t('Questions')}
@@ -62,6 +68,9 @@ export const ProductBody = () => {
         </TabsContent>
         <TabsContent value='properties'>
           <ProductProperties properties={state.product.properties} />
+        </TabsContent>
+        <TabsContent value='reviews'>
+          <ProductReviews product={state.product} />
         </TabsContent>
       </Card>
     </Tabs>

@@ -3,7 +3,7 @@
 import type { LucideIcon } from 'lucide-react';
 
 import {
-  HandPlatterIcon,
+  HeartIcon,
   HomeIcon,
   PackageSearchIcon,
   ShoppingCartIcon,
@@ -26,14 +26,14 @@ const navItems: { icon: LucideIcon; title: string; url: string }[] = [
     url: '/catalog'
   },
   {
-    icon: HandPlatterIcon,
-    title: 'Services',
-    url: '/services'
-  },
-  {
     icon: ShoppingCartIcon,
     title: 'Cart',
     url: '/cart'
+  },
+  {
+    icon: HeartIcon,
+    title: 'Favorites',
+    url: '/favorites'
   },
   {
     icon: UserCircleIcon,

@@ -1,15 +1,16 @@
 import { useTranslations } from 'next-intl';
+import { useQueryState } from 'nuqs';
 import React from 'react';
 
-import { Link, usePathname } from '@/i18n/navigation';
+import { Link } from '@/i18n/navigation';
 
 interface Props {
   properties: Product['properties'];
 }
 
 export const ProductPropertiesPreview = ({ properties }: Props) => {
+  const [_, setTab] = useQueryState('tab', { defaultValue: 'description' });
   const t = useTranslations();
-  const pathname = usePathname();
 
   return (
     <div>
@@ -37,12 +38,12 @@ export const ProductPropertiesPreview = ({ properties }: Props) => {
           </li>
         ))}
       </ul>
-      <Link
-        href={{ pathname, query: { tab: 'properties' } }}
+      <button
         className='border-b border-dashed border-blue-900 text-sm font-medium text-blue-900'
+        onClick={() => setTab('properties')}
       >
         Полные характеристики…
-      </Link>
+      </button>
     </div>
   );
 };

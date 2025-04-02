@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Ratings } from '@/components/ui/rating';
 import { cn } from '@/lib/utils';
 
-import { ProductImages, ProductPrice } from './components';
+import { ProductControl, ProductImages, ProductPrice } from './components';
 
 type Props = React.ComponentProps<'div'> & {
   product: Product;
@@ -21,10 +21,13 @@ export const ProductCard = ({ product, className, setLockParentScroll, ...props 
 
   return (
     <div className={cn('group/product size-full rounded-lg', className)} {...props}>
-      <Link href={`/product/${product.id}`} aria-label={product.title}>
-        <ProductImages product={product} setLockParentScroll={setLockParentScroll} />
-        <span className='sr-only'>{product.title}</span>
-      </Link>
+      <div className='relative'>
+        <ProductControl product={product} />
+        <Link href={`/product/${product.id}`} aria-label={product.title}>
+          <ProductImages product={product} setLockParentScroll={setLockParentScroll} />
+          <span className='sr-only'>{product.title}</span>
+        </Link>
+      </div>
       <div>
         <div className='py-1'>
           <Link href={{ pathname: `/product/${product.id}`, query: { tab: 'reviews' } }}>

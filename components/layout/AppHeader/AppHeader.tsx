@@ -15,7 +15,7 @@ export const AppHeader = () => {
       </div>
       <div className='md:hidden'>
         <div className='px-4 pt-4'>
-          <Link href='/public' className='flex items-center justify-between'>
+          <Link href='/' className='flex items-center justify-between'>
             <div className='flex items-center justify-center gap-1'>
               <img
                 alt='dommaster'

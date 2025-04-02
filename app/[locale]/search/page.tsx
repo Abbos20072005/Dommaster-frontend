@@ -4,28 +4,43 @@ import { BaseLayout } from '@/components/layout';
 import { Filter } from '@/components/modules/filter';
 import { ProductList } from '@/components/modules/product';
 import { productsData } from '@/fake-data/products';
+import { getProducts } from '@/utils/api/requests';
+import { getQueryClient } from '@/utils/getQueryClient';
+
+import { MobileFilterDrawer, ProductsSortBySelect } from './-components';
 
 interface Props {
   searchParams: Promise<{ q: string }>;
 }
 
 const SearchPage = async ({ searchParams }: Props) => {
-  const { q } = await searchParams;
+  const { q, ...rest } = await searchParams;
   const t = await getTranslations();
+
+  const queryClient = getQueryClient();
+
+  await queryClient.prefetchQuery({
+    queryKey: ['products', q, rest],
+    queryFn: () => getProducts({ config: { params: { q, ...rest } } })
+  });
 
   return (
     <BaseLayout>
-      <h1 className='mb-4 text-2xl font-bold'>
+      <h1 className='mb-4 text-xl font-bold md:text-2xl'>
         {t('Search results for: {search}', {
           search: q,
           productQty: productsData.length
         })}
       </h1>
-      <div className='flex gap-8'>
-        <aside className='hidden w-52 lg:block'>
+      <div className='gap-8 lg:flex'>
+        <aside className='hidden w-52 lg:block xl:w-60'>
           <Filter />
         </aside>
-        <div className='flex-1'>
+        <div className='lg:flex-1'>
+          <div className='mb-4 flex items-center justify-between'>
+            <ProductsSortBySelect />
+            <MobileFilterDrawer />
+          </div>
           <ProductList view='grid' products={productsData} />
         </div>
       </div>

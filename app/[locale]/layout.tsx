@@ -10,6 +10,7 @@ import type { Locale } from '@/i18n/routing';
 
 import { AppFooter, AppHeader, BottomNav } from '@/components/layout';
 import { Providers } from '@/components/Providers';
+import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
 
 import '@/styles/globals.css';
@@ -63,6 +64,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
               <AppFooter />
             </div>
             <BottomNav />
+            <Toaster />
           </body>
         </NextIntlClientProvider>
       </Providers>

@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 interface Props {
@@ -5,10 +6,12 @@ interface Props {
 }
 
 export const ProductDetails = ({ extendedDescription }: Props) => {
+  const t = useTranslations();
   if (!extendedDescription) return null;
 
   return (
     <div>
+      <p className='mb-8 text-3xl font-bold'>{t('Details')}</p>
       {extendedDescription.description && <p>{extendedDescription.description}</p>}
       {extendedDescription.properties.slice(0, 10).map((item) => (
         <div key={item.key}>

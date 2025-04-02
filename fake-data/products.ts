@@ -13,6 +13,56 @@ export const productsData: Product[] = [
       'https://cs.p-static.ru/image/2023535/original-227x227-fit.jpg',
       'https://cs.p-static.ru/image/2023462/original-227x227-fit.jpg'
     ],
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          first_name: 'John',
+          last_name: 'Doe',
+          phone_number: '1234567890'
+        },
+        likes: 10,
+        photos: [
+          {
+            url_small:
+              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+            owner_id: 1,
+            url_large:
+              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+            url_original:
+              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+            url_thumb:
+              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
+          }
+        ],
+        dislikes: 1,
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+      },
+      {
+        id: 2,
+        rating: 4,
+        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 2,
+          email: 'example@google.com',
+          first_name: 'John',
+          last_name: 'Doe',
+          phone_number: '1234567890'
+        },
+        likes: 1,
+        photos: [],
+        dislikes: 1,
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+      }
+    ],
     description: {
       description: 'Предназначена для подвесных унитазов.',
       properties: [
@@ -134,6 +184,26 @@ export const productsData: Product[] = [
     product_count: 10,
     rating: null,
     reviews_count: 10,
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          first_name: 'John',
+          last_name: 'Doe',
+          phone_number: '1234567890'
+        },
+        likes: 10,
+        photos: [],
+        dislikes: 1,
+        published_at: '2022-12-13T14:06:10.157+03:00'
+      }
+    ],
     description: {
       description: 'Предназначена для подвесных унитазов.',
       properties: [

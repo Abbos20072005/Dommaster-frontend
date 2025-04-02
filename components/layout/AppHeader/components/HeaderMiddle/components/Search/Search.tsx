@@ -8,6 +8,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Popover, PopoverAnchor, PopoverContent } from '@/components/ui/popover';
+import { useMounted } from '@/hooks';
 import { useRouter } from '@/i18n/navigation';
 
 import { SuggestionView } from './SuggestionView';
@@ -19,20 +20,17 @@ export const Search = () => {
   const [popoverOpen, setPopoverOpen] = React.useState(false);
   const [searchValue, setSearchValue] = useQueryState('q', { defaultValue: '' });
   const [searchInput, setSearchInput] = React.useState('');
-  const [mounted, setMounted] = React.useState(false);
+  const mounted = useMounted();
 
   React.useEffect(() => {
-    setMounted(true);
-    if (searchValue) {
-      setSearchInput(searchValue);
-    }
+    if (searchValue) setSearchInput(searchValue);
   }, []);
 
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!searchInput) return;
-    router.push(`/search?q=${searchInput}`);
-    setSearchValue(searchInput);
+    if (!searchInput.trim()) return;
+    router.push(`/search?q=${searchInput.trim()}`);
+    setSearchValue(searchInput.trim());
     setPopoverOpen(false);
   };
 

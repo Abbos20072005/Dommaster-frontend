@@ -17,7 +17,7 @@ export const FilterCheckbox = ({ filter }: Props) => {
   const t = useTranslations();
   const [selectedItems, setSelectedItems] = useQueryState(
     filter.request_var,
-    parseAsArrayOf(parseAsString).withDefault([])
+    parseAsArrayOf(parseAsString).withDefault([]).withOptions({ shallow: false })
   );
   const [showAll, setShowAll] = React.useState(false);
   const mounted = useMounted();

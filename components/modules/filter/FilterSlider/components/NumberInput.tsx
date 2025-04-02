@@ -41,7 +41,7 @@ export const NumberInput = ({
       size='sm'
       value={inputValue}
       autoComplete='off'
-      inputMode='numeric'
+      inputMode='decimal'
       onChange={onInputChange}
     />
   );

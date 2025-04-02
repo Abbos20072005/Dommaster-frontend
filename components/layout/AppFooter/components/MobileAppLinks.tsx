@@ -3,7 +3,7 @@ import React from 'react';
 export const MobileAppLinks = () => {
   return (
     <div>
-      <div className='border-muted-foreground w-[330px] rounded-3xl border px-6 pt-6'>
+      <div className='border-primary-foreground/60 w-[330px] rounded-3xl border px-6 pt-6'>
         <p className='mb-5 font-semibold'>
           Заказывайте в новом
           <br />
@@ -11,7 +11,7 @@ export const MobileAppLinks = () => {
           <br />
           бонусы
         </p>
-        <p className='text-muted-foreground text-xs'>
+        <p className='text-primary-foreground/60 text-xs'>
           Наведите камеру на QR,
           <br /> чтобы скачать приложение.
         </p>

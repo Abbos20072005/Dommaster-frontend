@@ -5,13 +5,7 @@ import * as React from 'react';
 
 import { cn } from '@/lib/utils';
 
-const TooltipProvider = ({
-  delayDuration = 0,
-  ...props
-}: React.ComponentProps<typeof TooltipPrimitive.Provider>) => {
-  // @ts-expect-error
-  return <TooltipPrimitive data-slot='tooltip-provider' delayDuration={delayDuration} {...props} />;
-};
+const TooltipProvider = TooltipPrimitive.Provider;
 
 const Tooltip = ({ ...props }: React.ComponentProps<typeof TooltipPrimitive.Root>) => {
   return (

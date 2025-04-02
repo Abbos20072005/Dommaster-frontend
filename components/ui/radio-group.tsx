@@ -17,7 +17,7 @@ const RadioGroup = ({
       {...props}
     />
   );
-}
+};
 
 const RadioGroupItem = ({
   className,
@@ -40,6 +40,6 @@ const RadioGroupItem = ({
       </RadioGroupPrimitive.Indicator>
     </RadioGroupPrimitive.Item>
   );
-}
+};
 
 export { RadioGroup, RadioGroupItem };

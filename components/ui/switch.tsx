@@ -23,6 +23,6 @@ const Switch = ({ className, ...props }: React.ComponentProps<typeof SwitchPrimi
       />
     </SwitchPrimitive.Root>
   );
-}
+};
 
 export { Switch };

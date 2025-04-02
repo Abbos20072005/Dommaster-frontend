@@ -10,7 +10,10 @@ interface Props extends React.ComponentProps<'footer'> {}
 
 export const AppFooter = ({ className, children, ...props }: Props) => {
   return (
-    <footer className={cn('bg-muted py-6 md:py-10 lg:pt-14', className)} {...props}>
+    <footer
+      className={cn('bg-primary text-primary-foreground py-6 md:py-10 lg:pt-14', className)}
+      {...props}
+    >
       <BaseLayout className='!py-0'>
         <div className='flex flex-col justify-between gap-6 lg:flex-row'>
           <div>
@@ -32,7 +35,7 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
         <Separator className='my-6 md:my-10' />
 
         <div className='flex flex-col justify-between gap-6 lg:flex-row'>
-          <p className='text-muted-foreground max-w-3xl text-center text-sm lg:text-left'>
+          <p className='text-primary-foreground/60 max-w-3xl text-center text-sm lg:text-left'>
             {new Date().getFullYear()} ©dommaster.uz. Все права защищены. Указанная стоимость
             товаров и условия их приобретения действительны по состоянию на текущую дату
           </p>
