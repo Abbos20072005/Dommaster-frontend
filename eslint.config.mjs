@@ -6,6 +6,7 @@ export default eslint(
     typescript: true,
     react: true,
     jsx: true,
+    next: true,
     rules: {
       'react/no-unstable-default-props': 'off',
       '@typescript-eslint/no-use-before-define': 'off',
