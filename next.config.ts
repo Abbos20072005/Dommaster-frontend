@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL
   },
   images: {
+    unoptimized: true,
     remotePatterns: [
       {
         protocol: 'https',
