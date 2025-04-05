@@ -3,7 +3,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
-import { catalogData } from '@/fake-data/catalog';
+import { categoryData } from '@/fake-data/category';
 import { productsData } from '@/fake-data/products';
 import { Link } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
@@ -64,10 +64,10 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
         <div className='p-3'>
           <p className='py-2.5 text-xs font-bold uppercase'>{t('Search in categories')}:</p>
           <ul>
-            {catalogData.map((item) => (
+            {categoryData.map((item) => (
               <li key={item.id}>
                 <Link
-                  href={`/catalog/${item.id}`}
+                  href={`/category/${item.id}`}
                   className='hover:bg-muted flex items-center gap-2 rounded-md px-4 py-2.5 transition-colors'
                   onClick={() => {
                     onClose();

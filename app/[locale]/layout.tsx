@@ -12,6 +12,7 @@ import { AppFooter, AppHeader, BottomNav } from '@/components/layout';
 import { Providers } from '@/components/Providers';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
+import { cn } from '@/lib/utils';
 
 import '@/styles/globals.css';
 
@@ -51,14 +52,14 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
 
   return (
     <html
-      className={`${fontSans.variable} ${fontMono.variable} antialiased`}
+      className={cn(fontSans.variable, fontMono.variable, 'antialiased')}
       lang={locale}
       suppressHydrationWarning
     >
       <Providers>
         <NextIntlClientProvider>
           <body className='flex h-screen flex-col md:block md:h-auto md:min-h-screen'>
-            <div className='flex h-screen flex-1 flex-col overflow-y-auto md:overflow-y-visible'>
+            <div className='flex h-screen flex-1 flex-col overflow-y-auto md:h-auto md:min-h-screen md:overflow-y-visible'>
               <AppHeader />
               <main className='w-full flex-1 flex-grow'>{children}</main>
               <AppFooter />

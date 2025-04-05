@@ -6,7 +6,7 @@ import { SideNav } from './_components';
 
 const UserLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <BaseLayout className='px-0 pt-4'>
+    <BaseLayout className='mt-2 px-0 md:mt-4'>
       <div className='gap-6 md:flex'>
         <SideNav />
         <main className='flex-1'>{children}</main>

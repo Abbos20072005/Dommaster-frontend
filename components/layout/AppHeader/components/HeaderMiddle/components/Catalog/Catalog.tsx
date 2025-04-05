@@ -4,7 +4,7 @@ import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { catalogData } from '@/fake-data/catalog';
+import { categoryData } from '@/fake-data/category';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 
@@ -36,7 +36,7 @@ export const Catalog = () => {
               className='w-60 flex-col justify-start overflow-y-auto rounded-none px-2 py-4 lg:w-72'
               variant='ghost'
             >
-              {catalogData.map((item) => (
+              {categoryData.map((item) => (
                 <TabsTrigger
                   key={item.id}
                   className='data-[state=active]:text-secondary w-full grow-0 gap-3'
@@ -51,13 +51,13 @@ export const Catalog = () => {
               ))}
             </TabsList>
 
-            {catalogData.map((item) => (
+            {categoryData.map((item) => (
               <TabsContent
                 key={item.id}
                 className='bg-background grow overflow-y-auto border-l p-6'
                 value={`tab-${item.id}`}
               >
-                <Link href={`/catalog/${item.id}`}>
+                <Link href={`/category/${item.id}`}>
                   <p className='hover:text-secondary mb-6 text-xl font-bold transition-colors'>
                     {item.title}
                   </p>

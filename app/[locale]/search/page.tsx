@@ -28,7 +28,7 @@ const SearchPage = async ({ searchParams }: Props) => {
   return (
     <div>
       <MobileHeader />
-      <BaseLayout className='pt-4'>
+      <BaseLayout className='mt-2 md:mt-4'>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>
           {t('Search results for: {search}', {
             search: q,

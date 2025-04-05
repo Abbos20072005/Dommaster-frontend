@@ -85,7 +85,7 @@ export const PopularCategories = () => {
           {categories.map((item) => (
             <CarouselItem key={item.id} className='h-32 basis-[192px] pl-2 md:pl-4'>
               <Link
-                href={`/catalog/${item.id}`}
+                href={`/category/${item.id}`}
                 className='relative block size-full rounded-md px-4 py-3'
               >
                 <div className='text-sm font-semibold'>{item.title}</div>
@@ -101,7 +101,7 @@ export const PopularCategories = () => {
           ))}
           <CarouselItem className='h-32 basis-[192px]'>
             <Link
-              href='/catalog'
+              href='/category'
               className='bg-muted relative flex size-full items-center justify-center gap-2 rounded-md px-4 py-3'
             >
               <div className='text-sm font-semibold'>Все категории</div>

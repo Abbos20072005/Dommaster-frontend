@@ -13,7 +13,7 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { catalogData } from '@/fake-data/catalog';
+import { categoryData } from '@/fake-data/category';
 import { Link } from '@/i18n/navigation';
 
 interface Props extends React.ComponentProps<typeof DialogTrigger> {
@@ -25,7 +25,7 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
   const [history, setHistory] = React.useState<number[]>([]);
   const [open, setOpen] = React.useState(false);
 
-  const catalog = history.reduce((acc, index) => acc[index]?.children || [], catalogData);
+  const catalog = history.reduce((acc, index) => acc[index]?.children || [], categoryData);
 
   const onEnter = (catalogIndex: number) => {
     setHistory([...history, catalogIndex]);
@@ -80,7 +80,7 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
               </button>
             ) : (
               <Link
-                href={`/catalog/${item.id}`}
+                href={`/category/${item.id}`}
                 key={item.id}
                 className='block border-t py-3 text-sm'
                 onClick={() => setOpen(false)}

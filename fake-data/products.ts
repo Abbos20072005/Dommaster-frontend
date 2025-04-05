@@ -158,6 +158,8 @@ export const productsData: Product[] = [
         id: 1,
         title: 'Category 1',
         productQty: 10,
+        breadcrumbs: [],
+        image: '',
         children: []
       }
     ],
@@ -338,6 +340,8 @@ export const productsData: Product[] = [
         id: 1,
         title: 'Category 1',
         productQty: 10,
+        breadcrumbs: [],
+        image: '',
         children: []
       }
     ],
@@ -518,6 +522,8 @@ export const productsData: Product[] = [
         id: 1,
         title: 'Category 1',
         productQty: 10,
+        breadcrumbs: [],
+        image: '',
         children: []
       }
     ],
@@ -698,6 +704,8 @@ export const productsData: Product[] = [
         id: 1,
         title: 'Category 1',
         productQty: 10,
+        breadcrumbs: [],
+        image: '',
         children: []
       }
     ],
@@ -878,6 +886,8 @@ export const productsData: Product[] = [
         id: 1,
         title: 'Category 1',
         productQty: 10,
+        breadcrumbs: [],
+        image: '',
         children: []
       }
     ],
@@ -1058,6 +1068,8 @@ export const productsData: Product[] = [
         id: 1,
         title: 'Category 1',
         productQty: 10,
+        breadcrumbs: [],
+        image: '',
         children: []
       }
     ],
@@ -1238,6 +1250,8 @@ export const productsData: Product[] = [
         id: 1,
         title: 'Category 1',
         productQty: 10,
+        breadcrumbs: [],
+        image: '',
         children: []
       }
     ],

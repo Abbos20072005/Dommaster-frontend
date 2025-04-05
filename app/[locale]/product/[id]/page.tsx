@@ -1,6 +1,6 @@
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 
-import { BaseLayout } from '@/components/layout';
+import { BaseLayout, MobileHeader } from '@/components/layout';
 import { getProductById } from '@/utils/api/requests';
 import { getQueryClient } from '@/utils/getQueryClient';
 
@@ -21,7 +21,8 @@ const ProductPage = async ({ params }: Props) => {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <BaseLayout>
+      <MobileHeader />
+      <BaseLayout className='mt-2 md:mt-4'>
         <div className='lg:flex'>
           <div className='flex-1'>
             <ProductHeader />
