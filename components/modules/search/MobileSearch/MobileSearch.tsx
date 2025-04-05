@@ -37,7 +37,11 @@ export const MobileSearch = ({ children, ...props }: Props) => {
     if (searchValue) setSearchInput(searchValue);
   }, []);
 
-  const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  React.useEffect(() => {
+    searchRef.current?.focus();
+  }, [open]);
+
+  const onSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!searchInput.trim()) return;
     router.push(`/search?q=${searchInput.trim()}`);
@@ -52,7 +56,7 @@ export const MobileSearch = ({ children, ...props }: Props) => {
       </DialogTrigger>
       <DialogContent className='flex h-svh flex-col gap-0 p-0' hideCloseButton>
         <DialogHeader className='flex flex-row border-b p-2'>
-          <DialogTitle className='sr-only'>Search</DialogTitle>
+          <DialogTitle className='sr-only'>{t('Search')}</DialogTitle>
           <DialogClose asChild>
             <Button size='iconSm' variant='ghost'>
               <ArrowLeftIcon className='size-5' />
@@ -67,6 +71,7 @@ export const MobileSearch = ({ children, ...props }: Props) => {
               value={searchInput}
               autoComplete='off'
               onChange={(e) => setSearchInput(e.target.value)}
+              onKeyDown={(e) => e.key === 'Enter' && onSearch(e)}
               placeholder='Саморез, доставка'
             />
             {mounted && searchInput && (
