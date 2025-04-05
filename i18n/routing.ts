@@ -5,7 +5,10 @@ export const routing = defineRouting({
   locales: ['en', 'ru', 'uz'],
 
   // Used when no locale matches
-  defaultLocale: 'uz'
+  defaultLocale: 'uz',
+
+  // The prefix for the default locale
+  localePrefix: 'as-needed'
 });
 
 export type Locale = (typeof routing.locales)[number];

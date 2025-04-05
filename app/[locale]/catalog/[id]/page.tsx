@@ -5,12 +5,13 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
-import { BaseLayout } from '@/components/layout';
+import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
   BreadcrumbList,
+  BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { catalogData } from '@/fake-data/catalog';
@@ -40,86 +41,43 @@ const CatalogPage = async ({ params }: Props) => {
   if (!catalog) return notFound();
 
   return (
-    <BaseLayout>
-      <Breadcrumb className='mb-4 md:hidden'>
-        <BreadcrumbList>
-          <BreadcrumbItem>
-            <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>
-          </BreadcrumbItem>
-          <BreadcrumbSeparator />
-          <BreadcrumbItem>
-            <BreadcrumbLink href='/catalog'>{t('Catalog')}</BreadcrumbLink>
-          </BreadcrumbItem>
-        </BreadcrumbList>
-      </Breadcrumb>
-      <h1 className='mb-4 text-xl leading-8 font-bold md:mb-10 md:text-2xl lg:text-3xl'>
-        {catalog.title}
-      </h1>
-      <div className='hidden gap-6 md:flex'>
-        <aside className='w-52'>
-          <ul className='space-y-3'>
-            {catalog.children.map((item) => (
-              <li key={item.id}>
-                <Link href={`/catalog/${item.id}`}>
-                  <p className='hover:text-secondary text-muted-foreground w-fit text-sm transition-colors'>
-                    {item.title}
-                  </p>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </aside>
-        <div className='flex-1'>
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>
-              </BreadcrumbItem>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href='/catalog'>{t('Catalog')}</BreadcrumbLink>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-          <div className='mt-6 grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4'>
-            {catalog.children.map((item) => (
-              <div key={item.id}>
-                <Link href={`/catalog/${item.id}`}>
-                  <div>
-                    <Image
-                      alt={item.title}
-                      className='mx-auto size-[90px]'
-                      height={90}
-                      src='https://cs.p-static.ru/image/30076196/original-150x150-fit.jpg'
-                      width={90}
-                    />
-                  </div>
-                  <p className='pt-3 text-center text-sm'>{item.title}</p>
-                </Link>
-              </div>
-            ))}
-          </div>
+    <div>
+      <MobileHeader />
+      <BaseLayout className='pt-4'>
+        <Breadcrumb className='mb-2 md:mb-4'>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{catalog.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+        <h1 className='mb-4 text-xl leading-8 font-bold md:mb-10 md:text-2xl lg:text-3xl'>
+          {catalog.title}
+        </h1>
+        <div className='grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] md:gap-4'>
+          {catalog.children.map((item) => (
+            <Link
+              href={`/catalog/${item.id}`}
+              key={item.id}
+              className='bg-muted relative flex flex-col justify-between gap-6 rounded-md p-3 md:flex-row md:gap-3'
+            >
+              <p className='text-xs font-medium [word-break:break-word] md:text-sm'>{item.title}</p>
+              <Image
+                alt={item.title}
+                className='mx-auto h-15 w-22 rounded-md object-contain md:w-15'
+                height={60}
+                src='https://cdn.vseinstrumenti.ru/imgtmbnf/400x400/img/cats/1774.jpg?hash=20250319092945'
+                width={60}
+              />
+            </Link>
+          ))}
         </div>
-      </div>
-      <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-2 sm:gap-4 md:hidden'>
-        {catalogData.map((item) => (
-          <Link
-            href={`/catalog/${item.id}`}
-            key={item.id}
-            className='relative block h-32 rounded-md p-4'
-          >
-            <p className='text-sm font-medium'>{item.title}</p>
-            <Image
-              alt={item.title}
-              className='absolute inset-0 z-[-1] size-full rounded-md object-cover'
-              height={150}
-              src='https://mini-io-api.texnomart.uz/catalog/special-category/7/74a09808-7198-496a-b704-158399923abd.png'
-              width={150}
-            />
-          </Link>
-        ))}
-      </div>
-    </BaseLayout>
+      </BaseLayout>
+    </div>
   );
 };
 

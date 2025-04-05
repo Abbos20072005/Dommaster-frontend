@@ -79,7 +79,7 @@ const categories = [
 
 export const PopularCategories = () => {
   return (
-    <BaseLayout className='px-0 pt-2 pb-0 md:px-4 md:!py-0'>
+    <BaseLayout className='px-0 md:px-4'>
       <Carousel opts={{ align: 'start' }}>
         <CarouselContent className='ml-2 md:-ml-4'>
           {categories.map((item) => (

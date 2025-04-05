@@ -1,5 +1,4 @@
 @import 'tailwindcss';
-@import './typography.css';
 
 @plugin "tailwindcss-animate";
 @plugin "@tailwindcss/typography";
@@ -18,21 +17,21 @@
   --card-foreground: hsl(20 14.3% 4.1%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(20 14.3% 4.1%);
-  --primary: hsl(220 70% 14%);
+  --primary: hsl(36 100% 55%);
   --primary-foreground: hsl(0 0% 100%);
-  --secondary: hsl(36 100% 55%);
+  --secondary: hsl(134 75% 37%);
   --secondary-foreground: hsl(24 9.8% 10%);
-  --tertiary: hsl(218 16% 67%);
-  --tertiary-foreground: hsl(20 14.3% 4.1%);
+  --tertiary: hsl(220 70% 14%);
+  --tertiary-foreground: hsl(0 0% 100%);
   --muted: hsl(210 14% 97%);
-  --muted-foreground: hsl(25 5.3% 44.7%);
+  --muted-foreground: hsl(207 5% 60%);
   --accent: hsl(210 14% 97%);
   --accent-foreground: hsl(24 9.8% 10%);
   --destructive: hsl(0 84.2% 60.2%);
   --destructive-foreground: hsl(60 9.1% 97.8%);
   --border: hsl(20 5.9% 90%);
   --input: hsl(20 5.9% 90%);
-  --ring: hsl(220 70% 14%);
+  --ring: hsl(36 100% 55%);
   --radius: 0.75rem;
   --chart-1: 12 76% 61%;
   --chart-2: 173 58% 39%;

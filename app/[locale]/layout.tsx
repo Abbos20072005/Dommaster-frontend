@@ -58,7 +58,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
       <Providers>
         <NextIntlClientProvider>
           <body className='flex h-screen flex-col md:block md:h-auto md:min-h-screen'>
-            <div className='flex h-full flex-1 flex-col overflow-y-auto md:overflow-y-visible'>
+            <div className='flex h-screen flex-1 flex-col overflow-y-auto md:overflow-y-visible'>
               <AppHeader />
               <main className='w-full flex-1 flex-grow'>{children}</main>
               <AppFooter />

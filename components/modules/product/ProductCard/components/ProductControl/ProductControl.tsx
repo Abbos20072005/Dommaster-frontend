@@ -5,9 +5,8 @@ import { HeartIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useRouter } from '@/i18n/navigation';
+import { cn } from '@/lib/utils';
 import { postFavorite } from '@/utils/api/requests';
 
 interface Props {
@@ -35,22 +34,16 @@ export const ProductControl = ({ product }: Props) => {
   };
 
   return (
-    <div className='absolute top-0 right-0 z-10 p-1'>
-      <Tooltip delayDuration={200}>
-        <TooltipTrigger asChild>
-          <Button
-            className='bg-background transition-opacity group-hover/product:opacity-100 md:opacity-0'
-            size='iconSm'
-            variant='ghost'
-            onClick={onToggleFavorite}
-          >
-            <HeartIcon />
-          </Button>
-        </TooltipTrigger>
-        <TooltipContent>
-          <p>{t('Add to favorites')}</p>
-        </TooltipContent>
-      </Tooltip>
+    <div className='flex gap-1'>
+      <button
+        className={cn('text-muted-foreground hover:text-foreground', {
+          'text-red-500 hover:text-red-600': product.isInFavorites
+        })}
+        type='button'
+        onClick={onToggleFavorite}
+      >
+        <HeartIcon />
+      </button>
     </div>
   );
 };

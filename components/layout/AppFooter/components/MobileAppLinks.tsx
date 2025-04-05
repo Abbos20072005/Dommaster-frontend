@@ -4,7 +4,7 @@ import React from 'react';
 export const MobileAppLinks = () => {
   return (
     <div>
-      <div className='border-primary-foreground/60 w-[330px] rounded-3xl border px-6 pt-6'>
+      <div className='border-primary-foreground/60 max-w-[330px] rounded-3xl border px-6 pt-6 md:w-[330px]'>
         <p className='mb-5 font-semibold'>
           Заказывайте в новом
           <br />
@@ -19,12 +19,12 @@ export const MobileAppLinks = () => {
         <div className='mt-4 flex justify-between'>
           <Image
             alt='QR'
-            className='block size-[145px]'
+            className='hidden size-[145px] md:block'
             height={145}
             src='https://media.obi.ru/media/wysiwyg/footer-app/qr.png'
             width={145}
           />
-          <div className='shrink-0 space-y-2'>
+          <div className='mb-4 flex shrink-0 gap-2 md:flex-col'>
             <a href='#' className='block'>
               <Image
                 alt='App Store'

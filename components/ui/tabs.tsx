@@ -58,7 +58,7 @@ const tabVariants = cva(
         ghost:
           'data-[state=active]:bg-muted text-foreground rounded-md border-transparent text-secondary-foreground',
         underline:
-          'transition-all after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 hover:not-disabled:after:bg-tertiary after:transition-all after:bg-muted data-[state=active]:after:!bg-primary'
+          'transition-all after:absolute after:inset-x-0 after:bottom-0 after:h-0.5 hover:not-disabled:after:bg-muted-foreground after:transition-all after:bg-muted data-[state=active]:after:!bg-primary'
       },
       size: {
         default: 'h-9',

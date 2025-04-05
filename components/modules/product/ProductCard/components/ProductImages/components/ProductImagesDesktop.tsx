@@ -18,7 +18,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
         <Image
           fill
           alt={product.title}
-          className='absolute inset-0 z-[-2]'
+          className='absolute inset-0 z-0'
           src={product.cover_image}
           priority
         />
@@ -27,12 +27,12 @@ export const ProductImagesDesktop = ({ product }: Props) => {
             fill
             key={image}
             alt={product.title}
-            className='absolute inset-0 z-[-1]'
+            className='absolute inset-0 z-1'
             hidden={tab !== i}
             src={image}
           />
         ))}
-        <div className='flex size-full'>
+        <div className='relative z-1 flex size-full'>
           {product.images.map((image, i) => (
             <div key={image} className='flex-1' onMouseEnter={() => setTab(i)} />
           ))}

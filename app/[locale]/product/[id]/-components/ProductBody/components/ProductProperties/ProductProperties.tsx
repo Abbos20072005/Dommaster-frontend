@@ -23,7 +23,7 @@ export const ProductProperties = ({ properties }: Props) => {
               {item.value.map((v, index) => (
                 <React.Fragment key={v.title}>
                   {v.link ? (
-                    <Link href={v.link} className='text-blue-900'>
+                    <Link href={v.link} className='text-tertiary'>
                       {v.title}
                     </Link>
                   ) : (

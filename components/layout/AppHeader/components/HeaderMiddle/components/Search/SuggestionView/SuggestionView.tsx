@@ -104,11 +104,21 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                 height={56}
                 src={product.cover_image}
                 width={56}
-                onClick={onClose}
+                onClick={() => {
+                  onClose();
+                  setSearchInput('');
+                }}
               />
             </Link>
             <div className='space-y-1'>
-              <Link href={`/product/${product.id}`} className='block' onClick={onClose}>
+              <Link
+                href={`/product/${product.id}`}
+                className='block'
+                onClick={() => {
+                  onClose();
+                  setSearchInput('');
+                }}
+              >
                 <p className='text-xs'>{product.title}</p>
               </Link>
               <div className='flex items-center justify-between'>

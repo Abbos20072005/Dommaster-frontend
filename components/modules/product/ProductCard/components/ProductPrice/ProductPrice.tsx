@@ -10,8 +10,8 @@ export const ProductPrice = ({ product }: Props) => {
   const t = useTranslations();
 
   return (
-    <div className='mt-1 mb-3'>
-      <div className='mb-3 border-b'>
+    <div>
+      <div className='mb-3'>
         <p className='pt-0.5 pb-1 text-sm'>
           {t('Price per')} {product.price.type}
         </p>

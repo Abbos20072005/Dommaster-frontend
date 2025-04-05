@@ -3,6 +3,7 @@ interface Product {
   cover_image: string;
   id: number;
   images: string[];
+  isInFavorites: boolean;
   product_count: number;
   rating: number | null;
   reviews: Review[];

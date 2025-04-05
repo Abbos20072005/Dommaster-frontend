@@ -11,7 +11,7 @@ interface Props extends React.ComponentProps<'footer'> {}
 export const AppFooter = ({ className, children, ...props }: Props) => {
   return (
     <footer
-      className={cn('bg-primary text-primary-foreground py-6 md:py-10 lg:pt-14', className)}
+      className={cn('bg-primary text-primary-foreground mt-10 py-6 md:py-10 lg:pt-14', className)}
       {...props}
     >
       <BaseLayout className='!py-0'>

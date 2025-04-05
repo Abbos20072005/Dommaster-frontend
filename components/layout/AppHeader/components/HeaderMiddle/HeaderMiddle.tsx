@@ -25,7 +25,7 @@ export const HeaderMiddle = () => {
 
   return (
     <div className={cn({ 'border-b': offset > 32 })}>
-      <div className='mx-auto flex h-20 max-w-[1272px] items-center gap-4 px-2 md:px-4'>
+      <div className='mx-auto flex h-16 max-w-[1272px] items-center gap-4 px-2 md:px-4'>
         <Link href='/'>
           <div className='flex items-center justify-center gap-1'>
             <Image
@@ -48,14 +48,14 @@ export const HeaderMiddle = () => {
         </div>
         <div className='ml-auto flex items-center justify-between gap-4 lg:gap-6'>
           <Link
-            href='/favorites'
+            href='/services'
             className='hover:text-secondary flex flex-col items-center transition-colors'
           >
             <HandPlatterIcon />
             <span className='hidden text-sm font-medium lg:inline'>{t('Services')}</span>
           </Link>
           <Link
-            href='/favorites'
+            href='/user/favorites'
             className='hover:text-secondary flex flex-col items-center transition-colors'
           >
             <HeartIcon />

@@ -25,7 +25,7 @@ export const ProductPropertiesPreview = ({ properties }: Props) => {
               {item.value.map((v, index) => (
                 <React.Fragment key={v.title}>
                   {v.link ? (
-                    <Link href={v.link} className='text-blue-900'>
+                    <Link href={v.link} className='text-tertiary'>
                       {v.title}
                     </Link>
                   ) : (
@@ -39,7 +39,7 @@ export const ProductPropertiesPreview = ({ properties }: Props) => {
         ))}
       </ul>
       <button
-        className='border-b border-dashed border-blue-900 text-sm font-medium text-blue-900'
+        className='border-tertiary text-tertiary border-b border-dashed text-sm font-medium'
         onClick={() => setTab('properties')}
       >
         Полные характеристики…
