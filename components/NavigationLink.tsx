@@ -13,7 +13,5 @@ export const NavigationLink = ({ href, activeClassName = '', className, ...props
   const pathname = usePathname();
   const isActive = pathname === href;
 
-  console.log(pathname, href, isActive);
-
   return <Link href={href} className={cn(className, isActive && activeClassName)} {...props} />;
 };

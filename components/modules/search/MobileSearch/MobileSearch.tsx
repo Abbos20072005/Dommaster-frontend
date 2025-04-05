@@ -34,11 +34,15 @@ export const MobileSearch = ({ children, ...props }: Props) => {
   const mounted = useMounted();
 
   React.useEffect(() => {
-    if (searchValue) setSearchInput(searchValue);
-  }, []);
+    setSearchInput(searchValue);
+  }, [searchValue]);
 
   React.useEffect(() => {
-    searchRef.current?.focus();
+    if (open) {
+      setTimeout(() => {
+        searchRef.current?.focus();
+      }, 0);
+    }
   }, [open]);
 
   const onSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {

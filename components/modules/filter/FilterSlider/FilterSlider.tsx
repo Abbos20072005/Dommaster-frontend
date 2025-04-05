@@ -24,7 +24,6 @@ export const FilterSlider = ({ filter }: Props) => {
   const mounted = useMounted();
 
   React.useEffect(() => {
-    console.log(sliderRange);
     setMinInput(String(sliderRange[0]));
     setMaxInput(String(sliderRange[1]));
   }, [...sliderRange]);

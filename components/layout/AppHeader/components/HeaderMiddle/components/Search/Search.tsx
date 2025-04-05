@@ -23,8 +23,8 @@ export const Search = () => {
   const mounted = useMounted();
 
   React.useEffect(() => {
-    if (searchValue) setSearchInput(searchValue);
-  }, []);
+    setSearchInput(searchValue);
+  }, [searchValue]);
 
   const onSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

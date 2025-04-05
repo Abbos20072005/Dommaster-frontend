@@ -11,7 +11,7 @@ export const MobileHeader = () => {
   return (
     <header className='bg-background sticky inset-x-0 -top-11 z-50 gap-3 md:hidden'>
       <div className='px-4 pt-4'>
-        <Link href='/public' className='flex items-center justify-between'>
+        <Link href='/' className='flex items-center justify-between'>
           <div className='flex items-center justify-center gap-1'>
             <Image
               alt='dommaster'
