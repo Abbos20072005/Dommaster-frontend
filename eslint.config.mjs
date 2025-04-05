@@ -12,7 +12,10 @@ export default eslint(
       'react/no-unstable-context-value': 'off',
       'eslint-comments/no-unlimited-disable': 'off',
       'ts/ban-ts-comment': 'off',
-      'node/prefer-global/process': 'off'
+      'node/prefer-global/process': 'off',
+      'react/no-array-index-key': 'off',
+      'react-dom/no-missing-button-type': 'off',
+      'react-refresh/only-export-components': 'off'
     }
   },
   {
