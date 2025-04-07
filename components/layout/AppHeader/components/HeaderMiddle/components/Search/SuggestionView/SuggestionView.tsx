@@ -2,6 +2,7 @@ import { ClockIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { categoryData } from '@/fake-data/category';
 import { productsData } from '@/fake-data/products';
@@ -21,6 +22,12 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
     <div className='grid max-h-[80vh] grid-cols-2 overflow-y-auto'>
       <div className='divide-y border-r'>
         <div className='px-3 py-3'>
+          <div className='mb-2 flex items-center justify-between text-sm'>
+            <p className='text-sm font-bold'>{t('You searched')}</p>
+            <button className='hover:text-secondary text-muted-foreground'>
+              {t('Clear search history')}
+            </button>
+          </div>
           <ul>
             {Array.from({ length: 5 }).map((_, i) => (
               <li key={i} className='flex'>
@@ -93,11 +100,8 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
       </div>
       <div className='p-3'>
         {productsData.map((product) => (
-          <article
-            key={product.id}
-            className='hover:bg-muted group flex gap-2 rounded-md px-4 py-2.5 transition-colors'
-          >
-            <Link href={`/product/${product.id}`} className='shrink-0'>
+          <Link href={`/product/${product.id}`} key={product.id}>
+            <article className='hover:bg-muted group flex gap-2 rounded-md px-4 py-2.5 transition-colors'>
               <Image
                 alt={'product'}
                 className='bg-background size-14 rounded-md object-contain'
@@ -109,31 +113,26 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                   setSearchInput('');
                 }}
               />
-            </Link>
-            <div className='space-y-1'>
-              <Link
-                href={`/product/${product.id}`}
-                className='block'
-                onClick={() => {
-                  onClose();
-                  setSearchInput('');
-                }}
-              >
+              <div className='space-y-1'>
                 <p className='text-xs'>{product.title}</p>
-              </Link>
-              <div className='flex items-center justify-between'>
-                <span className='text-sm font-bold'>
-                  {formatPrice(product.price.gold)} {t('sum')}
-                </span>
-                <Button
-                  className='h-6 opacity-0 transition-opacity group-hover:opacity-100'
-                  size='sm'
-                >
-                  {t('To cart')}
-                </Button>
+                <div className='flex items-center gap-2'>
+                  <p className='text-sm font-bold'>
+                    {formatPrice(product.discount_price ?? product.price)} {t('sum')}
+                  </p>
+                  {product.discount_price && (
+                    <div className='flex items-center gap-2'>
+                      <span className='text-xs line-through'>
+                        {product.price} {t('sum')}
+                      </span>
+                      <Badge variant='secondary'>
+                        {(100 / product.price) * product.discount_price - 100}%
+                      </Badge>
+                    </div>
+                  )}
+                </div>
               </div>
-            </div>
-          </article>
+            </article>
+          </Link>
         ))}
       </div>
     </div>

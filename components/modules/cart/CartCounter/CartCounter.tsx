@@ -1,5 +1,3 @@
-'use client';
-
 import { InfoIcon, MinusIcon, PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -54,7 +52,7 @@ export const CartCounter = ({
     <div className={cn('relative h-8', className)} {...props}>
       <Button
         className='absolute inset-y-0 left-0'
-        disabled={value <= minValue}
+        disabled={inputValue <= minValue}
         size='iconSm'
         variant='ghost'
         onClick={onDecrement}
@@ -70,7 +68,7 @@ export const CartCounter = ({
         onChange={handleChange}
         onFocus={(e) => e.target.select()}
       />
-      {Number(inputValue) > maxValue && (
+      {inputValue > maxValue && (
         <div className='text-destructive absolute top-full right-1 z-[2] flex items-center gap-1 text-xs'>
           <InfoIcon className='size-3' />
           {t('Only {maxValue} left', { maxValue })}
@@ -78,7 +76,7 @@ export const CartCounter = ({
       )}
       <Button
         className='absolute inset-y-0 right-0'
-        disabled={value >= maxValue}
+        disabled={inputValue >= maxValue}
         size='iconSm'
         variant='ghost'
         onClick={onIncrement}

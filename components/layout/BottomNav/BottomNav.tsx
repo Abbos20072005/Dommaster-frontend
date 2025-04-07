@@ -44,7 +44,7 @@ export const BottomNav = () => {
         <span className='text-xs font-medium'>{t('Favorites')}</span>
       </NavigationLink>
       <NavigationLink
-        href='/user/profile'
+        href='/user/dashboard'
         activeClassName='text-foreground'
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >

@@ -12,19 +12,19 @@ const FavoritesPage = async () => {
 
   return (
     <div>
-      <div className='mb-4 flex items-center border-b lg:hidden'>
+      <div className='mb-4 flex items-center border-b md:hidden'>
         <Button asChild className='size-13' size='icon' variant='ghost'>
-          <Link href='/user/profile'>
+          <Link href='/user/dashboard'>
             <ArrowLeftIcon className='text-muted-foreground size-5' />
           </Link>
         </Button>
-        <h1 className='flex-1 text-center font-bold lg:hidden'>{t('Favorites')}</h1>
+        <h1 className='flex-1 text-center font-bold md:hidden'>{t('Favorites')}</h1>
         <Button className='size-13' size='icon' variant='ghost'>
           <TrashIcon className='text-muted-foreground size-5' />
         </Button>
       </div>
-      <Card className='px-4 shadow-none lg:p-5 lg:shadow-sm'>
-        <h1 className='mb-3 hidden text-2xl font-bold lg:block'>{t('Favorites')}</h1>
+      <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
+        <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Favorites')}</h1>
         <ProductList
           view='grid'
           products={productsData.filter((product) => product.isInFavorites)}

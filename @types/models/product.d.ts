@@ -1,9 +1,11 @@
 interface Product {
   categories: Category[];
   cover_image: string;
+  discount_price: number | null;
   id: number;
   images: string[];
   isInFavorites: boolean;
+  price: number;
   product_count: number;
   rating: number | null;
   reviews: Review[];
@@ -30,11 +32,6 @@ interface Product {
       values: string[];
     }[];
   } | null;
-  price: {
-    type: string;
-    gold: number;
-    retail: number;
-  };
   properties: {
     title: string;
     value: {

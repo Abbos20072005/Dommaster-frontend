@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import Link from 'next/link';
 import React from 'react';
 
@@ -12,15 +13,18 @@ type Props = React.ComponentProps<'div'> & {
 };
 
 export const ProductCard = ({ product, className, setLockParentScroll, ...props }: Props) => {
+  const t = useTranslations();
+
   return (
     <div
       className={cn(
-        'flex flex-col rounded-lg border p-3 transition-shadow hover:shadow-md sm:p-4',
+        'bg-background flex h-full flex-col rounded-lg border p-3 transition-shadow hover:shadow-md sm:p-4',
         className
       )}
       {...props}
     >
-      <div className='flex justify-end'>
+      <div className='flex justify-between'>
+        <p className='text-muted-foreground text-sm'>{t('code')}: 16012263</p>
         <ProductControl product={product} />
       </div>
       <div className='relative mb-1'>

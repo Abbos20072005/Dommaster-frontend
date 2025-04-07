@@ -2,11 +2,8 @@ export const productsData: Product[] = [
   {
     id: 1,
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
-    price: {
-      type: 'item',
-      gold: 100000,
-      retail: 200000
-    },
+    price: 5000,
+    discount_price: null,
     product_count: 10,
     images: [
       'https://cs.p-static.ru/image/2125615/original-227x227-fit.jpg',
@@ -184,11 +181,8 @@ export const productsData: Product[] = [
   {
     id: 2,
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
-    price: {
-      type: 'item',
-      gold: 100000,
-      retail: 200000
-    },
+    price: 10000,
+    discount_price: null,
     isInFavorites: false,
     product_count: 10,
     images: [
@@ -366,11 +360,8 @@ export const productsData: Product[] = [
   {
     id: 3,
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
-    price: {
-      type: 'item',
-      gold: 100000,
-      retail: 200000
-    },
+    price: 10000,
+    discount_price: 8000,
     isInFavorites: false,
     product_count: 10,
     images: [
@@ -549,11 +540,8 @@ export const productsData: Product[] = [
     id: 4,
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     isInFavorites: false,
-    price: {
-      type: 'item',
-      gold: 100000,
-      retail: 200000
-    },
+    price: 12000,
+    discount_price: null,
     product_count: 10,
     images: [
       'https://cs.p-static.ru/image/2125615/original-227x227-fit.jpg',
@@ -730,11 +718,8 @@ export const productsData: Product[] = [
   {
     id: 5,
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
-    price: {
-      type: 'item',
-      gold: 100000,
-      retail: 200000
-    },
+    price: 12000,
+    discount_price: 10020,
     product_count: 10,
     images: [
       'https://cs.p-static.ru/image/2125615/original-227x227-fit.jpg',
@@ -912,11 +897,8 @@ export const productsData: Product[] = [
   {
     id: 7,
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
-    price: {
-      type: 'item',
-      gold: 100000,
-      retail: 200000
-    },
+    price: 12000,
+    discount_price: null,
     product_count: 10,
     isInFavorites: false,
     images: [
@@ -1094,11 +1076,8 @@ export const productsData: Product[] = [
   {
     id: 8,
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
-    price: {
-      type: 'item',
-      gold: 100000,
-      retail: 200000
-    },
+    price: 12000,
+    discount_price: null,
     isInFavorites: false,
     product_count: 10,
     images: [

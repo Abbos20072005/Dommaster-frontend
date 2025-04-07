@@ -1,5 +1,6 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import { CheckIcon, ChevronDownIcon, LanguagesIcon } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -27,6 +28,7 @@ export const LocaleSwitcher = () => {
 
   const onLocaleChange = (locale: Locale) => {
     startTransition(() => {
+      Cookies.set('NEXT_LOCALE', locale);
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will

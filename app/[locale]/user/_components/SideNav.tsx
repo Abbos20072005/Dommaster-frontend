@@ -22,7 +22,7 @@ const navLinks = [
   {
     title: 'Products',
     items: [
-      { href: '/user/cart', label: 'Cart' },
+      { href: '/cart', label: 'Cart' },
       { href: '/user/favorites', label: 'Favorites' }
     ]
   }
@@ -32,8 +32,8 @@ export const SideNav = async () => {
   const t = await getTranslations();
 
   return (
-    <aside className='hidden w-62 lg:block xl:w-78'>
-      <Card className='space-y-4 p-5'>
+    <aside className='hidden w-52 md:block lg:w-62 xl:w-78'>
+      <Card className='space-y-4 p-3 lg:p-5'>
         <NavigationLink
           href='/user/dashboard'
           activeClassName='text-secondary'

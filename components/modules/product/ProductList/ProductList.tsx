@@ -29,7 +29,7 @@ export const ProductList = ({ view = 'carousel', products, className, ...props }
       {view === 'grid' && (
         <div
           className={cn(
-            'grid grid-cols-2 gap-2 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] md:gap-4',
+            'grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] md:gap-4',
             className
           )}
           {...props}
