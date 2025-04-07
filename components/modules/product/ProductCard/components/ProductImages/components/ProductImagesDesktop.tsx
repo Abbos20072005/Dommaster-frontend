@@ -30,6 +30,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
             className='absolute inset-0 z-1'
             hidden={tab !== i}
             src={image}
+            loading='lazy'
           />
         ))}
         <div className='relative z-1 flex size-full'>

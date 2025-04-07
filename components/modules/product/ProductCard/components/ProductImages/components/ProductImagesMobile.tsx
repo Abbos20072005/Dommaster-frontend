@@ -53,7 +53,13 @@ export const ProductImagesMobile = ({ product, setLockParentScroll }: Props) => 
           {product.images.map((image, i) => (
             <CarouselItem key={image}>
               <div className='relative aspect-square'>
-                <Image fill alt={product.title} src={image} priority={i === 0} />
+                <Image
+                  fill
+                  alt={product.title}
+                  src={image}
+                  loading={i === 0 ? 'eager' : 'lazy'}
+                  priority={i === 0}
+                />
               </div>
             </CarouselItem>
           ))}

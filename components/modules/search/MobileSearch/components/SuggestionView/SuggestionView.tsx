@@ -73,10 +73,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                 <Link
                   href={`/category/${item.id}`}
                   className='hover:bg-muted flex items-center gap-2 rounded-md px-4 py-2.5 transition-colors'
-                  onClick={() => {
-                    onClose();
-                    setSearchInput('');
-                  }}
+                  onClick={onClose}
                 >
                   <Image
                     src={
@@ -104,10 +101,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                 height={56}
                 src={product.cover_image}
                 width={56}
-                onClick={() => {
-                  onClose();
-                  setSearchInput('');
-                }}
+                onClick={onClose}
               />
               <div className='space-y-1'>
                 <p className='text-xs'>{product.title}</p>
