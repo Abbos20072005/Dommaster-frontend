@@ -1,10 +1,9 @@
 'use client';
 
-import { ArrowLeftIcon, AxeIcon, ChevronRightIcon, SearchIcon, XIcon } from 'lucide-react';
+import { ArrowLeftIcon, AxeIcon, ChevronRightIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { MobileSearch } from '@/components/modules/search';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -55,23 +54,10 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
             </Button>
           </DialogClose>
         </div>
-        <div className='flex-1 overflow-y-auto p-4'>
-          <MobileSearch>
-            <Button
-              className='bg-background text-muted-foreground mb-4 w-full justify-start md:hidden'
-              variant='outline'
-            >
-              <SearchIcon />
-              Саморез, доставка
-            </Button>
-          </MobileSearch>
+        <div className='flex-1 divide-y overflow-y-auto px-4'>
           {catalog.map((item, index) =>
             item.children.length ? (
-              <button
-                key={item.id}
-                className='flex w-full border-t py-3'
-                onClick={() => onEnter(index)}
-              >
+              <button key={item.id} className='flex w-full py-3' onClick={() => onEnter(index)}>
                 <div className='flex flex-1 items-center gap-3 text-sm'>
                   {!history.length && <AxeIcon className='text-primary size-6' />}
                   {item.title}
