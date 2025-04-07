@@ -64,7 +64,7 @@ export const Search = () => {
                 </button>
               )}
             </div>
-            <Button className='rounded-s-none px-3 lg:px-4' type='submit'>
+            <Button className='rounded-s-none px-3 shadow-none lg:px-4' type='submit'>
               <span className='lg:hidden'>
                 <SearchIcon className='size-5' />
               </span>

@@ -38,7 +38,7 @@ export const ProductCard = ({ product, className, setLockParentScroll, ...props 
           <Ratings
             className='gap-0.5 md:gap-1'
             rating={product.rating}
-            classNameIcon='text-secondary size-3 md:size-4'
+            classNameIcon='text-secondary size-3.5 md:size-4'
           />
         </Link>
       </div>

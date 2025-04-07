@@ -14,8 +14,8 @@ export const ProductPrice = ({ product }: Props) => {
     <div>
       {product.discount_price && (
         <div className='mb-2 flex items-center gap-2'>
-          <span className='text-xs line-through'>
-            {product.price} {t('sum')}
+          <span className='text-muted-foreground text-xs line-through'>
+            {formatPrice(product.price)} {t('sum')}
           </span>
           <Badge variant='secondary'>{(100 / product.price) * product.discount_price - 100}%</Badge>
         </div>
