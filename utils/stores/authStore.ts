@@ -5,8 +5,8 @@ import { COOKIES } from '@/utils/constants/cookies';
 
 interface AuthState {
   auth: {
-    user: User | null;
-    setUser: (user: User | null) => void;
+    user: User | null | undefined;
+    setUser: (user: User | null | undefined) => void;
     accessToken: string | null;
     setAccessToken: (accessToken: string) => void;
     resetAccessToken: () => void;
@@ -22,7 +22,7 @@ export const useAuthStore = create<AuthState>()((set) => {
   const refreshToken = Cookies.get(COOKIES.REFRESH_TOKEN) || null;
   return {
     auth: {
-      user: null,
+      user: undefined,
       setUser: (user) => set((state) => ({ ...state, auth: { ...state.auth, user } })),
       accessToken,
       setAccessToken: (accessToken) =>

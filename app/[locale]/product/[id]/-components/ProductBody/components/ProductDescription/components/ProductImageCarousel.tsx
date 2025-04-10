@@ -5,7 +5,6 @@ import * as React from 'react';
 
 import type { CarouselApi } from '@/components/ui/carousel';
 
-import { Icons } from '@/components/Icons';
 import { ImageZoomer } from '@/components/ImageZoomer';
 import {
   Carousel,
@@ -62,25 +61,13 @@ export const ProductImageCarousel = ({
     emblaApi.on('select', onSelect);
   }, [emblaApi, onSelect]);
 
-  if (images.length === 0) {
-    return (
-      <div
-        className='bg-secondary flex aspect-square size-full flex-1 items-center justify-center'
-        aria-roledescription='placeholder'
-        role='img'
-      >
-        <Icons.placeholder aria-hidden='true' className='text-muted-foreground size-9' />
-      </div>
-    );
-  }
-
   return (
     <div className={cn('space-y-2', className)} {...props}>
       <Carousel setApi={setEmplaApi}>
         <CarouselContent>
           {images.map((image, index) => (
             <CarouselItem key={image}>
-              <div className='aspect-square'>
+              <div className='mx-auto aspect-square max-w-[450px]'>
                 <ImageZoomer
                   alt={image}
                   className='size-full rounded-md object-cover'
@@ -95,41 +82,49 @@ export const ProductImageCarousel = ({
           ))}
         </CarouselContent>
       </Carousel>
-      {images.length > 1 ? (
-        <Carousel
-          className='hidden md:block'
-          opts={{
-            align: 'start',
-            containScroll: 'keepSnaps',
-            dragFree: true
-          }}
-        >
-          <CarouselContent className='-ml-0'>
-            {images.map((image, i) => (
-              <CarouselItem key={i} className='min-w-0 basis-[60px] pl-0'>
-                <button
-                  className={cn(
-                    'focus-visible:ring-foreground aspect-square size-full border-0 border-b px-1 hover:bg-transparent',
-                    i === selectedIndex && 'border-primary'
-                  )}
-                  onClick={() => scrollTo(i)}
-                  onKeyDown={handleKeyDown}
-                >
-                  <Image
-                    alt={image}
-                    className='size-full rounded-md object-cover'
-                    height={60}
-                    src={image}
-                    width={60}
-                  />
-                </button>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious className='-left-3 size-8' />
-          <CarouselNext className='-right-3 size-8' />
-        </Carousel>
-      ) : null}
+      <Carousel
+        className='hidden md:block'
+        opts={{
+          align: 'start',
+          containScroll: 'keepSnaps',
+          dragFree: true
+        }}
+      >
+        <CarouselContent className='-ml-0'>
+          {images.map((image, i) => (
+            <CarouselItem key={i} className='min-w-0 basis-[60px] pl-0'>
+              <button
+                className={cn(
+                  'focus-visible:ring-foreground aspect-square size-full border-0 border-b px-1 hover:bg-transparent',
+                  i === selectedIndex && 'border-primary'
+                )}
+                onClick={() => scrollTo(i)}
+                onKeyDown={handleKeyDown}
+              >
+                <Image
+                  alt={image}
+                  className='size-full rounded-md object-cover'
+                  height={60}
+                  src={image}
+                  width={60}
+                />
+              </button>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+        <CarouselPrevious className='-left-3 size-8' />
+        <CarouselNext className='-right-3 size-8' />
+      </Carousel>
+      <div className='mr-1 flex h-1 justify-center gap-1 md:hidden'>
+        {images.map((image, i) => (
+          <span
+            key={image}
+            className={cn('bg-muted-foreground/50 block size-1.5 shrink-0 rounded-full', {
+              'bg-primary': selectedIndex === i
+            })}
+          />
+        ))}
+      </div>
     </div>
   );
 };

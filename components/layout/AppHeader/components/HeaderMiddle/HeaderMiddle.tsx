@@ -8,12 +8,14 @@ import React from 'react';
 import { AuthDialog } from '@/components/modules/auth';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { useAuth } from '@/utils/stores';
 
-import { Catalog, Search } from './components';
+import { Catalog, NavUser, Search } from './components';
 
 export const HeaderMiddle = () => {
   const t = useTranslations();
   const [offset, setOffset] = React.useState(0);
+  const { user } = useAuth();
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -61,10 +63,6 @@ export const HeaderMiddle = () => {
             <HeartIcon />
             <span className='hidden text-sm font-medium lg:inline'>{t('Favorites')}</span>
           </Link>
-          <AuthDialog className='hover:text-secondary flex flex-col items-center transition-colors'>
-            <UserCircleIcon />
-            <span className='hidden text-sm font-medium lg:inline'>{t('Login')}</span>
-          </AuthDialog>
           <Link
             href='/cart'
             className='hover:text-secondary flex flex-col items-center transition-colors'
@@ -72,6 +70,17 @@ export const HeaderMiddle = () => {
             <ShoppingCartIcon />
             <span className='hidden text-sm font-medium lg:inline'>{t('Cart')}</span>
           </Link>
+          {user ? (
+            <NavUser className='hover:text-secondary flex w-11 flex-col items-center transition-colors'>
+              <UserCircleIcon />
+              <span className='hidden text-sm font-medium lg:inline'>{t('Profile')}</span>
+            </NavUser>
+          ) : (
+            <AuthDialog className='hover:text-secondary flex w-11 flex-col items-center transition-colors'>
+              <UserCircleIcon />
+              <span className='hidden text-sm font-medium lg:inline'>{t('Login')}</span>
+            </AuthDialog>
+          )}
         </div>
       </div>
     </div>

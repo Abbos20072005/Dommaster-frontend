@@ -17,10 +17,14 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import { useLoginForm } from './hooks';
 
-export const LoginForm = () => {
+interface Props {
+  onSuccess?: (data: LoginResponse) => void;
+}
+
+export const LoginForm = ({ onSuccess }: Props) => {
   const t = useTranslations();
   const [tab, setTab] = React.useState<'email' | 'phone'>('email');
-  const { form, state, functions } = useLoginForm(tab === 'email');
+  const { form, state, functions } = useLoginForm({ onSuccess, withEmail: tab === 'email' });
 
   return (
     <Tabs value={tab} onValueChange={setTab as any}>

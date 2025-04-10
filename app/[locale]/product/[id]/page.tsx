@@ -23,12 +23,12 @@ const ProductPage = async ({ params }: Props) => {
     <HydrationBoundary state={dehydrate(queryClient)}>
       <MobileHeader />
       <BaseLayout className='mt-2 md:mt-4'>
-        <div className='lg:flex'>
+        <div className='gap-6 md:flex'>
           <div className='flex-1'>
             <ProductHeader />
             <ProductBody />
           </div>
-          <div className='w-[270px]'>Cart</div>
+          <div className='hidden w-[270px] lg:block'>Cart</div>
         </div>
       </BaseLayout>
     </HydrationBoundary>

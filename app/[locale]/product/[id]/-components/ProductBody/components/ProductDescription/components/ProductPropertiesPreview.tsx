@@ -1,4 +1,3 @@
-import { useTranslations } from 'next-intl';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
@@ -10,18 +9,14 @@ interface Props {
 
 export const ProductPropertiesPreview = ({ properties }: Props) => {
   const [_, setTab] = useQueryState('tab', { defaultValue: 'description' });
-  const t = useTranslations();
 
   return (
     <div>
-      <p className='pt-5 pb-4 text-xl font-bold'>{t('Properties')}</p>
-      <ul className='mb-4 space-y-4 text-sm'>
+      <ul className='mb-4 space-y-2 text-sm'>
         {properties.slice(0, 10).map((item) => (
-          <li key={item.title} className='grid grid-cols-2'>
-            <div className='after:border-muted-foreground flex h-3.75 flex-1 after:order-1 after:mx-1 after:flex after:flex-1 after:border-b after:border-dashed after:content-[""]'>
-              {item.title}
-            </div>
-            <div className='font-medium'>
+          <li key={item.title}>
+            <span className='text-muted-foreground'>{item.title}: </span>
+            <span className='text-foreground/80 font-medium'>
               {item.value.map((v, index) => (
                 <React.Fragment key={v.title}>
                   {v.link ? (
@@ -34,7 +29,7 @@ export const ProductPropertiesPreview = ({ properties }: Props) => {
                   {item.value.length !== index + 1 && ', '}
                 </React.Fragment>
               ))}
-            </div>
+            </span>
           </li>
         ))}
       </ul>

@@ -13,8 +13,8 @@ export const useProductBody = () => {
   });
 
   const data: ProductResponse = {
-    message: 'Success',
-    result: productsData[0]
+    result: productsData[0],
+    ok: true
   };
 
   return {

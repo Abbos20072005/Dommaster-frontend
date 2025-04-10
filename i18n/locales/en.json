@@ -1,4 +1,11 @@
 {
+  "Your one-time password must be 5 characters": "Your one-time password must be 5 characters",
+  "Back": "Back",
+  "Logout": "Logout",
+  "We have send sms code to your phone number": "We have send sms code to your phone number",
+  "Verify": "Verify",
+  "Get code": "Get code",
+  "Full name": "Full name",
   "About us": "About us",
   "Add to favorites": "Add to favorites",
   "Added to favorites": "Added to favorites",

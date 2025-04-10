@@ -1,36 +1,30 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
 
 import { postRegister } from '@/utils/api/requests';
-import { useAuth } from '@/utils/stores';
 
 import type { RegisterFormSchema } from '../constants';
 
 import { registerFormSchema } from '../constants';
 
-export const useRegisterForm = () => {
+export const useRegisterForm = (onSuccess?: (data: RegisterResponse) => void) => {
   const form = useForm<RegisterFormSchema>({
     resolver: zodResolver(registerFormSchema),
     defaultValues: {
-      phone_number: '',
+      full_name: '',
+      phone_number: '+998',
       password: '',
-      password_confirm: ''
+      email: ''
     }
   });
 
-  const authStore = useAuth();
   const postRegisterMutation = useMutation({
     mutationFn: postRegister,
-    onSuccess: ({ data }) => {
-      toast.success('Registered successfully');
-      authStore.setAccessToken(data.result.access_token);
-      authStore.setRefreshToken(data.result.refresh_token);
-    }
+    onSuccess: ({ data }) => onSuccess?.(data)
   });
 
-  const onSubmit = ({ password_confirm, ...data }: RegisterFormSchema) => {
+  const onSubmit = (data: RegisterFormSchema) => {
     postRegisterMutation.mutate({ data });
   };
 

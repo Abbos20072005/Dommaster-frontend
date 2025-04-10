@@ -3,12 +3,18 @@ import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
 import { postLogin } from '@/utils/api/requests';
+import { useAuth } from '@/utils/stores';
 
 import type { LoginFormSchema } from '../constants';
 
 import { loginFormSchema } from '../constants';
 
-export const useLoginForm = (withEmail: boolean) => {
+interface Props {
+  withEmail: boolean;
+  onSuccess?: (data: LoginResponse) => void;
+}
+
+export const useLoginForm = ({ onSuccess, withEmail }: Props) => {
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema(withEmail)),
     defaultValues: {
@@ -18,15 +24,22 @@ export const useLoginForm = (withEmail: boolean) => {
     }
   });
 
+  const authStore = useAuth();
+
   const postLoginMutation = useMutation({
-    mutationFn: postLogin
+    mutationFn: postLogin,
+    onSuccess: ({ data }) => {
+      authStore.setAccessToken(data.access_token);
+      authStore.setRefreshToken(data.refresh_token);
+      onSuccess?.(data);
+    }
   });
 
   const onSubmit = (data: LoginFormSchema) => {
     postLoginMutation.mutate({
       data: {
-        phone_number: data.phone_number,
-        email: data.email,
+        phone_number: withEmail ? undefined : data.phone_number,
+        email: withEmail ? data.email : undefined,
         password: data.password
       }
     });

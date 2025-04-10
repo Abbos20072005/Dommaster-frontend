@@ -36,7 +36,7 @@ export const ProductReviews = ({ product }: Props) => {
           <article key={review.id} className='space-y-3'>
             <div>
               <div className='mb-1 flex gap-2'>
-                <span className='font-bold'>{review.author.first_name}</span>
+                <span className='font-bold'>{review.author.full_name}</span>
                 <Ratings
                   className='gap-1'
                   rating={review.rating}

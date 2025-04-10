@@ -1,4 +1,5 @@
 import { useTranslations } from 'next-intl';
+import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -9,14 +10,19 @@ import {
   FormLabel,
   FormMessage
 } from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { PhoneInput } from '@/components/ui/phone-input';
 
 import { useRegisterForm } from './hooks';
 
-export const RegisterForm = () => {
+interface Props {
+  onSuccess?: (data: RegisterResponse) => void;
+}
+
+export const RegisterForm = ({ onSuccess }: Props) => {
   const t = useTranslations();
-  const { form, state, functions } = useRegisterForm();
+  const { form, state, functions } = useRegisterForm(onSuccess);
 
   return (
     <Form {...form}>
@@ -24,6 +30,19 @@ export const RegisterForm = () => {
         <FormField
           render={({ field }) => (
             <FormItem className='space-y-1'>
+              <FormLabel>{t('Full name')}</FormLabel>
+              <FormControl>
+                <Input placeholder={t('Full name')} {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+          name='full_name'
+          control={form.control}
+        />
+        <FormField
+          render={({ field }) => (
+            <FormItem className='flex-1 space-y-1'>
               <FormLabel>{t('Phone number')}</FormLabel>
               <FormControl>
                 <PhoneInput placeholder='+998 XX XXX XX XX' {...field} />
@@ -37,6 +56,19 @@ export const RegisterForm = () => {
         <FormField
           render={({ field }) => (
             <FormItem className='space-y-1'>
+              <FormLabel>E-mail</FormLabel>
+              <FormControl>
+                <Input type='email' placeholder='john@example.com' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+          name='email'
+          control={form.control}
+        />
+        <FormField
+          render={({ field }) => (
+            <FormItem className='space-y-1'>
               <FormLabel>{t('Password')}</FormLabel>
               <FormControl>
                 <PasswordInput placeholder='********' {...field} />
@@ -45,19 +77,6 @@ export const RegisterForm = () => {
             </FormItem>
           )}
           name='password'
-          control={form.control}
-        />
-        <FormField
-          render={({ field }) => (
-            <FormItem className='space-y-1'>
-              <FormLabel>{t('Confirm password')}</FormLabel>
-              <FormControl>
-                <PasswordInput placeholder='********' {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-          name='password_confirm'
           control={form.control}
         />
         <Button className='mt-2' isLoading={state.isPending}>

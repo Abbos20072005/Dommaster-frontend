@@ -19,8 +19,7 @@ export const productsData: Product[] = [
         author: {
           id: 1,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 10,
@@ -49,8 +48,7 @@ export const productsData: Product[] = [
         author: {
           id: 2,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 1,
@@ -198,8 +196,7 @@ export const productsData: Product[] = [
         author: {
           id: 1,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 10,
@@ -228,8 +225,7 @@ export const productsData: Product[] = [
         author: {
           id: 2,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 1,
@@ -377,8 +373,7 @@ export const productsData: Product[] = [
         author: {
           id: 1,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 10,
@@ -407,8 +402,7 @@ export const productsData: Product[] = [
         author: {
           id: 2,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 1,
@@ -556,8 +550,7 @@ export const productsData: Product[] = [
         author: {
           id: 1,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 10,
@@ -586,8 +579,7 @@ export const productsData: Product[] = [
         author: {
           id: 2,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 1,
@@ -735,8 +727,7 @@ export const productsData: Product[] = [
         author: {
           id: 1,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 10,
@@ -765,8 +756,7 @@ export const productsData: Product[] = [
         author: {
           id: 2,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 1,
@@ -914,8 +904,7 @@ export const productsData: Product[] = [
         author: {
           id: 1,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 10,
@@ -944,8 +933,7 @@ export const productsData: Product[] = [
         author: {
           id: 2,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 1,
@@ -1093,8 +1081,7 @@ export const productsData: Product[] = [
         author: {
           id: 1,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 10,
@@ -1123,8 +1110,7 @@ export const productsData: Product[] = [
         author: {
           id: 2,
           email: 'example@google.com',
-          first_name: 'John',
-          last_name: 'Doe',
+          full_name: 'John',
           phone_number: '1234567890'
         },
         likes: 1,

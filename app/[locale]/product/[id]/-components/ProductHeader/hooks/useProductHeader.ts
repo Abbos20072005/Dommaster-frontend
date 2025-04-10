@@ -13,7 +13,7 @@ export const useProductHeader = () => {
   });
 
   const data: ProductResponse = {
-    message: 'Success',
+    ok: true,
     result: productsData[0]
   };
 

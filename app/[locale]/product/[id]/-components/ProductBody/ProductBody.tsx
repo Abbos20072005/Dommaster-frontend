@@ -52,14 +52,11 @@ export const ProductBody = () => {
           {t('Reviews')}
           {state.product.reviews_count && `: ${state.product.reviews_count}`}
         </TabsTrigger>
-        <TabsTrigger size='lg' value='questions' variant='underline'>
-          {t('Questions')}
-        </TabsTrigger>
         <TabsTrigger size='lg' value='certificates' variant='underline'>
           {t('Certificates')}
         </TabsTrigger>
       </TabsList>
-      <Card className='p-0 shadow-none md:px-10 md:py-8 md:shadow-sm'>
+      <Card className='p-0 shadow-none md:p-8 md:shadow-sm'>
         <TabsContent value='description'>
           <ProductDescription product={state.product} />
         </TabsContent>

@@ -5,6 +5,6 @@ type RequestConfig<Data = undefined> = Data extends undefined
   : { data: Data; config?: import('axios').AxiosRequestConfig };
 
 interface ApiResponse<T = unknown> {
-  message: string;
+  ok: boolean;
   result: T;
 }

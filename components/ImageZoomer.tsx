@@ -3,6 +3,7 @@ import type { MouseEvent } from 'react';
 import Image from 'next/image';
 import React, { useRef, useState } from 'react';
 
+import { useIsMobile } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 interface ImageZoomerProps extends React.ComponentProps<typeof Image> {
@@ -15,6 +16,7 @@ export const ImageZoomer: React.FC<ImageZoomerProps> = ({
   zoomScale = 2,
   ...props
 }) => {
+  const isMobile = useIsMobile();
   const containerRef = useRef<HTMLDivElement>(null);
   const [position, setPosition] = useState<{
     x: number;
@@ -55,11 +57,15 @@ export const ImageZoomer: React.FC<ImageZoomerProps> = ({
           'absolute top-0 left-0 size-full object-cover transition-transform duration-200',
           className
         )}
-        style={{
-          ...style,
-          transformOrigin: `${position.x}px ${position.y}px`,
-          transform: position.visible ? `scale(${zoomScale})` : 'scale(1)'
-        }}
+        style={
+          isMobile
+            ? undefined
+            : {
+                ...style,
+                transformOrigin: `${position.x}px ${position.y}px`,
+                transform: position.visible ? `scale(${zoomScale})` : 'scale(1)'
+              }
+        }
         {...props}
       />
     </div>

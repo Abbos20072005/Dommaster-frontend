@@ -7,13 +7,17 @@ import React from 'react';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { getQueryClient } from '@/utils/getQueryClient';
 
+import { AuthProvider } from './AuthProvider';
+
 export const Providers = ({ children }: React.PropsWithChildren) => {
   const queryClient = getQueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>
       <NuqsAdapter>
-        <TooltipProvider>{children}</TooltipProvider>
+        <AuthProvider>
+          <TooltipProvider>{children}</TooltipProvider>
+        </AuthProvider>
       </NuqsAdapter>
     </QueryClientProvider>
   );
