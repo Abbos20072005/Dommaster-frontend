@@ -35,7 +35,9 @@ export const ProductHeader = () => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <h1 className='mt-4 mb-6 text-2xl leading-8 font-bold'>{state.product?.title}</h1>
+      <h1 className='mt-4 mb-6 text-lg leading-6 font-bold md:text-2xl md:leading-8'>
+        {state.product?.title}
+      </h1>
     </div>
   );
 };

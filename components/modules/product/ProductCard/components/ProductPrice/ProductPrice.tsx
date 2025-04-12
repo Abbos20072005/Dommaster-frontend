@@ -15,13 +15,15 @@ export const ProductPrice = ({ product }: Props) => {
       {product.discount_price && (
         <div className='mb-2 flex items-center gap-2'>
           <span className='text-muted-foreground text-xs line-through'>
-            {formatPrice(product.price)} {t('sum')}
+            {formatPrice(product.price)} {t('som')}
           </span>
-          <Badge variant='secondary'>{(100 / product.price) * product.discount_price - 100}%</Badge>
+          <Badge variant='secondary'>
+            {Math.round((100 / product.price) * product.discount_price - 100)}%
+          </Badge>
         </div>
       )}
       <div className='text-sm font-bold sm:text-lg'>
-        {formatPrice(product.discount_price ?? product.price)} {t('sum')}
+        {formatPrice(product.discount_price ?? product.price)} {t('som')}
       </div>
     </div>
   );

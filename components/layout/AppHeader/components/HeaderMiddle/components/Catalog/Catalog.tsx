@@ -22,7 +22,7 @@ export const Catalog = () => {
 
       <div
         className={cn(
-          'absolute top-full left-0 h-[min(80vh,1000px] !translate-x-[-200px] bg-transparent p-0 pt-4 shadow-none',
+          'absolute top-full left-0 z-50 h-[min(80vh,1000px] !translate-x-[-200px] bg-transparent p-0 pt-4 shadow-none',
           !open && 'hidden',
           tab !== -1 && 'w-[min(calc(100vw-70px),1200px)]'
         )}

@@ -26,7 +26,7 @@ export const HeaderMiddle = () => {
   }, []);
 
   return (
-    <div className={cn({ 'border-b': offset > 32 })}>
+    <div className={cn('bg-background', { 'fixed inset-x-0 top-0 z-50 border-b': offset > 32 })}>
       <div className='mx-auto flex h-16 max-w-[1272px] items-center gap-4 px-2 md:px-4'>
         <Link href='/'>
           <div className='flex items-center justify-center gap-1'>

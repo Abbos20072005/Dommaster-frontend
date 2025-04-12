@@ -1,4 +1,3 @@
-import { MoveRightIcon } from 'lucide-react';
 import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
@@ -79,19 +78,40 @@ const categories = [
 
 export const PopularCategories = () => {
   return (
-    <BaseLayout className='px-0 md:px-4'>
-      <Carousel opts={{ align: 'start' }}>
+    <BaseLayout>
+      {/* Mobile */}
+      <div className='grid grid-flow-col grid-rows-2 gap-2 overflow-x-auto md:hidden'>
+        {categories.map((item) => (
+          <Link
+            href={`/category/${item.id}`}
+            key={item.id}
+            className='bg-muted relative block size-25 rounded-md p-2 [word-break:break-word]'
+          >
+            <div className='relative z-1 text-xs'>{item.title}</div>
+            <Image
+              alt={item.title}
+              className='absolute right-0 bottom-0 rounded-lg'
+              height={80}
+              src={item.image.url}
+              width={80}
+            />
+          </Link>
+        ))}
+      </div>
+
+      {/* Desktop */}
+      <Carousel className='hidden md:block' opts={{ align: 'start' }}>
         <CarouselContent className='ml-2 md:-ml-4'>
           {categories.map((item) => (
             <CarouselItem key={item.id} className='h-32 basis-[192px] pl-2 md:pl-4'>
               <Link
                 href={`/category/${item.id}`}
-                className='relative block size-full rounded-md px-4 py-3'
+                className='bg-muted relative block size-full rounded-md px-4 py-3'
               >
-                <div className='text-sm font-semibold'>{item.title}</div>
+                <div className='relative z-1 text-sm font-semibold'>{item.title}</div>
                 <Image
                   alt={item.title}
-                  className='bg-muted absolute inset-0 z-[-1] size-full rounded-lg'
+                  className='absolute right-0 bottom-0 rounded-lg'
                   height={192}
                   src={item.image.url}
                   width={128}
@@ -99,15 +119,6 @@ export const PopularCategories = () => {
               </Link>
             </CarouselItem>
           ))}
-          <CarouselItem className='h-32 basis-[192px]'>
-            <Link
-              href='/category'
-              className='bg-muted relative flex size-full items-center justify-center gap-2 rounded-md px-4 py-3'
-            >
-              <div className='text-sm font-semibold'>Все категории</div>
-              <MoveRightIcon />
-            </Link>
-          </CarouselItem>
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />

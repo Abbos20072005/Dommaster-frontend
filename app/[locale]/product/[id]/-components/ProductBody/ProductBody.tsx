@@ -33,7 +33,7 @@ export const ProductBody = () => {
 
   return (
     <Tabs defaultValue='description' value={tab} onValueChange={setTab}>
-      <TabsList className='hidden w-full shadow-sm md:flex' variant='underline'>
+      <TabsList className='hidden w-full border md:flex' variant='underline'>
         <TabsTrigger size='lg' value='description' variant='underline'>
           {t('Description')}
         </TabsTrigger>
@@ -56,7 +56,7 @@ export const ProductBody = () => {
           {t('Certificates')}
         </TabsTrigger>
       </TabsList>
-      <Card className='p-0 shadow-none md:p-8 md:shadow-sm'>
+      <Card className='p-0 md:p-8' variant='outline'>
         <TabsContent value='description'>
           <ProductDescription product={state.product} />
         </TabsContent>
