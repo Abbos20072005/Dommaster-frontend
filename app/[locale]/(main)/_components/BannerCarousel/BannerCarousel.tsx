@@ -12,9 +12,11 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel';
 
-import { banners } from './data';
+interface Props {
+  banners: Banner[];
+}
 
-export const BannerCarousel = () => {
+export const BannerCarousel = ({ banners }: Props) => {
   return (
     <BaseLayout className='px-0 md:px-4'>
       <Carousel plugins={[Autoplay({ delay: 4000 })]} opts={{ loop: true }}>
@@ -22,7 +24,7 @@ export const BannerCarousel = () => {
           {banners.map((banner, index) => (
             <CarouselItem key={banner.id} className='basis-[90%] pl-2 md:basis-full md:pl-4'>
               <a
-                href={banner.image.url}
+                href={banner.link}
                 className='block aspect-[3/1]'
                 rel='noreferrer noopenner'
                 target='_blank'
@@ -31,7 +33,7 @@ export const BannerCarousel = () => {
                   alt='banner'
                   className='size-full rounded-lg object-cover md:rounded-xl'
                   height={413}
-                  src={banner.image.url}
+                  src={banner.image}
                   width={1240}
                   priority={index === 0}
                 />

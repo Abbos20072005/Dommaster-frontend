@@ -61,7 +61,7 @@ export const BottomNav = () => {
       ) : (
         <AuthDialog className='text-muted-foreground flex flex-col items-center transition-colors'>
           <UserCircleIcon className='size-5' />
-          <span className='text-xs font-medium'>{t('Profile')}</span>
+          <span className='text-xs font-medium'>{t('Login')}</span>
         </AuthDialog>
       )}
     </div>

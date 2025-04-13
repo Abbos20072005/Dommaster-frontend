@@ -22,8 +22,8 @@ export const Catalog = () => {
 
       <div
         className={cn(
-          'absolute top-full left-0 z-50 h-[min(80vh,1000px] !translate-x-[-200px] bg-transparent p-0 pt-4 shadow-none',
-          !open && 'hidden',
+          'invisible absolute top-full left-0 z-50 h-[min(80vh,1000px] !translate-x-[-200px] scale-96 bg-transparent p-0 pt-2 opacity-0 shadow-none transition-all',
+          { 'visible scale-100 opacity-100': open },
           tab !== -1 && 'w-[min(calc(100vw-70px),1200px)]'
         )}
         onMouseLeave={() => setTab(-1)}

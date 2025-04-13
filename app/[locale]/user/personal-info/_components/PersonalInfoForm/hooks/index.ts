@@ -1,1 +1,1 @@
-export * from './usePersonalInfoForm.ts';
+export * from './usePersonalInfoForm';

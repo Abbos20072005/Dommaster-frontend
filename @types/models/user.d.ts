@@ -10,5 +10,6 @@ type UserResponse = ApiResponse<User>;
 interface UserPatchRequest {
   email?: string;
   full_name?: string;
+  password?: string;
   phone_number?: string;
 }

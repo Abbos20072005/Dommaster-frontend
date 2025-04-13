@@ -1,12 +1,14 @@
 interface Product {
   categories: Category[];
   cover_image: string;
+  discount: number | null;
   discount_price: number | null;
   id: number;
   images: string[];
   isInFavorites: boolean;
   price: number;
   product_count: number;
+  questions: Question[];
   rating: number | null;
   reviews: Review[];
   reviews_count: number;

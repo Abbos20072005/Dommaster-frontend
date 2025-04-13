@@ -13,8 +13,8 @@ interface Props {
 }
 
 export const ProductCart = ({ product }: Props) => {
-  const [cartCount, setCartCount] = React.useState(0);
   const t = useTranslations();
+  const [cartCount, setCartCount] = React.useState(0);
 
   const onAddToCart = () => {
     setCartCount(1);

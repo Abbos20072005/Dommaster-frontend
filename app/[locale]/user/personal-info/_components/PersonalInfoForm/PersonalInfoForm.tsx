@@ -20,12 +20,11 @@ import { usePersonalInfoForm } from './hooks';
 
 interface Props {
   defaultValues?: User;
-  disabled?: boolean;
 }
 
-export const PersonalInfoForm = ({ defaultValues, disabled }: Props) => {
+export const PersonalInfoForm = ({ defaultValues }: Props) => {
   const t = useTranslations();
-  const { form, state, functions } = usePersonalInfoForm({ defaultValues, disabled });
+  const { form, state, functions } = usePersonalInfoForm({ defaultValues });
 
   return (
     <Form {...form}>
@@ -71,14 +70,15 @@ export const PersonalInfoForm = ({ defaultValues, disabled }: Props) => {
             control={form.control}
           />
         </div>
-        <div className='flex justify-end'>
-          <Button
-            className={cn({
-              'invisible opacity-0': !form.formState.isDirty
-            })}
-            disabled={state.isPending}
-            type='submit'
-          >
+        <div
+          className={cn('flex justify-end gap-2', {
+            'invisible opacity-0': !form.formState.isDirty
+          })}
+        >
+          <Button type='button' variant='muted' onClick={() => form.reset()}>
+            {t('Cancel')}
+          </Button>
+          <Button disabled={state.isPending} type='submit'>
             {state.isPending && <Spinner />}
             {t('Save')}
           </Button>

@@ -4,14 +4,17 @@ import { getTranslations } from 'next-intl/server';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+import { getMe } from '@/utils/api/requests';
 
 import { LogoutButton, PersonalInfoForm } from './_components';
 
 const PersonalInfoPage = async () => {
   const t = await getTranslations();
+  const userResponse = await getMe();
+  const user = userResponse.data.result;
 
   return (
-    <div>
+    <>
       <div className='mb-4 flex items-center border-b md:hidden'>
         <Button asChild className='size-13' size='icon' variant='ghost'>
           <Link href='/user/dashboard'>
@@ -23,17 +26,12 @@ const PersonalInfoPage = async () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Personal info')}</h1>
-        <div>
-          <PersonalInfoForm />
-        </div>
-        <div className='mt-6'>
-          <h2 className='text-lg font-bold'>{t('Logout')}</h2>
-          <div>
-            <LogoutButton />
-          </div>
+        <PersonalInfoForm defaultValues={user} />
+        <div className='mt-4'>
+          <LogoutButton />
         </div>
       </Card>
-    </div>
+    </>
   );
 };
 

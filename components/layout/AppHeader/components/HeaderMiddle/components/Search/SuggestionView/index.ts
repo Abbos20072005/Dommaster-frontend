@@ -1,1 +1,0 @@
-export { SuggestionView } from './SuggestionView';

@@ -102,23 +102,47 @@ export const PopularCategories = () => {
       {/* Desktop */}
       <Carousel className='hidden md:block' opts={{ align: 'start' }}>
         <CarouselContent className='ml-2 md:-ml-4'>
-          {categories.map((item) => (
-            <CarouselItem key={item.id} className='h-32 basis-[192px] pl-2 md:pl-4'>
-              <Link
-                href={`/category/${item.id}`}
-                className='bg-muted relative block size-full rounded-md px-4 py-3'
-              >
-                <div className='relative z-1 text-sm font-semibold'>{item.title}</div>
-                <Image
-                  alt={item.title}
-                  className='absolute right-0 bottom-0 rounded-lg'
-                  height={192}
-                  src={item.image.url}
-                  width={128}
-                />
-              </Link>
-            </CarouselItem>
-          ))}
+          {categories
+            .filter((_, index) => index % 2 === 0)
+            .map((item, index) => {
+              const nextItem = categories[index * 2 + 1];
+              return (
+                <CarouselItem key={item.id} className='basis-[192px] space-y-4 pl-2 md:pl-4'>
+                  <div className='h-32'>
+                    <Link
+                      href={`/category/${item.id}`}
+                      className='bg-muted relative block size-full rounded-md px-4 py-3'
+                    >
+                      <div className='relative z-1 text-sm font-semibold'>{item.title}</div>
+                      <Image
+                        alt={item.title}
+                        className='absolute right-0 bottom-0 rounded-lg'
+                        height={192}
+                        src={item.image.url}
+                        width={128}
+                      />
+                    </Link>
+                  </div>
+                  {nextItem && (
+                    <div key={nextItem.id} className='h-32'>
+                      <Link
+                        href={`/category/${nextItem.id}`}
+                        className='bg-muted relative block size-full rounded-md px-4 py-3'
+                      >
+                        <div className='relative z-1 text-sm font-semibold'>{nextItem.title}</div>
+                        <Image
+                          alt={nextItem.title}
+                          className='absolute right-0 bottom-0 rounded-lg'
+                          height={192}
+                          src={nextItem.image.url}
+                          width={128}
+                        />
+                      </Link>
+                    </div>
+                  )}
+                </CarouselItem>
+              );
+            })}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />

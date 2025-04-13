@@ -71,7 +71,7 @@ export const CartCounter = ({
   return (
     <div className={cn('relative h-8', className)} {...props}>
       <Button
-        className='absolute inset-y-0 left-0'
+        className='absolute inset-y-0 left-0 aspect-square h-full w-auto'
         disabled={numericValue <= minValue}
         size='iconSm'
         variant='ghost'
@@ -95,7 +95,7 @@ export const CartCounter = ({
         </div>
       )}
       <Button
-        className='absolute inset-y-0 right-0'
+        className='absolute inset-y-0 right-0 aspect-square h-full w-auto'
         disabled={numericValue >= maxValue}
         size='iconSm'
         variant='ghost'

@@ -17,8 +17,9 @@ import {
 import { Input } from '@/components/ui/input';
 import { useMounted } from '@/hooks';
 import { useRouter } from '@/i18n/navigation';
+import { useSearchHistoryStore } from '@/utils/stores';
 
-import { SuggestionView } from './components';
+import { SuggestionView } from '../components';
 
 interface Props extends React.ComponentProps<typeof DialogTrigger> {
   children: React.ReactNode;
@@ -29,9 +30,10 @@ export const MobileSearch = ({ children, ...props }: Props) => {
   const router = useRouter();
   const searchRef = React.useRef<HTMLInputElement>(null);
   const [open, setOpen] = React.useState(false);
-  const [searchValue, setSearchValue] = useQueryState('q', { defaultValue: '' });
+  const [searchValue] = useQueryState('q', { defaultValue: '' });
   const [searchInput, setSearchInput] = React.useState<string>('');
   const mounted = useMounted();
+  const searchHistoryStore = useSearchHistoryStore();
 
   React.useEffect(() => {
     setSearchInput(searchValue);
@@ -48,9 +50,9 @@ export const MobileSearch = ({ children, ...props }: Props) => {
   const onSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     e.preventDefault();
     if (!searchInput.trim()) return;
-    router.push(`/search?q=${searchInput.trim()}`);
-    setSearchValue(searchInput.trim());
+    searchHistoryStore.addSearchHistory(searchInput.trim());
     setOpen(false);
+    router.push(`/search?q=${searchInput.trim()}`);
   };
 
   return (

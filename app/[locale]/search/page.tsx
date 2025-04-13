@@ -30,10 +30,7 @@ const SearchPage = async ({ searchParams }: Props) => {
       <MobileHeader />
       <BaseLayout className='mt-2 md:mt-4'>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>
-          {t('Search results for: {search}', {
-            search: q,
-            productQty: productsData.length
-          })}
+          {t('Search results for: {search}', { search: q })}
         </h1>
         <div className='gap-8 lg:flex'>
           <aside className='hidden w-52 lg:block xl:w-60'>

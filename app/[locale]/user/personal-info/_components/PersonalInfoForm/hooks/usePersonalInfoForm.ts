@@ -12,24 +12,23 @@ import { personalInfoFormSchema } from '../constants';
 
 interface Props {
   defaultValues?: User;
-  disabled?: boolean;
 }
 
-export const usePersonalInfoForm = ({ defaultValues, disabled }: Props) => {
+export const usePersonalInfoForm = ({ defaultValues }: Props) => {
   const form = useForm<PersonalInfoFormSchema>({
     resolver: zodResolver(personalInfoFormSchema),
     defaultValues: {
       full_name: defaultValues?.full_name || '',
       email: defaultValues?.email || '',
       phone_number: defaultValues?.phone_number || ''
-    },
-    disabled
+    }
   });
 
   const patchPersonalInfoMutation = useMutation({
     mutationFn: patchMe,
-    onSuccess: () => {
+    onSuccess: ({ data }) => {
       toast.success('Personal info updated successfully');
+      form.reset(data.result);
     },
     onError: (error) => {
       handleFormServerErrors(error, form.setError);

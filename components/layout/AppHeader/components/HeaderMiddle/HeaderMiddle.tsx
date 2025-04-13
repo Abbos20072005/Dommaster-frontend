@@ -6,11 +6,12 @@ import Image from 'next/image';
 import React from 'react';
 
 import { AuthDialog } from '@/components/modules/auth';
+import { Search } from '@/components/modules/search';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/utils/stores';
 
-import { Catalog, NavUser, Search } from './components';
+import { Catalog, NavUser } from './components';
 
 export const HeaderMiddle = () => {
   const t = useTranslations();

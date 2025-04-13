@@ -1,6 +1,7 @@
 import axios from 'axios';
 // import { router } from 'next/client';
 
+import { getToken } from '@/utils/api/getAccessToken';
 import { useAuthStore } from '@/utils/stores';
 
 const api = axios.create({
@@ -8,11 +9,15 @@ const api = axios.create({
   baseURL: process.env.API_URL
 });
 
-api.interceptors.request.use((config) => {
-  const token = useAuthStore.getState().auth.accessToken;
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+api.interceptors.request.use(async (config) => {
+  let token;
+  if (typeof window === 'undefined') {
+    token = await getToken();
+  } else {
+    token = useAuthStore.getState().auth.accessToken;
   }
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+
   return config;
 });
 

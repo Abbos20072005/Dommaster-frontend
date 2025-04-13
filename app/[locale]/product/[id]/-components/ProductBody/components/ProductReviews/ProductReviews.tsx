@@ -49,33 +49,21 @@ export const ProductReviews = ({ product }: Props) => {
                 </span>
               </div>
             </div>
-            {review.photos.length > 0 && (
+            {review.images.length > 0 && (
               <div className='flex gap-2'>
-                {review.photos.map((photo) => (
+                {review.images.map((image) => (
                   <Image
-                    key={photo.url_small}
-                    alt={photo.url_small}
+                    key={image}
+                    alt={product.title}
                     className='h-35 w-40 rounded-md object-cover'
                     height={140}
-                    src={photo.url_small}
+                    src={image}
                     width={160}
                   />
                 ))}
               </div>
             )}
-            <p className='text-sm'>{review.body}</p>
-            {review.pros && (
-              <p className='text-sm'>
-                <strong>{t('Advantages')}: </strong>
-                {review.pros}
-              </p>
-            )}
-            {review.cons && (
-              <p className='text-sm'>
-                <strong>{t('Disadvantages')}: </strong>
-                {review.cons}
-              </p>
-            )}
+            <p className='text-sm'>{review.comment}</p>
           </article>
         ))}
       </div>

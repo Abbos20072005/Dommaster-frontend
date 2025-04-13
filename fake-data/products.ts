@@ -4,6 +4,7 @@ export const productsData: Product[] = [
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     price: 5000,
     discount_price: null,
+    discount: null,
     product_count: 10,
     images: [
       'https://cs.p-static.ru/image/2125615/original-227x227-fit.jpg',
@@ -11,52 +12,59 @@ export const productsData: Product[] = [
       'https://cs.p-static.ru/image/2023462/original-227x227-fit.jpg'
     ],
     isInFavorites: true,
-    reviews: [
+    questions: [
       {
         id: 1,
-        rating: 4.5,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 1,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 10,
-        photos: [
-          {
-            url_small:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            owner_id: 1,
-            url_large:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_original:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_thumb:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-          }
-        ],
-        dislikes: 1,
         published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        question: 'Какой размер мойки?'
+      },
+      {
+        id: 1,
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        question: 'Какой размер мойки?'
+      }
+    ],
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        images: [
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
+        ],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       },
       {
         id: 2,
         rating: 4,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 2,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 1,
-        photos: [],
-        dislikes: 1,
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        images: [],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       }
     ],
     description: {
@@ -181,6 +189,7 @@ export const productsData: Product[] = [
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     price: 10000,
     discount_price: null,
+    discount: null,
     isInFavorites: false,
     product_count: 10,
     images: [
@@ -188,52 +197,59 @@ export const productsData: Product[] = [
       'https://cs.p-static.ru/image/2023535/original-227x227-fit.jpg',
       'https://cs.p-static.ru/image/2023462/original-227x227-fit.jpg'
     ],
-    reviews: [
+    questions: [
       {
         id: 1,
-        rating: 4.5,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 1,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 10,
-        photos: [
-          {
-            url_small:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            owner_id: 1,
-            url_large:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_original:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_thumb:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-          }
-        ],
-        dislikes: 1,
         published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        question: 'Какой размер мойки?'
+      },
+      {
+        id: 1,
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        question: 'Какой размер мойки?'
+      }
+    ],
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        images: [
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
+        ],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       },
       {
         id: 2,
         rating: 4,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 2,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 1,
-        photos: [],
-        dislikes: 1,
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        images: [],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       }
     ],
     description: {
@@ -358,6 +374,7 @@ export const productsData: Product[] = [
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     price: 10000,
     discount_price: 8000,
+    discount: 20,
     isInFavorites: false,
     product_count: 10,
     images: [
@@ -365,52 +382,59 @@ export const productsData: Product[] = [
       'https://cs.p-static.ru/image/2023535/original-227x227-fit.jpg',
       'https://cs.p-static.ru/image/2023462/original-227x227-fit.jpg'
     ],
-    reviews: [
+    questions: [
       {
         id: 1,
-        rating: 4.5,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 1,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 10,
-        photos: [
-          {
-            url_small:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            owner_id: 1,
-            url_large:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_original:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_thumb:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-          }
-        ],
-        dislikes: 1,
         published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        question: 'Какой размер мойки?'
+      },
+      {
+        id: 1,
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        question: 'Какой размер мойки?'
+      }
+    ],
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        images: [
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
+        ],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       },
       {
         id: 2,
         rating: 4,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 2,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 1,
-        photos: [],
-        dislikes: 1,
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        images: [],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       }
     ],
     description: {
@@ -536,58 +560,66 @@ export const productsData: Product[] = [
     isInFavorites: false,
     price: 12000,
     discount_price: null,
+    discount: null,
     product_count: 10,
     images: [
       'https://cs.p-static.ru/image/2125615/original-227x227-fit.jpg',
       'https://cs.p-static.ru/image/2023535/original-227x227-fit.jpg',
       'https://cs.p-static.ru/image/2023462/original-227x227-fit.jpg'
     ],
-    reviews: [
+    questions: [
       {
         id: 1,
-        rating: 4.5,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 1,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 10,
-        photos: [
-          {
-            url_small:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            owner_id: 1,
-            url_large:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_original:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_thumb:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-          }
-        ],
-        dislikes: 1,
         published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        question: 'Какой размер мойки?'
+      },
+      {
+        id: 1,
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        question: 'Какой размер мойки?'
+      }
+    ],
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        images: [
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
+        ],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       },
       {
         id: 2,
         rating: 4,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 2,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 1,
-        photos: [],
-        dislikes: 1,
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        images: [],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       }
     ],
     description: {
@@ -712,6 +744,7 @@ export const productsData: Product[] = [
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     price: 12000,
     discount_price: 10020,
+    discount: 20,
     product_count: 10,
     images: [
       'https://cs.p-static.ru/image/2125615/original-227x227-fit.jpg',
@@ -719,52 +752,59 @@ export const productsData: Product[] = [
       'https://cs.p-static.ru/image/2023462/original-227x227-fit.jpg'
     ],
     isInFavorites: false,
-    reviews: [
+    questions: [
       {
         id: 1,
-        rating: 4.5,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 1,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 10,
-        photos: [
-          {
-            url_small:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            owner_id: 1,
-            url_large:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_original:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_thumb:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-          }
-        ],
-        dislikes: 1,
         published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        question: 'Какой размер мойки?'
+      },
+      {
+        id: 1,
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        question: 'Какой размер мойки?'
+      }
+    ],
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        images: [
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
+        ],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       },
       {
         id: 2,
         rating: 4,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 2,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 1,
-        photos: [],
-        dislikes: 1,
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        images: [],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       }
     ],
     description: {
@@ -889,6 +929,7 @@ export const productsData: Product[] = [
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     price: 12000,
     discount_price: null,
+    discount: null,
     product_count: 10,
     isInFavorites: false,
     images: [
@@ -896,52 +937,59 @@ export const productsData: Product[] = [
       'https://cs.p-static.ru/image/2023535/original-227x227-fit.jpg',
       'https://cs.p-static.ru/image/2023462/original-227x227-fit.jpg'
     ],
-    reviews: [
+    questions: [
       {
         id: 1,
-        rating: 4.5,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 1,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 10,
-        photos: [
-          {
-            url_small:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            owner_id: 1,
-            url_large:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_original:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_thumb:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-          }
-        ],
-        dislikes: 1,
         published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        question: 'Какой размер мойки?'
+      },
+      {
+        id: 1,
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        question: 'Какой размер мойки?'
+      }
+    ],
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        images: [
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
+        ],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       },
       {
         id: 2,
         rating: 4,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 2,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 1,
-        photos: [],
-        dislikes: 1,
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        images: [],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       }
     ],
     description: {
@@ -1066,6 +1114,7 @@ export const productsData: Product[] = [
     title: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     price: 12000,
     discount_price: null,
+    discount: null,
     isInFavorites: false,
     product_count: 10,
     images: [
@@ -1073,52 +1122,59 @@ export const productsData: Product[] = [
       'https://cs.p-static.ru/image/2023535/original-227x227-fit.jpg',
       'https://cs.p-static.ru/image/2023462/original-227x227-fit.jpg'
     ],
-    reviews: [
+    questions: [
       {
         id: 1,
-        rating: 4.5,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 1,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 10,
-        photos: [
-          {
-            url_small:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            owner_id: 1,
-            url_large:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_original:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-            url_thumb:
-              'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-          }
-        ],
-        dislikes: 1,
         published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        question: 'Какой размер мойки?'
+      },
+      {
+        id: 1,
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        published_at: '2022-12-13T14:06:10.157+03:00',
+        question: 'Какой размер мойки?'
+      }
+    ],
+    reviews: [
+      {
+        id: 1,
+        rating: 4.5,
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        author: {
+          id: 1,
+          email: 'example@google.com',
+          full_name: 'John',
+          phone_number: '1234567890'
+        },
+        images: [
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
+          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
+        ],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       },
       {
         id: 2,
         rating: 4,
-        body: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
+        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
         author: {
           id: 2,
           email: 'example@google.com',
           full_name: 'John',
           phone_number: '1234567890'
         },
-        likes: 1,
-        photos: [],
-        dislikes: 1,
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        pros: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        cons: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.'
+        images: [],
+        published_at: '2022-12-13T14:06:10.157+03:00'
       }
     ],
     description: {

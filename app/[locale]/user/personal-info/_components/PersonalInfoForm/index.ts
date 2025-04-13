@@ -1,1 +1,1 @@
-export { PersonalInfoForm } from './PersonalInfoForm.tsx';
+export { PersonalInfoForm } from './PersonalInfoForm';

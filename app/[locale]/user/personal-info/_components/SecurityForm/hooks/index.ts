@@ -1,1 +1,1 @@
-export * from './useSecurityForm.ts';
+export * from './useSecurityForm';

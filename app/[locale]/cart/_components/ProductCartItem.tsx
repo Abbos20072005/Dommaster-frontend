@@ -53,9 +53,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
                 <span className='text-xs line-through'>
                   {formatPrice(product.price * value)} {t('som')}
                 </span>
-                <Badge variant='secondary'>
-                  {Math.round((100 / product.price) * product.discount_price - 100)}%
-                </Badge>
+                <Badge variant='secondary'>-{product.discount}%</Badge>
               </>
             )}
           </div>

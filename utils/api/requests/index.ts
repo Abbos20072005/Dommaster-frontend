@@ -5,6 +5,8 @@ export * from './auth/register';
 export * from './auth/resend-code';
 export * from './auth/reset-password';
 export * from './auth/verify';
+export * from './base/banner';
+export * from './base/chat';
 export * from './categories';
 export * from './categories/{id}';
 export * from './favorites';

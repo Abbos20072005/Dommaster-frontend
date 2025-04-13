@@ -12,6 +12,7 @@ import {
   ProductDescription,
   ProductDetails,
   ProductProperties,
+  ProductQuestions,
   ProductReviews
 } from './components';
 import { useProductBody } from './hooks';
@@ -52,8 +53,9 @@ export const ProductBody = () => {
           {t('Reviews')}
           {state.product.reviews_count && `: ${state.product.reviews_count}`}
         </TabsTrigger>
-        <TabsTrigger size='lg' value='certificates' variant='underline'>
-          {t('Certificates')}
+        <TabsTrigger size='lg' value='questions' variant='underline'>
+          {t('Questions')}
+          {state.product.reviews_count && `: ${state.product.reviews_count}`}
         </TabsTrigger>
       </TabsList>
       <Card className='p-0 md:p-8' variant='outline'>
@@ -68,6 +70,9 @@ export const ProductBody = () => {
         </TabsContent>
         <TabsContent value='reviews'>
           <ProductReviews product={state.product} />
+        </TabsContent>
+        <TabsContent value='questions'>
+          <ProductQuestions product={state.product} />
         </TabsContent>
       </Card>
     </Tabs>

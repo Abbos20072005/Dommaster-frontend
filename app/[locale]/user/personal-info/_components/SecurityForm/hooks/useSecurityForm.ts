@@ -5,7 +5,9 @@ import { toast } from 'sonner';
 
 import { patchMe } from '@/utils/api/requests';
 
-import { type SecurityFormSchema, securityFormSchema } from '../constants';
+import type { SecurityFormSchema } from '../constants';
+
+import { securityFormSchema } from '../constants';
 
 export const useSecurityForm = () => {
   const form = useForm<SecurityFormSchema>({

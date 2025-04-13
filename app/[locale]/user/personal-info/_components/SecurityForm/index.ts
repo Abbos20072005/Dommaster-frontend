@@ -1,1 +1,1 @@
-export { SecurityForm } from './SecurityForm.tsx';
+export { SecurityForm } from './SecurityForm';

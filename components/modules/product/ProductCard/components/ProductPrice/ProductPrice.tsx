@@ -17,9 +17,7 @@ export const ProductPrice = ({ product }: Props) => {
           <span className='text-muted-foreground text-xs line-through'>
             {formatPrice(product.price)} {t('som')}
           </span>
-          <Badge variant='secondary'>
-            {Math.round((100 / product.price) * product.discount_price - 100)}%
-          </Badge>
+          <Badge variant='secondary'>-{product.discount}%</Badge>
         </div>
       )}
       <div className='text-sm font-bold sm:text-lg'>
