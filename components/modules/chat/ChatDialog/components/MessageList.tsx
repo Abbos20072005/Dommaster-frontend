@@ -2,6 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { differenceInDays, format } from 'date-fns';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
@@ -11,6 +12,7 @@ import { cn } from '@/lib/utils';
 import { getChatMessages } from '@/utils/api/requests';
 
 export const MessageList = () => {
+  const t = useTranslations();
   const getChatMessagesQuery = useQuery({
     queryKey: ['chat-messages'],
     queryFn: () => getChatMessages(),
@@ -30,6 +32,17 @@ export const MessageList = () => {
     return (
       <div className='flex h-full items-center justify-center'>
         <Spinner />
+      </div>
+    );
+  }
+
+  if (!messages?.length) {
+    return (
+      <div className='flex h-full items-center justify-center'>
+        <div className='flex flex-col items-center justify-center gap-2'>
+          <p>{t('Greetings')}!</p>
+          <p className='text-muted-foreground'>{t('Tell us who you are or ask your question')}.</p>
+        </div>
       </div>
     );
   }

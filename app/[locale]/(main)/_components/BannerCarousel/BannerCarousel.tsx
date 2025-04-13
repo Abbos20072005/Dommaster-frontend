@@ -17,6 +17,8 @@ interface Props {
 }
 
 export const BannerCarousel = ({ banners }: Props) => {
+  if (!banners.length) return null;
+
   return (
     <BaseLayout className='px-0 md:px-4'>
       <Carousel plugins={[Autoplay({ delay: 4000 })]} opts={{ loop: true }}>
