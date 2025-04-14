@@ -9,7 +9,7 @@ interface Props {
 export const ProductDescription = ({ product }: Props) => {
   return (
     <div className='grid gap-6 md:grid-cols-[3fr_2fr]'>
-      <ProductImageCarousel images={product.images} />
+      <ProductImageCarousel product={product} />
       <div className='hidden md:block'>
         <ProductPropertiesPreview properties={product.properties} />
       </div>

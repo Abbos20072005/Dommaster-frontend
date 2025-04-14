@@ -7,6 +7,8 @@ export * from './auth/reset-password';
 export * from './auth/verify';
 export * from './base/banner';
 export * from './base/chat';
+export * from './brands';
+export * from './brands/{id}';
 export * from './categories';
 export * from './categories/{id}';
 export * from './favorites';

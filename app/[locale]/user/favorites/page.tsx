@@ -4,11 +4,13 @@ import { getTranslations } from 'next-intl/server';
 import { ProductList } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
-import { productsData } from '@/fake-data/products';
 import { Link } from '@/i18n/navigation';
+import { getFavorites } from '@/utils/api/requests';
 
 const FavoritesPage = async () => {
   const t = await getTranslations();
+  const favoritesResponse = await getFavorites();
+  const favorites = favoritesResponse.data.result;
 
   return (
     <div>
@@ -25,10 +27,7 @@ const FavoritesPage = async () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Favorites')}</h1>
-        <ProductList
-          view='grid'
-          products={productsData.filter((product) => product.isInFavorites)}
-        />
+        <ProductList view='grid' products={favorites} />
       </Card>
     </div>
   );

@@ -1,6 +1,8 @@
-export { BannerCarousel } from './BannerCarousel/BannerCarousel';
-export { BenefitsSection } from './BenefitsSection/BenefitsSection';
+export { BannerCarousel } from './BannerCarousel';
+export { BannerCarouselLoading } from './BannerCarouselLoading';
+export { BrandsSection } from './BrandsSection';
+export { BrandsSectionLoading } from './BrandsSectionLoading';
 export { DiscountProductsSection } from './DiscountProductsSection';
-export { EcosystemSection } from './EcosystemSection/EcosystemSection';
-export { PopularCategories } from './PopularCategories/PopularCategories';
-export { ProductsSection } from './ProductsSection/ProductsSection';
+export { PopularCategories } from './PopularCategories';
+export { ProductsSection } from './ProductsSection';
+export { ProductsSectionLoading } from './ProductsSectionLoading';

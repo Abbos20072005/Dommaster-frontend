@@ -21,18 +21,15 @@ interface Props extends React.ComponentProps<typeof DialogTrigger> {
 
 export const MobileCatalogDialog = ({ children, ...props }: Props) => {
   const t = useTranslations();
-  const [history, setHistory] = React.useState<number[]>([]);
   const [open, setOpen] = React.useState(false);
-
-  const catalog = history.reduce((acc, index) => acc[index]?.children || [], categoryData);
-
-  const onEnter = (catalogIndex: number) => {
-    setHistory([...history, catalogIndex]);
-  };
+  const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null);
+  const [selectedSubCategory, setSelectedSubCategory] = React.useState<SubCategory | null>(null);
 
   const goBack = () => {
-    if (history.length > 0) {
-      setHistory(history.slice(0, -1));
+    if (selectedSubCategory) {
+      setSelectedSubCategory(null);
+    } else if (selectedCategory) {
+      setSelectedCategory(null);
     } else {
       setOpen(false);
     }
@@ -55,26 +52,41 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
           </DialogClose>
         </div>
         <div className='flex-1 divide-y overflow-y-auto px-4'>
-          {catalog.map((item, index) =>
-            item.children.length ? (
-              <button key={item.id} className='flex w-full py-3' onClick={() => onEnter(index)}>
-                <div className='flex flex-1 items-center gap-3 text-sm'>
-                  {!history.length && <AxeIcon className='text-primary size-6' />}
-                  {item.title}
-                </div>
-                <ChevronRightIcon className='text-muted-foreground' />
-              </button>
-            ) : (
-              <Link
-                href={`/category/${item.id}`}
-                key={item.id}
-                className='block border-t py-3 text-sm'
-                onClick={() => setOpen(false)}
-              >
-                {item.title}
-              </Link>
-            )
-          )}
+          {selectedCategory
+            ? selectedSubCategory
+              ? selectedSubCategory.product_item_categories.map((item) => (
+                  <Link
+                    href={`/category/${selectedCategory.id}/${selectedSubCategory.id}/${item.id}`}
+                    key={item.id}
+                    className='block py-3 text-sm'
+                    onClick={() => setOpen(false)}
+                  >
+                    {item.title}
+                  </Link>
+                ))
+              : selectedCategory.sub_categories.map((item) => (
+                  <button
+                    key={item.id}
+                    className='flex w-full py-3'
+                    onClick={() => setSelectedSubCategory(item)}
+                  >
+                    <div className='flex flex-1 items-center gap-3 text-sm'>{item.title}</div>
+                    <ChevronRightIcon className='text-muted-foreground' />
+                  </button>
+                ))
+            : categoryData.map((item) => (
+                <button
+                  key={item.id}
+                  className='flex w-full py-3'
+                  onClick={() => setSelectedCategory(item)}
+                >
+                  <div className='flex flex-1 items-center gap-3 text-sm'>
+                    <AxeIcon className='text-primary size-6' />
+                    {item.title}
+                  </div>
+                  <ChevronRightIcon className='text-muted-foreground' />
+                </button>
+              ))}
         </div>
       </DialogContent>
     </Dialog>

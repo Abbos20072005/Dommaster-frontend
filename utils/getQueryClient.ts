@@ -13,7 +13,14 @@ const makeQueryClient = () =>
     queryCache: new QueryCache({}),
     mutationCache: new MutationCache({
       onError: (error: any) => {
-        toast.error(error.response.data.detail || 'Что-то пошло не так');
+        if (typeof error.response.data.detail === 'string') {
+          toast.error(error.response.data.detail);
+        } else if (typeof error.response.data.details === 'object') {
+          const errors = Object.values(error.response.data.details).flat();
+          toast.error(errors[0] as string);
+        } else {
+          toast.error('An error occurred');
+        }
       }
     })
   });

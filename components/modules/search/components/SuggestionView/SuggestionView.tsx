@@ -52,6 +52,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                   <Button
                     className='shrink-0'
                     size='icon'
+                    type='button'
                     variant='ghost'
                     onClick={() => searchHistoryStore.removeSearchHistory(item)}
                   >

@@ -63,7 +63,7 @@ export const ProductBody = () => {
           <ProductDescription product={state.product} />
         </TabsContent>
         <TabsContent value='details'>
-          <ProductDetails extendedDescription={state.product.description} />
+          <ProductDetails description={state.product.description} />
         </TabsContent>
         <TabsContent value='properties'>
           <ProductProperties properties={state.product.properties} />

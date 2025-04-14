@@ -2,31 +2,35 @@ import React from 'react';
 
 import { Link } from '@/i18n/navigation';
 
-import { CatalogChild } from './CatalogChild';
+import { ItemCategories } from './ItemCategories';
 
 interface Props {
-  subCategory: Category;
+  category: Category;
 }
 
-export const SubCategories = ({ subCategory }: Props) => {
+export const SubCategories = ({ category }: Props) => {
   return (
     <div className='bg-background grow overflow-y-auto border-l p-6'>
-      <Link href={`/category/${subCategory.id}`}>
+      <Link href={`/category/${category.id}`}>
         <p className='hover:text-secondary mb-6 text-xl font-bold transition-colors'>
-          {subCategory.title}
+          {category.title}
         </p>
       </Link>
 
       <div className='grid grid-cols-2 grid-rows-1 gap-4 lg:grid-cols-3'>
         {Array.from({ length: 3 }).map((_, i) => (
           <div key={i} className='space-y-4'>
-            {subCategory.children
+            {category.sub_categories
               .slice(
-                Math.ceil((i * subCategory.children.length) / 3),
-                Math.ceil(((i + 1) * subCategory.children.length) / 3)
+                Math.ceil((i * category.sub_categories.length) / 3),
+                Math.ceil(((i + 1) * category.sub_categories.length) / 3)
               )
-              .map((child) => (
-                <CatalogChild key={child.id} item={child} />
+              .map((subCategory) => (
+                <ItemCategories
+                  key={subCategory.id}
+                  categoryId={category.id}
+                  subCategory={subCategory}
+                />
               ))}
           </div>
         ))}

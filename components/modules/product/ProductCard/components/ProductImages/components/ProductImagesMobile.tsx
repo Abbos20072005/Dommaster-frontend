@@ -51,12 +51,13 @@ export const ProductImagesMobile = ({ product, setLockParentScroll }: Props) => 
       >
         <CarouselContent>
           {product.images.map((image, i) => (
-            <CarouselItem key={image}>
+            <CarouselItem key={image.id}>
               <div className='relative aspect-square'>
                 <Image
                   fill
-                  alt={product.title}
-                  src={image}
+                  alt={product.name}
+                  className='object-contain'
+                  src={image.image}
                   loading={i === 0 ? 'eager' : 'lazy'}
                   priority={i === 0}
                 />
@@ -65,16 +66,18 @@ export const ProductImagesMobile = ({ product, setLockParentScroll }: Props) => 
           ))}
         </CarouselContent>
       </Carousel>
-      <div className='mr-1 flex h-1 justify-center gap-1'>
-        {product.images.map((image, i) => (
-          <span
-            key={image}
-            className={cn('bg-muted-foreground/50 block size-1 shrink-0 rounded-full', {
-              'bg-primary': current - 1 === i
-            })}
-          />
-        ))}
-      </div>
+      {product.images.length > 1 && (
+        <div className='mr-1 flex h-1 justify-center gap-1'>
+          {product.images.map((image, i) => (
+            <span
+              key={image.id}
+              className={cn('bg-muted-foreground/50 block size-1 shrink-0 rounded-full', {
+                'bg-primary': current - 1 === i
+              })}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 };

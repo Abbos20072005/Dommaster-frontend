@@ -2,6 +2,7 @@
 
 import type { UseEmblaCarouselType } from 'embla-carousel-react';
 
+import Autoplay from 'embla-carousel-autoplay';
 import useEmblaCarousel from 'embla-carousel-react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import * as React from 'react';
@@ -114,7 +115,8 @@ const Carousel = ({
         scrollPrev,
         scrollNext,
         canScrollPrev,
-        canScrollNext
+        canScrollNext,
+        plugins: [Autoplay({ delay: 4000 })]
       }}
     >
       <div

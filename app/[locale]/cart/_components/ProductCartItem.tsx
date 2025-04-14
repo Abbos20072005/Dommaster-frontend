@@ -28,10 +28,10 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
         <Checkbox checked={checked} onCheckedChange={onCheckedChange} />
         <Link href={`/product/${product.id}`}>
           <Image
-            alt={product.title}
+            alt={product.name}
             className='size-[80px] object-contain sm:size-[100px]'
             height={100}
-            src={product.cover_image}
+            src={product.images[0].image}
             width={100}
           />
         </Link>
@@ -41,7 +41,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
               {t('code')}: {product.id}
             </p>
             <Link href={`/product/${product.id}`} className='line-clamp-3 text-sm'>
-              {product.title}
+              {product.name}
             </Link>
           </div>
           <div className='flex flex-wrap items-center gap-2'>
@@ -63,7 +63,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
         <div className='flex flex-row items-center gap-2 sm:flex-col sm:items-start sm:gap-1'>
           <CartCounter
             className='bg-muted w-[120px] rounded-sm'
-            maxValue={product.product_count}
+            maxValue={product.quantity}
             minValue={1}
             value={value}
             onChange={setValue}

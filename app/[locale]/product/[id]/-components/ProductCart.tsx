@@ -57,7 +57,7 @@ export const ProductCart = ({ product }: Props) => {
           <div className='grid grid-cols-2 gap-3'>
             <CartCounter
               className='bg-muted h-11 rounded-md'
-              maxValue={product.product_count}
+              maxValue={product.quantity}
               value={cartCount}
               onChange={setCartCount}
             />

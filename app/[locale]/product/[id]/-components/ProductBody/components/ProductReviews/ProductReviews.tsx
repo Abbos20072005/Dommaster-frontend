@@ -54,7 +54,7 @@ export const ProductReviews = ({ product }: Props) => {
                 {review.images.map((image) => (
                   <Image
                     key={image}
-                    alt={product.title}
+                    alt={product.name}
                     className='h-35 w-40 rounded-md object-cover'
                     height={140}
                     src={image}

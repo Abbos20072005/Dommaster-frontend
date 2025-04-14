@@ -71,7 +71,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
             <Toaster />
             <ChatDialog asChild>
               <Button
-                className='fixed right-12 bottom-12 hidden rounded-full md:flex'
+                className='fixed right-12 bottom-12 z-50 hidden rounded-full md:flex'
                 size='iconLg'
                 variant='secondary'
               >

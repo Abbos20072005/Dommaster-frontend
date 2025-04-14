@@ -47,7 +47,7 @@ export const Catalog = () => {
               ))}
             </ul>
 
-            {tab !== -1 && <SubCategories subCategory={categoryData[tab]} />}
+            {tab !== -1 && <SubCategories category={categoryData[tab]} />}
           </div>
         </div>
       </div>

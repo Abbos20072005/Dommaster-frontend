@@ -39,8 +39,8 @@ export const Search = () => {
   };
 
   return (
-    <form className='relative flex-1' onSubmit={onSearch}>
-      <div ref={containerRef} className='bg-primary relative flex rounded-md'>
+    <div ref={containerRef} className='relative flex-1'>
+      <form className='bg-primary relative flex rounded-md' onSubmit={onSearch}>
         <div className='border-primary bg-background flex flex-1 rounded-md border-2'>
           <Input
             ref={searchRef}
@@ -72,7 +72,7 @@ export const Search = () => {
           </span>
           <span className='hidden lg:inline'>{t('Search')}</span>
         </Button>
-      </div>
+      </form>
       <div
         className={cn(
           'bg-background invisible absolute inset-x-0 top-full z-50 w-full scale-96 rounded-md border-none p-0 opacity-0 shadow-lg transition-all',
@@ -85,6 +85,6 @@ export const Search = () => {
           onClose={() => setPopoverOpen(false)}
         />
       </div>
-    </form>
+    </div>
   );
 };

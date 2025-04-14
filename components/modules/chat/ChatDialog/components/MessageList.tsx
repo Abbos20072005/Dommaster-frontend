@@ -48,7 +48,7 @@ export const MessageList = () => {
   }
 
   return (
-    <div className='flex-1 overflow-y-auto px-3' id='chat-message-list'>
+    <div className='grid flex-1 items-end overflow-y-auto px-3' id='chat-message-list'>
       <ul className='space-y-4'>
         {messages?.map((message, index) => (
           <React.Fragment key={message.id}>

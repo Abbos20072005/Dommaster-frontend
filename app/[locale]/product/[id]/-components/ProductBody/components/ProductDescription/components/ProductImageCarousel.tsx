@@ -16,11 +16,11 @@ import {
 import { cn } from '@/lib/utils';
 
 interface ProductImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
-  images: string[];
+  product: Product;
 }
 
 export const ProductImageCarousel = ({
-  images,
+  product,
   className,
   ...props
 }: ProductImageCarouselProps) => {
@@ -65,14 +65,14 @@ export const ProductImageCarousel = ({
     <div className={cn('space-y-2', className)} {...props}>
       <Carousel setApi={setEmplaApi}>
         <CarouselContent>
-          {images.map((image, index) => (
-            <CarouselItem key={image}>
+          {product.images.map((image, index) => (
+            <CarouselItem key={image.id}>
               <div className='mx-auto aspect-square max-w-[450px]'>
                 <ImageZoomer
-                  alt={image}
+                  alt={product.name}
                   className='size-full rounded-md object-cover'
                   height={385}
-                  src={image}
+                  src={image.image}
                   width={385}
                   priority={index === 0}
                   role='group'
@@ -91,8 +91,8 @@ export const ProductImageCarousel = ({
         }}
       >
         <CarouselContent className='-ml-0'>
-          {images.map((image, i) => (
-            <CarouselItem key={i} className='min-w-0 basis-[60px] pl-0'>
+          {product.images.map((image, i) => (
+            <CarouselItem key={image.id} className='min-w-0 basis-[60px] pl-0'>
               <button
                 className={cn(
                   'focus-visible:ring-foreground aspect-square size-full border-0 border-b px-1 hover:bg-transparent',
@@ -102,10 +102,10 @@ export const ProductImageCarousel = ({
                 onKeyDown={handleKeyDown}
               >
                 <Image
-                  alt={image}
+                  alt={product.name}
                   className='size-full rounded-md object-cover'
                   height={60}
-                  src={image}
+                  src={image.image}
                   width={60}
                 />
               </button>
@@ -116,9 +116,9 @@ export const ProductImageCarousel = ({
         <CarouselNext className='-right-3 size-8' />
       </Carousel>
       <div className='mr-1 flex h-1 justify-center gap-1 md:hidden'>
-        {images.map((image, i) => (
+        {product.images.map((image, i) => (
           <span
-            key={image}
+            key={image.id}
             className={cn('bg-muted-foreground/50 block size-1.5 shrink-0 rounded-full', {
               'bg-primary': selectedIndex === i
             })}

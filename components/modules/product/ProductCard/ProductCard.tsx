@@ -28,9 +28,9 @@ export const ProductCard = ({ product, className, setLockParentScroll, ...props 
         <ProductControl product={product} />
       </div>
       <div className='relative mb-1'>
-        <Link href={`/product/${product.id}`} aria-label={product.title}>
+        <Link href={`/product/${product.id}`} aria-label={product.name}>
           <ProductImages product={product} setLockParentScroll={setLockParentScroll} />
-          <span className='sr-only'>{product.title}</span>
+          <span className='sr-only'>{product.name}</span>
         </Link>
       </div>
       <div className='mb-2'>
@@ -44,7 +44,7 @@ export const ProductCard = ({ product, className, setLockParentScroll, ...props 
       </div>
       <div className='mb-4 flex-1'>
         <Link href={`/product/${product.id}`}>
-          <span className='line-clamp-4 text-sm leading-5'>{product.title}</span>
+          <span className='line-clamp-4 text-sm leading-5'>{product.name}</span>
         </Link>
       </div>
       <div className='mb-2'>

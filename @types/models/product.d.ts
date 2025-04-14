@@ -1,45 +1,31 @@
 interface Product {
   categories: Category[];
-  cover_image: string;
+  description: string | null;
   discount: number | null;
   discount_price: number | null;
   id: number;
-  images: string[];
-  isInFavorites: boolean;
+  is_favourite: boolean;
+  name: string;
   price: number;
-  product_count: number;
+  quantity: number;
   questions: Question[];
   rating: number | null;
   reviews: Review[];
   reviews_count: number;
-  title: string;
   breadcrumbs: {
     id: number;
     title: string;
     url: string;
   }[];
-  description: {
-    description: string;
-    properties: {
-      key: string;
-      value: string;
-      values: string[];
-    }[];
-  } | null;
-  extended_description: {
-    description: string;
-    properties: {
-      key: string;
-      value: string;
-      values: string[];
-    }[];
-  } | null;
+  images: {
+    id: number;
+    product: number;
+    image: string;
+  }[];
   properties: {
     title: string;
-    value: {
-      title: string;
-      link: string | null;
-    }[];
+    value: string;
+    unit: string;
   }[];
 }
 

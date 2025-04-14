@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const useDebouncedValue = <T extends number | string | null | undefined>(
+export const useDebouncedValue = <T extends boolean | number | string | null | undefined>(
   value: T,
   delay = 300
 ) => {

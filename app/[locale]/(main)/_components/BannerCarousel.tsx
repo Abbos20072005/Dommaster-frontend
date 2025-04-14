@@ -1,27 +1,24 @@
-'use client';
-
-import Autoplay from 'embla-carousel-autoplay';
 import Image from 'next/image';
 
+import { AutoPlayCarousel } from '@/components/AutoPlayCarousel';
 import { BaseLayout } from '@/components/layout';
 import {
-  Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel';
+import { getBanners } from '@/utils/api/requests';
 
-interface Props {
-  banners: Banner[];
-}
+export const BannerCarousel = async () => {
+  const bannersResponse = await getBanners();
+  const banners = bannersResponse.data.result;
 
-export const BannerCarousel = ({ banners }: Props) => {
   if (!banners.length) return null;
 
   return (
     <BaseLayout className='px-0 md:px-4'>
-      <Carousel plugins={[Autoplay({ delay: 4000 })]} opts={{ loop: true }}>
+      <AutoPlayCarousel delay={4000} opts={{ loop: true }}>
         <CarouselContent className='-ml-2 md:-ml-4'>
           {banners.map((banner, index) => (
             <CarouselItem key={banner.id} className='basis-[90%] pl-2 md:basis-full md:pl-4'>
@@ -45,7 +42,7 @@ export const BannerCarousel = ({ banners }: Props) => {
         </CarouselContent>
         <CarouselPrevious className='hidden size-12 md:flex' />
         <CarouselNext className='hidden size-12 md:flex' />
-      </Carousel>
+      </AutoPlayCarousel>
     </BaseLayout>
   );
 };

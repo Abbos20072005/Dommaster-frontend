@@ -1,8 +1,6 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { Link } from '@/i18n/navigation';
-
 interface Props {
   properties: Product['properties'];
 }
@@ -20,18 +18,8 @@ export const ProductProperties = ({ properties }: Props) => {
               {item.title}
             </div>
             <div className='font-medium'>
-              {item.value.map((v, index) => (
-                <React.Fragment key={v.title}>
-                  {v.link ? (
-                    <Link href={v.link} className='text-tertiary'>
-                      {v.title}
-                    </Link>
-                  ) : (
-                    <span>{v.title}</span>
-                  )}
-                  {item.value.length !== index + 1 && ', '}
-                </React.Fragment>
-              ))}
+              {item.value}
+              {item.unit && ` ${item.unit}`}
             </div>
           </li>
         ))}

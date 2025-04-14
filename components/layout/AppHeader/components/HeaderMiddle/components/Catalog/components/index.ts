@@ -1,2 +1,2 @@
-export { CatalogChild } from './CatalogChild';
+export { ItemCategories } from './ItemCategories';
 export { SubCategories } from './SubCategories';

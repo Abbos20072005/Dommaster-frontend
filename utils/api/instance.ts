@@ -1,7 +1,8 @@
 import axios from 'axios';
-// import { router } from 'next/client';
+import Cookies from 'js-cookie';
 
 import { getToken } from '@/utils/api/getAccessToken';
+import { getServerLocale } from '@/utils/api/getServerLocale';
 import { useAuthStore } from '@/utils/stores';
 
 const api = axios.create({
@@ -11,31 +12,19 @@ const api = axios.create({
 
 api.interceptors.request.use(async (config) => {
   let token;
+  let locale;
   if (typeof window === 'undefined') {
     token = await getToken();
+    locale = getServerLocale();
   } else {
     token = useAuthStore.getState().auth.accessToken;
+    locale = Cookies.get('NEXT_LOCALE') || 'en';
   }
   if (token) config.headers.Authorization = `Bearer ${token}`;
 
+  config.headers['Accept-Language'] = locale;
+
   return config;
 });
-
-api.interceptors.response.use(
-  (response) => response
-  // (error) => {
-  //   if (error) {
-  //     if (error.response?.status === 401) {
-  //       useAuthStore.getState().auth.reset();
-  //       router.push('/login');
-  //     }
-  //     if (error.response?.status === 500) {
-  //       router.push('/500');
-  //     } else if (error.response?.status === 403) {
-  //       router.push('/403');
-  //     }
-  //   }
-  // }
-);
 
 export { api };

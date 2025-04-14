@@ -1,8 +1,6 @@
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
-import { Link } from '@/i18n/navigation';
-
 interface Props {
   properties: Product['properties'];
 }
@@ -17,18 +15,8 @@ export const ProductPropertiesPreview = ({ properties }: Props) => {
           <li key={item.title}>
             <span className='text-muted-foreground'>{item.title}: </span>
             <span className='text-foreground/80 font-medium'>
-              {item.value.map((v, index) => (
-                <React.Fragment key={v.title}>
-                  {v.link ? (
-                    <Link href={v.link} className='text-tertiary'>
-                      {v.title}
-                    </Link>
-                  ) : (
-                    <span>{v.title}</span>
-                  )}
-                  {item.value.length !== index + 1 && ', '}
-                </React.Fragment>
-              ))}
+              {item.value}
+              {item.unit && ` ${item.unit}`}
             </span>
           </li>
         ))}

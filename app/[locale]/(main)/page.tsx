@@ -1,27 +1,36 @@
+import { Suspense } from 'react';
+
 import { MobileHeader } from '@/components/layout';
-import { getBanners } from '@/utils/api/requests';
 
 import {
   BannerCarousel,
+  BannerCarouselLoading,
+  BrandsSection,
+  BrandsSectionLoading,
   DiscountProductsSection,
   PopularCategories,
-  ProductsSection
+  ProductsSection,
+  ProductsSectionLoading
 } from './_components';
 
-const Home = async () => {
-  const bannersResponse = await getBanners();
-  const banners = bannersResponse.data.result;
-
+const Home = () => {
   return (
     <>
       <MobileHeader />
       <div className='mt-2 space-y-6 md:mt-4 lg:space-y-8 xl:space-y-10'>
         <div className='space-y-4 md:space-y-6'>
-          <BannerCarousel banners={banners} />
+          <Suspense fallback={<BannerCarouselLoading />}>
+            <BannerCarousel />
+          </Suspense>
           <PopularCategories />
         </div>
         <DiscountProductsSection />
-        <ProductsSection />
+        <Suspense fallback={<BrandsSectionLoading />}>
+          <BrandsSection />
+        </Suspense>
+        <Suspense fallback={<ProductsSectionLoading />}>
+          <ProductsSection />
+        </Suspense>
       </div>
     </>
   );
