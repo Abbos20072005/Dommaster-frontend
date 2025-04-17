@@ -23,17 +23,17 @@ interface Props {
 
 export const LoginForm = ({ onSuccess }: Props) => {
   const t = useTranslations();
-  const [tab, setTab] = React.useState<'email' | 'phone'>('email');
+  const [tab, setTab] = React.useState<'email' | 'phone'>('phone');
   const { form, state, functions } = useLoginForm({ onSuccess, withEmail: tab === 'email' });
 
   return (
     <Tabs value={tab} onValueChange={setTab as any}>
       <TabsList className='mb-2 w-full'>
-        <TabsTrigger className='flex-1' value='email'>
-          {t('By E-mail')}
-        </TabsTrigger>
         <TabsTrigger className='flex-1' value='phone'>
           {t('By phone')}
+        </TabsTrigger>
+        <TabsTrigger className='flex-1' value='email'>
+          {t('By E-mail')}
         </TabsTrigger>
       </TabsList>
       <Form {...form}>
