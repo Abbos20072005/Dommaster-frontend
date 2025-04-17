@@ -6,6 +6,8 @@ export const ProductsSection = async () => {
   const addsBrandsResponse = await getAddsBrands();
   const addsBrands = addsBrandsResponse.data.result;
 
+  if (!addsBrands.length) return null;
+
   return addsBrands.map((brand) => (
     <section key={brand.id}>
       <BaseLayout>

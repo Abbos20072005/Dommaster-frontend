@@ -17,6 +17,8 @@ export const BrandsSection = async () => {
   const brandsResponse = await getBrands();
   const brands = brandsResponse.data.result;
 
+  if (!brands.length) return null;
+
   return (
     <section>
       <BaseLayout>

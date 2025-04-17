@@ -1,11 +1,10 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { parseAsArrayOf, parseAsInteger, useQueryState } from 'nuqs';
+import { parseAsInteger, useQueryStates } from 'nuqs';
 import React from 'react';
 
 import { Label } from '@/components/ui/label';
-import { useMounted } from '@/hooks';
 
 import { CustomSlider, NumberInput } from './components';
 
@@ -15,20 +14,20 @@ interface Props {
 
 export const FilterSlider = ({ filter }: Props) => {
   const t = useTranslations();
-  const [sliderRange, setSliderRange] = useQueryState(
-    filter.request_var,
-    parseAsArrayOf(parseAsInteger).withDefault([filter.min!, filter.max!])
-  );
-  const [minInput, setMinInput] = React.useState<string>(String(sliderRange[0]));
-  const [maxInput, setMaxInput] = React.useState<string>(String(sliderRange[1]));
-  const mounted = useMounted();
+  const [sliderRange, setSliderRange] = useQueryStates({
+    [`${filter.request_var}_from`]: parseAsInteger.withDefault(filter.from!),
+    [`${filter.request_var}_to`]: parseAsInteger.withDefault(filter.to!)
+  });
+  const min = sliderRange[`${filter.request_var}_from`];
+  const max = sliderRange[`${filter.request_var}_to`];
+
+  const [minInput, setMinInput] = React.useState<string>(String(min));
+  const [maxInput, setMaxInput] = React.useState<string>(String(max));
 
   React.useEffect(() => {
-    setMinInput(String(sliderRange[0]));
-    setMaxInput(String(sliderRange[1]));
-  }, [...sliderRange]);
-
-  if (!mounted) return null;
+    setMinInput(String(min));
+    setMaxInput(String(max));
+  }, [min, max]);
 
   return (
     <div className='space-y-3'>
@@ -41,11 +40,16 @@ export const FilterSlider = ({ filter }: Props) => {
           <NumberInput
             id='min'
             inputValue={minInput}
-            max={sliderRange[1]}
-            min={filter.min ?? undefined}
+            max={max}
+            min={filter.from ?? undefined}
             setInputValue={setMinInput}
-            value={sliderRange[0]}
-            onValueChange={(value) => setSliderRange([value, sliderRange[1]])}
+            value={min}
+            onValueChange={(min) =>
+              setSliderRange({
+                [`${filter.request_var}_from`]: min,
+                [`${filter.request_var}_to`]: max
+              })
+            }
           />
         </div>
         <div className='grid gap-1'>
@@ -55,11 +59,16 @@ export const FilterSlider = ({ filter }: Props) => {
           <NumberInput
             id='max'
             inputValue={maxInput}
-            max={filter.max ?? undefined}
-            min={sliderRange[0]}
+            max={filter.to ?? undefined}
+            min={min}
             setInputValue={setMaxInput}
-            value={sliderRange[1]}
-            onValueChange={(value) => setSliderRange([sliderRange[0], value])}
+            value={max}
+            onValueChange={(max) =>
+              setSliderRange({
+                [`${filter.request_var}_from`]: min,
+                [`${filter.request_var}_to`]: max
+              })
+            }
           />
         </div>
       </div>
@@ -69,9 +78,14 @@ export const FilterSlider = ({ filter }: Props) => {
           setMaxInput(String(value[1]));
         }}
         inputValue={[+minInput, +maxInput]}
-        max={filter.max ?? undefined}
-        min={filter.min ?? undefined}
-        onValueChange={setSliderRange}
+        max={filter.to ?? undefined}
+        min={filter.from ?? undefined}
+        onValueChange={([min, max]) =>
+          setSliderRange({
+            [`${filter.request_var}_from`]: min,
+            [`${filter.request_var}_to`]: max
+          })
+        }
       />
     </div>
   );

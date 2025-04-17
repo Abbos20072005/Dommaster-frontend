@@ -13,7 +13,11 @@ import {
   DrawerTrigger
 } from '@/components/ui/drawer';
 
-export const MobileFilterDrawer = () => {
+interface Props {
+  filters: Filter[];
+}
+
+export const MobileFilterDrawer = ({ filters }: Props) => {
   const t = useTranslations();
 
   return (
@@ -29,7 +33,7 @@ export const MobileFilterDrawer = () => {
           <DrawerTitle>Filters</DrawerTitle>
         </DrawerHeader>
         <div className='overflow-y-auto px-4 py-2'>
-          <Filter />
+          <Filter filters={filters} />
         </div>
         <DrawerFooter className='py-2'>
           <DrawerClose asChild>

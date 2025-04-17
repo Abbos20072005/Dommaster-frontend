@@ -37,7 +37,7 @@ export const HeaderBottom = () => {
             key={item.id}
             className='hover:text-primary text-sm text-nowrap transition-colors'
           >
-            <span>{item.title}</span>
+            <span>{item.name}</span>
           </Link>
         ))}
       </nav>

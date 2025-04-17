@@ -7,7 +7,6 @@ import React from 'react';
 
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
-import { useMounted } from '@/hooks';
 
 interface Props {
   filter: Filter;
@@ -20,9 +19,6 @@ export const FilterRadio = ({ filter }: Props) => {
     parseAsString.withDefault('')
   );
   const [showAll, setShowAll] = React.useState(false);
-  const mounted = useMounted();
-
-  if (!mounted) return null;
 
   const COUNT_MAX = 5;
 
@@ -34,17 +30,11 @@ export const FilterRadio = ({ filter }: Props) => {
           {filter.filter_items
             .slice(0, showAll ? filter.filter_items.length : COUNT_MAX)
             .map((item) => (
-              <div key={item.value_string} className='flex items-center space-x-2'>
-                <RadioGroupItem
-                  id={`${item.label}-${item.value_string}`}
-                  value={item.value_string}
-                />
-                <Label
-                  className='text-sm font-normal'
-                  htmlFor={`${item.label}-${item.value_string}`}
-                >
+              <div key={item.value} className='flex items-center space-x-2'>
+                <RadioGroupItem id={`${item.label}-${item.value}`} value={item.value} />
+                <Label className='text-sm font-normal' htmlFor={`${item.label}-${item.value}`}>
                   {item.label}
-                  <span className='text-muted-foreground ml-1'>({item.count})</span>
+                  {item.count && <span className='text-muted-foreground ml-1'>({item.count})</span>}
                 </Label>
               </div>
             ))}

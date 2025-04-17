@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { HeartIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -18,6 +18,7 @@ export const ProductControl = ({ product }: Props) => {
   const t = useTranslations();
   const router = useRouter();
   const [liked, setLiked] = React.useState(product.is_favourite);
+  const queryClient = useQueryClient();
 
   const postFavoriteMutation = useMutation({
     mutationFn: postFavorite,
@@ -33,6 +34,7 @@ export const ProductControl = ({ product }: Props) => {
       } else {
         setLiked(false);
       }
+      queryClient.invalidateQueries({ queryKey: ['favorites'] });
     }
   });
 

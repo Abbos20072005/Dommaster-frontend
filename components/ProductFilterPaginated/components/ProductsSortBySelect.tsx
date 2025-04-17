@@ -13,7 +13,7 @@ import {
 
 export const ProductsSortBySelect = () => {
   const t = useTranslations();
-  const [sortBy, setSortBy] = useQueryState('sortDirection', { defaultValue: 'popularity' });
+  const [sortBy, setSortBy] = useQueryState('sort_by', { defaultValue: 'popularity' });
 
   return (
     <Select value={sortBy} onValueChange={setSortBy}>

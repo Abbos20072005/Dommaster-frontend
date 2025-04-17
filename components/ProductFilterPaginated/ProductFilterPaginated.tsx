@@ -1,0 +1,71 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+import { useQueryState } from 'nuqs';
+import React from 'react';
+
+import { Filter, useFilter } from '@/components/modules/filter';
+import { ProductList, ProductListSkeleton } from '@/components/modules/product';
+import { Pagination } from '@/components/ui/pagination';
+import { getProducts } from '@/utils/api/requests';
+
+import { MobileFilterDrawer, ProductsSortBySelect } from './components';
+
+interface Props {
+  filters: Filter[];
+  queries?: Partial<ProductRequest>;
+}
+
+export const ProductFilterPaginated = ({ filters, queries }: Props) => {
+  const { filter } = useFilter();
+  const [q] = useQueryState('q');
+  const [sort_by] = useQueryState('sort_by');
+
+  const getProductsQuery = useQuery({
+    queryKey: [
+      'products',
+      {
+        q,
+        sort_by,
+        ...filter,
+        ...queries
+      }
+    ],
+    queryFn: () =>
+      getProducts({
+        data: {
+          q: q ?? undefined,
+          sort_by: sort_by ?? undefined,
+          category: filter.category ?? undefined,
+          brand: filter.brand ?? undefined,
+          page: filter.page,
+          page_size: filter.page_size,
+          price_from: filter.price_from,
+          price_to: filter.price_to,
+          ...queries
+        }
+      })
+  });
+
+  const products = getProductsQuery.data?.data.result.content || [];
+
+  return (
+    <div className='gap-8 lg:flex'>
+      <aside className='hidden w-52 lg:block xl:w-60'>
+        <Filter filters={filters} />
+      </aside>
+      <div className='space-y-4 lg:flex-1'>
+        <div className='flex items-center justify-between'>
+          <ProductsSortBySelect />
+          <MobileFilterDrawer filters={filters} />
+        </div>
+        {getProductsQuery.isFetching ? (
+          <ProductListSkeleton view='grid' />
+        ) : (
+          <ProductList view='grid' products={products} />
+        )}
+        <Pagination totalCount={getProductsQuery.data?.data.result.totalElements} />
+      </div>
+    </div>
+  );
+};

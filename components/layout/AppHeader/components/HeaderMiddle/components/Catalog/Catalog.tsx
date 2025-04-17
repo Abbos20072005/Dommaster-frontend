@@ -41,7 +41,7 @@ export const Catalog = () => {
                   onMouseEnter={() => setTab(index)}
                 >
                   <HammerIcon className='size-4' />
-                  <span className='flex-1 text-sm'>{item.title}</span>
+                  <span className='flex-1 text-sm'>{item.name}</span>
                   {tab === index && <ChevronRightIcon className='size-4' />}
                 </li>
               ))}

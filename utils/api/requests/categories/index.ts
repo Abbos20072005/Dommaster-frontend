@@ -1,4 +1,4 @@
 import { api } from '@/utils/api/instance';
 
-export const getCatalogs = (requestConfig?: RequestConfig) =>
-  api.get<CatalogsResponse>('catalogs/', requestConfig?.config);
+export const getCategories = (requestConfig?: RequestConfig) =>
+  api.get<CategoriesResponse>('categories/', requestConfig?.config);

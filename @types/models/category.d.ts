@@ -2,9 +2,9 @@ interface Category {
   icon: string;
   id: number;
   image: string;
+  name: string;
   productQty: number;
   sub_categories: SubCategory[];
-  title: string;
   breadcrumbs: {
     id: number;
     title: string;
@@ -15,9 +15,9 @@ interface Category {
 interface SubCategory {
   id: number;
   image: string;
+  name: string;
   product_item_categories: ItemCategory[];
   productQty: number;
-  title: string;
   breadcrumbs: {
     id: number;
     title: string;
@@ -28,8 +28,8 @@ interface SubCategory {
 interface ItemCategory {
   id: number;
   image: string;
+  name: string;
   productQty: number;
-  title: string;
   breadcrumbs: {
     id: number;
     title: string;
@@ -37,5 +37,5 @@ interface ItemCategory {
   }[];
 }
 
-type CatalogsResponse = ApiResponse<Category[]>;
-type CatalogResponse = ApiResponse<Category>;
+type CategoriesResponse = ApiResponse<Category[]>;
+type CategoryResponse = ApiResponse<Category>;

@@ -117,7 +117,7 @@ export const productsData: Product[] = [
     categories: [
       {
         id: 1,
-        title: 'Category 1',
+        name: 'Category 1',
         productQty: 10,
         breadcrumbs: [],
         image: '',
@@ -261,7 +261,7 @@ export const productsData: Product[] = [
     categories: [
       {
         id: 1,
-        title: 'Category 1',
+        name: 'Category 1',
         productQty: 10,
         breadcrumbs: [],
         icon: '',
@@ -405,7 +405,7 @@ export const productsData: Product[] = [
     categories: [
       {
         id: 1,
-        title: 'Category 1',
+        name: 'Category 1',
         productQty: 10,
         icon: '',
         breadcrumbs: [],
@@ -549,7 +549,7 @@ export const productsData: Product[] = [
     categories: [
       {
         id: 1,
-        title: 'Category 1',
+        name: 'Category 1',
         productQty: 10,
         icon: '',
         breadcrumbs: [],
@@ -693,7 +693,7 @@ export const productsData: Product[] = [
     categories: [
       {
         id: 1,
-        title: 'Category 1',
+        name: 'Category 1',
         productQty: 10,
         breadcrumbs: [],
         image: '',
@@ -837,7 +837,7 @@ export const productsData: Product[] = [
     categories: [
       {
         id: 1,
-        title: 'Category 1',
+        name: 'Category 1',
         productQty: 10,
         breadcrumbs: [],
         image: '',
@@ -981,7 +981,7 @@ export const productsData: Product[] = [
     categories: [
       {
         id: 1,
-        title: 'Category 1',
+        name: 'Category 1',
         productQty: 10,
         breadcrumbs: [],
         image: '',

@@ -13,7 +13,7 @@ export const SubCategories = ({ category }: Props) => {
     <div className='bg-background grow overflow-y-auto border-l p-6'>
       <Link href={`/category/${category.id}`}>
         <p className='hover:text-secondary mb-6 text-xl font-bold transition-colors'>
-          {category.title}
+          {category.name}
         </p>
       </Link>
 

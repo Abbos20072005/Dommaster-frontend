@@ -7,7 +7,6 @@ import React from 'react';
 
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { useMounted } from '@/hooks';
 
 interface Props {
   filter: Filter;
@@ -20,9 +19,6 @@ export const FilterCheckbox = ({ filter }: Props) => {
     parseAsArrayOf(parseAsString).withDefault([]).withOptions({ shallow: false })
   );
   const [showAll, setShowAll] = React.useState(false);
-  const mounted = useMounted();
-
-  if (!mounted) return null;
 
   const COUNT_MAX = 5;
 
@@ -33,22 +29,20 @@ export const FilterCheckbox = ({ filter }: Props) => {
         {filter.filter_items
           .slice(0, showAll ? filter.filter_items.length : COUNT_MAX)
           .map((item) => (
-            <div key={item.value_string} className='flex items-center gap-2'>
+            <div key={item.value} className='flex items-center gap-2'>
               <Checkbox
-                key={item.value_string}
-                checked={selectedItems?.includes(item.value_string)}
-                id={`${item.label}-${item.value_string}`}
+                key={item.value}
+                checked={selectedItems?.includes(item.value)}
+                id={`${item.label}-${item.value}`}
                 onCheckedChange={(checked) =>
                   checked
-                    ? setSelectedItems([...selectedItems, item.value_string])
-                    : setSelectedItems(
-                        selectedItems?.filter((value) => value !== item.value_string)
-                      )
+                    ? setSelectedItems([...selectedItems, item.value])
+                    : setSelectedItems(selectedItems?.filter((value) => value !== item.value))
                 }
               />
-              <Label className='text-sm font-normal' htmlFor={`${item.label}-${item.value_string}`}>
+              <Label className='text-sm font-normal' htmlFor={`${item.label}-${item.value}`}>
                 {item.label}
-                <span className='text-muted-foreground ml-1'>({item.count})</span>
+                {item.count && <span className='text-muted-foreground ml-1'>({item.count})</span>}
               </Label>
             </div>
           ))}

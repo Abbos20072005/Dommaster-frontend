@@ -2,7 +2,7 @@ export const categoryData: Category[] = Array.from({ length: 10 }, (_, i) => {
   const parentId = i + 1;
   return {
     id: parentId,
-    title: `Category ${parentId}`,
+    name: `Category ${parentId}`,
     icon: `https://picsum.photos/seed/${parentId}/200/200`,
     productQty: Math.floor(Math.random() * 100),
     image: `https://picsum.photos/seed/${parentId}/200/200`,
@@ -17,7 +17,7 @@ export const categoryData: Category[] = Array.from({ length: 10 }, (_, i) => {
       const childId = parentId * 10 + j + 1;
       return {
         id: childId,
-        title: `Subcategory ${childId}`,
+        name: `Subcategory ${childId}`,
         productQty: Math.floor(Math.random() * 50),
         image: `https://picsum.photos/seed/${childId}/200/200`,
         breadcrumbs: [
@@ -36,7 +36,7 @@ export const categoryData: Category[] = Array.from({ length: 10 }, (_, i) => {
           const subChildId = childId * 10 + k + 1;
           return {
             id: subChildId,
-            title: `Sub-Subcategory ${subChildId}`,
+            name: `Sub-Subcategory ${subChildId}`,
             productQty: Math.floor(Math.random() * 20),
             image: `https://picsum.photos/seed/${subChildId}/200/200`,
             breadcrumbs: [

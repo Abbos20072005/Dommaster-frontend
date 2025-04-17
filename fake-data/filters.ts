@@ -3,71 +3,58 @@ export const filters: Filter[] = [
     name: 'Цена',
     request_var: 'price',
     type: 'SLIDER',
-    is_boolean: false,
-    has_swatch: false,
-    position: 0,
-    min: 209,
-    max: 4095,
+    from: 0,
+    to: 10000000,
     filter_items: [
       {
         label: '209~4094.99',
         count: 198,
-        value_string: '209_4094.99',
-        hruValue: null,
+        value: '209_4094.99',
         swatch_data: null
       }
     ]
   },
   {
     name: 'Категория',
-    request_var: 'additional_category_id',
-    type: 'CHECKBOX',
-    is_boolean: false,
-    has_swatch: false,
-    position: 0,
-    min: null,
-    max: null,
+    request_var: 'category',
+    type: 'RADIO',
+    from: null,
+    to: null,
     filter_items: [
       {
         label: 'Напольные покрытия',
         count: 670,
-        value_string: '4303',
-        hruValue: null,
+        value: '4303',
         swatch_data: null
       },
       {
         label: 'Отопление дома',
         count: 50,
-        value_string: '4600',
-        hruValue: null,
+        value: '4600',
         swatch_data: null
       },
       {
         label: 'Окна и двери',
         count: 16,
-        value_string: '5251',
-        hruValue: null,
+        value: '5251',
         swatch_data: null
       },
       {
         label: 'Инструмент',
         count: 7,
-        value_string: '5456',
-        hruValue: null,
+        value: '5456',
         swatch_data: null
       },
       {
         label: 'Лакокрасочные материалы',
         count: 6,
-        value_string: '5253',
-        hruValue: null,
+        value: '5253',
         swatch_data: null
       },
       {
         label: 'Хозяйственные товары',
         count: 4,
-        value_string: '5162',
-        hruValue: null,
+        value: '5162',
         swatch_data: null
       }
     ]
@@ -76,185 +63,157 @@ export const filters: Filter[] = [
     name: 'Бренд',
     request_var: 'brand',
     type: 'CHECKBOX',
-    is_boolean: false,
-    has_swatch: false,
-    position: 2,
-    min: null,
-    max: null,
+    from: null,
+    to: null,
     filter_items: [
       {
         label: 'EGGER',
         count: 43,
-        value_string: 'EGGER',
-        hruValue: null,
+        value: 'EGGER',
         swatch_data: null
       },
       {
         label: 'KRONOSTAR',
         count: 23,
-        value_string: 'KRONOSTAR',
-        hruValue: null,
+        value: 'KRONOSTAR',
         swatch_data: null
       },
       {
         label: 'Без бренда',
         count: 20,
-        value_string: 'Без бренда',
-        hruValue: null,
+        value: 'Без бренда',
         swatch_data: null
       },
       {
         label: 'Kronospan',
         count: 12,
-        value_string: 'Kronospan',
-        hruValue: null,
+        value: 'Kronospan',
         swatch_data: null
       },
       {
         label: 'Tarkett',
         count: 12,
-        value_string: 'Tarkett',
-        hruValue: null,
+        value: 'Tarkett',
         swatch_data: null
       },
       {
         label: 'ЛУКА',
         count: 12,
-        value_string: 'ЛУКА',
-        hruValue: null,
+        value: 'ЛУКА',
         swatch_data: null
       },
       {
         label: 'Expert Choice',
         count: 11,
-        value_string: 'Expert Choice',
-        hruValue: null,
+        value: 'Expert Choice',
         swatch_data: null
       },
       {
         label: 'Clic & Go',
         count: 10,
-        value_string: 'Clic & Go',
-        hruValue: null,
+        value: 'Clic & Go',
         swatch_data: null
       },
       {
         label: 'CLIX',
         count: 8,
-        value_string: 'CLIX',
-        hruValue: null,
+        value: 'CLIX',
         swatch_data: null
       },
       {
         label: 'Alpine Floor',
         count: 7,
-        value_string: 'Alpine Floor',
-        hruValue: null,
+        value: 'Alpine Floor',
         swatch_data: null
       },
       {
         label: 'Derby',
         count: 6,
-        value_string: 'Derby',
-        hruValue: null,
+        value: 'Derby',
         swatch_data: null
       },
       {
         label: 'Quick-Step',
         count: 6,
-        value_string: 'Quick-Step',
-        hruValue: null,
+        value: 'Quick-Step',
         swatch_data: null
       },
       {
         label: 'MAXWOOD Dynamic',
         count: 4,
-        value_string: 'MAXWOOD Dynamic',
-        hruValue: null,
+        value: 'MAXWOOD Dynamic',
         swatch_data: null
       },
       {
         label: 'Sunfloor',
         count: 4,
-        value_string: 'Sunfloor',
-        hruValue: null,
+        value: 'Sunfloor',
         swatch_data: null
       },
       {
         label: 'WoodStyle',
         count: 4,
-        value_string: 'WoodStyle',
-        hruValue: null,
+        value: 'WoodStyle',
         swatch_data: null
       },
       {
         label: 'Latat',
         count: 3,
-        value_string: 'Latat',
-        hruValue: null,
+        value: 'Latat',
         swatch_data: null
       },
       {
         label: 'ISODOM',
         count: 2,
-        value_string: 'ISODOM',
-        hruValue: null,
+        value: 'ISODOM',
         swatch_data: null
       },
       {
         label: 'PROFI',
         count: 2,
-        value_string: 'PROFI',
-        hruValue: null,
+        value: 'PROFI',
         swatch_data: null
       },
       {
         label: 'Pergo',
         count: 2,
-        value_string: 'Pergo',
-        hruValue: null,
+        value: 'Pergo',
         swatch_data: null
       },
       {
         label: 'SWISS KRONO',
         count: 2,
-        value_string: 'SWISS KRONO',
-        hruValue: null,
+        value: 'SWISS KRONO',
         swatch_data: null
       },
       {
         label: 'Floorpan',
         count: 1,
-        value_string: 'Floorpan',
-        hruValue: null,
+        value: 'Floorpan',
         swatch_data: null
       },
       {
         label: 'Greenplanet®',
         count: 1,
-        value_string: 'Greenplanet®',
-        hruValue: null,
+        value: 'Greenplanet®',
         swatch_data: null
       },
       {
         label: 'HAUSMANN',
         count: 1,
-        value_string: 'HAUSMANN',
-        hruValue: null,
+        value: 'HAUSMANN',
         swatch_data: null
       },
       {
         label: 'Sanfor',
         count: 1,
-        value_string: 'Sanfor',
-        hruValue: null,
+        value: 'Sanfor',
         swatch_data: null
       },
       {
         label: 'Sinteros',
         count: 1,
-        value_string: 'Sinteros',
-        hruValue: null,
+        value: 'Sinteros',
         swatch_data: null
       }
     ]
@@ -263,101 +222,85 @@ export const filters: Filter[] = [
     name: 'Основной цвет',
     request_var: 'color',
     type: 'RADIO',
-    is_boolean: false,
-    has_swatch: false,
-    position: 3,
-    min: null,
-    max: null,
+    from: null,
+    to: null,
     filter_items: [
       {
         label: 'серый',
         count: 60,
-        value_string: 'серый',
-        hruValue: null,
+        value: 'серый',
         swatch_data: null
       },
       {
         label: 'коричневый',
         count: 48,
-        value_string: 'коричневый',
-        hruValue: null,
+        value: 'коричневый',
         swatch_data: null
       },
       {
         label: 'бежевый',
         count: 43,
-        value_string: 'бежевый',
-        hruValue: null,
+        value: 'бежевый',
         swatch_data: null
       },
       {
         label: 'бесцветный',
         count: 20,
-        value_string: 'бесцветный',
-        hruValue: null,
+        value: 'бесцветный',
         swatch_data: null
       },
       {
         label: 'белый',
         count: 16,
-        value_string: 'белый',
-        hruValue: null,
+        value: 'белый',
         swatch_data: null
       },
       {
         label: 'оранжевый',
         count: 3,
-        value_string: 'оранжевый',
-        hruValue: null,
+        value: 'оранжевый',
         swatch_data: null
       },
       {
         label: 'зеленый',
         count: 2,
-        value_string: 'зеленый',
-        hruValue: null,
+        value: 'зеленый',
         swatch_data: null
       },
       {
         label: 'бронзовый',
         count: 1,
-        value_string: 'бронзовый',
-        hruValue: null,
+        value: 'бронзовый',
         swatch_data: null
       },
       {
         label: 'желтый',
         count: 1,
-        value_string: 'желтый',
-        hruValue: null,
+        value: 'желтый',
         swatch_data: null
       },
       {
         label: 'медный',
         count: 1,
-        value_string: 'медный',
-        hruValue: null,
+        value: 'медный',
         swatch_data: null
       },
       {
         label: 'многоцветный',
         count: 1,
-        value_string: 'многоцветный',
-        hruValue: null,
+        value: 'многоцветный',
         swatch_data: null
       },
       {
         label: 'розовый',
         count: 1,
-        value_string: 'розовый',
-        hruValue: null,
+        value: 'розовый',
         swatch_data: null
       },
       {
         label: 'серебристый',
         count: 1,
-        value_string: 'серебристый',
-        hruValue: null,
+        value: 'серебристый',
         swatch_data: null
       }
     ]
@@ -366,45 +309,37 @@ export const filters: Filter[] = [
     name: 'Тип',
     request_var: 'nastennye_i_potolochnye_svetilniki_tip',
     type: 'CHECKBOX',
-    is_boolean: false,
-    has_swatch: false,
-    position: 4,
-    min: null,
-    max: null,
+    from: null,
+    to: null,
     filter_items: [
       {
         label: 'порог',
         count: 12,
-        value_string: 'порог',
-        hruValue: null,
+        value: 'порог',
         swatch_data: null
       },
       {
         label: 'бытовой',
         count: 2,
-        value_string: 'бытовой',
-        hruValue: null,
+        value: 'бытовой',
         swatch_data: null
       },
       {
         label: 'полукоммерческий',
         count: 2,
-        value_string: 'полукоммерческий',
-        hruValue: null,
+        value: 'полукоммерческий',
         swatch_data: null
       },
       {
         label: 'средство для мытья',
         count: 2,
-        value_string: 'средство для мытья',
-        hruValue: null,
+        value: 'средство для мытья',
         swatch_data: null
       },
       {
         label: 'средство для чистки',
         count: 1,
-        value_string: 'средство для чистки',
-        hruValue: null,
+        value: 'средство для чистки',
         swatch_data: null
       }
     ]

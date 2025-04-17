@@ -42,7 +42,7 @@ interface ButtonPropsBase
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {}
 
-type ButtonProps = ButtonPropsBase &
+export type ButtonProps = ButtonPropsBase &
   (
     | { asChild: true }
     | {

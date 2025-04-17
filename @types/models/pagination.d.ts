@@ -1,4 +1,4 @@
 interface Pagination<T> {
-  data: T[];
+  content: T[];
   total: number;
 }

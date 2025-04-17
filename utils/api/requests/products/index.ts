@@ -1,4 +1,4 @@
 import { api } from '@/utils/api/instance';
 
-export const getProducts = (requestConfig?: RequestConfig) =>
-  api.get<ProductsResponse>('products/', requestConfig?.config);
+export const getProducts = ({ data, config }: RequestConfig<ProductRequest>) =>
+  api.post<ProductsResponse>('product/filter/', data, config);

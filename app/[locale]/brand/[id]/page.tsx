@@ -2,8 +2,7 @@ import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
-import { Filter } from '@/components/modules/filter';
-import { ProductList } from '@/components/modules/product';
+import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -12,10 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { productsData } from '@/fake-data/products';
-import { getBrandById } from '@/utils/api/requests';
-
-import { MobileFilterDrawer, ProductsSortBySelect } from './-components';
+import { getBrandById, getCategories } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -26,6 +22,8 @@ const SearchPage = async ({ params }: Props) => {
   const { id } = await params;
   const brandResponse = await getBrandById({ id });
   const brand = brandResponse.data.result;
+  const categoriesResponse = await getCategories();
+  const categories = categoriesResponse.data.result;
 
   return (
     <div>
@@ -43,18 +41,29 @@ const SearchPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>{brand.name}</h1>
-        <div className='gap-8 lg:flex'>
-          <aside className='hidden w-52 lg:block xl:w-60'>
-            <Filter />
-          </aside>
-          <div className='lg:flex-1'>
-            <div className='mb-4 flex items-center justify-between'>
-              <ProductsSortBySelect />
-              <MobileFilterDrawer />
-            </div>
-            <ProductList view='grid' products={productsData} />
-          </div>
-        </div>
+        <ProductFilterPaginated
+          filters={[
+            {
+              filter_items: categories.map((category) => ({
+                label: category.name,
+                swatch_data: null,
+                value: String(category.id)
+              })),
+              name: t('Categories'),
+              request_var: 'category',
+              type: 'RADIO'
+            },
+            {
+              request_var: 'price',
+              type: 'SLIDER',
+              name: t('Price'),
+              filter_items: [],
+              from: 0,
+              to: 1000000
+            }
+          ]}
+          queries={{ brand: brand.id }}
+        />
       </BaseLayout>
     </div>
   );

@@ -61,7 +61,7 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
                     className='block py-3 text-sm'
                     onClick={() => setOpen(false)}
                   >
-                    {item.title}
+                    {item.name}
                   </Link>
                 ))
               : selectedCategory.sub_categories.map((item) => (
@@ -70,7 +70,7 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
                     className='flex w-full py-3'
                     onClick={() => setSelectedSubCategory(item)}
                   >
-                    <div className='flex flex-1 items-center gap-3 text-sm'>{item.title}</div>
+                    <div className='flex flex-1 items-center gap-3 text-sm'>{item.name}</div>
                     <ChevronRightIcon className='text-muted-foreground' />
                   </button>
                 ))
@@ -82,7 +82,7 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
                 >
                   <div className='flex flex-1 items-center gap-3 text-sm'>
                     <AxeIcon className='text-primary size-6' />
-                    {item.title}
+                    {item.name}
                   </div>
                   <ChevronRightIcon className='text-muted-foreground' />
                 </button>

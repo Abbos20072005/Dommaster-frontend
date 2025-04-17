@@ -1,7 +1,7 @@
 import { api } from '@/utils/api/instance';
 
 export const getFavorites = (requestConfig?: RequestConfig) =>
-  api.get<ApiResponse<Product[]>>('/favourite/list/', requestConfig?.config);
+  api.get<FavoritesResponse>('/favourite/list/', requestConfig?.config);
 
 export const postFavorite = ({ data, config }: RequestConfig<{ product: number }>) =>
-  api.post<ProductResponse>('/favourite/create/', data, config);
+  api.post<FavoriteResponse>('/favourite/create/', data, config);

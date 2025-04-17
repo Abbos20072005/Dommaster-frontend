@@ -29,5 +29,16 @@ interface Product {
   }[];
 }
 
-type ProductsResponse = ApiResponse<Pagination<Product>>;
+interface ProductRequest {
+  brand?: number;
+  category?: number;
+  page: number;
+  page_size: number;
+  price_from: number;
+  price_to: number;
+  q?: string;
+  sort_by?: string;
+}
+
+type ProductsResponse = ApiResponse<Pagination<Product> & { totalElements: number }>;
 type ProductResponse = ApiResponse<Product>;

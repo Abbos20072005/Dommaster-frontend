@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const catalog = categoryData.find((item) => item.id === +id);
 
   return {
-    title: catalog?.title,
+    title: catalog?.name,
     description:
       'в Санкт-Петербурге — покупайте ✅ в интернет-магазине Петрович. 🚚 Доставка за 2 часа или бесплатно на авто до 10 тонн. 👍 Возврат неиспользованного товара в течение 360 дней. Звоните круглосуточно: ☎️ +7(812)334-88-88. Качество по ISO 9001:2000.'
   };
@@ -63,7 +63,7 @@ const CategoryPage = async ({ params }: Props) => {
             ))}
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{category.title}</h1>
+        <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{category.name}</h1>
         <div className='grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] md:gap-4'>
           {category.sub_categories.map((subCategory) => (
             <Link
@@ -72,10 +72,10 @@ const CategoryPage = async ({ params }: Props) => {
               className='bg-muted relative flex flex-col justify-between gap-6 rounded-md p-3 md:flex-row md:gap-3'
             >
               <p className='text-xs font-medium [word-break:break-word] md:text-sm'>
-                {subCategory.title}
+                {subCategory.name}
               </p>
               <Image
-                alt={subCategory.title}
+                alt={subCategory.name}
                 className='mx-auto h-15 w-22 rounded-md object-contain md:w-15'
                 height={60}
                 src='https://cdn.vseinstrumenti.ru/imgtmbnf/400x400/img/cats/1774.jpg?hash=20250319092945'

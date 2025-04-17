@@ -1,16 +1,14 @@
 import { ArrowLeftIcon, TrashIcon } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
-import { ProductList } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
-import { getFavorites } from '@/utils/api/requests';
 
-const FavoritesPage = async () => {
-  const t = await getTranslations();
-  const favoritesResponse = await getFavorites();
-  const favorites = favoritesResponse.data.result;
+import { FavoriteProductList } from './_components';
+
+const FavoritesPage = () => {
+  const t = useTranslations();
 
   return (
     <div>
@@ -27,7 +25,7 @@ const FavoritesPage = async () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Favorites')}</h1>
-        <ProductList view='grid' products={favorites} />
+        <FavoriteProductList />
       </Card>
     </div>
   );

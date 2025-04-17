@@ -1,5 +1,6 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import {
   HeartIcon,
   HomeIcon,
@@ -13,11 +14,19 @@ import React from 'react';
 import { AuthDialog } from '@/components/modules/auth';
 import { MobileCatalogDialog } from '@/components/modules/catalog';
 import { NavigationLink } from '@/components/NavigationLink';
+import { getFavorites } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 
 export const BottomNav = () => {
   const t = useTranslations();
   const { user } = useAuth();
+
+  const getFavoritesQuery = useQuery({
+    queryKey: ['favorites'],
+    queryFn: () => getFavorites()
+  });
+
+  const favorites = getFavoritesQuery.data?.data.result || [];
 
   return (
     <div className='grid grid-cols-5 gap-4 py-2 shadow-md md:hidden'>
@@ -44,8 +53,13 @@ export const BottomNav = () => {
       <NavigationLink
         href='/user/favorites'
         activeClassName='text-foreground'
-        className='text-muted-foreground flex flex-col items-center transition-colors'
+        className='text-muted-foreground relative flex flex-col items-center transition-colors'
       >
+        {!!favorites.length && (
+          <div className='bg-secondary text-secondary-foreground absolute -top-1 right-2 flex size-4 items-center justify-center rounded-full text-xs font-bold'>
+            {favorites.length}
+          </div>
+        )}
         <HeartIcon className='size-5' />
         <span className='text-xs font-medium'>{t('Favorites')}</span>
       </NavigationLink>

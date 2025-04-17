@@ -2,8 +2,13 @@
 
 import React from 'react';
 
-import { FilterCheckbox, FilterRadio, FilterSlider } from '@/components/modules/filter';
-import { filters } from '@/fake-data/filters';
+import {
+  FilterCheckbox,
+  FilterRadio,
+  FilterSkeleton,
+  FilterSlider
+} from '@/components/modules/filter';
+import { useMounted } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import { FilterClearButton } from './components/FilterClearButton';
@@ -14,9 +19,15 @@ const filterMap: Record<FilterType, React.ComponentType<{ filter: Filter }>> = {
   SLIDER: FilterSlider
 };
 
-interface Props extends React.ComponentProps<'div'> {}
+interface Props extends React.ComponentProps<'div'> {
+  filters: Filter[];
+}
 
-export const Filter = ({ className, ...props }: Props) => {
+export const Filter = ({ className, filters, ...props }: Props) => {
+  const mounted = useMounted();
+
+  if (!mounted) return <FilterSkeleton />;
+
   return (
     <div className={cn(className)} {...props} aria-label='Filter' data-slot='filter'>
       <FilterClearButton />

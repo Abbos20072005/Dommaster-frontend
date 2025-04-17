@@ -12,6 +12,7 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/components/ui/drawer';
+import { filters } from '@/fake-data/filters';
 
 export const MobileFilterDrawer = () => {
   const t = useTranslations();
@@ -29,7 +30,7 @@ export const MobileFilterDrawer = () => {
           <DrawerTitle>Filters</DrawerTitle>
         </DrawerHeader>
         <div className='overflow-y-auto px-4 py-2'>
-          <Filter />
+          <Filter filters={filters} />
         </div>
         <DrawerFooter className='py-2'>
           <DrawerClose asChild>

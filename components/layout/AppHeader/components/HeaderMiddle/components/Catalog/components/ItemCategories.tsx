@@ -22,7 +22,7 @@ export const ItemCategories = ({ subCategory, categoryId }: Props) => {
             </div>
             <Link href={`/category/${categoryId}/${subCategory.id}`} className='text-sm'>
               <span className='hover:text-secondary font-medium transition-colors'>
-                {subCategory.title}
+                {subCategory.name}
               </span>
               <span className='text-muted-foreground ml-1'>({subCategory.productQty})</span>
             </Link>
@@ -36,7 +36,7 @@ export const ItemCategories = ({ subCategory, categoryId }: Props) => {
                     className='text-sm'
                   >
                     <span className='hover:text-secondary transition-colors'>
-                      {itemCategory.title}
+                      {itemCategory.name}
                     </span>
                     <span className='text-muted-foreground ml-1'>({itemCategory.productQty})</span>
                   </Link>
