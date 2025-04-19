@@ -3,7 +3,6 @@
 import { useQuery } from '@tanstack/react-query';
 import { TruckIcon, UserIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { useQueryState } from 'nuqs';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -24,11 +23,7 @@ export const DeliveryCard = () => {
   });
 
   const addresses = getAddressesQuery.data?.data.result;
-  const [selectedAddressId] = useQueryState('delivery_address', { defaultValue: '' });
-
-  const address = addresses?.find(
-    (address) => selectedAddressId && address.id === +selectedAddressId
-  );
+  const defaultAddress = addresses?.find((address) => address.is_default);
 
   return (
     <Card variant='outline'>
@@ -42,15 +37,32 @@ export const DeliveryCard = () => {
               <TruckIcon className='text-secondary' />
             </div>
           </div>
-          <CardHeader className='flex-1'>
-            <CardTitle className='font-semibold'>
-              {address?.name || t('Delivery address not specified')}
-            </CardTitle>
-            <CardDescription>{address?.location_name}</CardDescription>
-            <SelectAddressDialog asChild>
-              <Button variant='muted'>{address ? t('Choose another') : t('Select')}</Button>
-            </SelectAddressDialog>
-          </CardHeader>
+          {getAddressesQuery.isFetching ? (
+            <CardHeader className='flex-1'>
+              <CardTitle className='font-semibold'>
+                <Skeleton className='h-4 w-20' />
+              </CardTitle>
+
+              <CardDescription>
+                <Skeleton className='h-5 w-3/4' />
+              </CardDescription>
+              <SelectAddressDialog asChild>
+                <Skeleton className='h-11 w-full' />
+              </SelectAddressDialog>
+            </CardHeader>
+          ) : (
+            <CardHeader className='flex-1'>
+              <CardTitle className='font-semibold'>
+                {defaultAddress?.name || t('Delivery address not specified')}
+              </CardTitle>
+              <CardDescription>{defaultAddress?.location_name}</CardDescription>
+              <SelectAddressDialog asChild>
+                <Button variant='muted'>
+                  {defaultAddress ? t('Choose another') : t('Select')}
+                </Button>
+              </SelectAddressDialog>
+            </CardHeader>
+          )}
         </Card>
         <Card className='flex items-start gap-3 p-4' variant='outline'>
           <div className='bg-muted rounded-md p-2'>
