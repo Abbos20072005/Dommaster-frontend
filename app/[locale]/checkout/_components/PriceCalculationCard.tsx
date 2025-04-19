@@ -9,7 +9,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Link } from '@/i18n/navigation';
 import { useAuth } from '@/utils/stores';
 
-export const CartCalculation = () => {
+export const PriceCalculationCard = () => {
   const t = useTranslations();
   const { user } = useAuth();
 
@@ -35,11 +35,11 @@ export const CartCalculation = () => {
       <CardFooter className='p-4 pt-0'>
         {user ? (
           <Button asChild className='w-full'>
-            <Link href='/checkout'>{t('Proceed to checkout')}</Link>
+            <Link href='/checkout'>{t('Pay')}</Link>
           </Button>
         ) : (
           <AuthDialog asChild>
-            <Button className='w-full'>{t('Proceed to checkout')}</Button>
+            <Button className='w-full'>{t('Pay')}</Button>
           </AuthDialog>
         )}
       </CardFooter>

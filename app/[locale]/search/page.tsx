@@ -3,7 +3,7 @@ import React from 'react';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
-import { filters } from '@/fake-data/filters';
+import { getBrands } from '@/utils/api/requests';
 
 interface Props {
   searchParams: Promise<{ q: string }>;
@@ -12,6 +12,28 @@ interface Props {
 const SearchPage = async ({ searchParams }: Props) => {
   const { q } = await searchParams;
   const t = await getTranslations();
+  const brandsResponse = await getBrands();
+  const brands = brandsResponse.data.result || [];
+
+  const filters: Filter[] = [
+    {
+      request_var: 'price',
+      type: 'SLIDER',
+      name: t('Price'),
+      filter_items: [],
+      from: 0,
+      to: 1000000
+    },
+    {
+      name: t('Brand'),
+      type: 'RADIO',
+      request_var: 'brand',
+      filter_items: brands.map((brand) => ({
+        value: String(brand.id),
+        label: brand.name
+      }))
+    }
+  ];
 
   return (
     <div>

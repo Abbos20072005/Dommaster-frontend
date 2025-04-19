@@ -32,8 +32,8 @@ const CartPage = async () => {
         <h1 className='flex-1 text-center font-bold md:hidden'>{t('Cart')}</h1>
         <div className='size-13' />
       </div>
-      <BaseLayout className='mt-2 md:mt-4'>
-        <Breadcrumb className='mb-2 md:mb-4'>
+      <BaseLayout className='mt-2 px-0 md:mt-4 md:px-4'>
+        <Breadcrumb className='hidden md:mb-4 md:block'>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>

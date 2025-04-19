@@ -1,5 +1,6 @@
 'use client';
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -7,12 +8,23 @@ import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { productsData } from '@/fake-data/products';
+import { getCartList, postCartBulk } from '@/utils/api/requests';
 
 import { ProductCartItem } from './ProductCartItem';
 
 export const ProductCartList = () => {
   const t = useTranslations();
+
+  const getCartListQuery = useQuery({
+    queryKey: ['cart'],
+    queryFn: () => getCartList()
+  });
+
+  const cartItems = getCartListQuery.data?.data.result.cart_items || [];
+
   const [selectedProducts, setSelectedProducts] = React.useState<number[]>([]);
+
+  const isAllChecked = cartItems.every((item) => item.is_checked);
 
   const onToggleProduct = (id: number) => {
     setSelectedProducts((prev) =>
@@ -20,21 +32,25 @@ export const ProductCartList = () => {
     );
   };
 
+  const queryClient = useQueryClient();
+  const postCartBulkMutation = useMutation({
+    mutationFn: postCartBulk,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+    }
+  });
+
   const onToggleAll = () => {
-    setSelectedProducts((prev) =>
-      prev.length === productsData.length ? [] : productsData.map((item) => item.id)
-    );
+    postCartBulkMutation.mutate({
+      data: { is_checked: !isAllChecked }
+    });
   };
 
   return (
     <Card className='flex-1' variant='outline'>
       <CardHeader className='p-4'>
         <div className='flex items-center gap-2'>
-          <Checkbox
-            checked={selectedProducts.length === productsData.length}
-            id='select-all'
-            onCheckedChange={onToggleAll}
-          />
+          <Checkbox checked={isAllChecked} id='select-all' onCheckedChange={onToggleAll} />
           <Label htmlFor='select-all'>{t('Select all')}</Label>
         </div>
       </CardHeader>

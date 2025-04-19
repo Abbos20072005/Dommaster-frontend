@@ -107,7 +107,7 @@ export const PopularCategories = () => {
             .map((item, index) => {
               const nextItem = categories[index * 2 + 1];
               return (
-                <CarouselItem key={item.id} className='basis-[192px] space-y-4 pl-2 md:pl-4'>
+                <CarouselItem key={item.id} className='basis-[215px] space-y-4 pl-2 md:pl-4'>
                   <div className='h-32'>
                     <Link
                       href={`/category/${item.id}`}

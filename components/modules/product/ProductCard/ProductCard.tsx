@@ -9,27 +9,28 @@ import { ProductCart, ProductControl, ProductImages, ProductPrice } from './comp
 
 type Props = React.ComponentProps<'div'> & {
   product: Product;
-  setLockParentScroll?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export const ProductCard = ({ product, className, setLockParentScroll, ...props }: Props) => {
+export const ProductCard = ({ product, className, ...props }: Props) => {
   const t = useTranslations();
 
   return (
     <div
       className={cn(
-        'bg-background flex h-full flex-col rounded-lg border p-3 transition-shadow hover:shadow-md sm:p-4',
+        'bg-background flex flex-col rounded-lg border p-3 transition-shadow hover:shadow-md sm:p-4',
         className
       )}
       {...props}
     >
       <div className='flex justify-between'>
-        <p className='text-muted-foreground text-sm'>{t('code')}: 16012263</p>
+        <p className='text-muted-foreground text-sm'>
+          {t('code')}: {product.id}
+        </p>
         <ProductControl product={product} />
       </div>
       <div className='relative mb-1'>
         <Link href={`/product/${product.id}`} aria-label={product.name}>
-          <ProductImages product={product} setLockParentScroll={setLockParentScroll} />
+          <ProductImages product={product} />
           <span className='sr-only'>{product.name}</span>
         </Link>
       </div>

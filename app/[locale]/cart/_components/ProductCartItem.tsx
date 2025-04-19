@@ -5,7 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
-import { CartCounter } from '@/components/modules/cart';
+import { CartCounter, useProductCart } from '@/components/modules/cart';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -20,7 +20,7 @@ interface Props {
 
 export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) => {
   const t = useTranslations();
-  const [value, setValue] = React.useState(1);
+  const { state, functions } = useProductCart(product);
 
   return (
     <div key={product.id} className='flex flex-1 flex-col gap-4 py-4 sm:flex-row'>
@@ -31,7 +31,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
             alt={product.name}
             className='size-[80px] object-contain sm:size-[100px]'
             height={100}
-            src={product.images[0].image}
+            src={product.images[0]?.image ?? '/product/no-image.png'}
             width={100}
           />
         </Link>
@@ -46,12 +46,12 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
           </div>
           <div className='flex flex-wrap items-center gap-2'>
             <p className='font-bold'>
-              {formatPrice((product.discount_price ?? product.price) * value)} {t('som')}
+              {formatPrice((product.discount_price ?? product.price) * state.cartCount)} {t('som')}
             </p>
             {product.discount_price && (
               <>
                 <span className='text-xs line-through'>
-                  {formatPrice(product.price * value)} {t('som')}
+                  {formatPrice(product.price * state.cartCount)} {t('som')}
                 </span>
                 <Badge variant='secondary'>-{product.discount}%</Badge>
               </>
@@ -65,10 +65,15 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
             className='bg-muted w-[120px] rounded-sm'
             maxValue={product.quantity}
             minValue={1}
-            value={value}
-            onChange={setValue}
+            value={state.cartCount}
+            onChange={functions.onCartCountChange}
           />
-          <p className={cn('text-muted-foreground text-xs', value === 1 && 'invisible opacity-0')}>
+          <p
+            className={cn(
+              'text-muted-foreground text-xs',
+              state.cartCount === 1 && 'invisible opacity-0'
+            )}
+          >
             {formatPrice(product.discount_price ?? product.price)} {t('som')}/{t('unit')}
           </p>
         </div>

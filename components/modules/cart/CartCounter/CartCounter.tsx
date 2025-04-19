@@ -30,7 +30,7 @@ export const CartCounter = ({
   // Update from button click (debounced)
   React.useEffect(() => {
     if (!Number.isNaN(debouncedButtonValue)) {
-      onChange(debouncedButtonValue);
+      if (Number(inputValue) !== value) onChange(debouncedButtonValue);
     }
   }, [debouncedButtonValue]);
 
@@ -48,7 +48,7 @@ export const CartCounter = ({
     } else {
       const clamped = Math.max(minValue, Math.min(parsed, maxValue));
       setInputValue(clamped.toString());
-      onChange(clamped); // Immediate update on blur
+      if (Number(inputValue) !== value) onChange(clamped); // Immediate update on blur
     }
   };
 

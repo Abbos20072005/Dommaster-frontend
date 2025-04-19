@@ -1,6 +1,5 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import {
   HeartIcon,
   HomeIcon,
@@ -14,19 +13,14 @@ import React from 'react';
 import { AuthDialog } from '@/components/modules/auth';
 import { MobileCatalogDialog } from '@/components/modules/catalog';
 import { NavigationLink } from '@/components/NavigationLink';
-import { getFavorites } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
+
+import { useBottomNav } from './hooks';
 
 export const BottomNav = () => {
   const t = useTranslations();
   const { user } = useAuth();
-
-  const getFavoritesQuery = useQuery({
-    queryKey: ['favorites'],
-    queryFn: () => getFavorites()
-  });
-
-  const favorites = getFavoritesQuery.data?.data.result || [];
+  const { state } = useBottomNav();
 
   return (
     <div className='grid grid-cols-5 gap-4 py-2 shadow-md md:hidden'>
@@ -47,20 +41,29 @@ export const BottomNav = () => {
         activeClassName='text-foreground'
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
-        <ShoppingCartIcon className='size-5' />
+        <div className='relative'>
+          {!!state.cartItemsLength.length && (
+            <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
+              {state.cartItemsLength.length}
+            </div>
+          )}
+          <ShoppingCartIcon className='size-5' />
+        </div>
         <span className='text-xs font-medium'>{t('Cart')}</span>
       </NavigationLink>
       <NavigationLink
         href='/user/favorites'
         activeClassName='text-foreground'
-        className='text-muted-foreground relative flex flex-col items-center transition-colors'
+        className='text-muted-foreground flex flex-col items-center transition-colors'
       >
-        {!!favorites.length && (
-          <div className='bg-secondary text-secondary-foreground absolute -top-1 right-2 flex size-4 items-center justify-center rounded-full text-xs font-bold'>
-            {favorites.length}
-          </div>
-        )}
-        <HeartIcon className='size-5' />
+        <div className='relative'>
+          {!!state.favoritesLength.length && (
+            <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
+              {state.favoritesLength.length}
+            </div>
+          )}
+          <HeartIcon />
+        </div>
         <span className='text-xs font-medium'>{t('Favorites')}</span>
       </NavigationLink>
       {user ? (

@@ -45,7 +45,6 @@ export const Search = () => {
           <Input
             ref={searchRef}
             className='h-10 flex-1 border-none !ring-transparent ring-offset-transparent'
-            id='search'
             type='text'
             value={searchInput}
             autoComplete='off'
@@ -75,7 +74,7 @@ export const Search = () => {
       </form>
       <div
         className={cn(
-          'bg-background invisible absolute inset-x-0 top-full z-50 w-full scale-96 rounded-md border-none p-0 opacity-0 shadow-lg transition-all',
+          'bg-background invisible absolute inset-x-0 top-full z-50 mt-1 w-full scale-96 rounded-md border-none p-0 opacity-0 shadow-lg transition-all',
           { 'visible scale-100 opacity-100': popoverOpen }
         )}
       >

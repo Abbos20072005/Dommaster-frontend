@@ -4,6 +4,9 @@ interface Product {
   discount: number | null;
   discount_price: number | null;
   id: number;
+  in_cart: boolean;
+  in_cart_quantity: number;
+  is_checked: boolean;
   is_favourite: boolean;
   name: string;
   price: number;

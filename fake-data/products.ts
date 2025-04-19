@@ -6,6 +6,8 @@ export const productsData: Product[] = [
     discount_price: null,
     discount: null,
     quantity: 10,
+    in_cart_quantity: 0,
+    in_cart: false,
     images: [
       {
         id: 1,
@@ -150,6 +152,8 @@ export const productsData: Product[] = [
     discount_price: null,
     discount: null,
     is_favourite: false,
+    in_cart_quantity: 0,
+    in_cart: false,
     quantity: 10,
     images: [
       {
@@ -294,6 +298,8 @@ export const productsData: Product[] = [
     discount_price: 8000,
     discount: 20,
     is_favourite: false,
+    in_cart_quantity: 0,
+    in_cart: false,
     quantity: 10,
     images: [
       {
@@ -435,6 +441,8 @@ export const productsData: Product[] = [
     id: 4,
     name: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     is_favourite: false,
+    in_cart_quantity: 10,
+    in_cart: true,
     price: 12000,
     discount_price: null,
     discount: null,
@@ -600,6 +608,8 @@ export const productsData: Product[] = [
       }
     ],
     is_favourite: false,
+    in_cart_quantity: 1,
+    in_cart: true,
     questions: [
       {
         id: 1,
@@ -727,6 +737,8 @@ export const productsData: Product[] = [
     discount: null,
     quantity: 10,
     is_favourite: false,
+    in_cart_quantity: 3,
+    in_cart: false,
     images: [
       {
         id: 1,
@@ -870,6 +882,8 @@ export const productsData: Product[] = [
     discount_price: null,
     discount: null,
     is_favourite: false,
+    in_cart_quantity: 0,
+    in_cart: false,
     quantity: 10,
     images: [
       {

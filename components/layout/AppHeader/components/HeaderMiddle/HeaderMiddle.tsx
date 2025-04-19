@@ -1,6 +1,5 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { HandPlatterIcon, HeartIcon, ShoppingCartIcon, UserCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -10,33 +9,20 @@ import { AuthDialog } from '@/components/modules/auth';
 import { Search } from '@/components/modules/search';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { getFavorites } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 
 import { Catalog, NavUser } from './components';
+import { useHeaderMiddle } from './hooks';
 
 export const HeaderMiddle = () => {
   const t = useTranslations();
-  const [offset, setOffset] = React.useState(0);
+  const { state } = useHeaderMiddle();
   const { user } = useAuth();
 
-  React.useEffect(() => {
-    const onScroll = () => {
-      setOffset(document.body.scrollTop || document.documentElement.scrollTop);
-    };
-    document.addEventListener('scroll', onScroll, { passive: true });
-    return () => document.removeEventListener('scroll', onScroll);
-  }, []);
-
-  const getFavoritesQuery = useQuery({
-    queryKey: ['favorites'],
-    queryFn: () => getFavorites()
-  });
-
-  const favorites = getFavoritesQuery.data?.data.result || [];
-
   return (
-    <div className={cn('bg-background', { 'fixed inset-x-0 top-0 z-50 border-b': offset > 32 })}>
+    <div
+      className={cn('bg-background', { 'fixed inset-x-0 top-0 z-50 border-b': state.offset > 32 })}
+    >
       <div className='mx-auto flex h-16 max-w-[1272px] items-center gap-4 px-2 md:px-4'>
         <Link href='/'>
           <div className='flex items-center justify-center gap-1'>
@@ -68,21 +54,30 @@ export const HeaderMiddle = () => {
           </Link>
           <Link
             href='/user/favorites'
-            className='hover:text-secondary relative flex flex-col items-center transition-colors'
+            className='hover:text-secondary flex flex-col items-center transition-colors'
           >
-            {!!favorites.length && (
-              <div className='bg-secondary text-secondary-foreground absolute -top-1 right-3 flex size-4 items-center justify-center rounded-full text-xs font-bold'>
-                {favorites.length}
-              </div>
-            )}
-            <HeartIcon />
+            <div className='relative'>
+              {!!state.favoritesLength.length && (
+                <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
+                  {state.favoritesLength.length}
+                </div>
+              )}
+              <HeartIcon />
+            </div>
             <span className='hidden text-sm font-medium lg:inline'>{t('Favorites')}</span>
           </Link>
           <Link
             href='/cart'
             className='hover:text-secondary flex flex-col items-center transition-colors'
           >
-            <ShoppingCartIcon />
+            <div className='relative'>
+              {!!state.cartItemsLength.length && (
+                <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
+                  {state.cartItemsLength.length}
+                </div>
+              )}
+              <ShoppingCartIcon />
+            </div>
             <span className='hidden text-sm font-medium lg:inline'>{t('Cart')}</span>
           </Link>
           {user ? (

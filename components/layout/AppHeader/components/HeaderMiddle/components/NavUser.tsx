@@ -1,4 +1,4 @@
-import { EditIcon, ListChecksIcon, LogOutIcon, UserCircleIcon } from 'lucide-react';
+import { EditIcon, ListChecksIcon, LogOutIcon, MapPinIcon, UserCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -7,7 +7,6 @@ import {
   DropdownMenuContent,
   DropdownMenuGroup,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
@@ -31,14 +30,14 @@ export const NavUser = ({ ...props }: Props) => {
       <DropdownMenuTrigger {...props} />
       {user && (
         <DropdownMenuContent align='end' className='w-56' sideOffset={-3}>
-          <DropdownMenuLabel className='font-normal'>
-            <div className='flex flex-col space-y-1'>
+          <DropdownMenuItem asChild className='items-start gap-0 font-normal'>
+            <Link href='/user/dashboard' className='flex flex-col space-y-1'>
               <p className='text-sm leading-none font-medium'>{user.full_name}</p>
               <p className='text-muted-foreground text-xs leading-none'>
                 {formatPhoneNumber(user.phone_number)}
               </p>
-            </div>
-          </DropdownMenuLabel>
+            </Link>
+          </DropdownMenuItem>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
             <DropdownMenuItem asChild>
@@ -57,6 +56,12 @@ export const NavUser = ({ ...props }: Props) => {
               <Link href='/user//orders/all'>
                 <ListChecksIcon />
                 {t('My orders')}
+              </Link>
+            </DropdownMenuItem>
+            <DropdownMenuItem asChild>
+              <Link href='/user/addresses'>
+                <MapPinIcon />
+                {t('My addresses')}
               </Link>
             </DropdownMenuItem>
           </DropdownMenuGroup>

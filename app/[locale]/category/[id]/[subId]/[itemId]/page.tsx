@@ -15,7 +15,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { categoryData } from '@/fake-data/category';
-import { filters } from '@/fake-data/filters';
+import { getBrands } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string; subId: string; itemId: string }>;
@@ -35,6 +35,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const ItemCategoryPage = async ({ params }: Props) => {
   const { id, subId, itemId } = await params;
   const t = await getTranslations();
+  const brandsResponse = await getBrands();
+  const brands = brandsResponse.data.result || [];
 
   const itemCategory = categoryData
     .find((item) => item.id === +id)
@@ -42,6 +44,26 @@ const ItemCategoryPage = async ({ params }: Props) => {
     ?.product_item_categories.find((item) => item.id === +itemId);
 
   if (!itemCategory) return notFound();
+
+  const filters: Filter[] = [
+    {
+      request_var: 'price',
+      type: 'SLIDER',
+      name: t('Price'),
+      filter_items: [],
+      from: 0,
+      to: 1000000
+    },
+    {
+      name: t('Brand'),
+      type: 'RADIO',
+      request_var: 'brand',
+      filter_items: brands.map((brand) => ({
+        value: String(brand.id),
+        label: brand.name
+      }))
+    }
+  ];
 
   return (
     <div>

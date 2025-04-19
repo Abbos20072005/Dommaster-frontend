@@ -10,24 +10,14 @@ import { cn } from '@/lib/utils';
 
 interface Props {
   product: Product;
-  setLockParentScroll?: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export const ProductImagesMobile = ({ product, setLockParentScroll }: Props) => {
+export const ProductImagesMobile = ({ product }: Props) => {
   const [api, setApi] = React.useState<CarouselApi>();
   const [current, setCurrent] = React.useState(0);
 
   React.useEffect(() => {
-    if (!api || !setLockParentScroll) return;
-    api.on('pointerDown', () => setLockParentScroll(true));
-    api.on('pointerUp', () => setLockParentScroll(false));
-  }, [api, setLockParentScroll]);
-
-  React.useEffect(() => {
-    if (!api) {
-      return;
-    }
-
+    if (!api) return;
     setCurrent(api.selectedScrollSnap() + 1);
 
     api.on('select', () => {
@@ -35,20 +25,9 @@ export const ProductImagesMobile = ({ product, setLockParentScroll }: Props) => 
     });
   }, [api]);
 
-  const stopPropagation = (e: React.MouseEvent | React.TouchEvent) => {
-    e.stopPropagation();
-  };
-
   return (
     <div className='md:hidden'>
-      <Carousel
-        setApi={setApi}
-        onMouseDown={stopPropagation}
-        onMouseMove={stopPropagation}
-        onPointerDown={stopPropagation}
-        onTouchMove={stopPropagation}
-        onTouchStart={stopPropagation}
-      >
+      <Carousel setApi={setApi}>
         <CarouselContent>
           {product.images.map((image, i) => (
             <CarouselItem key={image.id}>

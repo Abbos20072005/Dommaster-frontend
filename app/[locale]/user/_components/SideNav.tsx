@@ -21,7 +21,8 @@ const navLinks = [
     items: [
       { href: '/user/reviews', label: 'My reviews and questions' },
       { href: '/user/promo', label: 'Promo codes' },
-      { href: '/user/personal-info', label: 'Personal info' }
+      { href: '/user/personal-info', label: 'Personal info' },
+      { href: '/user/addresses', label: 'My addresses' }
     ]
   },
   {

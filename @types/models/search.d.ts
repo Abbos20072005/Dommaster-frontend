@@ -1,0 +1,1 @@
+type SearchResponse = ApiResponse<string[]>;

@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 
 import { MessageSquareTextIcon } from 'lucide-react';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
@@ -45,6 +45,13 @@ export async function generateMetadata(): Promise<Metadata> {
     description: 'Dommaster'
   };
 }
+
+export const viewport: Viewport = {
+  initialScale: 1,
+  maximumScale: 1,
+  minimumScale: 1,
+  userScalable: false
+};
 
 const RootLayout = async ({ children, params }: Readonly<Props>) => {
   // Ensure that the incoming `locale` is valid

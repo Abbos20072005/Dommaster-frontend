@@ -19,7 +19,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
           fill
           alt={product.name}
           className='absolute inset-0 z-0 object-contain'
-          src={product.images[0].image}
+          src={product.images[0]?.image ?? '/product/no-image.png'}
           priority
         />
         {product.images.length > 1 &&

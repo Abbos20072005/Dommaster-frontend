@@ -2,16 +2,13 @@
 
 import React from 'react';
 
-import type { CarouselApi } from '@/components/ui/carousel';
-
 import { ProductCard } from '@/components/modules/product';
 import {
   Carousel,
   CarouselContent,
   CarouselItem,
   CarouselNext,
-  CarouselPrevious,
-  useNestedEmblaCarousel
+  CarouselPrevious
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
 
@@ -21,9 +18,6 @@ type Props = React.ComponentProps<'div'> & {
 };
 
 export const ProductList = ({ view = 'carousel', products, className, ...props }: Props) => {
-  const [api, setApi] = React.useState<CarouselApi>();
-  const setLockParentScroll = useNestedEmblaCarousel(api);
-
   return (
     <>
       {view === 'grid' && (
@@ -40,20 +34,29 @@ export const ProductList = ({ view = 'carousel', products, className, ...props }
         </div>
       )}
       {view === 'carousel' && (
-        <Carousel setApi={setApi} opts={{ align: 'start' }}>
-          <CarouselContent className={cn('py-4', className)} {...props}>
-            {products.map((product) => (
-              <CarouselItem
-                key={product.id}
-                className='basis-[250px] sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5'
-              >
-                <ProductCard product={product} setLockParentScroll={setLockParentScroll} />
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <CarouselPrevious />
-          <CarouselNext />
-        </Carousel>
+        <>
+          <div className={cn('relative overflow-y-auto py-4 md:hidden', className)} {...props}>
+            <div className='flex gap-2'>
+              {products.map((product) => (
+                <ProductCard key={product.id} className='min-w-[200px]' product={product} />
+              ))}
+            </div>
+          </div>
+          <Carousel className='hidden md:block' opts={{ align: 'start' }}>
+            <CarouselContent className={cn('py-4', className)} {...props}>
+              {products.map((product) => (
+                <CarouselItem
+                  key={product.id}
+                  className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5'
+                >
+                  <ProductCard className='h-full' product={product} />
+                </CarouselItem>
+              ))}
+            </CarouselContent>
+            <CarouselPrevious />
+            <CarouselNext />
+          </Carousel>
+        </>
       )}
     </>
   );

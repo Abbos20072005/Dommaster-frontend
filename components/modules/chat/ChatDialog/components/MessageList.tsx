@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { differenceInDays, format } from 'date-fns';
+import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
@@ -74,8 +74,9 @@ export const MessageList = () => {
                 </p>
               </div>
             </li>
-            {messages.length > index + 1 &&
-            differenceInDays(message.created_at, messages[index + 1].created_at) ? (
+            {index !== 0 &&
+            new Date(message.created_at).getDay() -
+              new Date(messages[index - 1].created_at).getDay() ? (
               <li className='flex items-center justify-center'>
                 <Badge variant='outline'>{format(message.created_at, 'dd.MM')}</Badge>
               </li>

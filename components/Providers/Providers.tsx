@@ -1,5 +1,6 @@
 'use client';
 
+import { YMaps } from '@pbe/react-yandex-maps';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React from 'react';
@@ -16,7 +17,14 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
     <QueryClientProvider client={queryClient}>
       <NuqsAdapter>
         <AuthProvider>
-          <TooltipProvider>{children}</TooltipProvider>
+          <YMaps
+            query={{
+              apikey: process.env.YANDEX_KEY,
+              suggest_apikey: process.env.SUGGEST_KEY
+            }}
+          >
+            <TooltipProvider>{children}</TooltipProvider>
+          </YMaps>
         </AuthProvider>
       </NuqsAdapter>
     </QueryClientProvider>

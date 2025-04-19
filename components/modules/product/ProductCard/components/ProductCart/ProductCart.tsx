@@ -4,8 +4,9 @@ import { CheckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { CartCounter } from '@/components/modules/cart';
+import { CartCounter, useProductCart } from '@/components/modules/cart';
 import { Button } from '@/components/ui/button';
+import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 
 interface Props {
@@ -14,22 +15,27 @@ interface Props {
 
 export const ProductCart = ({ product }: Props) => {
   const t = useTranslations();
-  const [cartCount, setCartCount] = React.useState(0);
-
-  const onAddToCart = () => {
-    setCartCount(1);
-  };
-
-  if (cartCount === 0)
+  const { state, functions } = useProductCart(product);
+  if (state.cartCount === 0)
     return (
-      <Button className='w-full' size='sm' onClick={onAddToCart}>
+      <Button
+        className='w-full'
+        disabled={state.isCartAdding}
+        size='sm'
+        onClick={functions.onAddToCart}
+      >
+        <Spinner show={state.isCartAdding} />
         {t('To cart')}
       </Button>
     );
 
   return (
     <div className='grid grid-cols-[2fr_1fr] gap-2'>
-      <CartCounter maxValue={product.quantity} value={cartCount} onChange={setCartCount} />
+      <CartCounter
+        maxValue={product.quantity}
+        value={state.cartCount}
+        onChange={functions.onCartCountChange}
+      />
       <Button asChild className='shrink-0' size='sm' variant='outline'>
         <Link href='/cart'>
           <CheckIcon />

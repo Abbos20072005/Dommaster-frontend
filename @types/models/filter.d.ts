@@ -12,6 +12,6 @@ interface Filter {
 interface FilterItem {
   count?: number;
   label: string;
-  swatch_data: null;
+  swatch_data?: null;
   value: string;
 }

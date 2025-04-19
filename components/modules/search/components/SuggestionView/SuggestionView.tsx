@@ -1,8 +1,14 @@
+import { useQuery } from '@tanstack/react-query';
 import { ClockIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { productsData } from '@/fake-data/products';
 import { Link } from '@/i18n/navigation';
+import { formatPrice } from '@/lib/utils';
+import { getSearch } from '@/utils/api/requests';
 import { useSearchHistoryStore } from '@/utils/stores';
 
 interface Props {
@@ -18,6 +24,13 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
   const searchHistory = searchHistoryStore.searchHistory
     .filter((item) => item.includes(searchInput))
     .slice(0, 5);
+
+  const getSearchQuery = useQuery({
+    queryKey: ['search', searchInput],
+    queryFn: () => getSearch({ config: { params: { q: searchInput } } })
+  });
+
+  const searchResults = getSearchQuery.data?.data.result || [];
 
   return (
     <div className='divide-y'>
@@ -63,25 +76,27 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
           </ul>
         </div>
       )}
-      <div className='px-3 py-3'>
-        <ul>
-          {Array.from({ length: 5 }).map((_, i) => (
-            <li key={i}>
-              <Link
-                href={`/search?q=value ${i + 1}`}
-                className='hover:bg-muted block rounded-md py-2.5 transition-colors md:px-4'
-                onClick={() => {
-                  onClose();
-                  searchHistoryStore.addSearchHistory(`value ${i + 1}`);
-                  setSearchInput(`value ${i + 1}`);
-                }}
-              >
-                <span className='text-sm'>value {i + 1}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </div>
+      {!!searchResults.length && (
+        <div className='px-3 py-3'>
+          <ul>
+            {searchResults.map((item) => (
+              <li key={item}>
+                <Link
+                  href={`/search?q=${item}`}
+                  className='hover:bg-muted block rounded-md py-2.5 transition-colors md:px-4'
+                  onClick={() => {
+                    onClose();
+                    searchHistoryStore.addSearchHistory(item);
+                    setSearchInput(item);
+                  }}
+                >
+                  <span className='text-sm'>{item}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
       {/*{!!searchInput && (*/}
       {/*  <div className='p-3'>*/}
       {/*    <p className='py-2.5 text-xs font-bold uppercase'>{t('Search in categories')}:</p>*/}
@@ -109,38 +124,40 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
       {/*    </ul>*/}
       {/*  </div>*/}
       {/*)}*/}
-      {/*<div className='p-3'>*/}
-      {/*  {productsData.map((product) => (*/}
-      {/*    <Link href={`/product/${product.id}`} key={product.id}>*/}
-      {/*      <article className='hover:bg-muted group flex gap-2 rounded-md px-4 py-2.5 transition-colors'>*/}
-      {/*        <Image*/}
-      {/*          alt={'product'}*/}
-      {/*          className='bg-background size-14 rounded-md object-contain'*/}
-      {/*          height={56}*/}
-      {/*          src={product.cover_image}*/}
-      {/*          width={56}*/}
-      {/*          onClick={onClose}*/}
-      {/*        />*/}
-      {/*        <div className='space-y-1'>*/}
-      {/*          <p className='text-xs'>{product.title}</p>*/}
-      {/*          <div className='flex items-center gap-2'>*/}
-      {/*            <p className='text-sm font-bold'>*/}
-      {/*              {formatPrice(product.discount_price ?? product.price)} {t('som')}*/}
-      {/*            </p>*/}
-      {/*            {product.discount_price && (*/}
-      {/*              <div className='flex items-center gap-2'>*/}
-      {/*                <span className='text-xs line-through'>*/}
-      {/*                  {product.price} {t('som')}*/}
-      {/*                </span>*/}
-      {/*                <Badge variant='secondary'>-{product.discount}%</Badge>*/}
-      {/*              </div>*/}
-      {/*            )}*/}
-      {/*          </div>*/}
-      {/*        </div>*/}
-      {/*      </article>*/}
-      {/*    </Link>*/}
-      {/*  ))}*/}
-      {/*</div>*/}
+      {!searchInput && (
+        <div className='p-3'>
+          {productsData.map((product) => (
+            <Link href={`/product/${product.id}`} key={product.id}>
+              <article className='hover:bg-muted group flex gap-2 rounded-md px-4 py-2.5 transition-colors'>
+                <Image
+                  alt={'product'}
+                  className='bg-background size-14 rounded-md object-contain'
+                  height={56}
+                  src={product.images[0]?.image ?? '/product/no-image.png'}
+                  width={56}
+                  onClick={onClose}
+                />
+                <div className='space-y-1'>
+                  <p className='text-xs'>{product.name}</p>
+                  <div className='flex items-center gap-2'>
+                    <p className='text-sm font-bold'>
+                      {formatPrice(product.discount_price ?? product.price)} {t('som')}
+                    </p>
+                    {product.discount_price && (
+                      <div className='flex items-center gap-2'>
+                        <span className='text-xs line-through'>
+                          {product.price} {t('som')}
+                        </span>
+                        <Badge variant='secondary'>-{product.discount}%</Badge>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </article>
+            </Link>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

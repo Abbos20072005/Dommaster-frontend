@@ -61,8 +61,12 @@ export const ProductFilterPaginated = ({ filters, queries }: Props) => {
         </div>
         {getProductsQuery.isFetching ? (
           <ProductListSkeleton view='grid' />
-        ) : (
+        ) : products.length ? (
           <ProductList view='grid' products={products} />
+        ) : (
+          <div className='flex h-[50vh] items-center justify-center'>
+            <h1 className='text-lg font-semibold'>No products found</h1>
+          </div>
         )}
         <Pagination totalCount={getProductsQuery.data?.data.result.totalElements} />
       </div>
