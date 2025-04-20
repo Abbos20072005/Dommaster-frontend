@@ -1,5 +1,5 @@
 export * from './auth/customer';
-export * from './auth/customer/address';
+export * from './auth/customer/addresses';
 export * from './auth/forgot-password';
 export * from './auth/login';
 export * from './auth/register';
@@ -12,8 +12,8 @@ export * from './brands';
 export * from './brands/{id}';
 export * from './cart';
 export * from './categories';
-export * from './categories/{id}';
+export * from './comments';
 export * from './favorites';
 export * from './products';
-export * from './products/{id}';
+export * from './questions';
 export * from './search';

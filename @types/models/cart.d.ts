@@ -1,5 +1,14 @@
+interface CartItem {
+  id: number;
+  is_checked: boolean;
+  product: Product;
+  quantity: number;
+}
+
+type CartItemResponse = ApiResponse<CartItem>;
+
 interface CartList {
-  cart_items: Product[];
+  cart_items: CartItem[];
   id: number;
 }
 

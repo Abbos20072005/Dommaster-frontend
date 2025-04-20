@@ -1,14 +1,13 @@
 'use client';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { productsData } from '@/fake-data/products';
-import { getCartList, postCartBulk } from '@/utils/api/requests';
+import { getCartList, patchCart, postCartBulk } from '@/utils/api/requests';
 
 import { ProductCartItem } from './ProductCartItem';
 
@@ -22,27 +21,31 @@ export const ProductCartList = () => {
 
   const cartItems = getCartListQuery.data?.data.result.cart_items || [];
 
-  const [selectedProducts, setSelectedProducts] = React.useState<number[]>([]);
-
   const isAllChecked = cartItems.every((item) => item.is_checked);
 
-  const onToggleProduct = (id: number) => {
-    setSelectedProducts((prev) =>
-      prev.includes(id) ? prev.filter((item) => item !== id) : [...prev, id]
-    );
-  };
-
-  const queryClient = useQueryClient();
   const postCartBulkMutation = useMutation({
     mutationFn: postCartBulk,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
+      getCartListQuery.refetch();
     }
   });
 
   const onToggleAll = () => {
     postCartBulkMutation.mutate({
       data: { is_checked: !isAllChecked }
+    });
+  };
+
+  const patchCartMutation = useMutation({
+    mutationFn: patchCart,
+    onSuccess: () => {
+      getCartListQuery.refetch();
+    }
+  });
+
+  const onToggleProduct = (product: number, is_checked: boolean) => {
+    patchCartMutation.mutate({
+      data: { is_checked, product }
     });
   };
 
@@ -55,12 +58,12 @@ export const ProductCartList = () => {
         </div>
       </CardHeader>
       <CardContent className='p-4 pt-0'>
-        {productsData.slice(0, 3).map((product) => (
-          <div key={product.id} className='flex items-center gap-2 border-t'>
+        {cartItems.map((item) => (
+          <div key={item.id} className='flex items-center gap-2 border-t'>
             <ProductCartItem
-              checked={selectedProducts.includes(product.id)}
-              onCheckedChange={() => onToggleProduct(product.id)}
-              product={product}
+              checked={item.is_checked}
+              onCheckedChange={(checked) => onToggleProduct(item.product.id, checked)}
+              product={item.product}
             />
           </div>
         ))}

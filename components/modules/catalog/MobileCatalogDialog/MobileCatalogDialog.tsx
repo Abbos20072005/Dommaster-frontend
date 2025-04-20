@@ -38,7 +38,7 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger {...props}>{children}</DialogTrigger>
-      <DialogContent className='flex h-svh flex-col gap-0 p-0' hideCloseButton>
+      <DialogContent className='flex h-dvh flex-col gap-0 p-0' hideCloseButton>
         <DialogTitle className='sr-only'>{t('Catalog')}</DialogTitle>
         <div className='flex items-center border-b md:hidden'>
           <Button className='size-13' size='icon' variant='ghost' onClick={goBack}>

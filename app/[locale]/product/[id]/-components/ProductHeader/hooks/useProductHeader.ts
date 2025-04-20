@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query';
+import { useSuspenseQuery } from '@tanstack/react-query';
 import { useParams } from 'next/navigation';
 
 import { productsData } from '@/fake-data/products';
@@ -7,7 +7,7 @@ import { getProductById } from '@/utils/api/requests';
 export const useProductHeader = () => {
   const { id } = useParams<{ id: string }>();
 
-  const getProductQuery = useQuery({
+  const getProductQuery = useSuspenseQuery({
     queryKey: ['product', id],
     queryFn: () => getProductById({ id })
   });

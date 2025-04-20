@@ -4,7 +4,7 @@ import { ShoppingCartIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { CartCounter } from '@/components/modules/cart';
+import { CartCounter, useProductCart } from '@/components/modules/cart';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
@@ -18,14 +18,10 @@ interface Props {
 
 export const ProductCart = ({ product }: Props) => {
   const t = useTranslations();
-  const [cartCount, setCartCount] = React.useState(0);
-
-  const onAddToCart = () => {
-    setCartCount(1);
-  };
+  const { state, functions } = useProductCart(product);
 
   return (
-    <Card className='border-primary sticky top-20 space-y-4 p-5' variant='outline'>
+    <Card className='border-primary sticky top-20 space-y-4 p-4' variant='outline'>
       {product.discount && (
         <>
           <CardHeader className='p-0'>
@@ -48,8 +44,8 @@ export const ProductCart = ({ product }: Props) => {
         </div>
       </CardContent>
       <CardFooter className='p-0'>
-        {cartCount === 0 ? (
-          <Button className='w-full' onClick={onAddToCart}>
+        {state.cartCount === 0 ? (
+          <Button className='w-full' onClick={functions.onAddToCart}>
             <ShoppingCartIcon />
             {t('Add to cart')}
           </Button>
@@ -58,8 +54,8 @@ export const ProductCart = ({ product }: Props) => {
             <CartCounter
               className='bg-muted h-11 rounded-md'
               maxValue={product.quantity}
-              value={cartCount}
-              onChange={setCartCount}
+              value={state.cartCount}
+              onChange={functions.onCartCountChange}
             />
             <Button asChild className='shrink-0' variant='outline'>
               <Link href='/cart'>{t('To cart')}</Link>

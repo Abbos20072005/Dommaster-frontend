@@ -11,7 +11,6 @@ export const useProductCart = (product: Product) => {
     mutationFn: postCart,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
-      setCartCount(1);
     }
   });
 
@@ -19,16 +18,17 @@ export const useProductCart = (product: Product) => {
     mutationFn: patchCart,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
-      setCartCount(cartCount);
     }
   });
 
   const onAddToCart = () => {
     postCartMutation.mutate({ data: { product: product.id, quantity: 1 } });
+    setCartCount(1);
   };
 
   const onCartCountChange = (value: number) => {
     patchCartMutation.mutate({ data: { product: product.id, quantity: value } });
+    setCartCount(value);
   };
 
   return {

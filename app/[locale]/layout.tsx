@@ -68,25 +68,21 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
     >
       <Providers>
         <NextIntlClientProvider>
-          <body className='min-h-svh'>
-            <div className='flex h-svh flex-col md:block md:h-auto md:min-h-screen'>
-              <div className='flex h-svh flex-1 flex-col overflow-y-auto md:h-auto md:min-h-screen md:overflow-y-visible'>
-                <AppHeader />
-                <main className='w-full flex-1 flex-grow'>{children}</main>
-                <AppFooter />
-              </div>
-              <BottomNav />
-              <Toaster />
-              <ChatDialog asChild>
-                <Button
-                  className='fixed right-12 bottom-12 z-50 hidden rounded-full md:flex'
-                  size='iconLg'
-                  variant='secondary'
-                >
-                  <MessageSquareTextIcon className='size-6' />
-                </Button>
-              </ChatDialog>
-            </div>
+          <body>
+            <AppHeader />
+            <main>{children}</main>
+            <AppFooter />
+            <BottomNav />
+            <Toaster />
+            <ChatDialog asChild>
+              <Button
+                className='fixed right-12 bottom-12 z-50 hidden rounded-full md:flex'
+                size='iconLg'
+                variant='secondary'
+              >
+                <MessageSquareTextIcon className='size-6' />
+              </Button>
+            </ChatDialog>
           </body>
         </NextIntlClientProvider>
       </Providers>

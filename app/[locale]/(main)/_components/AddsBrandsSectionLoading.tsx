@@ -4,7 +4,7 @@ import { BaseLayout } from '@/components/layout';
 import { ProductListSkeleton } from '@/components/modules/product';
 import { Skeleton } from '@/components/ui/skeleton';
 
-export const ProductsSectionLoading = () => {
+export const AddsBrandsSectionLoading = () => {
   return (
     <>
       {Array.from({ length: 2 }).map((_, index) => (

@@ -60,7 +60,7 @@ export const MobileSearch = ({ children, ...props }: Props) => {
       <DialogTrigger asChild {...props}>
         {children}
       </DialogTrigger>
-      <DialogContent className='flex h-svh flex-col gap-0 p-0' hideCloseButton>
+      <DialogContent className='flex h-dvh flex-col gap-0 p-0' hideCloseButton>
         <DialogHeader className='flex flex-row border-b p-2'>
           <DialogTitle className='sr-only'>{t('Search')}</DialogTitle>
           <DialogClose asChild>

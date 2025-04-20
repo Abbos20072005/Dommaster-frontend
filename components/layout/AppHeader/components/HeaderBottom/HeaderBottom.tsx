@@ -17,7 +17,7 @@ export const HeaderBottom = () => {
   const [offset, setOffset] = React.useState(0);
   const [open, setOpen] = React.useState(false);
   const [tab, setTab] = React.useState<number>(-1);
-  const openDebounced = useDebouncedValue(open, 100);
+  const openDebounced = useDebouncedValue(open, 200);
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -57,7 +57,7 @@ export const HeaderBottom = () => {
       </BaseLayout>
       <div
         className={cn(
-          'bg-background invisible absolute inset-x-0 top-full z-50 scale-96 py-6 opacity-0 shadow-[0_100px_100px_rgba(0,0,0,0.2)] transition-all',
+          'bg-background invisible absolute inset-x-0 top-full z-20 scale-96 py-6 opacity-0 shadow-[0_150px_200px_rgba(0,0,0,0.2)] transition-all',
           { 'visible scale-100 opacity-100': openDebounced }
         )}
       >

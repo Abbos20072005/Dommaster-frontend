@@ -8,10 +8,10 @@ interface Props {
 
 export const SubCategories = ({ category }: Props) => {
   return category.sub_categories.map((subCategory) => (
-    <div key={subCategory.id} className='space-y-4'>
+    <div key={subCategory.id} className='space-y-2'>
       <Link
         href={`/category/${category.id}/${subCategory.id}`}
-        className='hover:text-secondary mb-4 inline-block text-lg font-bold transition-colors'
+        className='hover:text-secondary mb-3 inline-block text-lg font-bold transition-colors'
       >
         {subCategory.name}
       </Link>

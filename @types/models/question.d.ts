@@ -1,6 +1,19 @@
-interface Question {
-  author: User;
+interface ProductQuestion {
+  created_at: string;
+  customer: User;
   id: number;
-  published_at: string;
+  question: string;
+  replies: {
+    comment: string;
+    created_at: string;
+    customer: User;
+    id: number;
+  }[];
+}
+
+interface ProductQuestionRequest {
   question: string;
 }
+
+type ProductQuestionsResponse = ApiResponse<Pagination<ProductQuestion>>;
+type ProductQuestionResponse = ApiResponse<ProductQuestion>;

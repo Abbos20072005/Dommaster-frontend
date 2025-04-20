@@ -11,7 +11,7 @@ export const ProductDetails = ({ description }: Props) => {
 
   return (
     <div>
-      <p className='mb-8 text-3xl font-bold'>{t('Details')}</p>
+      <p className='mb-8 hidden text-3xl font-bold md:block'>{t('Details')}</p>
       <div dangerouslySetInnerHTML={{ __html: description }} />
     </div>
   );

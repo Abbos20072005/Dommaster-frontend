@@ -1,8 +1,10 @@
 'use server';
 
-import { headers } from 'next/headers';
+import { cookies } from 'next/headers';
+
+import { COOKIES } from '@/utils/constants';
 
 export const getServerLocale = async () => {
-  const headersStore = await headers();
-  return headersStore.get('Accept-Language')?.slice(0, 2);
+  const cookieStore = await cookies();
+  return cookieStore.get(COOKIES.LOCALE)?.value;
 };

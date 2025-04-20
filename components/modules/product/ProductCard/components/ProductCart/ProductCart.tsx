@@ -16,6 +16,7 @@ interface Props {
 export const ProductCart = ({ product }: Props) => {
   const t = useTranslations();
   const { state, functions } = useProductCart(product);
+
   if (state.cartCount === 0)
     return (
       <Button

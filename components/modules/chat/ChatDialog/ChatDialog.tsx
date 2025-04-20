@@ -50,7 +50,7 @@ export const ChatDialog = ({ children, ...props }: Props) => {
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger {...props}>{children}</DialogTrigger>
       <DialogContent
-        className='flex h-svh w-screen flex-col gap-0 p-0 sm:max-w-auto md:h-full md:max-h-[700px] md:w-[500px]'
+        className='flex h-dvh w-screen flex-col gap-0 p-0 sm:max-w-auto md:h-full md:max-h-[700px] md:w-[500px]'
         hideCloseButton
       >
         <DialogHeader className='hidden flex-row justify-between p-5 md:flex'>

@@ -15,7 +15,7 @@ api.interceptors.request.use(async (config) => {
   let locale;
   if (typeof window === 'undefined') {
     token = await getToken();
-    locale = getServerLocale();
+    locale = await getServerLocale();
   } else {
     token = useAuthStore.getState().auth.accessToken;
     locale = Cookies.get('NEXT_LOCALE') || 'en';

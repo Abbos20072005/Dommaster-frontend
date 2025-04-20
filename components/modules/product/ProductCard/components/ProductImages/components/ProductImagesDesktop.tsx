@@ -13,7 +13,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
   const [tab, setTab] = React.useState(-1);
 
   return (
-    <div className='hidden md:block' onMouseLeave={() => setTab(-1)}>
+    <div className='hidden md:block'>
       <div className='relative aspect-square'>
         <Image
           fill

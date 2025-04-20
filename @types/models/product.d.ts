@@ -1,5 +1,6 @@
 interface Product {
   categories: Category[];
+  comments_quantity: number;
   description: string | null;
   discount: number | null;
   discount_price: number | null;
@@ -7,28 +8,27 @@ interface Product {
   in_cart: boolean;
   in_cart_quantity: number;
   is_checked: boolean;
+  is_commented: boolean;
   is_favourite: boolean;
   name: string;
   price: number;
   quantity: number;
-  questions: Question[];
+  questions_quantity: number;
   rating: number | null;
-  reviews: Review[];
-  reviews_count: number;
   breadcrumbs: {
     id: number;
     title: string;
     url: string;
   }[];
+  characteristics: {
+    title: string;
+    value: string;
+    unit: string;
+  }[];
   images: {
     id: number;
     product: number;
     image: string;
-  }[];
-  properties: {
-    title: string;
-    value: string;
-    unit: string;
   }[];
 }
 

@@ -1,5 +1,5 @@
+export { ProductCharacteristics } from './ProductCharacteristics';
+export { ProductComments } from './ProductComments/ProductComments';
 export { ProductDescription } from './ProductDescription/ProductDescription';
-export { ProductDetails } from './ProductDetails/ProductDetails';
-export { ProductProperties } from './ProductProperties/ProductProperties';
+export { ProductDetails } from './ProductDetails';
 export { ProductQuestions } from './ProductQuestions/ProductQuestions';
-export { ProductReviews } from './ProductReviews/ProductReviews';

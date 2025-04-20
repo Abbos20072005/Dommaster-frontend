@@ -3,7 +3,9 @@ export const productsData: Product[] = [
     id: 1,
     name: 'Мойка для кухни Granula Standard 50х42х19 см врезная кварц белая',
     price: 5000,
+    is_commented: false,
     is_checked: false,
+    questions_quantity: 0,
     discount_price: null,
     discount: null,
     quantity: 10,
@@ -27,65 +29,10 @@ export const productsData: Product[] = [
       }
     ],
     is_favourite: true,
-    questions: [
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      },
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      }
-    ],
-    reviews: [
-      {
-        id: 1,
-        rating: 4.5,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-        ],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      },
-      {
-        id: 2,
-        rating: 4,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 2,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      }
-    ],
+    comments_quantity: 10,
     description: 'string',
     rating: 4.5,
-    reviews_count: 10,
-    properties: [
+    characteristics: [
       {
         title: 'Артикул',
         unit: '',
@@ -154,6 +101,7 @@ export const productsData: Product[] = [
     discount_price: null,
     discount: null,
     is_favourite: false,
+    is_commented: false,
     in_cart_quantity: 0,
     in_cart: false,
     quantity: 10,
@@ -174,65 +122,11 @@ export const productsData: Product[] = [
         product: 3
       }
     ],
-    questions: [
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      },
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      }
-    ],
-    reviews: [
-      {
-        id: 1,
-        rating: 4.5,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-        ],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      },
-      {
-        id: 2,
-        rating: 4,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 2,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      }
-    ],
     description: 'string',
+    questions_quantity: 10,
+    comments_quantity: 11,
     rating: 4.5,
-    reviews_count: 10,
-    properties: [
+    characteristics: [
       {
         title: 'Артикул',
         unit: '',
@@ -321,65 +215,12 @@ export const productsData: Product[] = [
         product: 3
       }
     ],
-    questions: [
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      },
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      }
-    ],
-    reviews: [
-      {
-        id: 1,
-        rating: 4.5,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-        ],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      },
-      {
-        id: 2,
-        rating: 4,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 2,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      }
-    ],
+    is_commented: false,
+    questions_quantity: 10,
+    comments_quantity: 11,
     description: 'string',
     rating: 4.5,
-    reviews_count: 10,
-    properties: [
+    characteristics: [
       {
         title: 'Артикул',
         unit: '',
@@ -468,65 +309,12 @@ export const productsData: Product[] = [
         product: 3
       }
     ],
-    questions: [
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      },
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      }
-    ],
-    reviews: [
-      {
-        id: 1,
-        rating: 4.5,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-        ],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      },
-      {
-        id: 2,
-        rating: 4,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 2,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      }
-    ],
+    is_commented: false,
+    questions_quantity: 10,
+    comments_quantity: 11,
     description: 'string',
     rating: 4.5,
-    reviews_count: 10,
-    properties: [
+    characteristics: [
       {
         title: 'Артикул',
         unit: '',
@@ -615,65 +403,12 @@ export const productsData: Product[] = [
     is_favourite: false,
     in_cart_quantity: 1,
     in_cart: true,
-    questions: [
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      },
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      }
-    ],
-    reviews: [
-      {
-        id: 1,
-        rating: 4.5,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-        ],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      },
-      {
-        id: 2,
-        rating: 4,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 2,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      }
-    ],
+    is_commented: false,
+    questions_quantity: 10,
+    comments_quantity: 11,
     description: 'string',
     rating: 4.5,
-    reviews_count: 10,
-    properties: [
+    characteristics: [
       {
         title: 'Артикул',
         unit: '',
@@ -762,65 +497,12 @@ export const productsData: Product[] = [
         product: 3
       }
     ],
-    questions: [
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      },
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      }
-    ],
-    reviews: [
-      {
-        id: 1,
-        rating: 4.5,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-        ],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      },
-      {
-        id: 2,
-        rating: 4,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 2,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      }
-    ],
+    is_commented: false,
+    questions_quantity: 10,
+    comments_quantity: 11,
     description: 'string',
     rating: 4.5,
-    reviews_count: 10,
-    properties: [
+    characteristics: [
       {
         title: 'Артикул',
         unit: '',
@@ -909,65 +591,12 @@ export const productsData: Product[] = [
         product: 3
       }
     ],
-    questions: [
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      },
-      {
-        id: 1,
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        published_at: '2022-12-13T14:06:10.157+03:00',
-        question: 'Какой размер мойки?'
-      }
-    ],
-    reviews: [
-      {
-        id: 1,
-        rating: 4.5,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 1,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838',
-          'https://media.apltcdn.com/media_files/660a/82a7/a5ab/7500/14ff/5218/large.jpg?1711964838'
-        ],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      },
-      {
-        id: 2,
-        rating: 4,
-        comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, voluptates.',
-        author: {
-          id: 2,
-          email: 'example@google.com',
-          full_name: 'John',
-          phone_number: '1234567890'
-        },
-        images: [],
-        published_at: '2022-12-13T14:06:10.157+03:00'
-      }
-    ],
+    is_commented: false,
+    questions_quantity: 10,
+    comments_quantity: 11,
     description: 'string',
     rating: 4.5,
-    reviews_count: 10,
-    properties: [
+    characteristics: [
       {
         title: 'Артикул',
         unit: '',

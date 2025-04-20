@@ -53,7 +53,7 @@ const CartPage = async () => {
             <CartCalculation />
           </div>
         </div>
-        <div className='mt-8'>
+        <div className='mt-8 px-4 md:px-0'>
           <h2 className='text-lg font-bold md:text-2xl'>{t('Frequently bought together')}</h2>
           <ProductList products={productsData} />
         </div>

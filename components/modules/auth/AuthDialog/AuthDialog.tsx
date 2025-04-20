@@ -38,7 +38,7 @@ export const AuthDialog = ({ ...props }: Props) => {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger {...props} />
-      <DialogContent className='h-svh w-full sm:h-auto sm:max-w-[450px]'>
+      <DialogContent className='h-dvh w-full sm:h-auto sm:max-w-[450px]'>
         <Tabs value={tab} onValueChange={setTab as any}>
           <TabsContent value='login'>
             <DialogHeader className='mb-6'>

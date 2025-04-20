@@ -1,5 +1,6 @@
 'use client';
 
+import { useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { CheckIcon, ChevronDownIcon, LanguagesIcon } from 'lucide-react';
 import { useLocale } from 'next-intl';
@@ -26,9 +27,11 @@ export const LocaleSwitcher = () => {
   const pathname = usePathname();
   const params = useParams();
 
+  const queryClient = useQueryClient();
   const onLocaleChange = (locale: Locale) => {
     startTransition(() => {
       Cookies.set('NEXT_LOCALE', locale);
+      queryClient.invalidateQueries();
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
         // are used in combination with a given `pathname`. Since the two will

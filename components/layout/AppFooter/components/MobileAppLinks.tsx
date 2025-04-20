@@ -12,7 +12,7 @@ export const MobileAppLinks = () => {
           <br />
           бонусы
         </p>
-        <p className='text-primary-foreground/60 text-xs'>
+        <p className='text-primary-foreground/60 hidden text-xs md:block'>
           Наведите камеру на QR,
           <br /> чтобы скачать приложение.
         </p>

@@ -28,7 +28,7 @@ export const MobileFilterDrawer = ({ filters }: Props) => {
           Filter
         </Button>
       </DrawerTrigger>
-      <DrawerContent className='mx-auto !max-h-svh w-full max-w-xl'>
+      <DrawerContent className='mx-auto !max-h-dvh w-full max-w-xl'>
         <DrawerHeader className='py-2'>
           <DrawerTitle>Filters</DrawerTitle>
         </DrawerHeader>

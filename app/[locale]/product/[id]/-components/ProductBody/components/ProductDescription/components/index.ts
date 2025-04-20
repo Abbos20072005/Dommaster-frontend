@@ -1,2 +1,2 @@
+export { ProductCharacteristicsPreview } from './ProductCharacteristicsPreview';
 export { ProductImageCarousel } from './ProductImageCarousel';
-export { ProductPropertiesPreview } from './ProductPropertiesPreview';

@@ -2,17 +2,17 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 interface Props {
-  properties: Product['properties'];
+  characteristics: Product['characteristics'];
 }
 
-export const ProductProperties = ({ properties }: Props) => {
+export const ProductCharacteristics = ({ characteristics }: Props) => {
   const t = useTranslations();
 
   return (
     <div>
-      <p className='mb-8 text-3xl font-bold'>{t('Properties')}</p>
+      <p className='mb-8 hidden text-3xl font-bold md:block'>{t('Characteristics')}</p>
       <ul className='space-y-4 text-sm'>
-        {properties.map((item) => (
+        {characteristics.map((item) => (
           <li key={item.title} className='grid grid-cols-2'>
             <div className='after:border-muted-foreground flex h-3.75 flex-1 after:order-1 after:mx-1 after:flex after:flex-1 after:border-b after:border-dashed after:content-[""]'>
               {item.title}

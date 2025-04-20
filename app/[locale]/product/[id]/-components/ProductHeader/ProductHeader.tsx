@@ -1,5 +1,3 @@
-'use client';
-
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -11,11 +9,12 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 
-import { useProductHeader } from './hooks';
+interface Props {
+  product: Product;
+}
 
-export const ProductHeader = () => {
+export const ProductHeader = ({ product }: Props) => {
   const t = useTranslations();
-  const { state } = useProductHeader();
 
   return (
     <div>
@@ -24,7 +23,7 @@ export const ProductHeader = () => {
           <BreadcrumbItem>
             <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>
           </BreadcrumbItem>
-          {state.product?.breadcrumbs.map((breadcrumb) => (
+          {product?.breadcrumbs?.map((breadcrumb) => (
             <React.Fragment key={breadcrumb.id}>
               <BreadcrumbSeparator />
               <BreadcrumbItem>
@@ -35,8 +34,8 @@ export const ProductHeader = () => {
         </BreadcrumbList>
       </Breadcrumb>
 
-      <h1 className='mt-4 mb-6 text-lg leading-6 font-bold md:text-2xl md:leading-8'>
-        {state.product?.name}
+      <h1 className='mt-4 mb-6 hidden text-lg leading-6 font-bold md:block md:text-2xl md:leading-8'>
+        {product?.name}
       </h1>
     </div>
   );

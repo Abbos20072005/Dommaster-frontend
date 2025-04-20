@@ -23,7 +23,7 @@ export const BottomNav = () => {
   const { state } = useBottomNav();
 
   return (
-    <div className='grid grid-cols-5 gap-4 py-2 shadow-md md:hidden'>
+    <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 gap-4 py-2 shadow-md md:hidden'>
       <NavigationLink
         href='/'
         activeClassName='text-foreground'

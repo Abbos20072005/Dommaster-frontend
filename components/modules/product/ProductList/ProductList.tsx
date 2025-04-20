@@ -38,7 +38,11 @@ export const ProductList = ({ view = 'carousel', products, className, ...props }
           <div className={cn('relative overflow-y-auto py-4 md:hidden', className)} {...props}>
             <div className='flex gap-2'>
               {products.map((product) => (
-                <ProductCard key={product.id} className='min-w-[200px]' product={product} />
+                <ProductCard
+                  key={product.id}
+                  className='max-w-[250px] min-w-[200px]'
+                  product={product}
+                />
               ))}
             </div>
           </div>

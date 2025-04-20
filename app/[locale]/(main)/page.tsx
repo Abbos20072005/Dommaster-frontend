@@ -3,14 +3,14 @@ import { Suspense } from 'react';
 import { MobileHeader } from '@/components/layout';
 
 import {
+  AddsBrandsSection,
+  AddsBrandsSectionLoading,
   BannerCarousel,
   BannerCarouselLoading,
   BrandsSection,
   BrandsSectionLoading,
   DiscountProductsSection,
-  PopularCategories,
-  ProductsSection,
-  ProductsSectionLoading
+  PopularCategories
 } from './_components';
 
 const Home = () => {
@@ -28,8 +28,8 @@ const Home = () => {
         <Suspense fallback={<BrandsSectionLoading />}>
           <BrandsSection />
         </Suspense>
-        <Suspense fallback={<ProductsSectionLoading />}>
-          <ProductsSection />
+        <Suspense fallback={<AddsBrandsSectionLoading />}>
+          <AddsBrandsSection />
         </Suspense>
       </div>
     </>

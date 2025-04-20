@@ -1,36 +1,26 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import { notFound } from 'next/navigation';
-import { useQueryState } from 'nuqs';
+import React from 'react';
 
 import { Card } from '@/components/ui/card';
-import { Spinner } from '@/components/ui/spinner';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
 import {
+  ProductCharacteristics,
+  ProductComments,
   ProductDescription,
   ProductDetails,
-  ProductProperties,
-  ProductQuestions,
-  ProductReviews
+  ProductQuestions
 } from './components';
-import { useProductBody } from './hooks';
 
-export const ProductBody = () => {
+interface Props {
+  product: Product;
+}
+
+export const ProductBody = ({ product }: Props) => {
   const t = useTranslations();
-  const { state } = useProductBody();
-  const [tab, setTab] = useQueryState('tab', { defaultValue: 'description' });
-
-  if (state.isLoading) {
-    return (
-      <div className='mt-10 grid place-items-center'>
-        <Spinner />
-      </div>
-    );
-  }
-
-  if (!state.product) return notFound();
+  const [tab, setTab] = React.useState('description');
 
   return (
     <Tabs defaultValue='description' value={tab} onValueChange={setTab}>
@@ -38,41 +28,41 @@ export const ProductBody = () => {
         <TabsTrigger size='lg' value='description' variant='underline'>
           {t('Description')}
         </TabsTrigger>
-        <TabsTrigger
-          disabled={!state.product.description}
-          size='lg'
-          value='details'
-          variant='underline'
-        >
+        <TabsTrigger disabled={!product.description} size='lg' value='details' variant='underline'>
           {t('Details')}
         </TabsTrigger>
-        <TabsTrigger size='lg' value='properties' variant='underline'>
-          {t('Properties')}
+        <TabsTrigger
+          disabled={!product.characteristics.length}
+          size='lg'
+          value='characteristics'
+          variant='underline'
+        >
+          {t('Characteristics')}
         </TabsTrigger>
         <TabsTrigger size='lg' value='reviews' variant='underline'>
           {t('Reviews')}
-          {state.product.reviews_count && `: ${state.product.reviews_count}`}
+          {!!product.comments_quantity && `: ${product.comments_quantity}`}
         </TabsTrigger>
         <TabsTrigger size='lg' value='questions' variant='underline'>
           {t('Questions')}
-          {state.product.reviews_count && `: ${state.product.reviews_count}`}
+          {!!product.questions_quantity && `: ${product.questions_quantity}`}
         </TabsTrigger>
       </TabsList>
-      <Card className='p-0 md:p-8' variant='outline'>
+      <Card className='md:border-border border-transparent p-0 md:p-8' variant='outline'>
         <TabsContent value='description'>
-          <ProductDescription product={state.product} />
+          <ProductDescription product={product} />
         </TabsContent>
         <TabsContent value='details'>
-          <ProductDetails description={state.product.description} />
+          <ProductDetails description={product.description} />
         </TabsContent>
-        <TabsContent value='properties'>
-          <ProductProperties properties={state.product.properties} />
+        <TabsContent value='characteristics'>
+          <ProductCharacteristics characteristics={product.characteristics} />
         </TabsContent>
         <TabsContent value='reviews'>
-          <ProductReviews product={state.product} />
+          <ProductComments product={product} />
         </TabsContent>
         <TabsContent value='questions'>
-          <ProductQuestions product={state.product} />
+          <ProductQuestions product={product} />
         </TabsContent>
       </Card>
     </Tabs>
