@@ -14,31 +14,30 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { categoryData } from '@/fake-data/category';
 import { Link } from '@/i18n/navigation';
+import { getSubCategoryById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string; subId: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const catalog = categoryData.find((item) => item.id === +id);
+  const { subId } = await params;
+  const subCategoryResponse = await getSubCategoryById({ id: subId });
+  const subCategory = subCategoryResponse.data.result;
 
   return {
-    title: catalog?.name,
+    title: subCategory?.name,
     description:
       'в Санкт-Петербурге — покупайте ✅ в интернет-магазине Петрович. 🚚 Доставка за 2 часа или бесплатно на авто до 10 тонн. 👍 Возврат неиспользованного товара в течение 360 дней. Звоните круглосуточно: ☎️ +7(812)334-88-88. Качество по ISO 9001:2000.'
   };
 }
 
 const SubCategoryPage = async ({ params }: Props) => {
-  const { id, subId } = await params;
   const t = await getTranslations();
-
-  const subCategory = categoryData
-    .find((item) => item.id === +id)
-    ?.sub_categories.find((item) => item.id === +subId);
+  const { id, subId } = await params;
+  const subCategoryResponse = await getSubCategoryById({ id: subId });
+  const subCategory = subCategoryResponse.data.result;
 
   if (!subCategory) return notFound();
 
@@ -54,7 +53,7 @@ const SubCategoryPage = async ({ params }: Props) => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href={`/category/${id}`}>
-                {subCategory.breadcrumbs[0].title}
+                {subCategory.breadcrumbs?.[0].title}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />

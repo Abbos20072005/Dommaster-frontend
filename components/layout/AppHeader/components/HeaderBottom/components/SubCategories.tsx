@@ -11,7 +11,7 @@ export const SubCategories = ({ category }: Props) => {
     <div key={subCategory.id} className='space-y-2'>
       <Link
         href={`/category/${category.id}/${subCategory.id}`}
-        className='hover:text-secondary mb-3 inline-block text-lg font-bold transition-colors'
+        className='hover:text-secondary mb-3 inline-block font-bold transition-colors'
       >
         {subCategory.name}
       </Link>

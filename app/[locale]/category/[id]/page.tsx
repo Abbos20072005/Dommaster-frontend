@@ -14,8 +14,8 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { categoryData } from '@/fake-data/category';
 import { Link } from '@/i18n/navigation';
+import { getCategoryById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -23,10 +23,11 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const catalog = categoryData.find((item) => item.id === +id);
+  const categoryResponse = await getCategoryById({ id });
+  const category = categoryResponse.data.result;
 
   return {
-    title: catalog?.name,
+    title: category?.name,
     description:
       'в Санкт-Петербурге — покупайте ✅ в интернет-магазине Петрович. 🚚 Доставка за 2 часа или бесплатно на авто до 10 тонн. 👍 Возврат неиспользованного товара в течение 360 дней. Звоните круглосуточно: ☎️ +7(812)334-88-88. Качество по ISO 9001:2000.'
   };
@@ -35,8 +36,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const CategoryPage = async ({ params }: Props) => {
   const { id } = await params;
   const t = await getTranslations();
-
-  const category = categoryData.find((item) => item.id === +id);
+  const categoryResponse = await getCategoryById({ id });
+  const category = categoryResponse.data.result;
 
   if (!category) return notFound();
 
@@ -76,9 +77,9 @@ const CategoryPage = async ({ params }: Props) => {
               </p>
               <Image
                 alt={subCategory.name}
-                className='mx-auto h-15 w-22 rounded-md object-contain md:w-15'
+                className='mx-auto h-15 w-22 rounded-md object-contain md:mx-0 md:size-15'
                 height={60}
-                src='https://cdn.vseinstrumenti.ru/imgtmbnf/400x400/img/cats/1774.jpg?hash=20250319092945'
+                src={subCategory.image}
                 width={60}
               />
             </Link>

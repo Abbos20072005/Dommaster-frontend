@@ -1,10 +1,12 @@
-import { ChevronRightIcon, HammerIcon, MenuIcon, XIcon } from 'lucide-react';
+import { useQuery } from '@tanstack/react-query';
+import { ChevronRightIcon, MenuIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { categoryData } from '@/fake-data/category';
 import { cn } from '@/lib/utils';
+import { getCategories } from '@/utils/api/requests';
 
 import { SubCategories } from './components';
 
@@ -12,6 +14,13 @@ export const Catalog = () => {
   const t = useTranslations();
   const [open, setOpen] = React.useState(false);
   const [tab, setTab] = React.useState<number>(-1);
+
+  const getCategoriesQuery = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories()
+  });
+
+  const categories = getCategoriesQuery.data?.data.result;
 
   return (
     <div className='relative' onMouseLeave={() => setOpen(false)}>
@@ -31,7 +40,7 @@ export const Catalog = () => {
         <div className='bg-background gap-4 overflow-y-auto rounded-lg shadow-md'>
           <div className='flex'>
             <ul className='w-60 overflow-y-auto px-2 py-4 lg:w-72'>
-              {categoryData.map((item, index) => (
+              {categories?.map((item, index) => (
                 <li
                   key={item.id}
                   className={cn(
@@ -40,14 +49,20 @@ export const Catalog = () => {
                   )}
                   onMouseEnter={() => setTab(index)}
                 >
-                  <HammerIcon className='size-4' />
+                  <Image
+                    alt={item.name}
+                    className='size-4'
+                    height={16}
+                    src={item.icon}
+                    width={16}
+                  />
                   <span className='flex-1 text-sm'>{item.name}</span>
                   {tab === index && <ChevronRightIcon className='size-4' />}
                 </li>
               ))}
             </ul>
 
-            {tab !== -1 && <SubCategories category={categoryData[tab]} />}
+            {tab !== -1 && categories && <SubCategories category={categories[tab]} />}
           </div>
         </div>
       </div>

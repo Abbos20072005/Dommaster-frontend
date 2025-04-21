@@ -12,6 +12,9 @@ interface Category {
   }[];
 }
 
+type CategoriesResponse = ApiResponse<Category[]>;
+type CategoryResponse = ApiResponse<Category>;
+
 interface SubCategory {
   id: number;
   image: string;
@@ -25,6 +28,8 @@ interface SubCategory {
   }[];
 }
 
+type SubCategoryResponse = ApiResponse<SubCategory>;
+
 interface ItemCategory {
   id: number;
   image: string;
@@ -36,6 +41,3 @@ interface ItemCategory {
     url: string | null;
   }[];
 }
-
-type CategoriesResponse = ApiResponse<Category[]>;
-type CategoryResponse = ApiResponse<Category>;

@@ -36,7 +36,7 @@ export const ProductFilterPaginated = ({ filters, queries }: Props) => {
         data: {
           q: q ?? undefined,
           sort_by: sort_by ?? undefined,
-          category: filter.category ?? undefined,
+          item_category: filter.item_category ?? undefined,
           brand: filter.brand ?? undefined,
           page: filter.page,
           page_size: filter.page_size,

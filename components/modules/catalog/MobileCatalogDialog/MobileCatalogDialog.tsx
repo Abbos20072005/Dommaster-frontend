@@ -1,5 +1,6 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import { ArrowLeftIcon, AxeIcon, ChevronRightIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -12,8 +13,8 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { categoryData } from '@/fake-data/category';
 import { Link } from '@/i18n/navigation';
+import { getCategories } from '@/utils/api/requests';
 
 interface Props extends React.ComponentProps<typeof DialogTrigger> {
   children: React.ReactNode;
@@ -24,6 +25,13 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
   const [open, setOpen] = React.useState(false);
   const [selectedCategory, setSelectedCategory] = React.useState<Category | null>(null);
   const [selectedSubCategory, setSelectedSubCategory] = React.useState<SubCategory | null>(null);
+
+  const getCategoriesQuery = useQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories()
+  });
+
+  const categories = getCategoriesQuery.data?.data.result;
 
   const goBack = () => {
     if (selectedSubCategory) {
@@ -74,7 +82,7 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
                     <ChevronRightIcon className='text-muted-foreground' />
                   </button>
                 ))
-            : categoryData.map((item) => (
+            : categories?.map((item) => (
                 <button
                   key={item.id}
                   className='flex w-full py-3'

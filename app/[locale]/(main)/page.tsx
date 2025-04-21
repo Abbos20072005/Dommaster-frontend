@@ -1,5 +1,6 @@
 import { Suspense } from 'react';
 
+import { PopularCategoriesSectionSkeleton } from '@/app/[locale]/(main)/_components/PopularCategoriesSectionSkeleton';
 import { MobileHeader } from '@/components/layout';
 
 import {
@@ -10,7 +11,7 @@ import {
   BrandsSection,
   BrandsSectionLoading,
   DiscountProductsSection,
-  PopularCategories
+  PopularCategoriesSection
 } from './_components';
 
 const Home = () => {
@@ -22,7 +23,9 @@ const Home = () => {
           <Suspense fallback={<BannerCarouselLoading />}>
             <BannerCarousel />
           </Suspense>
-          <PopularCategories />
+          <Suspense fallback={<PopularCategoriesSectionSkeleton />}>
+            <PopularCategoriesSection />
+          </Suspense>
         </div>
         <DiscountProductsSection />
         <Suspense fallback={<BrandsSectionLoading />}>

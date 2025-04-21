@@ -14,19 +14,19 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { categoryData } from '@/fake-data/category';
-import { getBrands } from '@/utils/api/requests';
+import { getBrands, getSubCategoryById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string; subId: string; itemId: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const catalog = categoryData.find((item) => item.id === +id);
+  const { itemId } = await params;
+  const itemCategoryResponse = await getSubCategoryById({ id: itemId });
+  const itemCategory = itemCategoryResponse.data.result;
 
   return {
-    title: catalog?.name,
+    title: itemCategory?.name,
     description:
       'в Санкт-Петербурге — покупайте ✅ в интернет-магазине Петрович. 🚚 Доставка за 2 часа или бесплатно на авто до 10 тонн. 👍 Возврат неиспользованного товара в течение 360 дней. Звоните круглосуточно: ☎️ +7(812)334-88-88. Качество по ISO 9001:2000.'
   };
@@ -38,10 +38,8 @@ const ItemCategoryPage = async ({ params }: Props) => {
   const brandsResponse = await getBrands();
   const brands = brandsResponse.data.result || [];
 
-  const itemCategory = categoryData
-    .find((item) => item.id === +id)
-    ?.sub_categories.find((item) => item.id === +subId)
-    ?.product_item_categories.find((item) => item.id === +itemId);
+  const itemCategoryResponse = await getSubCategoryById({ id: itemId });
+  const itemCategory = itemCategoryResponse.data.result;
 
   if (!itemCategory) return notFound();
 
@@ -77,13 +75,13 @@ const ItemCategoryPage = async ({ params }: Props) => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href={`/category/${id}`}>
-                {itemCategory.breadcrumbs[0].title}
+                {itemCategory.breadcrumbs?.[0].title}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href={`/category/${id}/${subId}`}>
-                {itemCategory.breadcrumbs[1].title}
+                {itemCategory.breadcrumbs?.[1].title}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
@@ -93,7 +91,7 @@ const ItemCategoryPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{itemCategory.name}</h1>
-        <ProductFilterPaginated filters={filters} />
+        <ProductFilterPaginated filters={filters} queries={{ item_category: +itemId }} />
       </BaseLayout>
     </div>
   );

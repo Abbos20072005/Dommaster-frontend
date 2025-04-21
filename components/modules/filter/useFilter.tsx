@@ -5,7 +5,7 @@ const defaultValues = {
   page_size: 20,
   price_from: 0,
   price_to: 1000000,
-  category: null,
+  item_category: null,
   brand: null
 };
 
@@ -15,7 +15,7 @@ export const useFilter = () => {
     page_size: parseAsInteger.withDefault(defaultValues.page_size),
     price_from: parseAsInteger.withDefault(defaultValues.price_from),
     price_to: parseAsInteger.withDefault(defaultValues.price_to),
-    category: parseAsInteger,
+    item_category: parseAsInteger,
     brand: parseAsInteger
   });
 
