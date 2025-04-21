@@ -1,10 +1,11 @@
-import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 
-import { getCartList, getFavorites } from '@/utils/api/requests';
+import { useCart, useFavorites } from '@/utils/stores';
 
 export const useHeaderMiddle = () => {
   const [offset, setOffset] = React.useState(0);
+  const { favorites } = useFavorites();
+  const { cart } = useCart();
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -17,25 +18,11 @@ export const useHeaderMiddle = () => {
     return () => document.removeEventListener('scroll', onScroll);
   }, []);
 
-  const getFavoritesQuery = useQuery({
-    queryKey: ['favorites'],
-    queryFn: () => getFavorites()
-  });
-
-  const favoritesLength = getFavoritesQuery.data?.data.result || [];
-
-  const getCartListQuery = useQuery({
-    queryKey: ['cart'],
-    queryFn: () => getCartList()
-  });
-
-  const cartItemsLength = getCartListQuery.data?.data.result.cart_items || [];
-
   return {
     state: {
       offset,
-      favoritesLength,
-      cartItemsLength
+      favoritesLength: favorites?.length,
+      cartItemsLength: cart?.cart_items.length
     }
   };
 };

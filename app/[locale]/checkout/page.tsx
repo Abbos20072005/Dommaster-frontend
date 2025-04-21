@@ -12,7 +12,6 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
-import { productsData } from '@/fake-data/products';
 import { Link } from '@/i18n/navigation';
 
 import {
@@ -24,8 +23,6 @@ import {
 
 const CartPage = async () => {
   const t = await getTranslations();
-
-  const products = productsData.filter((product) => product.in_cart);
 
   return (
     <div>
@@ -60,7 +57,7 @@ const CartPage = async () => {
         <div className='mx-auto flex flex-col gap-4 lg:flex-row'>
           <div className='flex-1 space-y-4'>
             <DeliveryCard />
-            <CartProductsCard products={products} />
+            <CartProductsCard />
             <PaymentTypeCard />
           </div>
           <div className='lg:w-[360px]'>

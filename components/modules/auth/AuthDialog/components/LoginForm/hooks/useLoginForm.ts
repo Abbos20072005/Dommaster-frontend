@@ -1,7 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
+import { useRouter } from '@/i18n/navigation';
 import { postLogin } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 
@@ -25,6 +26,8 @@ export const useLoginForm = ({ onSuccess, withEmail }: Props) => {
   });
 
   const authStore = useAuth();
+  const queryClient = useQueryClient();
+  const router = useRouter();
 
   const postLoginMutation = useMutation({
     mutationFn: postLogin,
@@ -32,6 +35,8 @@ export const useLoginForm = ({ onSuccess, withEmail }: Props) => {
       authStore.setAccessToken(data.access_token);
       authStore.setRefreshToken(data.refresh_token);
       onSuccess?.(data);
+      queryClient.invalidateQueries();
+      router.refresh();
     }
   });
 

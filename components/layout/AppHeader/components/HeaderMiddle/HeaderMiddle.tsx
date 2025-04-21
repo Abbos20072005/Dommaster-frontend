@@ -57,9 +57,9 @@ export const HeaderMiddle = () => {
             className='hover:text-secondary flex flex-col items-center transition-colors'
           >
             <div className='relative'>
-              {!!state.favoritesLength.length && (
+              {!!state.favoritesLength && (
                 <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
-                  {state.favoritesLength.length}
+                  {state.favoritesLength}
                 </div>
               )}
               <HeartIcon />
@@ -71,9 +71,9 @@ export const HeaderMiddle = () => {
             className='hover:text-secondary flex flex-col items-center transition-colors'
           >
             <div className='relative'>
-              {!!state.cartItemsLength.length && (
+              {!!state.cartItemsLength && (
                 <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
-                  {state.cartItemsLength.length}
+                  {state.cartItemsLength}
                 </div>
               )}
               <ShoppingCartIcon />

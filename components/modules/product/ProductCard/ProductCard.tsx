@@ -35,12 +35,16 @@ export const ProductCard = ({ product, className, ...props }: Props) => {
         </Link>
       </div>
       <div className='mb-2'>
-        <Link href={{ pathname: `/product/${product.id}`, query: { tab: 'reviews' } }}>
+        <Link
+          href={{ pathname: `/product/${product.id}`, query: { tab: 'reviews' } }}
+          className='flex items-center gap-1'
+        >
           <Ratings
             className='gap-0.5 md:gap-1'
             rating={product.rating}
             classNameIcon='text-secondary size-3.5 md:size-4'
           />
+          <span className='text-muted-foreground text-sm'>{product.comments_quantity}</span>
         </Link>
       </div>
       <div className='mb-4 flex-1'>

@@ -70,7 +70,7 @@ export const ProductImageCarousel = ({
               <div className='mx-auto aspect-square max-w-[450px]'>
                 <ImageZoomer
                   alt={product.name}
-                  className='size-full rounded-md object-cover'
+                  className='size-full rounded-md object-contain'
                   height={385}
                   src={image.image}
                   width={385}
@@ -92,10 +92,10 @@ export const ProductImageCarousel = ({
       >
         <CarouselContent className='-ml-0'>
           {product.images.map((image, i) => (
-            <CarouselItem key={image.id} className='min-w-0 basis-[60px] pl-0'>
+            <CarouselItem key={image.id} className='min-w-0 basis-[62px] pl-0'>
               <button
                 className={cn(
-                  'focus-visible:ring-foreground aspect-square size-full border-0 border-b px-1 hover:bg-transparent',
+                  'focus-visible:ring-foreground aspect-square size-15 border-0 border-b p-1 hover:bg-transparent',
                   i === selectedIndex && 'border-primary'
                 )}
                 onClick={() => scrollTo(i)}
@@ -103,7 +103,7 @@ export const ProductImageCarousel = ({
               >
                 <Image
                   alt={product.name}
-                  className='size-full rounded-md object-cover'
+                  className='size-full rounded-md object-contain'
                   height={60}
                   src={image.image}
                   width={60}

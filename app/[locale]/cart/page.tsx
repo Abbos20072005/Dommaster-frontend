@@ -1,5 +1,5 @@
 import { ArrowLeftIcon } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
@@ -18,8 +18,8 @@ import { Link } from '@/i18n/navigation';
 
 import { CartCalculation, ProductCartList } from './_components';
 
-const CartPage = async () => {
-  const t = await getTranslations();
+const CartPage = () => {
+  const t = useTranslations();
 
   return (
     <div>

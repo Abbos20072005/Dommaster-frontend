@@ -20,7 +20,7 @@ export const AddsBrandsSection = async () => {
         <div className='flex items-center justify-between gap-3'>
           <h2 className='text-lg font-bold md:text-2xl'>{brand.name}</h2>
           <Button asChild size='sm' variant='muted'>
-            <Link href={`/brand/${brand.id}`}>
+            <Link href={`/brand/${brand.id}`} scroll>
               {t('View all')}
               <ArrowRightIcon />
             </Link>

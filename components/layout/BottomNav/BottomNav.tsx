@@ -13,14 +13,13 @@ import React from 'react';
 import { AuthDialog } from '@/components/modules/auth';
 import { MobileCatalogDialog } from '@/components/modules/catalog';
 import { NavigationLink } from '@/components/NavigationLink';
-import { useAuth } from '@/utils/stores';
-
-import { useBottomNav } from './hooks';
+import { useAuth, useCart, useFavorites } from '@/utils/stores';
 
 export const BottomNav = () => {
   const t = useTranslations();
   const { user } = useAuth();
-  const { state } = useBottomNav();
+  const { favorites } = useFavorites();
+  const { cart } = useCart();
 
   return (
     <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 gap-4 py-2 shadow-md md:hidden'>
@@ -42,9 +41,9 @@ export const BottomNav = () => {
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
         <div className='relative'>
-          {!!state.cartItemsLength.length && (
+          {!!favorites?.length && (
             <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
-              {state.cartItemsLength.length}
+              {favorites.length}
             </div>
           )}
           <ShoppingCartIcon className='size-5' />
@@ -57,9 +56,9 @@ export const BottomNav = () => {
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
         <div className='relative'>
-          {!!state.favoritesLength.length && (
+          {!!cart?.cart_items.length && (
             <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
-              {state.favoritesLength.length}
+              {cart.cart_items.length}
             </div>
           )}
           <HeartIcon />

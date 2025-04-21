@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
@@ -22,6 +24,22 @@ import {
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const t = await getTranslations();
+  const { id } = await params;
+  const productResponse = await getProductById({ id });
+  const product = productResponse.data.result;
+
+  return {
+    title: product?.name,
+    description: t('metadata.product.description', {
+      name: product?.name,
+      price: product.discount_price ?? product?.price,
+      reviews: product?.comments_quantity
+    })
+  };
 }
 
 const ProductPage = async ({ params }: Props) => {

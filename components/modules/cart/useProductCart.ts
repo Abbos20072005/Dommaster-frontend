@@ -4,7 +4,7 @@ import React from 'react';
 import { patchCart, postCart } from '@/utils/api/requests';
 
 export const useProductCart = (product: Product) => {
-  const [cartCount, setCartCount] = React.useState(product.in_cart ? 1 : 0);
+  const [cartCount, setCartCount] = React.useState(product.in_cart_quantity);
   const queryClient = useQueryClient();
 
   const postCartMutation = useMutation({
@@ -31,6 +31,11 @@ export const useProductCart = (product: Product) => {
     setCartCount(value);
   };
 
+  const onRemoveFromCart = () => {
+    patchCartMutation.mutate({ data: { product: product.id, quantity: 0 } });
+    setCartCount(0);
+  };
+
   return {
     state: {
       cartCount,
@@ -38,7 +43,8 @@ export const useProductCart = (product: Product) => {
     },
     functions: {
       onAddToCart,
-      onCartCountChange
+      onCartCountChange,
+      onRemoveFromCart
     }
   };
 };

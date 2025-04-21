@@ -1,6 +1,5 @@
 import { Suspense } from 'react';
 
-import { PopularCategoriesSectionSkeleton } from '@/app/[locale]/(main)/_components/PopularCategoriesSectionSkeleton';
 import { MobileHeader } from '@/components/layout';
 
 import {
@@ -11,7 +10,8 @@ import {
   BrandsSection,
   BrandsSectionLoading,
   DiscountProductsSection,
-  PopularCategoriesSection
+  PopularCategoriesSection,
+  PopularCategoriesSectionSkeleton
 } from './_components';
 
 const Home = () => {

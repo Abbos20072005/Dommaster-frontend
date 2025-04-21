@@ -1,32 +1,31 @@
 'use client';
 
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
-import { getCartList, patchCart, postCartBulk } from '@/utils/api/requests';
+import { Link } from '@/i18n/navigation';
+import { patchCart, postCartBulk } from '@/utils/api/requests';
+import { useCart } from '@/utils/stores';
 
 import { ProductCartItem } from './ProductCartItem';
 
 export const ProductCartList = () => {
   const t = useTranslations();
 
-  const getCartListQuery = useQuery({
-    queryKey: ['cart'],
-    queryFn: () => getCartList()
-  });
+  const { cart } = useCart();
 
-  const cartItems = getCartListQuery.data?.data.result.cart_items || [];
+  const isAllChecked = cart?.cart_items.every((item) => item.is_checked);
 
-  const isAllChecked = cartItems.every((item) => item.is_checked);
-
+  const queryClient = useQueryClient();
   const postCartBulkMutation = useMutation({
     mutationFn: postCartBulk,
     onSuccess: () => {
-      getCartListQuery.refetch();
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
     }
   });
 
@@ -39,7 +38,7 @@ export const ProductCartList = () => {
   const patchCartMutation = useMutation({
     mutationFn: patchCart,
     onSuccess: () => {
-      getCartListQuery.refetch();
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
     }
   });
 
@@ -48,6 +47,26 @@ export const ProductCartList = () => {
       data: { is_checked, product }
     });
   };
+
+  if (!cart?.cart_items.length) {
+    return (
+      <Card className='flex-1' variant='outline'>
+        <CardHeader>
+          <CardTitle className='font-semibold'>{t('Your cart is currently empty')}</CardTitle>
+          <CardDescription>
+            {t(
+              'Promotions, special offers and reviews of the most interesting products on the main page will help you make your choice!'
+            )}
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          <Button asChild>
+            <Link href='/'>{t('Go to the main page')}</Link>
+          </Button>
+        </CardContent>
+      </Card>
+    );
+  }
 
   return (
     <Card className='flex-1' variant='outline'>
@@ -58,7 +77,7 @@ export const ProductCartList = () => {
         </div>
       </CardHeader>
       <CardContent className='p-4 pt-0'>
-        {cartItems.map((item) => (
+        {cart.cart_items.map((item) => (
           <div key={item.id} className='flex items-center gap-2 border-t'>
             <ProductCartItem
               checked={item.is_checked}

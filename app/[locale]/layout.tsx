@@ -68,7 +68,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
     >
       <Providers>
         <NextIntlClientProvider>
-          <body>
+          <body className='min-h-screen font-sans antialiased'>
             <AppHeader />
             <main>{children}</main>
             <AppFooter />

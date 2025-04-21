@@ -8,15 +8,19 @@ import { ProductList, ProductListSkeleton } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { getFavorites } from '@/utils/api/requests';
+import { useFavorites } from '@/utils/stores';
 
 export const FavoriteProductList = () => {
   const t = useTranslations();
+  const { favorites, setFavorites } = useFavorites();
   const getFavoritesQuery = useQuery({
     queryKey: ['favorites'],
-    queryFn: () => getFavorites()
+    queryFn: async () => {
+      const res = await getFavorites();
+      if (res.data.ok) setFavorites(res.data.result);
+      return res;
+    }
   });
-
-  const favorites = getFavoritesQuery.data?.data.result || [];
 
   if (getFavoritesQuery.isLoading) {
     return (
@@ -26,7 +30,7 @@ export const FavoriteProductList = () => {
     );
   }
 
-  if (favorites.length === 0) {
+  if (!favorites || favorites?.length === 0) {
     return (
       <div className='mx-auto grid max-w-lg place-items-center space-y-5 py-10 md:py-20'>
         <Image

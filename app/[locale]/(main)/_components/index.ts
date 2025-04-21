@@ -6,3 +6,4 @@ export { BrandsSection } from './BrandsSection';
 export { BrandsSectionLoading } from './BrandsSectionLoading';
 export { DiscountProductsSection } from './DiscountProductsSection';
 export { PopularCategoriesSection } from './PopularCategoriesSection';
+export { PopularCategoriesSectionSkeleton } from './PopularCategoriesSectionSkeleton';

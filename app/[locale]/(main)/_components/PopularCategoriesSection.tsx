@@ -28,7 +28,7 @@ export const PopularCategoriesSection = async () => {
             <div className='relative z-1 text-xs'>{item.name}</div>
             <Image
               alt={item.name}
-              className='absolute right-0 bottom-0 rounded-lg'
+              className='absolute inset-0 size-full rounded-lg object-contain'
               height={80}
               src={item.image}
               width={80}
@@ -45,38 +45,37 @@ export const PopularCategoriesSection = async () => {
             .map((item, index) => {
               const nextItem = categories[index * 2 + 1];
               return (
-                <CarouselItem key={item.id} className='basis-[215px] space-y-4 pl-2 md:pl-4'>
-                  <div className='h-32'>
+                <CarouselItem
+                  key={item.id}
+                  className='basis-1/5 space-y-4 pl-2 md:pl-4 lg:basis-1/6'
+                >
+                  <Link
+                    href={`/category/${item.id}`}
+                    className='bg-muted relative block aspect-square rounded-md p-3'
+                  >
+                    <div className='relative z-1 font-semibold'>{item.name}</div>
+                    <Image
+                      alt={item.name}
+                      className='absolute inset-0 size-full rounded-lg object-contain'
+                      height={128}
+                      src={item.image}
+                      width={128}
+                    />
+                  </Link>
+                  {nextItem && (
                     <Link
-                      href={`/category/${item.id}`}
-                      className='bg-muted relative block size-full rounded-md px-4 py-3'
+                      href={`/category/${nextItem.id}`}
+                      className='bg-muted relative block aspect-square rounded-md p-3'
                     >
-                      <div className='relative z-1 text-sm font-semibold'>{item.name}</div>
+                      <div className='relative z-1 font-semibold'>{nextItem.name}</div>
                       <Image
-                        alt={item.name}
-                        className='absolute right-0 bottom-0 rounded-lg'
+                        alt={nextItem.name}
+                        className='absolute inset-0 size-full rounded-lg object-contain'
                         height={192}
-                        src={item.image}
+                        src={nextItem.image}
                         width={128}
                       />
                     </Link>
-                  </div>
-                  {nextItem && (
-                    <div key={nextItem.id} className='h-32'>
-                      <Link
-                        href={`/category/${nextItem.id}`}
-                        className='bg-muted relative block size-full rounded-md px-4 py-3'
-                      >
-                        <div className='relative z-1 text-sm font-semibold'>{nextItem.name}</div>
-                        <Image
-                          alt={nextItem.name}
-                          className='absolute right-0 bottom-0 rounded-lg'
-                          height={192}
-                          src={nextItem.image}
-                          width={128}
-                        />
-                      </Link>
-                    </div>
                   )}
                 </CarouselItem>
               );

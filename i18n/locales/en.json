@@ -61,6 +61,7 @@
   "Full name": "Full name",
   "Get code": "Get code",
   "Go to home": "Go to home",
+  "Go to the main page": "Go to the main page",
   "Goods": "Goods",
   "Greetings": "Greetings",
   "High rating": "High rating",
@@ -104,6 +105,7 @@
   "Products on order": "Products on order",
   "Profile": "Profile",
   "Promo codes": "Promo codes",
+  "Promotions, special offers and reviews of the most interesting products on the main page will help you make your choice!": "Promotions, special offers and reviews of the most interesting products on the main page will help you make your choice!",
   "Purchase history": "Purchase history",
   "Purchases": "Purchases",
   "Question": "Question",
@@ -146,6 +148,7 @@
   "Write a review": "Write a review",
   "You searched": "You searched",
   "Your benefit": "Your benefit",
+  "Your cart is currently empty": "Your cart is currently empty",
   "Your list of products": "Your list of products",
   "Your one-time password must be 5 characters": "Your one-time password must be 5 characters",
   "Your order": "Your order",
@@ -155,6 +158,11 @@
     "title": "Favorites",
     "emptyTitle": "Your favorites list is empty",
     "emptyDescription": "Click ❤️ on the product page and add what you like here. If the price of the product in your favorites drops, we will notify you about it."
+  },
+  "metadata": {
+    "product": {
+      "description": "{name} at a price of {price} som in the online store Dommaster - description, specifications, equipment, photos, reviews: {reviews}."
+    }
   },
   "question": "question",
   "reviews": "reviews",

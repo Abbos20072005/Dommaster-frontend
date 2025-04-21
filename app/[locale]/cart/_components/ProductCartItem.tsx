@@ -77,7 +77,12 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
             {formatPrice(product.discount_price ?? product.price)} {t('som')}/{t('unit')}
           </p>
         </div>
-        <Button className='text-muted-foreground' size='sm' variant='ghost'>
+        <Button
+          className='text-muted-foreground'
+          size='sm'
+          variant='ghost'
+          onClick={functions.onRemoveFromCart}
+        >
           <TrashIcon />
           {t('Delete')}
         </Button>

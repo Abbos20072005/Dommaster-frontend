@@ -1,9 +1,10 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
 import { useTimer } from '@/hooks';
+import { useRouter } from '@/i18n/navigation';
 import { postResendCode, postVerify } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 
@@ -24,7 +25,6 @@ export const useVerifyForm = ({ otpKey, setOtpKey, onSuccess }: Props) => {
       otp_code: ''
     }
   });
-  const authStore = useAuth();
   const [showResetButton, setShowResetButton] = React.useState(false);
   const {
     start,
@@ -37,12 +37,18 @@ export const useVerifyForm = ({ otpKey, setOtpKey, onSuccess }: Props) => {
     onTimerEnd: () => setShowResetButton(true)
   });
 
+  const authStore = useAuth();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+
   const postVerifyMutation = useMutation({
     mutationFn: postVerify,
     onSuccess: ({ data }) => {
       authStore.setAccessToken(data.result.access_token);
       authStore.setRefreshToken(data.result.refresh_token);
       onSuccess?.(data);
+      queryClient.invalidateQueries();
+      router.refresh();
     }
   });
 

@@ -1,6 +1,7 @@
 import { ArrowLeftIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
+import { AuthWrapper } from '@/components/modules/auth';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
@@ -21,6 +22,7 @@ const OrdersPage = async () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('My reviews and questions')}</h1>
+        <AuthWrapper>content</AuthWrapper>
       </Card>
     </div>
   );
