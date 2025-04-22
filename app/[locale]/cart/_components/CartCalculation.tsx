@@ -15,7 +15,7 @@ import { useAuth } from '@/utils/stores';
 export const CartCalculation = () => {
   const t = useTranslations();
   const { user } = useAuth();
-  const { cart, overallPrice, overallPriceWithDiscount, overallBenefit, isFetching } = useCart();
+  const { cart, isFetching } = useCart();
   const router = useRouter();
 
   return (
@@ -30,22 +30,22 @@ export const CartCalculation = () => {
               {t('Goods')} ({cart?.cart_items.length}):
             </p>
             <span>
-              {formatPrice(overallPrice)} {t('som')}
+              {formatPrice(cart.products_total_price)} {t('som')}
             </span>
           </div>
         )}
-        {!!overallBenefit && (
+        {!!cart?.saved_price && (
           <div className='align-center flex justify-between gap-1 text-sm'>
             <p>{t('Your benefit')}</p>
             <p className='text-secondary'>
-              -{formatPrice(overallBenefit)} {t('som')}
+              -{formatPrice(cart.saved_price)} {t('som')}
             </p>
           </div>
         )}
         <div className='align-center flex justify-between gap-1 text-xl font-bold'>
           <p>{t('Total')}</p>
           <p>
-            {formatPrice(overallPriceWithDiscount)} {t('som')}
+            {formatPrice(cart?.total_price ?? 0)} {t('som')}
           </p>
         </div>
       </CardContent>
@@ -56,13 +56,13 @@ export const CartCalculation = () => {
             disabled={!cart?.cart_items.length || isFetching}
             onClick={() => router.push('/checkout')}
           >
-            <Spinner show={isFetching} />
-            {t('Proceed to checkout')}
+            {isFetching ? <Spinner /> : t('Proceed to checkout')}
           </Button>
         ) : (
           <AuthDialog asChild>
-            <Spinner show={isFetching} />
-            <Button className='w-full'>{t('Proceed to checkout')}</Button>
+            <Button className='w-full' disabled={!cart?.cart_items.length || isFetching}>
+              {isFetching ? <Spinner /> : t('Proceed to checkout')}
+            </Button>
           </AuthDialog>
         )}
       </CardFooter>

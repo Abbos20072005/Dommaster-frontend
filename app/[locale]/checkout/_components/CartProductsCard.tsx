@@ -19,6 +19,7 @@ export const CartProductsCard = () => {
       </CardHeader>
       <CardContent className='flex gap-4'>
         {cart?.cart_items
+          .filter((item) => item.product.quantity >= item.product.in_cart_quantity)
           .map((item) => item.product)
           .map((product) => (
             <div key={product.id} className='relative'>

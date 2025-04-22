@@ -9,8 +9,8 @@ export const productsData: Product[] = [
     discount_price: null,
     discount: null,
     quantity: 10,
-    in_cart_quantity: 0,
-    in_cart: false,
+    in_cart_quantity: 11,
+    in_cart: true,
     images: [
       {
         id: 1,

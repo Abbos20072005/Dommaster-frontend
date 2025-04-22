@@ -89,7 +89,7 @@ export const CartCounter = ({
         onFocus={(e) => e.target.select()}
       />
       {numericValue > maxValue && (
-        <div className='text-destructive absolute top-full right-1 z-[2] flex items-center gap-1 text-xs'>
+        <div className='bg-background/70 text-destructive absolute top-full right-1 z-[2] flex items-center gap-1 text-xs'>
           <InfoIcon className='size-3' />
           {t('Only {maxValue} left', { maxValue })}
         </div>

@@ -94,7 +94,10 @@ export const AddressList = ({ onSave }: Props) => {
         </Button>
       </AddressSelectDialog>
       <div className='flex justify-end' onClick={onSubmit}>
-        <Button disabled={!currentAddressId}>{t('Save')}</Button>
+        <Button disabled={!currentAddressId || patchAddressMutation.isPending}>
+          <Spinner show={patchAddressMutation.isPending} />
+          {t('Save')}
+        </Button>
       </div>
     </div>
   );

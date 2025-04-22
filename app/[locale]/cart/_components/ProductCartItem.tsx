@@ -22,11 +22,17 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
   const t = useTranslations();
   const { state, functions } = useProductCart(product);
 
+  const notValidQuantity = product.quantity < product.in_cart_quantity;
+
   return (
     <div key={product.id} className='flex flex-1 flex-col gap-4 py-4 sm:flex-row'>
       <div className='flex flex-1 gap-1 sm:gap-3'>
-        <Checkbox checked={checked} onCheckedChange={onCheckedChange} />
-        <Link href={`/product/${product.id}`}>
+        <Checkbox
+          checked={notValidQuantity ? false : checked}
+          disabled={notValidQuantity}
+          onCheckedChange={onCheckedChange}
+        />
+        <Link href={`/product/${product.id}`} className={cn({ 'opacity-50': notValidQuantity })}>
           <Image
             alt={product.name}
             className='size-[80px] object-contain sm:size-[100px]'
@@ -35,7 +41,11 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
             width={100}
           />
         </Link>
-        <div className='flex flex-1 flex-col justify-between gap-3'>
+        <div
+          className={cn('flex flex-1 flex-col justify-between gap-3', {
+            'opacity-50': notValidQuantity
+          })}
+        >
           <div>
             <p className='text-muted-foreground mb-3 text-xs'>
               {t('code')}: {product.id}

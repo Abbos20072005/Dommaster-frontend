@@ -9,6 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@/i18n/navigation';
 import { patchCart, postCartBulk } from '@/utils/api/requests';
 
@@ -17,7 +18,7 @@ import { ProductCartItem } from './ProductCartItem';
 export const ProductCartList = () => {
   const t = useTranslations();
 
-  const { cart } = useCart();
+  const { cart, isLoading } = useCart();
 
   const isAllChecked = cart?.cart_items.every((item) => item.is_checked);
 
@@ -47,6 +48,23 @@ export const ProductCartList = () => {
       data: { is_checked, product }
     });
   };
+
+  if (isLoading) {
+    return (
+      <Card className='flex-1' variant='outline'>
+        <CardHeader className='p-4'>
+          <Skeleton className='h-4 w-32' />
+        </CardHeader>
+        <CardContent className='p-4 pt-0'>
+          {Array.from({ length: 2 }).map((_, index) => (
+            <div key={index} className='border-t py-4'>
+              <Skeleton className='h-26 w-full' />
+            </div>
+          ))}
+        </CardContent>
+      </Card>
+    );
+  }
 
   if (!cart?.cart_items.length) {
     return (

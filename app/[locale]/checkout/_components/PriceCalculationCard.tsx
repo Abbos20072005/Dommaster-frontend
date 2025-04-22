@@ -13,11 +13,18 @@ import { useAuth } from '@/utils/stores';
 export const PriceCalculationCard = () => {
   const t = useTranslations();
   const { user } = useAuth();
-  const { cart, overallPrice, overallPriceWithDiscount, overallBenefit } = useCart();
+  const { cart, isSuccess } = useCart();
   const router = useRouter();
 
   React.useEffect(() => {
-    if (!cart || !user) router.push('/cart');
+    if (
+      isSuccess &&
+      (!cart ||
+        !user ||
+        !cart.cart_items.filter((item) => item.product.quantity >= item.product.in_cart_quantity)
+          .length)
+    )
+      router.push('/cart');
   }, [cart, user]);
 
   return (
@@ -32,22 +39,22 @@ export const PriceCalculationCard = () => {
               {t('Goods')} ({cart?.cart_items.length}):
             </p>
             <span>
-              {formatPrice(overallPrice)} {t('som')}
+              {formatPrice(cart.products_total_price)} {t('som')}
             </span>
           </div>
         )}
-        {!!overallBenefit && (
+        {!!cart?.saved_price && (
           <div className='align-center flex justify-between gap-1 text-sm'>
             <p>{t('Your benefit')}</p>
             <p className='text-secondary'>
-              -{formatPrice(overallBenefit)} {t('som')}
+              -{formatPrice(cart.saved_price)} {t('som')}
             </p>
           </div>
         )}
         <div className='align-center flex justify-between gap-1 text-xl font-bold'>
           <p>{t('Total')}</p>
           <p>
-            {formatPrice(overallPriceWithDiscount)} {t('som')}
+            {formatPrice(cart?.total_price ?? 0)} {t('som')}
           </p>
         </div>
       </CardContent>
