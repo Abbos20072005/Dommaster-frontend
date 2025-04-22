@@ -1,6 +1,8 @@
 import { ArrowLeftIcon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { Suspense } from 'react';
 
+import { ProductListSkeleton } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
@@ -25,7 +27,9 @@ const FavoritesPage = () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Favorites')}</h1>
-        <FavoriteProductList />
+        <Suspense fallback={<ProductListSkeleton view='grid' count={3} />}>
+          <FavoriteProductList />
+        </Suspense>
       </Card>
     </div>
   );

@@ -1,6 +1,7 @@
 import React from 'react';
 
-import { useCart, useFavorites } from '@/utils/stores';
+import { useCart } from '@/components/modules/cart';
+import { useFavorites } from '@/utils/stores';
 
 export const useHeaderMiddle = () => {
   const [offset, setOffset] = React.useState(0);

@@ -3,11 +3,12 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { useCart } from '@/components/modules/cart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
-import { useAuth, useCart } from '@/utils/stores';
+import { useAuth } from '@/utils/stores';
 
 export const PriceCalculationCard = () => {
   const t = useTranslations();

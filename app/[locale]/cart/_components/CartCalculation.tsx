@@ -4,16 +4,19 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { AuthDialog } from '@/components/modules/auth';
+import { useCart } from '@/components/modules/cart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Link } from '@/i18n/navigation';
+import { Spinner } from '@/components/ui/spinner';
+import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
-import { useAuth, useCart } from '@/utils/stores';
+import { useAuth } from '@/utils/stores';
 
 export const CartCalculation = () => {
   const t = useTranslations();
   const { user } = useAuth();
-  const { cart, overallPrice, overallPriceWithDiscount, overallBenefit } = useCart();
+  const { cart, overallPrice, overallPriceWithDiscount, overallBenefit, isFetching } = useCart();
+  const router = useRouter();
 
   return (
     <Card className='sticky top-20' variant='outline'>
@@ -48,17 +51,17 @@ export const CartCalculation = () => {
       </CardContent>
       <CardFooter className='p-4 pt-0'>
         {user ? (
-          cart?.cart_items.length ? (
-            <Button asChild className='w-full'>
-              <Link href='/checkout'>{t('Proceed to checkout')}</Link>
-            </Button>
-          ) : (
-            <Button disabled className='w-full'>
-              {t('Proceed to checkout')}
-            </Button>
-          )
+          <Button
+            className='w-full'
+            disabled={!cart?.cart_items.length || isFetching}
+            onClick={() => router.push('/checkout')}
+          >
+            <Spinner show={isFetching} />
+            {t('Proceed to checkout')}
+          </Button>
         ) : (
           <AuthDialog asChild>
+            <Spinner show={isFetching} />
             <Button className='w-full'>{t('Proceed to checkout')}</Button>
           </AuthDialog>
         )}

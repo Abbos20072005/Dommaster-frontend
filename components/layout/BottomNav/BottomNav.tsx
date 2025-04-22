@@ -11,9 +11,10 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { AuthDialog } from '@/components/modules/auth';
+import { useCart } from '@/components/modules/cart';
 import { MobileCatalogDialog } from '@/components/modules/catalog';
 import { NavigationLink } from '@/components/NavigationLink';
-import { useAuth, useCart, useFavorites } from '@/utils/stores';
+import { useAuth, useFavorites } from '@/utils/stores';
 
 export const BottomNav = () => {
   const t = useTranslations();

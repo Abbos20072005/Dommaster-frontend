@@ -4,9 +4,9 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
+import { useCart } from '@/components/modules/cart';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useCart } from '@/utils/stores';
 
 export const CartProductsCard = () => {
   const t = useTranslations();

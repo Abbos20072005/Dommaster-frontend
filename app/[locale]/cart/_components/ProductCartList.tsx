@@ -4,13 +4,13 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { useCart } from '@/components/modules/cart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Link } from '@/i18n/navigation';
 import { patchCart, postCartBulk } from '@/utils/api/requests';
-import { useCart } from '@/utils/stores';
 
 import { ProductCartItem } from './ProductCartItem';
 

@@ -15,6 +15,7 @@ export const FavoriteProductList = () => {
   const { favorites, setFavorites } = useFavorites();
   const getFavoritesQuery = useQuery({
     queryKey: ['favorites'],
+    staleTime: 0,
     queryFn: async () => {
       const res = await getFavorites();
       if (res.data.ok) setFavorites(res.data.result);
@@ -22,7 +23,7 @@ export const FavoriteProductList = () => {
     }
   });
 
-  if (getFavoritesQuery.isLoading) {
+  if (getFavoritesQuery.isFetching) {
     return (
       <div>
         <ProductListSkeleton view='grid' count={3} />

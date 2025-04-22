@@ -31,6 +31,7 @@ export const ProductFilterPaginated = ({ filters, queries }: Props) => {
         ...queries
       }
     ],
+    staleTime: 0,
     queryFn: () =>
       getProducts({
         data: {
