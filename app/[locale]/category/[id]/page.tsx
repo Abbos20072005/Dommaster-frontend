@@ -50,18 +50,10 @@ const CategoryPage = async ({ params }: Props) => {
             <BreadcrumbItem>
               <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>
             </BreadcrumbItem>
-            {category.breadcrumbs?.map((item) => (
-              <React.Fragment key={item.id}>
-                <BreadcrumbSeparator />
-                <BreadcrumbItem>
-                  {item.url ? (
-                    <BreadcrumbLink href={item.url}>{item.name}</BreadcrumbLink>
-                  ) : (
-                    <BreadcrumbPage>{item.name}</BreadcrumbPage>
-                  )}
-                </BreadcrumbItem>
-              </React.Fragment>
-            ))}
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{category.name}</BreadcrumbPage>
+            </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{category.name}</h1>
