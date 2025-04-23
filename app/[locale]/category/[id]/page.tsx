@@ -55,9 +55,9 @@ const CategoryPage = async ({ params }: Props) => {
                 <BreadcrumbSeparator />
                 <BreadcrumbItem>
                   {item.url ? (
-                    <BreadcrumbLink href={item.url}>{item.title}</BreadcrumbLink>
+                    <BreadcrumbLink href={item.url}>{item.name}</BreadcrumbLink>
                   ) : (
-                    <BreadcrumbPage>{item.title}</BreadcrumbPage>
+                    <BreadcrumbPage>{item.name}</BreadcrumbPage>
                   )}
                 </BreadcrumbItem>
               </React.Fragment>

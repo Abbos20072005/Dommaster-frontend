@@ -23,18 +23,32 @@ export const ProductHeader = ({ product }: Props) => {
           <BreadcrumbItem>
             <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>
           </BreadcrumbItem>
-          {product?.breadcrumbs?.map((breadcrumb) => (
-            <React.Fragment key={breadcrumb.id}>
-              <BreadcrumbSeparator />
-              <BreadcrumbItem>
-                <BreadcrumbLink href={breadcrumb.url}>{breadcrumb.title}</BreadcrumbLink>
-              </BreadcrumbItem>
-            </React.Fragment>
-          ))}
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink href={`/category/${product.breadcrumbs[0].id}`}>
+              {product.breadcrumbs[0].name}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink
+              href={`/category/${product.breadcrumbs[0].id}/${product.breadcrumbs[1].id}`}
+            >
+              {product.breadcrumbs[1].name}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
+          <BreadcrumbSeparator />
+          <BreadcrumbItem>
+            <BreadcrumbLink
+              href={`/category/${product.breadcrumbs[0].id}/${product.breadcrumbs[1].id}/${product.breadcrumbs[2].id}`}
+            >
+              {product.breadcrumbs[2].name}
+            </BreadcrumbLink>
+          </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
 
-      <h1 className='mt-4 mb-6 hidden text-lg leading-6 font-bold md:block md:text-2xl md:leading-8'>
+      <h1 className='my-4 text-lg leading-6 font-bold md:mb-6 md:text-2xl md:leading-8'>
         {product?.name}
       </h1>
     </div>

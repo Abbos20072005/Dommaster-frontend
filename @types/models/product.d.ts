@@ -17,8 +17,7 @@ interface Product {
   rating: number | null;
   breadcrumbs: {
     id: number;
-    title: string;
-    url: string;
+    name: string;
   }[];
   characteristics: {
     title: string;

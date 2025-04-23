@@ -14,7 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { getBrands, getSubCategoryById } from '@/utils/api/requests';
+import { getBrands, getItemCategoryById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string; subId: string; itemId: string }>;
@@ -22,7 +22,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { itemId } = await params;
-  const itemCategoryResponse = await getSubCategoryById({ id: itemId });
+  const itemCategoryResponse = await getItemCategoryById({ id: itemId });
   const itemCategory = itemCategoryResponse.data.result;
 
   return {
@@ -38,7 +38,7 @@ const ItemCategoryPage = async ({ params }: Props) => {
   const brandsResponse = await getBrands();
   const brands = brandsResponse.data.result || [];
 
-  const itemCategoryResponse = await getSubCategoryById({ id: itemId });
+  const itemCategoryResponse = await getItemCategoryById({ id: itemId });
   const itemCategory = itemCategoryResponse.data.result;
 
   if (!itemCategory) return notFound();
@@ -75,13 +75,13 @@ const ItemCategoryPage = async ({ params }: Props) => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href={`/category/${id}`}>
-                {itemCategory.breadcrumbs?.[0].title}
+                {itemCategory.breadcrumbs?.[0].name}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href={`/category/${id}/${subId}`}>
-                {itemCategory.breadcrumbs?.[1].title}
+                {itemCategory.breadcrumbs?.[1].name}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />

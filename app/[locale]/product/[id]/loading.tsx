@@ -16,7 +16,7 @@ const ProductLoading = () => {
           <Skeleton className='h-5 w-40' />
           <Skeleton className='h-5 w-40' />
         </div>
-        <Skeleton className='mt-4 mb-6 h-8 w-3/4' />
+        <Skeleton className='my-4 h-8 w-3/4 md:mb-6' />
         <div className='flex flex-col gap-4 lg:flex-row'>
           <div className='flex-1 space-y-4'>
             <Card className='hidden h-11.5 items-center px-6 md:flex' variant='outline'>

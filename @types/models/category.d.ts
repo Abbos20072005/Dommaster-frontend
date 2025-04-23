@@ -7,8 +7,7 @@ interface Category {
   sub_categories: SubCategory[];
   breadcrumbs: {
     id: number;
-    title: string;
-    url: string | null;
+    name: string;
   }[];
 }
 
@@ -23,8 +22,7 @@ interface SubCategory {
   productQty: number;
   breadcrumbs: {
     id: number;
-    title: string;
-    url: string | null;
+    name: string;
   }[];
 }
 
@@ -37,7 +35,9 @@ interface ItemCategory {
   productQty: number;
   breadcrumbs: {
     id: number;
-    title: string;
+    name: string;
     url: string | null;
   }[];
 }
+
+type ItemCategoryResponse = ApiResponse<ItemCategory>;

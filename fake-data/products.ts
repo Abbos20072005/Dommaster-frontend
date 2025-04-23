@@ -78,18 +78,15 @@ export const productsData: Product[] = [
     breadcrumbs: [
       {
         id: 1,
-        url: 'https://example.com',
-        title: 'Товары для дома'
+        name: 'Товары для дома'
       },
       {
         id: 2,
-        url: 'https://example.com',
-        title: 'Текстиль для дома'
+        name: 'Текстиль для дома'
       },
       {
         id: 3,
-        url: 'https://example.com',
-        title: 'Постельное белье'
+        name: 'Постельное белье'
       }
     ]
   },
@@ -172,18 +169,15 @@ export const productsData: Product[] = [
     breadcrumbs: [
       {
         id: 1,
-        url: 'https://example.com',
-        title: 'Товары для дома'
+        name: 'Товары для дома'
       },
       {
         id: 2,
-        url: 'https://example.com',
-        title: 'Текстиль для дома'
+        name: 'Текстиль для дома'
       },
       {
         id: 3,
-        url: 'https://example.com',
-        title: 'Постельное белье'
+        name: 'Постельное белье'
       }
     ]
   },
@@ -266,18 +260,15 @@ export const productsData: Product[] = [
     breadcrumbs: [
       {
         id: 1,
-        url: 'https://example.com',
-        title: 'Товары для дома'
+        name: 'Товары для дома'
       },
       {
         id: 2,
-        url: 'https://example.com',
-        title: 'Текстиль для дома'
+        name: 'Текстиль для дома'
       },
       {
         id: 3,
-        url: 'https://example.com',
-        title: 'Постельное белье'
+        name: 'Постельное белье'
       }
     ]
   },
@@ -360,18 +351,15 @@ export const productsData: Product[] = [
     breadcrumbs: [
       {
         id: 1,
-        url: 'https://example.com',
-        title: 'Товары для дома'
+        name: 'Товары для дома'
       },
       {
         id: 2,
-        url: 'https://example.com',
-        title: 'Текстиль для дома'
+        name: 'Текстиль для дома'
       },
       {
         id: 3,
-        url: 'https://example.com',
-        title: 'Постельное белье'
+        name: 'Постельное белье'
       }
     ]
   },
@@ -454,18 +442,15 @@ export const productsData: Product[] = [
     breadcrumbs: [
       {
         id: 1,
-        url: 'https://example.com',
-        title: 'Товары для дома'
+        name: 'Товары для дома'
       },
       {
         id: 2,
-        url: 'https://example.com',
-        title: 'Текстиль для дома'
+        name: 'Текстиль для дома'
       },
       {
         id: 3,
-        url: 'https://example.com',
-        title: 'Постельное белье'
+        name: 'Постельное белье'
       }
     ]
   },
@@ -548,18 +533,15 @@ export const productsData: Product[] = [
     breadcrumbs: [
       {
         id: 1,
-        url: 'https://example.com',
-        title: 'Товары для дома'
+        name: 'Товары для дома'
       },
       {
         id: 2,
-        url: 'https://example.com',
-        title: 'Текстиль для дома'
+        name: 'Текстиль для дома'
       },
       {
         id: 3,
-        url: 'https://example.com',
-        title: 'Постельное белье'
+        name: 'Постельное белье'
       }
     ]
   },
@@ -642,18 +624,15 @@ export const productsData: Product[] = [
     breadcrumbs: [
       {
         id: 1,
-        url: 'https://example.com',
-        title: 'Товары для дома'
+        name: 'Товары для дома'
       },
       {
         id: 2,
-        url: 'https://example.com',
-        title: 'Текстиль для дома'
+        name: 'Текстиль для дома'
       },
       {
         id: 3,
-        url: 'https://example.com',
-        title: 'Постельное белье'
+        name: 'Постельное белье'
       }
     ]
   }

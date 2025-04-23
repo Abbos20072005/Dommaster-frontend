@@ -53,7 +53,7 @@ const SubCategoryPage = async ({ params }: Props) => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbLink href={`/category/${id}`}>
-                {subCategory.breadcrumbs?.[0].title}
+                {subCategory.breadcrumbs?.[0].name}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
