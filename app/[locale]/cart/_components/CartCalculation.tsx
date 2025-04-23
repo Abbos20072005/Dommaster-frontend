@@ -15,7 +15,7 @@ import { useAuth } from '@/utils/stores';
 export const CartCalculation = () => {
   const t = useTranslations();
   const { user } = useAuth();
-  const { cart, isFetching } = useCart();
+  const { cart, availableCartItems, isFetching } = useCart();
   const router = useRouter();
 
   return (
@@ -27,7 +27,7 @@ export const CartCalculation = () => {
         {!!cart?.cart_items.length && (
           <div className='align-center flex justify-between gap-1 text-sm'>
             <p>
-              {t('Goods')} ({cart?.cart_items.length}):
+              {t('Goods')} ({availableCartItems.length}):
             </p>
             <span>
               {formatPrice(cart.products_total_price)} {t('som')}
@@ -53,14 +53,14 @@ export const CartCalculation = () => {
         {user ? (
           <Button
             className='w-full'
-            disabled={!cart?.cart_items.length || isFetching}
+            disabled={!availableCartItems.length || isFetching}
             onClick={() => router.push('/checkout')}
           >
             {isFetching ? <Spinner /> : t('Proceed to checkout')}
           </Button>
         ) : (
           <AuthDialog asChild>
-            <Button className='w-full' disabled={!cart?.cart_items.length || isFetching}>
+            <Button className='w-full' disabled={!availableCartItems.length || isFetching}>
               {isFetching ? <Spinner /> : t('Proceed to checkout')}
             </Button>
           </AuthDialog>

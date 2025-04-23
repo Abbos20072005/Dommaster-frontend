@@ -13,18 +13,11 @@ import { useAuth } from '@/utils/stores';
 export const PriceCalculationCard = () => {
   const t = useTranslations();
   const { user } = useAuth();
-  const { cart, isSuccess } = useCart();
+  const { cart, availableCartItems, isSuccess } = useCart();
   const router = useRouter();
 
   React.useEffect(() => {
-    if (
-      isSuccess &&
-      (!cart ||
-        !user ||
-        !cart.cart_items.filter((item) => item.product.quantity >= item.product.in_cart_quantity)
-          .length)
-    )
-      router.push('/cart');
+    if (isSuccess && !availableCartItems.length) router.push('/cart');
   }, [cart, user]);
 
   return (

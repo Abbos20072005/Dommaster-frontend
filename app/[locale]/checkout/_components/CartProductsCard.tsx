@@ -10,7 +10,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 export const CartProductsCard = () => {
   const t = useTranslations();
-  const { cart } = useCart();
+  const { availableCartItems } = useCart();
 
   return (
     <Card variant='outline'>
@@ -18,8 +18,7 @@ export const CartProductsCard = () => {
         <CardTitle className='md:text-xl'>{t('Products on order')}</CardTitle>
       </CardHeader>
       <CardContent className='flex gap-4'>
-        {cart?.cart_items
-          .filter((item) => item.product.quantity >= item.product.in_cart_quantity)
+        {availableCartItems
           .map((item) => item.product)
           .map((product) => (
             <div key={product.id} className='relative'>

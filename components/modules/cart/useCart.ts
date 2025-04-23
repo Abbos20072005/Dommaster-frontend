@@ -10,9 +10,14 @@ export const useCart = () => {
   });
 
   const cart = getCartListQuery.data?.data.result;
+  const availableCartItems =
+    cart?.cart_items.filter(
+      (item) => item.is_checked && item.product.quantity >= item.product.in_cart_quantity
+    ) || [];
 
   return {
     cart,
+    availableCartItems,
     ...getCartListQuery
   };
 };
