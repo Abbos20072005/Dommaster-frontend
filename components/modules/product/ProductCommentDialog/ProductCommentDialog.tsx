@@ -41,6 +41,7 @@ export const ProductCommentDialog = ({ children, defaultValues, ...props }: Prop
     mutationFn: deleteCommentById,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['productComments'] });
+      queryClient.invalidateQueries({ queryKey: ['myComments'] });
     }
   });
 

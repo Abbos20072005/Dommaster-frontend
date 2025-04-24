@@ -102,17 +102,13 @@ export const ProductBody = ({ product }: Props) => {
           collapsible
           onValueChange={setTab}
         >
-          <AccordionItem disabled={!product.description} id='details' value='details'>
+          <AccordionItem disabled={!product.description} value='details'>
             <AccordionTrigger>{t('Details')}</AccordionTrigger>
             <AccordionContent>
               <ProductDetails description={product.description} />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem
-            disabled={!product.characteristics.length}
-            id='characteristics'
-            value='characteristics'
-          >
+          <AccordionItem disabled={!product.characteristics.length} value='characteristics'>
             <AccordionTrigger>{t('Characteristics')}</AccordionTrigger>
             <AccordionContent>
               <ProductCharacteristics characteristics={product.characteristics} />
@@ -127,7 +123,7 @@ export const ProductBody = ({ product }: Props) => {
               <ProductComments product={product} />
             </AccordionContent>
           </AccordionItem>
-          <AccordionItem id='questions' value='questions'>
+          <AccordionItem value='questions'>
             <AccordionTrigger>
               {t('Questions')}
               {!!product.questions_quantity && `: ${product.questions_quantity}`}

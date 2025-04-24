@@ -10,6 +10,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Checkbox } from '@/components/ui/checkbox';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { patchCart, postCartBulk } from '@/utils/api/requests';
 
@@ -18,7 +19,7 @@ import { ProductCartItem } from './ProductCartItem';
 export const ProductCartList = () => {
   const t = useTranslations();
 
-  const { cart, isLoading } = useCart();
+  const { cart, isLoading, isFetching } = useCart();
 
   const isAllChecked = cart?.cart_items.every((item) => item.is_checked);
 
@@ -88,10 +89,16 @@ export const ProductCartList = () => {
 
   return (
     <Card className='flex-1' variant='outline'>
-      <CardHeader className='p-4'>
+      <CardHeader className='flex-row justify-between p-4'>
         <div className='flex items-center gap-2'>
           <Checkbox checked={isAllChecked} id='select-all' onCheckedChange={onToggleAll} />
           <Label htmlFor='select-all'>{t('Select all')}</Label>
+        </div>
+        <div>
+          <Spinner
+            className='text-primary size-4'
+            show={isFetching || postCartBulkMutation.isPending || patchCartMutation.isPending}
+          />
         </div>
       </CardHeader>
       <CardContent className='p-4 pt-0'>

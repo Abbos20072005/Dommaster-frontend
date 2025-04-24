@@ -23,7 +23,7 @@ export const FavoriteProductList = () => {
     }
   });
 
-  if (getFavoritesQuery.isFetching) {
+  if (getFavoritesQuery.isLoading) {
     return (
       <div>
         <ProductListSkeleton view='grid' count={3} />

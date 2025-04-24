@@ -52,6 +52,13 @@ export const MessageList = () => {
       <ul className='space-y-4'>
         {messages?.map((message, index) => (
           <React.Fragment key={message.id}>
+            {index !== 0 &&
+            new Date(message.created_at).getDay() -
+              new Date(messages[index - 1].created_at).getDay() ? (
+              <li className='flex items-center justify-center'>
+                <Badge variant='outline'>{format(message.created_at, 'dd.MM')}</Badge>
+              </li>
+            ) : null}
             <li className={cn('flex items-end gap-1.5', !message.is_answer && 'justify-end')}>
               {message.is_answer && (
                 <Image
@@ -74,13 +81,6 @@ export const MessageList = () => {
                 </p>
               </div>
             </li>
-            {index !== 0 &&
-            new Date(message.created_at).getDay() -
-              new Date(messages[index - 1].created_at).getDay() ? (
-              <li className='flex items-center justify-center'>
-                <Badge variant='outline'>{format(message.created_at, 'dd.MM')}</Badge>
-              </li>
-            ) : null}
           </React.Fragment>
         ))}
       </ul>

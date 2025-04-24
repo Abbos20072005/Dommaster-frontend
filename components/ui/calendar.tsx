@@ -55,11 +55,11 @@ const Calendar = ({
       }}
       className={cn('p-3', className)}
       components={{
-        // eslint-disable-next-line react/no-nested-components
+        // eslint-disable-next-line react/no-nested-_components
         IconLeft: ({ className, ...props }) => (
           <ChevronLeft className={cn('size-4', className)} {...props} />
         ),
-        // eslint-disable-next-line react/no-nested-components
+        // eslint-disable-next-line react/no-nested-_components
         IconRight: ({ className, ...props }) => (
           <ChevronRight className={cn('size-4', className)} {...props} />
         )

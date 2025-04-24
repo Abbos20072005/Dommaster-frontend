@@ -25,7 +25,12 @@ export const CartCounter = ({
   const [inputValue, setInputValue] = React.useState<string>(value.toString());
   const [buttonValue, setButtonValue] = React.useState<number>(value);
 
-  const debouncedButtonValue = useDebouncedValue(buttonValue, 500);
+  const debouncedButtonValue = useDebouncedValue(buttonValue);
+
+  React.useEffect(() => {
+    setInputValue(value.toString());
+    setButtonValue(value);
+  }, [value]);
 
   // Update from button click (debounced)
   React.useEffect(() => {

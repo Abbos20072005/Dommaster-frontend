@@ -7,6 +7,10 @@ export const useProductCart = (product: Product) => {
   const [cartCount, setCartCount] = React.useState(product.in_cart_quantity);
   const queryClient = useQueryClient();
 
+  React.useEffect(() => {
+    setCartCount(product.in_cart_quantity);
+  }, [product.in_cart_quantity]);
+
   const postCartMutation = useMutation({
     mutationFn: postCart,
     onSuccess: () => {

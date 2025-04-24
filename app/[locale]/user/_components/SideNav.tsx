@@ -30,7 +30,8 @@ const navLinks = [
     authorized: false,
     items: [
       { href: '/cart', label: 'Cart' },
-      { href: '/user/favorites', label: 'Favorites' }
+      { href: '/user/favorites', label: 'Favorites' },
+      { href: '/user/products-history', label: 'Viewed products' }
     ]
   }
 ];

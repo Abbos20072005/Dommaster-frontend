@@ -15,5 +15,6 @@ export * from './categories';
 export * from './comments';
 export * from './favorites';
 export * from './products';
+export * from './promos';
 export * from './questions';
 export * from './search';

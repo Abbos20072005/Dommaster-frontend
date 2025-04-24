@@ -30,6 +30,7 @@ export const useCommentForm = ({ onSuccess, defaultValues }: Props) => {
     mutationFn: postComment,
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ['productComments'] });
+      queryClient.invalidateQueries({ queryKey: ['myComments'] });
       onSuccess?.(data);
     }
   });
@@ -38,6 +39,7 @@ export const useCommentForm = ({ onSuccess, defaultValues }: Props) => {
     mutationFn: patchCommentById,
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ['productComments'] });
+      queryClient.invalidateQueries({ queryKey: ['myComments'] });
       onSuccess?.(data);
     }
   });

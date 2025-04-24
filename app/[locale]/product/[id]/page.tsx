@@ -8,7 +8,7 @@ import { ProductList } from '@/components/modules/product';
 import { productsData } from '@/fake-data/products';
 import { getProductById } from '@/utils/api/requests';
 
-import { ProductBody, ProductCart, ProductHeader } from './-components';
+import { ProductBody, ProductCart, ProductHeader } from './_components';
 
 interface Props {
   params: Promise<{ id: string }>;

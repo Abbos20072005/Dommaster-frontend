@@ -41,6 +41,7 @@ export const ProductQuestionDialog = ({ children, defaultValues, ...props }: Pro
     mutationFn: deleteQuestionById,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['productQuestions'] });
+      queryClient.invalidateQueries({ queryKey: ['myQuestions'] });
     }
   });
 

@@ -8,6 +8,7 @@ export const FavoritesProvider = ({ children }: { children: React.ReactNode }) =
 
   useQuery({
     queryKey: ['favorites'],
+    staleTime: 0,
     queryFn: async () => {
       const res = await getFavorites();
       if (res.data.ok) setFavorites(res.data.result);

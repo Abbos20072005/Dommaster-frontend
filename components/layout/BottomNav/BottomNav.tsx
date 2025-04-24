@@ -10,15 +10,13 @@ import {
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { AuthDialog } from '@/components/modules/auth';
 import { useCart } from '@/components/modules/cart';
 import { MobileCatalogDialog } from '@/components/modules/catalog';
 import { NavigationLink } from '@/components/NavigationLink';
-import { useAuth, useFavorites } from '@/utils/stores';
+import { useFavorites } from '@/utils/stores';
 
 export const BottomNav = () => {
   const t = useTranslations();
-  const { user } = useAuth();
   const { favorites } = useFavorites();
   const { cart } = useCart();
 
@@ -42,9 +40,9 @@ export const BottomNav = () => {
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
         <div className='relative'>
-          {!!favorites?.length && (
+          {!!cart?.cart_items.length && (
             <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
-              {favorites.length}
+              {cart.cart_items.length}
             </div>
           )}
           <ShoppingCartIcon className='size-5' />
@@ -57,30 +55,23 @@ export const BottomNav = () => {
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
         <div className='relative'>
-          {!!cart?.cart_items.length && (
+          {!!favorites?.length && (
             <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
-              {cart.cart_items.length}
+              {favorites.length}
             </div>
           )}
           <HeartIcon />
         </div>
         <span className='text-xs font-medium'>{t('Favorites')}</span>
       </NavigationLink>
-      {user ? (
-        <NavigationLink
-          href='/user/dashboard'
-          activeClassName='text-foreground'
-          className='text-muted-foreground flex flex-col items-center transition-colors'
-        >
-          <UserCircleIcon className='size-5' />
-          <span className='text-xs font-medium'>{t('Profile')}</span>
-        </NavigationLink>
-      ) : (
-        <AuthDialog className='text-muted-foreground flex flex-col items-center transition-colors'>
-          <UserCircleIcon className='size-5' />
-          <span className='text-xs font-medium'>{t('Login')}</span>
-        </AuthDialog>
-      )}
+      <NavigationLink
+        href='/user/dashboard'
+        activeClassName='text-foreground'
+        className='text-muted-foreground flex flex-col items-center transition-colors'
+      >
+        <UserCircleIcon className='size-5' />
+        <span className='text-xs font-medium'>{t('Profile')}</span>
+      </NavigationLink>
     </div>
   );
 };

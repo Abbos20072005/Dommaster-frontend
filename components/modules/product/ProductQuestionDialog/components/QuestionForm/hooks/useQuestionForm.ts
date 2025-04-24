@@ -29,6 +29,7 @@ export const useQuestionForm = ({ onSuccess, defaultValues }: Props) => {
     mutationFn: postQuestion,
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ['productQuestions'] });
+      queryClient.invalidateQueries({ queryKey: ['myQuestions'] });
       onSuccess?.(data);
     }
   });
@@ -37,6 +38,7 @@ export const useQuestionForm = ({ onSuccess, defaultValues }: Props) => {
     mutationFn: patchQuestionById,
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ['productQuestions'] });
+      queryClient.invalidateQueries({ queryKey: ['myQuestions'] });
       onSuccess?.(data);
     }
   });

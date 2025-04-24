@@ -21,17 +21,19 @@ import { LoginForm } from './components/LoginForm';
 import { RegisterForm } from './components/RegisterForm';
 import { VerifyForm } from './components/VerifyForm';
 
-interface Props extends React.ComponentProps<typeof DialogTrigger> {}
+interface Props extends React.ComponentProps<typeof DialogTrigger> {
+  defaultStep?: 'login' | 'register';
+}
 
-export const AuthDialog = ({ ...props }: Props) => {
+export const AuthDialog = ({ defaultStep = 'login', ...props }: Props) => {
   const [open, setOpen] = React.useState(false);
   const t = useTranslations();
-  const [tab, setTab] = React.useState<AuthTabs>('login');
+  const [tab, setTab] = React.useState<AuthTabs>(defaultStep);
   const [otpKey, setOtpKey] = React.useState<string>('');
 
   React.useEffect(() => {
     if (!open) {
-      setTab('login');
+      setTab(defaultStep);
     }
   }, [open]);
 

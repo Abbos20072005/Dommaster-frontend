@@ -4,7 +4,10 @@ import { getTranslations } from 'next-intl/server';
 import { AuthWrapper } from '@/components/modules/auth';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Link } from '@/i18n/navigation';
+
+import { ProductComments, ProductQuestions } from './_components';
 
 const OrdersPage = async () => {
   const t = await getTranslations();
@@ -22,7 +25,20 @@ const OrdersPage = async () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('My reviews and questions')}</h1>
-        <AuthWrapper>content</AuthWrapper>
+        <AuthWrapper>
+          <Tabs defaultValue='reviews'>
+            <TabsList>
+              <TabsTrigger value='reviews'>{t('Reviews')}</TabsTrigger>
+              <TabsTrigger value='questions'>{t('Questions')}</TabsTrigger>
+            </TabsList>
+            <TabsContent value='reviews'>
+              <ProductComments />
+            </TabsContent>
+            <TabsContent value='questions'>
+              <ProductQuestions />
+            </TabsContent>
+          </Tabs>
+        </AuthWrapper>
       </Card>
     </div>
   );
