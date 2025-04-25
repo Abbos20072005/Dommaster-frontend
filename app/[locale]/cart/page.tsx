@@ -1,9 +1,9 @@
 import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { BaseLayout } from '@/components/layout';
-import { ProductList } from '@/components/modules/product';
+import { ProductListSkeleton } from '@/components/modules/product';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,10 +13,9 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { Button } from '@/components/ui/button';
-import { productsData } from '@/fake-data/products';
 import { Link } from '@/i18n/navigation';
 
-import { CartCalculation, ProductCartList } from './_components';
+import { CartCalculation, ProductCartList, RecentlyViewedProducts } from './_components';
 
 const CartPage = () => {
   const t = useTranslations();
@@ -53,9 +52,11 @@ const CartPage = () => {
             <CartCalculation />
           </div>
         </div>
-        <div className='mt-8 px-4 md:px-0'>
+        <div className='mt-8'>
           <h2 className='text-lg font-bold md:text-2xl'>{t('Frequently bought together')}</h2>
-          <ProductList products={productsData} />
+          <Suspense fallback={<ProductListSkeleton />}>
+            <RecentlyViewedProducts />
+          </Suspense>
         </div>
       </BaseLayout>
     </div>

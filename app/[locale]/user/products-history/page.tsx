@@ -6,6 +6,8 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
 
+import { ViewedProducts } from './_components';
+
 const ProductsHistoryPage = async () => {
   const t = await getTranslations();
 
@@ -22,7 +24,9 @@ const ProductsHistoryPage = async () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Viewed products')}</h1>
-        <AuthWrapper>content</AuthWrapper>
+        <AuthWrapper>
+          <ViewedProducts />
+        </AuthWrapper>
       </Card>
     </div>
   );

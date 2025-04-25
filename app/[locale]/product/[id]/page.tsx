@@ -1,14 +1,14 @@
 import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
-import React from 'react';
+import React, { Suspense } from 'react';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
-import { ProductList } from '@/components/modules/product';
+import { ProductListSkeleton } from '@/components/modules/product';
 import { productsData } from '@/fake-data/products';
 import { getProductById } from '@/utils/api/requests';
 
-import { ProductBody, ProductCart, ProductHeader } from './_components';
+import { ProductBody, ProductCart, ProductHeader, RecentlyViewedProducts } from './_components';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -54,7 +54,9 @@ const ProductPage = async ({ params }: Props) => {
         </div>
         <div className='mt-8'>
           <h2 className='text-lg font-bold md:text-2xl'>{t('Frequently bought together')}</h2>
-          <ProductList products={productsData} />
+          <Suspense fallback={<ProductListSkeleton />}>
+            <RecentlyViewedProducts />
+          </Suspense>
         </div>
       </BaseLayout>
     </>

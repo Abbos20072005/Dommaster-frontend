@@ -12,7 +12,7 @@ export const PromoList = () => {
     queryFn: () => getPromos()
   });
 
-  const promos = getPromosQuery.data?.data.result;
+  // const promos = getPromosQuery.data?.data.result;
 
   if (getPromosQuery.isLoading) {
     return (
