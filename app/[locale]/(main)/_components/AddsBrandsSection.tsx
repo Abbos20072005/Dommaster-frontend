@@ -1,5 +1,8 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
 import { ArrowRightIcon } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
 import { BaseLayout } from '@/components/layout';
 import { ProductList } from '@/components/modules/product';
@@ -7,10 +10,19 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { getAddsBrands } from '@/utils/api/requests';
 
-export const AddsBrandsSection = async () => {
-  const t = await getTranslations();
-  const addsBrandsResponse = await getAddsBrands();
-  const addsBrands = addsBrandsResponse.data.result;
+import { AddsBrandsSectionLoading } from './AddsBrandsSectionLoading';
+
+export const AddsBrandsSection = () => {
+  const t = useTranslations();
+  const getAddsBrandsQuery = useQuery({
+    queryKey: ['addsBrands'],
+    staleTime: 0,
+    queryFn: () => getAddsBrands()
+  });
+
+  const addsBrands = getAddsBrandsQuery.data?.data.result || [];
+
+  if (getAddsBrandsQuery.isLoading) return <AddsBrandsSectionLoading />;
 
   if (!addsBrands.length) return null;
 

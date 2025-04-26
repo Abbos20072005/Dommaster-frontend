@@ -4,12 +4,12 @@ import { MobileHeader } from '@/components/layout';
 
 import {
   AddsBrandsSection,
-  AddsBrandsSectionLoading,
   BannerCarousel,
   BannerCarouselLoading,
   BrandsSection,
   BrandsSectionLoading,
   DiscountProductsSection,
+  MostSoldProductsSection,
   PopularCategoriesSection,
   PopularCategoriesSectionSkeleton
 } from './_components';
@@ -31,9 +31,8 @@ const Home = () => {
         <Suspense fallback={<BrandsSectionLoading />}>
           <BrandsSection />
         </Suspense>
-        <Suspense fallback={<AddsBrandsSectionLoading />}>
-          <AddsBrandsSection />
-        </Suspense>
+        <MostSoldProductsSection />
+        <AddsBrandsSection />
       </div>
     </>
   );

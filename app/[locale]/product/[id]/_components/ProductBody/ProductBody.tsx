@@ -1,9 +1,12 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import { useParams } from 'next/navigation';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
+import { ProductCart } from '@/app/[locale]/product/[id]/_components';
 import {
   Accordion,
   AccordionContent,
@@ -11,8 +14,10 @@ import {
   AccordionTrigger
 } from '@/components/ui/accordion';
 import { Card } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useScrollTo } from '@/hooks';
+import { getProductById } from '@/utils/api/requests';
 
 import {
   ProductCharacteristics,
@@ -22,11 +27,7 @@ import {
   ProductQuestions
 } from './components';
 
-interface Props {
-  product: Product;
-}
-
-export const ProductBody = ({ product }: Props) => {
+export const ProductBody = () => {
   const t = useTranslations();
   const [tab, setTab] = useQueryState('tab', { defaultValue: 'description' });
   const scrollTo = useScrollTo(60);
@@ -35,11 +36,49 @@ export const ProductBody = ({ product }: Props) => {
     scrollTo(tab);
   }, []);
 
+  const { id } = useParams<{ id: string }>();
+
+  const getProductByIdQuery = useQuery({
+    queryKey: ['product', id],
+    staleTime: 0,
+    queryFn: () => getProductById({ id })
+  });
+
+  if (getProductByIdQuery.isLoading)
+    return (
+      <div className='flex flex-col gap-4 lg:flex-row'>
+        <div className='flex-1 space-y-4'>
+          <Card className='hidden h-11.5 items-center px-6 md:flex' variant='outline'>
+            <Skeleton className='h-5 w-32' />
+          </Card>
+          <Card className='md:border-border border-transparent p-0 md:p-8' variant='outline'>
+            <div className='grid gap-6 md:grid-cols-[3fr_2fr]'>
+              <div className='space-y-2'>
+                <Skeleton className='aspect-square' />
+                <div className='flex gap-1'>
+                  <Skeleton className='h-[61.5px] w-15' />
+                  <Skeleton className='h-[61.5px] w-15' />
+                  <Skeleton className='h-[61.5px] w-15' />
+                </div>
+              </div>
+            </div>
+          </Card>
+        </div>
+        <div className='lg:w-[360px]'>
+          <Skeleton className='h-50' />
+        </div>
+      </div>
+    );
+
+  const product = getProductByIdQuery.data?.data.result;
+
+  if (!product) return null;
+
   return (
-    <>
+    <div className='flex flex-col gap-4 lg:flex-row'>
       {/* Desktop */}
       <Tabs
-        className='hidden md:flex'
+        className='hidden flex-1 md:flex'
         defaultValue='description'
         value={tab}
         onValueChange={setTab}
@@ -134,6 +173,9 @@ export const ProductBody = ({ product }: Props) => {
           </AccordionItem>
         </Accordion>
       </div>
-    </>
+      <div className='lg:w-[360px]'>
+        <ProductCart product={product} />
+      </div>
+    </div>
   );
 };

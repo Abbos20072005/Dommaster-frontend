@@ -1,9 +1,8 @@
 import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import React, { Suspense } from 'react';
+import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
-import { ProductListSkeleton } from '@/components/modules/product';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -52,12 +51,7 @@ const CartPage = () => {
             <CartCalculation />
           </div>
         </div>
-        <div className='mt-8'>
-          <h2 className='text-lg font-bold md:text-2xl'>{t('Frequently bought together')}</h2>
-          <Suspense fallback={<ProductListSkeleton />}>
-            <RecentlyViewedProducts />
-          </Suspense>
-        </div>
+        <RecentlyViewedProducts />
       </BaseLayout>
     </div>
   );

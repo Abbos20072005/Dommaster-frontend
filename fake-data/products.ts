@@ -68,7 +68,6 @@ export const productsData: Product[] = [
       {
         id: 1,
         name: 'Category 1',
-        productQty: 10,
         breadcrumbs: [],
         image: '',
         sub_categories: [],
@@ -159,7 +158,6 @@ export const productsData: Product[] = [
       {
         id: 1,
         name: 'Category 1',
-        productQty: 10,
         breadcrumbs: [],
         icon: '',
         image: '',
@@ -250,7 +248,6 @@ export const productsData: Product[] = [
       {
         id: 1,
         name: 'Category 1',
-        productQty: 10,
         icon: '',
         breadcrumbs: [],
         image: '',
@@ -341,7 +338,6 @@ export const productsData: Product[] = [
       {
         id: 1,
         name: 'Category 1',
-        productQty: 10,
         icon: '',
         breadcrumbs: [],
         image: '',
@@ -432,7 +428,6 @@ export const productsData: Product[] = [
       {
         id: 1,
         name: 'Category 1',
-        productQty: 10,
         breadcrumbs: [],
         image: '',
         icon: '',
@@ -523,7 +518,6 @@ export const productsData: Product[] = [
       {
         id: 1,
         name: 'Category 1',
-        productQty: 10,
         breadcrumbs: [],
         image: '',
         icon: '',
@@ -614,7 +608,6 @@ export const productsData: Product[] = [
       {
         id: 1,
         name: 'Category 1',
-        productQty: 10,
         breadcrumbs: [],
         image: '',
         icon: '',

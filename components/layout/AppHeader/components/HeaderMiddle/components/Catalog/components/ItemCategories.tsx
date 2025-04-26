@@ -24,7 +24,6 @@ export const ItemCategories = ({ subCategory, categoryId }: Props) => {
               <span className='hover:text-secondary font-medium transition-colors'>
                 {subCategory.name}
               </span>
-              <span className='text-muted-foreground ml-1'>({subCategory.productQty})</span>
             </Link>
           </div>
           <AccordionContent className='pb-0'>
@@ -38,7 +37,9 @@ export const ItemCategories = ({ subCategory, categoryId }: Props) => {
                     <span className='hover:text-secondary transition-colors'>
                       {itemCategory.name}
                     </span>
-                    <span className='text-muted-foreground ml-1'>({itemCategory.productQty})</span>
+                    <span className='text-muted-foreground ml-1'>
+                      ({itemCategory.product_quantity})
+                    </span>
                   </Link>
                 </li>
               ))}

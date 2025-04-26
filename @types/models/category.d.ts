@@ -3,7 +3,6 @@ interface Category {
   id: number;
   image: string;
   name: string;
-  productQty: number;
   sub_categories: SubCategory[];
   breadcrumbs: {
     id: number;
@@ -19,7 +18,6 @@ interface SubCategory {
   image: string;
   name: string;
   product_item_categories: ItemCategory[];
-  productQty: number;
   breadcrumbs: {
     id: number;
     name: string;
@@ -32,7 +30,7 @@ interface ItemCategory {
   id: number;
   image: string;
   name: string;
-  productQty: number;
+  product_quantity: number;
   breadcrumbs: {
     id: number;
     name: string;

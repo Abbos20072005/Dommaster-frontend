@@ -5,5 +5,6 @@ export { BannerCarouselLoading } from './BannerCarouselLoading';
 export { BrandsSection } from './BrandsSection';
 export { BrandsSectionLoading } from './BrandsSectionLoading';
 export { DiscountProductsSection } from './DiscountProductsSection';
+export { MostSoldProductsSection } from './MostSoldProductsSection';
 export { PopularCategoriesSection } from './PopularCategoriesSection';
 export { PopularCategoriesSectionSkeleton } from './PopularCategoriesSectionSkeleton';
