@@ -1,8 +1,9 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { ArrowLeftIcon, AxeIcon, ChevronRightIcon, XIcon } from 'lucide-react';
+import { ArrowLeftIcon, ChevronRightIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -89,7 +90,13 @@ export const MobileCatalogDialog = ({ children, ...props }: Props) => {
                   onClick={() => setSelectedCategory(item)}
                 >
                   <div className='flex flex-1 items-center gap-3 text-sm'>
-                    <AxeIcon className='text-primary size-6' />
+                    <Image
+                      alt={item.name}
+                      className='size-5 rounded-sm'
+                      height={20}
+                      src={item.icon}
+                      width={20}
+                    />
                     {item.name}
                   </div>
                   <ChevronRightIcon className='text-muted-foreground' />
