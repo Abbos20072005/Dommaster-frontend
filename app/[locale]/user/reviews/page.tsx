@@ -1,5 +1,5 @@
 import { ArrowLeftIcon } from 'lucide-react';
-import { getTranslations } from 'next-intl/server';
+import { useTranslations } from 'next-intl';
 
 import { AuthWrapper } from '@/components/modules/auth';
 import { Button } from '@/components/ui/button';
@@ -9,11 +9,11 @@ import { Link } from '@/i18n/navigation';
 
 import { ProductComments, ProductQuestions } from './_components';
 
-const OrdersPage = async () => {
-  const t = await getTranslations();
+const OrdersPage = () => {
+  const t = useTranslations();
 
   return (
-    <div>
+    <AuthWrapper>
       <div className='mb-4 flex items-center border-b md:hidden'>
         <Button asChild className='size-13' size='icon' variant='ghost'>
           <Link href='/user/dashboard'>
@@ -25,22 +25,20 @@ const OrdersPage = async () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('My reviews and questions')}</h1>
-        <AuthWrapper>
-          <Tabs defaultValue='reviews'>
-            <TabsList>
-              <TabsTrigger value='reviews'>{t('Reviews')}</TabsTrigger>
-              <TabsTrigger value='questions'>{t('Questions')}</TabsTrigger>
-            </TabsList>
-            <TabsContent value='reviews'>
-              <ProductComments />
-            </TabsContent>
-            <TabsContent value='questions'>
-              <ProductQuestions />
-            </TabsContent>
-          </Tabs>
-        </AuthWrapper>
+        <Tabs defaultValue='reviews'>
+          <TabsList>
+            <TabsTrigger value='reviews'>{t('Reviews')}</TabsTrigger>
+            <TabsTrigger value='questions'>{t('Questions')}</TabsTrigger>
+          </TabsList>
+          <TabsContent value='reviews'>
+            <ProductComments />
+          </TabsContent>
+          <TabsContent value='questions'>
+            <ProductQuestions />
+          </TabsContent>
+        </Tabs>
       </Card>
-    </div>
+    </AuthWrapper>
   );
 };
 

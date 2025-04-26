@@ -12,7 +12,7 @@ const PromoPage = () => {
   const t = useTranslations();
 
   return (
-    <div>
+    <AuthWrapper>
       <div className='mb-4 flex items-center border-b md:hidden'>
         <Button asChild className='size-13' size='icon' variant='ghost'>
           <Link href='/user/dashboard'>
@@ -24,11 +24,9 @@ const PromoPage = () => {
       </div>
       <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Promo codes')}</h1>
-        <AuthWrapper>
-          <PromoList />
-        </AuthWrapper>
+        <PromoList />
       </Card>
-    </div>
+    </AuthWrapper>
   );
 };
 
