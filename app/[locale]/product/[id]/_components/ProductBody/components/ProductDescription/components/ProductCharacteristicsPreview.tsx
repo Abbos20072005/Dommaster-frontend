@@ -12,8 +12,8 @@ export const ProductCharacteristicsPreview = ({ characteristics }: Props) => {
     <div>
       <ul className='mb-4 space-y-2 text-sm'>
         {characteristics?.slice(0, 10).map((item) => (
-          <li key={item.title}>
-            <span className='text-muted-foreground'>{item.title}: </span>
+          <li key={item.name}>
+            <span className='text-muted-foreground'>{item.name}: </span>
             <span className='text-foreground/80 font-medium'>
               {item.value}
               {item.unit && ` ${item.unit}`}
@@ -21,12 +21,14 @@ export const ProductCharacteristicsPreview = ({ characteristics }: Props) => {
           </li>
         ))}
       </ul>
-      <button
-        className='border-tertiary text-tertiary border-b border-dashed text-sm font-medium'
-        onClick={() => setTab('characteristics')}
-      >
-        Полные характеристики…
-      </button>
+      {characteristics?.length > 10 && (
+        <button
+          className='border-tertiary text-tertiary border-b border-dashed text-sm font-medium'
+          onClick={() => setTab('characteristics')}
+        >
+          Полные характеристики…
+        </button>
+      )}
     </div>
   );
 };

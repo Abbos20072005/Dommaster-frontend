@@ -20,7 +20,7 @@ interface Product {
     name: string;
   }[];
   characteristics: {
-    title: string;
+    name: string;
     value: string;
     unit: string;
   }[];

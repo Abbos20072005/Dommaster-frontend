@@ -9,3 +9,11 @@ interface Promo {
 
 type PromosResponse = ApiResponse<Promo[]>;
 type PromoResponse = ApiResponse<Promo>;
+
+interface PromoCodeChecker {
+  discount: number;
+  discount_price: number;
+  total_price: number;
+}
+
+type PromoCodeCheckerResponse = ApiResponse<PromoCodeChecker>;

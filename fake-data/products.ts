@@ -34,32 +34,32 @@ export const productsData: Product[] = [
     rating: 4.5,
     characteristics: [
       {
-        title: 'Артикул',
+        name: 'Артикул',
         unit: '',
         value: '153.741'
       },
       {
-        title: 'Тип товара',
+        name: 'Тип товара',
         unit: '',
         value: 'Штора'
       },
       {
-        title: 'Бренд',
+        name: 'Бренд',
         unit: '',
         value: 'Decofest'
       },
       {
-        title: 'Коллекция',
+        name: 'Коллекция',
         unit: '',
         value: 'Сола'
       },
       {
-        title: 'Страна-производитель',
+        name: 'Страна-производитель',
         unit: '',
         value: 'Китай'
       },
       {
-        title: 'Высота',
+        name: 'Высота',
         unit: 'sm',
         value: '280'
       }
@@ -124,32 +124,32 @@ export const productsData: Product[] = [
     rating: 4.5,
     characteristics: [
       {
-        title: 'Артикул',
+        name: 'Артикул',
         unit: '',
         value: '153.741'
       },
       {
-        title: 'Тип товара',
+        name: 'Тип товара',
         unit: '',
         value: 'Штора'
       },
       {
-        title: 'Бренд',
+        name: 'Бренд',
         unit: '',
         value: 'Decofest'
       },
       {
-        title: 'Коллекция',
+        name: 'Коллекция',
         unit: '',
         value: 'Сола'
       },
       {
-        title: 'Страна-производитель',
+        name: 'Страна-производитель',
         unit: '',
         value: 'Китай'
       },
       {
-        title: 'Высота',
+        name: 'Высота',
         unit: 'sm',
         value: '280'
       }
@@ -214,32 +214,32 @@ export const productsData: Product[] = [
     rating: 4.5,
     characteristics: [
       {
-        title: 'Артикул',
+        name: 'Артикул',
         unit: '',
         value: '153.741'
       },
       {
-        title: 'Тип товара',
+        name: 'Тип товара',
         unit: '',
         value: 'Штора'
       },
       {
-        title: 'Бренд',
+        name: 'Бренд',
         unit: '',
         value: 'Decofest'
       },
       {
-        title: 'Коллекция',
+        name: 'Коллекция',
         unit: '',
         value: 'Сола'
       },
       {
-        title: 'Страна-производитель',
+        name: 'Страна-производитель',
         unit: '',
         value: 'Китай'
       },
       {
-        title: 'Высота',
+        name: 'Высота',
         unit: 'sm',
         value: '280'
       }
@@ -304,32 +304,32 @@ export const productsData: Product[] = [
     rating: 4.5,
     characteristics: [
       {
-        title: 'Артикул',
+        name: 'Артикул',
         unit: '',
         value: '153.741'
       },
       {
-        title: 'Тип товара',
+        name: 'Тип товара',
         unit: '',
         value: 'Штора'
       },
       {
-        title: 'Бренд',
+        name: 'Бренд',
         unit: '',
         value: 'Decofest'
       },
       {
-        title: 'Коллекция',
+        name: 'Коллекция',
         unit: '',
         value: 'Сола'
       },
       {
-        title: 'Страна-производитель',
+        name: 'Страна-производитель',
         unit: '',
         value: 'Китай'
       },
       {
-        title: 'Высота',
+        name: 'Высота',
         unit: 'sm',
         value: '280'
       }
@@ -394,32 +394,32 @@ export const productsData: Product[] = [
     rating: 4.5,
     characteristics: [
       {
-        title: 'Артикул',
+        name: 'Артикул',
         unit: '',
         value: '153.741'
       },
       {
-        title: 'Тип товара',
+        name: 'Тип товара',
         unit: '',
         value: 'Штора'
       },
       {
-        title: 'Бренд',
+        name: 'Бренд',
         unit: '',
         value: 'Decofest'
       },
       {
-        title: 'Коллекция',
+        name: 'Коллекция',
         unit: '',
         value: 'Сола'
       },
       {
-        title: 'Страна-производитель',
+        name: 'Страна-производитель',
         unit: '',
         value: 'Китай'
       },
       {
-        title: 'Высота',
+        name: 'Высота',
         unit: 'sm',
         value: '280'
       }
@@ -484,32 +484,32 @@ export const productsData: Product[] = [
     rating: 4.5,
     characteristics: [
       {
-        title: 'Артикул',
+        name: 'Артикул',
         unit: '',
         value: '153.741'
       },
       {
-        title: 'Тип товара',
+        name: 'Тип товара',
         unit: '',
         value: 'Штора'
       },
       {
-        title: 'Бренд',
+        name: 'Бренд',
         unit: '',
         value: 'Decofest'
       },
       {
-        title: 'Коллекция',
+        name: 'Коллекция',
         unit: '',
         value: 'Сола'
       },
       {
-        title: 'Страна-производитель',
+        name: 'Страна-производитель',
         unit: '',
         value: 'Китай'
       },
       {
-        title: 'Высота',
+        name: 'Высота',
         unit: 'sm',
         value: '280'
       }
@@ -574,32 +574,32 @@ export const productsData: Product[] = [
     rating: 4.5,
     characteristics: [
       {
-        title: 'Артикул',
+        name: 'Артикул',
         unit: '',
         value: '153.741'
       },
       {
-        title: 'Тип товара',
+        name: 'Тип товара',
         unit: '',
         value: 'Штора'
       },
       {
-        title: 'Бренд',
+        name: 'Бренд',
         unit: '',
         value: 'Decofest'
       },
       {
-        title: 'Коллекция',
+        name: 'Коллекция',
         unit: '',
         value: 'Сола'
       },
       {
-        title: 'Страна-производитель',
+        name: 'Страна-производитель',
         unit: '',
         value: 'Китай'
       },
       {
-        title: 'Высота',
+        name: 'Высота',
         unit: 'sm',
         value: '280'
       }

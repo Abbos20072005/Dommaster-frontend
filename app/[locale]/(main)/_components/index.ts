@@ -8,3 +8,4 @@ export { DiscountProductsSection } from './DiscountProductsSection';
 export { MostSoldProductsSection } from './MostSoldProductsSection';
 export { PopularCategoriesSection } from './PopularCategoriesSection';
 export { PopularCategoriesSectionSkeleton } from './PopularCategoriesSectionSkeleton';
+export { UsefulContentSection } from './UsefulContentSection';
