@@ -15,6 +15,7 @@ export const MessageList = () => {
   const t = useTranslations();
   const getChatMessagesQuery = useQuery({
     queryKey: ['chat-messages'],
+    refetchInterval: 3000,
     queryFn: () => getChatMessages(),
     staleTime: 0
   });
