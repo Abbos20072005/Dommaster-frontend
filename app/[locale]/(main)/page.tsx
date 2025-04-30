@@ -12,7 +12,8 @@ import {
   MostSoldProductsSection,
   PopularCategoriesSection,
   PopularCategoriesSectionSkeleton,
-  UsefulContentSection
+  UsefulContentSection,
+  UsefulContentSectionLoading
 } from './_components';
 
 const Home = () => {
@@ -33,7 +34,7 @@ const Home = () => {
           <BrandsSection />
         </Suspense>
         <MostSoldProductsSection />
-        <Suspense fallback={'loading...'}>
+        <Suspense fallback={<UsefulContentSectionLoading />}>
           <UsefulContentSection />
         </Suspense>
         <AddsBrandsSection />

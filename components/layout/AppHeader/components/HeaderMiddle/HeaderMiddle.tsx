@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
+import { BaseLayout } from '@/components/layout';
 import { AuthDialog } from '@/components/modules/auth';
 import { Search } from '@/components/modules/search';
 import { Link } from '@/i18n/navigation';
@@ -23,7 +24,7 @@ export const HeaderMiddle = () => {
     <div
       className={cn('bg-background', { 'fixed inset-x-0 top-0 z-50 border-b': state.offset > 32 })}
     >
-      <div className='mx-auto flex h-16 max-w-[1272px] items-center gap-4 px-2 md:px-4'>
+      <BaseLayout className='flex h-16 items-center gap-4'>
         <Link href='/'>
           <div className='flex items-center justify-center gap-1'>
             <Image
@@ -92,7 +93,7 @@ export const HeaderMiddle = () => {
             </AuthDialog>
           )}
         </div>
-      </div>
+      </BaseLayout>
     </div>
   );
 };

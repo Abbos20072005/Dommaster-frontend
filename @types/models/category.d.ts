@@ -30,7 +30,7 @@ interface ItemCategory {
   id: number;
   image: string;
   name: string;
-  product_quantity: number;
+  product_amount: number;
   breadcrumbs: {
     id: number;
     name: string;

@@ -3,6 +3,7 @@
 import React from 'react';
 
 import {
+  FilterCategories,
   FilterCheckbox,
   FilterRadio,
   FilterSkeleton,
@@ -26,6 +27,7 @@ export const Filter = ({ className, filters, ...props }: Props) => {
     <div className={cn(className)} {...props} aria-label='Filter' data-slot='filter'>
       <FilterClearButton />
       <div className='space-y-7'>
+        <FilterCategories />
         {filters.map((filter) => (
           <React.Fragment key={filter.name}>
             {filter.type === 'CHECKBOX' && <FilterCheckbox filter={filter} />}

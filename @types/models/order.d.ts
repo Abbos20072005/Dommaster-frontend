@@ -6,7 +6,7 @@ interface Order {
 }
 
 interface OrderRequest {
-  promocode: string;
+  promocode?: string;
 }
 
 type OrdersResponse = ApiResponse<Pagination<Order>>;

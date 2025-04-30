@@ -20,7 +20,7 @@ export const RecentlyViewedProducts = () => {
   if (getProductByIdQuery.isLoading)
     return (
       <section>
-        <h2 className='text-lg font-bold md:text-2xl'>{t('Frequently bought together')}</h2>
+        <h2 className='text-lg font-bold md:text-2xl'>{t('Recently viewed products')}</h2>
         <ProductListSkeleton />
       </section>
     );
@@ -29,7 +29,7 @@ export const RecentlyViewedProducts = () => {
 
   return (
     <section>
-      <h2 className='text-lg font-bold md:text-2xl'>{t('Frequently bought together')}</h2>
+      <h2 className='text-lg font-bold md:text-2xl'>{t('Recently viewed products')}</h2>
       <ProductList products={viewedProducts} />
     </section>
   );

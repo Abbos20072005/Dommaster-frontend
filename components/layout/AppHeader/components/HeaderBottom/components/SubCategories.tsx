@@ -22,7 +22,7 @@ export const SubCategories = ({ category }: Props) => {
             className='text-sm text-nowrap'
           >
             <span className='hover:text-secondary transition-colors'>{itemCategory.name}</span>
-            <span className='text-muted-foreground ml-1'>({itemCategory.product_quantity})</span>
+            <span className='text-muted-foreground ml-1'>({itemCategory.product_amount})</span>
           </Link>
         </div>
       ))}

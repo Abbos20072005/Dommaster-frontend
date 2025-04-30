@@ -21,12 +21,7 @@ export const PriceCalculationCard = () => {
   const { user } = useAuth();
   const { cart, availableCartItems, isSuccess, isFetching } = useCart();
   const router = useRouter();
-  const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>({
-    code: 'SALOM',
-    discount: 20,
-    discount_price: 10000,
-    total_price: 100000
-  });
+  const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
 
   React.useEffect(() => {
     if (isSuccess && !availableCartItems.length) router.push('/cart');
@@ -38,7 +33,7 @@ export const PriceCalculationCard = () => {
 
   const onSubmit = () => {
     if (!user) return;
-    postOrderMutation.mutate({ data: { promocode: promo.code } });
+    postOrderMutation.mutate({ data: { promocode: promo?.code } });
   };
 
   return (

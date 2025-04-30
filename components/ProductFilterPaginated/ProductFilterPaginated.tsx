@@ -52,7 +52,7 @@ export const ProductFilterPaginated = ({ filters, queries }: Props) => {
 
   return (
     <div className='gap-8 lg:flex'>
-      <aside className='hidden w-52 lg:block xl:w-60'>
+      <aside className='hidden w-60 lg:block lg:w-64'>
         <Filter filters={filters} />
       </aside>
       <div className='space-y-4 lg:flex-1'>

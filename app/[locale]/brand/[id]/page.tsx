@@ -11,7 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { getBrandById, getCategories } from '@/utils/api/requests';
+import { getBrandById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -22,8 +22,6 @@ const SearchPage = async ({ params }: Props) => {
   const { id } = await params;
   const brandResponse = await getBrandById({ id });
   const brand = brandResponse.data.result;
-  const categoriesResponse = await getCategories();
-  const categories = categoriesResponse.data.result;
 
   return (
     <div>
@@ -43,16 +41,6 @@ const SearchPage = async ({ params }: Props) => {
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>{brand.name}</h1>
         <ProductFilterPaginated
           filters={[
-            {
-              filter_items: categories.map((category) => ({
-                label: category.name,
-                swatch_data: null,
-                value: String(category.id)
-              })),
-              name: t('Categories'),
-              request_var: 'category',
-              type: 'RADIO'
-            },
             {
               request_var: 'price',
               type: 'SLIDER',

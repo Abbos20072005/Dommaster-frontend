@@ -24,7 +24,7 @@ export const BannerCarousel = async () => {
             <CarouselItem key={banner.id} className='basis-[90%] pl-2 md:basis-full md:pl-4'>
               <a
                 href={banner.link}
-                className='block aspect-[3/1]'
+                className='block aspect-[3/1] md:aspect-[4/1]'
                 rel='noreferrer noopenner'
                 target='_blank'
               >

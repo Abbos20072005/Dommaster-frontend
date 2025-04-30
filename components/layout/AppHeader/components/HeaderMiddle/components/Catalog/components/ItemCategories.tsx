@@ -38,7 +38,7 @@ export const ItemCategories = ({ subCategory, categoryId }: Props) => {
                       {itemCategory.name}
                     </span>
                     <span className='text-muted-foreground ml-1'>
-                      ({itemCategory.product_quantity})
+                      ({itemCategory.product_amount})
                     </span>
                   </Link>
                 </li>

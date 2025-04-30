@@ -22,3 +22,47 @@ interface ChatMessageRequest {
 }
 type ChatMessagesResponse = ApiResponse<ChatMessage[]>;
 type ChatMessageResponse = ApiResponse<ChatMessage>;
+
+interface News {
+  created_at: string;
+  description: string;
+  id: number;
+  image: string;
+  title: string;
+}
+
+type NewsListResponse = ApiResponse<Pagination<News>>;
+type NewsResponse = ApiResponse<News>;
+
+interface Article {
+  created_at: string;
+  description: string;
+  id: number;
+  short_description: string;
+  title: string;
+}
+
+type ArticlesResponse = ApiResponse<Pagination<Article>>;
+type ArticleResponse = ApiResponse<Article>;
+
+interface Review {
+  created_at: string;
+  description: string;
+  id: number;
+  short_description: string;
+  title: string;
+}
+
+type ReviewsResponse = ApiResponse<Pagination<Review>>;
+type ReviewResponse = ApiResponse<Review>;
+
+interface Video {
+  created_at: string;
+  description: string;
+  id: number;
+  name: string;
+  url: string;
+}
+
+type VideosResponse = ApiResponse<Video[]>;
+type VideoResponse = ApiResponse<Video>;
