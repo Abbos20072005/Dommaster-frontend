@@ -47,7 +47,7 @@ export const PopularCategoriesSection = async () => {
               return (
                 <CarouselItem
                   key={item.id}
-                  className='basis-1/5 space-y-4 pl-2 md:pl-4 lg:basis-1/6'
+                  className='basis-1/6 space-y-4 pl-2 md:pl-4 lg:basis-1/7'
                 >
                   <Link
                     href={`/category/${item.id}`}

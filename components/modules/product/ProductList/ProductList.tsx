@@ -40,7 +40,7 @@ export const ProductList = ({ view = 'carousel', products, className, ...props }
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
-                  className='max-w-[200px] min-w-[200px]'
+                  className='max-w-[170px] min-w-[170px]'
                   product={product}
                 />
               ))}

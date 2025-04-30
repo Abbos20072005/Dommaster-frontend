@@ -11,8 +11,8 @@ type PromosResponse = ApiResponse<Promo[]>;
 type PromoResponse = ApiResponse<Promo>;
 
 interface PromoCodeChecker {
-  discount: number;
-  discount_price: number;
+  discount_precent: number;
+  saved_price: number;
   total_price: number;
 }
 

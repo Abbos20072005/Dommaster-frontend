@@ -63,11 +63,11 @@ export const PriceCalculationCard = () => {
         {!!promo && (
           <div className='align-center flex justify-between gap-1 text-sm'>
             <div className='flex items-center gap-1'>
-              <span className='font-bold'>{promo.code}</span>
-              <Badge variant='secondary'>-{promo.discount}%</Badge>
+              <span className='font-bold uppercase'>{promo.code}</span>
+              <Badge variant='secondary'>-{promo.discount_precent}%</Badge>
             </div>
             <p className='text-secondary'>
-              -{formatPrice(promo.discount_price)} {t('som')}
+              -{formatPrice(promo.saved_price)} {t('som')}
             </p>
           </div>
         )}
