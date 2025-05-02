@@ -17,9 +17,16 @@ const DropdownMenuPortal = ({
 };
 
 const DropdownMenuTrigger = ({
+  className,
   ...props
 }: React.ComponentProps<typeof DropdownMenuPrimitive.Trigger>) => {
-  return <DropdownMenuPrimitive.Trigger data-slot='dropdown-menu-trigger' {...props} />;
+  return (
+    <DropdownMenuPrimitive.Trigger
+      className={cn('outline-none', className)}
+      data-slot='dropdown-menu-trigger'
+      {...props}
+    />
+  );
 };
 
 const DropdownMenuContent = ({

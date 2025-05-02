@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
@@ -9,6 +10,7 @@ import { Links, MobileAppLinks, Socials } from './components';
 interface Props extends React.ComponentProps<'footer'> {}
 
 export const AppFooter = ({ className, children, ...props }: Props) => {
+  const t = useTranslations();
   return (
     <footer
       className={cn(
@@ -21,10 +23,14 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
         <div className='flex flex-col justify-between gap-6 lg:flex-row'>
           <div>
             <div className='mb-5'>
-              <div className='mb-3 text-sm font-medium'>Возник вопрос? Звоните</div>
+              <div className='mb-3 text-sm font-medium'>{t('Have a question? Call us')}</div>
               <a href='tel:+998712099944' className='text-2xl font-semibold'>
                 +998 71 209 99 44
               </a>
+            </div>
+            <div>
+              <div className='mb-2 text-sm font-medium'>{t('Receiving calls')}</div>
+              <p>{t('Mon – Sun: from 07:00 – 22:00')}</p>
             </div>
 
             <Socials />

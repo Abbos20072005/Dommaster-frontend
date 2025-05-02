@@ -1,8 +1,16 @@
-import { MapPinIcon } from 'lucide-react';
+import { ChevronDownIcon, MapPinIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuTrigger
+} from '@/components/ui/dropdown-menu';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { Link } from '@/i18n/navigation';
 
 import { LocaleSwitcher } from './components';
@@ -16,12 +24,63 @@ export const HeaderTop = () => {
           <MapPinIcon className='size-4' />
           <span>{t('Tashkent')}</span>
         </div>
-        <Link href='/offices' className='hover:text-secondary text-sm transition-colors'>
-          {t('Stores')}
-        </Link>
-        <Link href='/services/delivery' className='hover:text-secondary text-sm transition-colors'>
-          {t('Delivery and lifting')}
-        </Link>
+        <DropdownMenu>
+          <DropdownMenuTrigger className='hover:text-secondary flex items-center gap-1 text-sm transition-colors'>
+            {t('Receiving and payment')}
+            <ChevronDownIcon className='size-4' />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuGroup>
+              <Link href='/courier-delivery'>
+                <DropdownMenuItem>{t('Delivery by courier')}</DropdownMenuItem>
+              </Link>
+              <Link href='/payment-methods'>
+                <DropdownMenuItem>{t('Payment methods')}</DropdownMenuItem>
+              </Link>
+              <DropdownMenuItem>{t('Check order status')}</DropdownMenuItem>
+              <Tooltip delayDuration={0}>
+                <DropdownMenuItem asChild className='text-muted-foreground cursor-not-allowed'>
+                  <TooltipTrigger disabled className='w-full'>
+                    {t('Delivery by transport company')}
+                  </TooltipTrigger>
+                </DropdownMenuItem>
+                <TooltipContent side='right'>{t('In the process of development')}</TooltipContent>
+              </Tooltip>
+              <Tooltip delayDuration={0}>
+                <DropdownMenuItem asChild className='text-muted-foreground cursor-not-allowed'>
+                  <TooltipTrigger disabled className='w-full'>
+                    {t('Pickup')}
+                  </TooltipTrigger>
+                </DropdownMenuItem>
+                <TooltipContent side='right'>{t('In the process of development')}</TooltipContent>
+              </Tooltip>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
+        <DropdownMenu>
+          <DropdownMenuTrigger className='hover:text-secondary flex items-center gap-1 text-sm transition-colors'>
+            {t('About us')}
+            <ChevronDownIcon className='size-4' />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuGroup>
+              <Link href='/about'>
+                <DropdownMenuItem>{t('About company')}</DropdownMenuItem>
+              </Link>
+              <Tooltip delayDuration={0}>
+                <DropdownMenuItem asChild className='text-muted-foreground cursor-not-allowed'>
+                  <TooltipTrigger disabled className='w-full'>
+                    {t('Information for investors')}
+                  </TooltipTrigger>
+                </DropdownMenuItem>
+                <TooltipContent side='right'>{t('In the process of development')}</TooltipContent>
+              </Tooltip>
+              <Link href='/requisites'>
+                <DropdownMenuItem>{t('Requisites')}</DropdownMenuItem>
+              </Link>
+            </DropdownMenuGroup>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
       <div className='flex items-center gap-4'>
         <LocaleSwitcher />

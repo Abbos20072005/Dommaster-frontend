@@ -10,7 +10,7 @@ export const BannerCarouselLoading = async () => {
 
   return (
     <BaseLayout className='px-6 md:px-4'>
-      <Skeleton className='aspect-[3/1] w-full rounded-lg md:rounded-xl' />
+      <Skeleton className='aspect-[3/1] w-full rounded-lg md:aspect-[4/1] md:rounded-xl' />
     </BaseLayout>
   );
 };

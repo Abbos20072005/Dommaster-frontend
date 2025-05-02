@@ -30,9 +30,17 @@ export const BannerCarousel = async () => {
               >
                 <Image
                   alt='banner'
-                  className='size-full rounded-lg object-cover md:rounded-xl'
+                  className='size-full rounded-lg object-cover md:hidden md:rounded-xl'
+                  height={230}
+                  src={banner.mobile_image}
+                  width={690}
+                  priority={index === 0}
+                />
+                <Image
+                  alt='banner'
+                  className='hidden size-full rounded-lg object-cover md:block md:rounded-xl'
                   height={413}
-                  src={banner.image}
+                  src={banner.desktop_image}
                   width={1240}
                   priority={index === 0}
                 />

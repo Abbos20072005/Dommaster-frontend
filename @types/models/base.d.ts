@@ -1,7 +1,15 @@
-interface Banner {
+interface About {
+  description: string;
   id: number;
-  image: string;
+}
+
+type AboutResponse = ApiResponse<About>;
+
+interface Banner {
+  desktop_image: string;
+  id: number;
   link: string;
+  mobile_image: string;
   short_description: string | null;
   title: string;
 }

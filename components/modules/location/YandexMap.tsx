@@ -36,11 +36,10 @@ export const YandexMap = ({ mapRef, className, coordinates, setCoordinates, ...p
       <Polygon
         geometry={[MAP.availablePolygon]}
         options={{
-          fillColor: '#00FF0020',
-          strokeColor: '#0000FF',
+          fillColor: 'rgba(146,146,146,0.25)',
+          strokeColor: '#ffa31a',
           opacity: 0.5,
-          strokeWidth: 5,
-          strokeStyle: 'shortdash',
+          strokeWidth: 3,
           interactivityModel: 'default#transparent'
         }}
       />
