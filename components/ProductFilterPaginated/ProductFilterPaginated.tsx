@@ -13,10 +13,11 @@ import { MobileFilterDrawer, ProductsSortBySelect } from './components';
 
 interface Props {
   filters: Filter[];
+  hideCategories?: boolean;
   queries?: Partial<ProductRequest>;
 }
 
-export const ProductFilterPaginated = ({ filters, queries }: Props) => {
+export const ProductFilterPaginated = ({ filters, hideCategories, queries }: Props) => {
   const { filter } = useFilter();
   const [q] = useQueryState('q');
   const [sort_by] = useQueryState('sort_by');
@@ -53,12 +54,12 @@ export const ProductFilterPaginated = ({ filters, queries }: Props) => {
   return (
     <div className='gap-8 lg:flex'>
       <aside className='hidden w-60 lg:block lg:w-64'>
-        <Filter filters={filters} />
+        <Filter filters={filters} hideCategories={hideCategories} />
       </aside>
       <div className='space-y-4 lg:flex-1'>
         <div className='flex items-center justify-between'>
           <ProductsSortBySelect />
-          <MobileFilterDrawer filters={filters} />
+          <MobileFilterDrawer filters={filters} hideCategories={hideCategories} />
         </div>
         {getProductsQuery.isFetching ? (
           <ProductListSkeleton view='grid' />

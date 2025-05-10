@@ -8,6 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel';
+import { cn } from '@/lib/utils';
 import { getBanners } from '@/utils/api/requests';
 
 export const BannerCarousel = async () => {
@@ -19,9 +20,14 @@ export const BannerCarousel = async () => {
   return (
     <BaseLayout className='px-0 md:px-4'>
       <AutoPlayCarousel delay={4000} opts={{ loop: true }}>
-        <CarouselContent className='-ml-2 md:-ml-4'>
-          {banners.map((banner, index) => (
-            <CarouselItem key={banner.id} className='basis-[90%] pl-2 md:basis-full md:pl-4'>
+        <CarouselContent
+          className={cn('-ml-2 md:-ml-4', { 'justify-center': banners.length === 1 })}
+        >
+          {(banners.length === 2 ? [...banners, ...banners] : banners).map((banner, index) => (
+            <CarouselItem
+              key={`${banner.id}-${index}`}
+              className='basis-[calc(100%-32px)] pl-2 md:basis-full md:pl-4'
+            >
               <a
                 href={banner.link}
                 className='block aspect-[3/1] md:aspect-[4/1]'

@@ -1,5 +1,8 @@
 import { isServer, MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
+import { AxiosError } from 'axios';
 import { toast } from 'sonner';
+
+import { useAuthStore } from '@/utils/stores';
 
 const makeQueryClient = () =>
   new QueryClient({
@@ -10,7 +13,15 @@ const makeQueryClient = () =>
         staleTime: 60 * 1000 // 1m
       }
     },
-    queryCache: new QueryCache({}),
+    queryCache: new QueryCache({
+      onError: (error: any) => {
+        if (error instanceof AxiosError) {
+          if (error.status === 401) {
+            useAuthStore.getState().auth.reset();
+          }
+        }
+      }
+    }),
     mutationCache: new MutationCache({
       onError: (error: any) => {
         if (typeof error.response.data.detail === 'string') {

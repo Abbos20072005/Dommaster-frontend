@@ -60,7 +60,7 @@ export const BottomNav = () => {
               {favorites.length}
             </div>
           )}
-          <HeartIcon />
+          <HeartIcon className='size-5' />
         </div>
         <span className='text-xs font-medium'>{t('Favorites')}</span>
       </NavigationLink>

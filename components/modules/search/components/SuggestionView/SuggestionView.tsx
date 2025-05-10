@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { getSearch, getViewedProducts } from '@/utils/api/requests';
-import { useSearchHistoryStore } from '@/utils/stores';
+import { useAuth, useSearchHistoryStore } from '@/utils/stores';
 
 interface Props {
   searchInput: string;
@@ -19,6 +19,7 @@ interface Props {
 export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) => {
   const t = useTranslations();
   const searchHistoryStore = useSearchHistoryStore();
+  const { user } = useAuth();
 
   const searchHistory = searchHistoryStore.searchHistory
     .filter((item) => item.includes(searchInput))
@@ -34,6 +35,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
   const getViewedProductsQuery = useQuery({
     queryKey: ['viewedProducts'],
     staleTime: 0,
+    enabled: !!user,
     queryFn: () => getViewedProducts({ config: { params: { page_size: 5 } } })
   });
 
@@ -104,7 +106,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
           </ul>
         </div>
       )}
-      {!searchInput && (
+      {!searchInput && !!viewedProducts?.length && (
         <div className='p-3'>
           <p className='mb-2 text-sm font-bold'>{t('Recently viewed')}</p>
           {viewedProducts?.map((product) => (

@@ -25,3 +25,4 @@ export * from './promos';
 export * from './questions';
 export * from './sales';
 export * from './search';
+export * from './services';

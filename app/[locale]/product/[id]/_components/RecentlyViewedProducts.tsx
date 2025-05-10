@@ -6,12 +6,15 @@ import React from 'react';
 
 import { ProductList, ProductListSkeleton } from '@/components/modules/product';
 import { getViewedProducts } from '@/utils/api/requests';
+import { useAuth } from '@/utils/stores';
 
 export const RecentlyViewedProducts = () => {
   const t = useTranslations();
+  const { user } = useAuth();
   const getProductByIdQuery = useQuery({
     queryKey: ['recentlyViewedProducts'],
     staleTime: 0,
+    enabled: !!user,
     queryFn: () => getViewedProducts()
   });
 

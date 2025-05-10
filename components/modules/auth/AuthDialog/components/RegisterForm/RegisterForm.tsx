@@ -26,10 +26,10 @@ export const RegisterForm = ({ onSuccess }: Props) => {
 
   return (
     <Form {...form}>
-      <form className='grid gap-6' onSubmit={form.handleSubmit(functions.onSubmit)}>
+      <form className='grid gap-4' onSubmit={form.handleSubmit(functions.onSubmit)}>
         <FormField
           render={({ field }) => (
-            <FormItem className='space-y-1'>
+            <FormItem>
               <FormLabel>{t('Full name')}</FormLabel>
               <FormControl>
                 <Input placeholder={t('Full name')} {...field} />
@@ -42,7 +42,7 @@ export const RegisterForm = ({ onSuccess }: Props) => {
         />
         <FormField
           render={({ field }) => (
-            <FormItem className='flex-1 space-y-1'>
+            <FormItem>
               <FormLabel>{t('Phone number')}</FormLabel>
               <FormControl>
                 <PhoneInput placeholder='+998 XX XXX XX XX' {...field} />
@@ -55,7 +55,7 @@ export const RegisterForm = ({ onSuccess }: Props) => {
         />
         <FormField
           render={({ field }) => (
-            <FormItem className='space-y-1'>
+            <FormItem>
               <FormLabel>E-mail</FormLabel>
               <FormControl>
                 <Input type='email' placeholder='john@example.com' {...field} />
@@ -68,7 +68,7 @@ export const RegisterForm = ({ onSuccess }: Props) => {
         />
         <FormField
           render={({ field }) => (
-            <FormItem className='space-y-1'>
+            <FormItem>
               <FormLabel>{t('Password')}</FormLabel>
               <FormControl>
                 <PasswordInput placeholder='********' {...field} />
@@ -79,9 +79,20 @@ export const RegisterForm = ({ onSuccess }: Props) => {
           name='password'
           control={form.control}
         />
-        <Button className='mt-2' isLoading={state.isPending}>
-          {t('Register')}
-        </Button>
+        <FormField
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>{t('Confirm password')}</FormLabel>
+              <FormControl>
+                <PasswordInput placeholder='********' {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+          name='confirm_password'
+          control={form.control}
+        />
+        <Button isLoading={state.isPending}>{t('Register')}</Button>
       </form>
     </Form>
   );

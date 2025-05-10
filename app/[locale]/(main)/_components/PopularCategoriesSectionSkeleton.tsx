@@ -22,7 +22,7 @@ export const PopularCategoriesSectionSkeleton = () => {
       <Carousel className='hidden md:block' opts={{ align: 'start' }}>
         <CarouselContent className='ml-2 md:-ml-4'>
           {Array.from({ length: 12 }).map((_, index) => (
-            <CarouselItem key={index} className='basis-1/5 space-y-4 pl-2 md:pl-4 lg:basis-1/6'>
+            <CarouselItem key={index} className='basis-1/6 space-y-4 pl-2 md:pl-4 lg:basis-1/7'>
               <div className='aspect-square'>
                 <Skeleton className='size-full' />
               </div>

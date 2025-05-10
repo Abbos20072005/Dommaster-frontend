@@ -16,9 +16,10 @@ import { FilterClearButton } from './components/FilterClearButton';
 
 interface Props extends React.ComponentProps<'div'> {
   filters: Filter[];
+  hideCategories?: boolean;
 }
 
-export const Filter = ({ className, filters, ...props }: Props) => {
+export const Filter = ({ className, filters, hideCategories, ...props }: Props) => {
   const mounted = useMounted();
 
   if (!mounted) return <FilterSkeleton />;
@@ -27,7 +28,7 @@ export const Filter = ({ className, filters, ...props }: Props) => {
     <div className={cn(className)} {...props} aria-label='Filter' data-slot='filter'>
       <FilterClearButton />
       <div className='space-y-7'>
-        <FilterCategories />
+        {!hideCategories && <FilterCategories />}
         {filters.map((filter) => (
           <React.Fragment key={filter.name}>
             {filter.type === 'CHECKBOX' && <FilterCheckbox filter={filter} />}

@@ -44,7 +44,9 @@ export const ProductCard = ({ product, className, ...props }: Props) => {
             rating={product.rating}
             classNameIcon='text-secondary size-3.5 md:size-4'
           />
-          <span className='text-muted-foreground text-sm'>{product.comments_quantity}</span>
+          {product.comments_quantity > 0 && (
+            <span className='text-muted-foreground text-sm'>{product.comments_quantity}</span>
+          )}
         </Link>
       </div>
       <div className='mb-4 flex-1'>

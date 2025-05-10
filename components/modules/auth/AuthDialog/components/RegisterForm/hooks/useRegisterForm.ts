@@ -14,8 +14,9 @@ export const useRegisterForm = (onSuccess?: (data: RegisterResponse) => void) =>
     defaultValues: {
       full_name: '',
       phone_number: '+998',
+      email: '',
       password: '',
-      email: ''
+      confirm_password: ''
     }
   });
 
@@ -24,7 +25,7 @@ export const useRegisterForm = (onSuccess?: (data: RegisterResponse) => void) =>
     onSuccess: ({ data }) => onSuccess?.(data)
   });
 
-  const onSubmit = (data: RegisterFormSchema) => {
+  const onSubmit = ({ confirm_password, ...data }: RegisterFormSchema) => {
     postRegisterMutation.mutate({ data });
   };
 

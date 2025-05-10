@@ -43,7 +43,7 @@ export const AuthDialog = ({ defaultStep = 'login', ...props }: Props) => {
       <DialogContent className='h-dvh w-full sm:h-auto sm:max-w-[450px]'>
         <Tabs value={tab} onValueChange={setTab as any}>
           <TabsContent value='login'>
-            <DialogHeader className='mb-6'>
+            <DialogHeader className='mb-4'>
               <DialogTitle className='text-2xl'>{t('Login')}</DialogTitle>
               <DialogDescription>{t('Login to continue')}</DialogDescription>
             </DialogHeader>
@@ -73,6 +73,23 @@ export const AuthDialog = ({ defaultStep = 'login', ...props }: Props) => {
                 )}
               </p>
             </Link>
+          </TabsContent>
+          <TabsContent value='verify'>
+            <DialogHeader className='mb-6'>
+              <DialogTitle className='text-2xl'>{t('Verify')}</DialogTitle>
+              <DialogDescription>
+                {t('We have send sms code to your phone number')}.
+              </DialogDescription>
+            </DialogHeader>
+            <VerifyForm
+              setOtpKey={setOtpKey}
+              onCancel={() => {
+                setTab('register');
+                setOtpKey('');
+              }}
+              onSuccess={() => setOpen(false)}
+              otpKey={otpKey}
+            />
           </TabsContent>
           <TabsContent value='verify'>
             <DialogHeader className='mb-6'>

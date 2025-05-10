@@ -15,9 +15,10 @@ import {
 
 interface Props {
   filters: Filter[];
+  hideCategories?: boolean;
 }
 
-export const MobileFilterDrawer = ({ filters }: Props) => {
+export const MobileFilterDrawer = ({ filters, hideCategories }: Props) => {
   const t = useTranslations();
 
   return (
@@ -33,7 +34,7 @@ export const MobileFilterDrawer = ({ filters }: Props) => {
           <DrawerTitle>Filters</DrawerTitle>
         </DrawerHeader>
         <div className='overflow-y-auto px-4 py-2'>
-          <Filter filters={filters} />
+          <Filter filters={filters} hideCategories={hideCategories} />
         </div>
         <DrawerFooter className='py-2'>
           <DrawerClose asChild>

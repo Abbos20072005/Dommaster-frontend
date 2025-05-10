@@ -6,7 +6,6 @@ import React from 'react';
 
 import { CartCounter, useProductCart } from '@/components/modules/cart';
 import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 
 interface Props {
@@ -21,12 +20,11 @@ export const ProductCart = ({ product }: Props) => {
     return (
       <Button
         className='w-full'
-        disabled={state.isCartAdding}
+        disabled={product.quantity === 0}
         size='sm'
         onClick={functions.onAddToCart}
       >
-        <Spinner show={state.isCartAdding} />
-        {t('To cart')}
+        {product.quantity === 0 ? t('Out of stock') : t('To cart')}
       </Button>
     );
 

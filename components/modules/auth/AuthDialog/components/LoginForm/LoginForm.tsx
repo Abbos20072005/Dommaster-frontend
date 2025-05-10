@@ -15,20 +15,23 @@ import { PasswordInput } from '@/components/ui/password-input';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 
+import type { AuthTabs } from '../../types';
+
 import { useLoginForm } from './hooks';
 
 interface Props {
   onSuccess?: (data: LoginResponse) => void;
+  setAuthTab?: (tab: AuthTabs) => void;
 }
 
-export const LoginForm = ({ onSuccess }: Props) => {
+export const LoginForm = ({ onSuccess, setAuthTab }: Props) => {
   const t = useTranslations();
   const [tab, setTab] = React.useState<'email' | 'phone'>('phone');
   const { form, state, functions } = useLoginForm({ onSuccess, withEmail: tab === 'email' });
 
   return (
     <Tabs value={tab} onValueChange={setTab as any}>
-      <TabsList className='mb-2 w-full'>
+      <TabsList className='w-full'>
         <TabsTrigger className='flex-1' value='phone'>
           {t('By phone')}
         </TabsTrigger>
@@ -37,11 +40,11 @@ export const LoginForm = ({ onSuccess }: Props) => {
         </TabsTrigger>
       </TabsList>
       <Form {...form}>
-        <form className='grid gap-6' onSubmit={form.handleSubmit(functions.onSubmit)}>
+        <form className='grid gap-4' onSubmit={form.handleSubmit(functions.onSubmit)}>
           <TabsContent asChild value='phone'>
             <FormField
               render={({ field }) => (
-                <FormItem className='space-y-1'>
+                <FormItem>
                   <FormLabel>{t('Phone number')}</FormLabel>
                   <FormControl>
                     <PhoneInput placeholder='+998 XX XXX XX XX' {...field} />
@@ -56,7 +59,7 @@ export const LoginForm = ({ onSuccess }: Props) => {
           <TabsContent asChild value='email'>
             <FormField
               render={({ field }) => (
-                <FormItem className='space-y-1'>
+                <FormItem>
                   <FormLabel>E-mail</FormLabel>
                   <FormControl>
                     <Input type='email' placeholder='john@example.com' {...field} />
@@ -70,8 +73,17 @@ export const LoginForm = ({ onSuccess }: Props) => {
           </TabsContent>
           <FormField
             render={({ field }) => (
-              <FormItem className='space-y-1'>
-                <FormLabel>{t('Password')}</FormLabel>
+              <FormItem>
+                <div className='flex items-center justify-between'>
+                  <FormLabel>{t('Password')}</FormLabel>
+                  <button
+                    className='text-secondary h-4 text-sm hover:underline'
+                    type='button'
+                    onClick={() => setAuthTab?.('forgotPassword')}
+                  >
+                    {t('Forgot password?')}
+                  </button>
+                </div>
                 <FormControl>
                   <PasswordInput placeholder='********' {...field} />
                 </FormControl>

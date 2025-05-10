@@ -91,7 +91,11 @@ const ItemCategoryPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{itemCategory.name}</h1>
-        <ProductFilterPaginated filters={filters} queries={{ item_category: +itemId }} />
+        <ProductFilterPaginated
+          filters={filters}
+          queries={{ item_category: +itemId }}
+          hideCategories
+        />
       </BaseLayout>
     </div>
   );

@@ -45,9 +45,13 @@ export const ProductCart = ({ product }: Props) => {
       </CardContent>
       <CardFooter className='p-0'>
         {state.cartCount === 0 ? (
-          <Button className='w-full' onClick={functions.onAddToCart}>
+          <Button
+            className='w-full'
+            disabled={product.quantity === 0}
+            onClick={functions.onAddToCart}
+          >
             <ShoppingCartIcon />
-            {t('Add to cart')}
+            {product.quantity === 0 ? t('Out of stock') : t('Add to cart')}
           </Button>
         ) : (
           <div className='grid grid-cols-2 gap-3'>
