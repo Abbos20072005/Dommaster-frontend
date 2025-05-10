@@ -1,3 +1,5 @@
+'use client';
+
 import { parseAsInteger, useQueryStates } from 'nuqs';
 
 const defaultValues = {
@@ -6,7 +8,8 @@ const defaultValues = {
   price_from: 0,
   price_to: 1000000,
   item_category: null,
-  brand: null
+  brand: null,
+  sale_id: null
 };
 
 export const useFilter = () => {
@@ -16,7 +19,8 @@ export const useFilter = () => {
     price_from: parseAsInteger.withDefault(defaultValues.price_from),
     price_to: parseAsInteger.withDefault(defaultValues.price_to),
     item_category: parseAsInteger,
-    brand: parseAsInteger
+    brand: parseAsInteger,
+    sale_id: parseAsInteger
   });
 
   const isCleared = Object.entries(filter).every(

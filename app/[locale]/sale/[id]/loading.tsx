@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
+import { FilterSkeleton } from '@/components/modules/filter';
 import { ProductListSkeleton } from '@/components/modules/product';
 import {
   Breadcrumb,
@@ -28,15 +29,26 @@ const SaleLoading = () => {
             <BreadcrumbSeparator />
             <BreadcrumbItem>
               <BreadcrumbPage>
-                <Skeleton className='h-5 w-20' />
+                <Skeleton className='h-5 w-40 md:w-60' />
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>
-          <Skeleton className='h-6 w-32 md:h-8' />
+          <Skeleton className='h-6 w-60 md:h-8 md:w-80' />
         </h1>
-        <ProductListSkeleton view='grid' />
+        <div className='gap-8 lg:flex'>
+          <aside className='hidden w-60 lg:block lg:w-64'>
+            <FilterSkeleton />
+          </aside>
+          <div className='lg:flex-1'>
+            <div className='mb-4 flex items-center justify-between'>
+              <Skeleton className='h-8 w-48' />
+              <Skeleton className='h-8 w-20 md:hidden' />
+            </div>
+            <ProductListSkeleton view='grid' />
+          </div>
+        </div>
       </BaseLayout>
     </div>
   );

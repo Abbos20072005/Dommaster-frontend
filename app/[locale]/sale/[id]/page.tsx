@@ -1,11 +1,7 @@
-'use client';
-
-import { useQuery } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
+import { getTranslations } from 'next-intl/server';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
-import { ProductList } from '@/components/modules/product';
+import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,23 +10,43 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { getSaleById } from '@/utils/api/requests';
+import { getBrands, getSaleById } from '@/utils/api/requests';
 
-import SaleLoading from './loading';
+interface Props {
+  params: Promise<{ id: string }>;
+}
 
-const SalePage = () => {
-  const t = useTranslations();
-  const { id } = useParams<{ id: string }>();
-  const getSaleQuery = useQuery({
-    queryKey: ['sale', id],
-    queryFn: () => getSaleById({ id })
-  });
+const SalePage = async ({ params }: Props) => {
+  const t = await getTranslations();
+  const { id } = await params;
 
-  const sale = getSaleQuery.data?.data.result;
+  const saleResponse = await getSaleById({ id });
+  const sale = saleResponse.data.result;
 
-  if (getSaleQuery.isLoading) return <SaleLoading />;
+  const brandsResponse = await getBrands();
+  const brands = brandsResponse.data.result || [];
 
-  if (!sale) return null;
+  const filters: Filter[] = [
+    {
+      request_var: 'price',
+      type: 'SLIDER',
+      name: t('Price'),
+      filter_items: [],
+      from: 0,
+      to: 1000000
+    },
+    {
+      name: t('Brands'),
+      type: 'RADIO',
+      request_var: 'brand',
+      filter_items: brands.map((brand) => ({
+        value: String(brand.id),
+        label: brand.name
+      }))
+    }
+  ];
+
+  if (!sale || !brands) return null;
 
   return (
     <div>
@@ -48,7 +64,7 @@ const SalePage = () => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>{sale.name}</h1>
-        <ProductList products={sale.products} />
+        <ProductFilterPaginated filters={filters} queries={{ sale_id: sale.id }} />
       </BaseLayout>
     </div>
   );

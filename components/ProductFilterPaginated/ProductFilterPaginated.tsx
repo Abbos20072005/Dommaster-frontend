@@ -1,6 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
@@ -18,6 +19,7 @@ interface Props {
 }
 
 export const ProductFilterPaginated = ({ filters, hideCategories, queries }: Props) => {
+  const t = useTranslations();
   const { filter } = useFilter();
   const [q] = useQueryState('q');
   const [sort_by] = useQueryState('sort_by');
@@ -40,6 +42,7 @@ export const ProductFilterPaginated = ({ filters, hideCategories, queries }: Pro
           sort_by: sort_by ?? undefined,
           item_category: filter.item_category ?? undefined,
           brand: filter.brand ?? undefined,
+          sale_id: filter.sale_id ?? undefined,
           page: filter.page,
           page_size: filter.page_size,
           price_from: filter.price_from,
@@ -67,7 +70,7 @@ export const ProductFilterPaginated = ({ filters, hideCategories, queries }: Pro
           <ProductList view='grid' products={products} />
         ) : (
           <div className='flex h-[50vh] items-center justify-center'>
-            <h1 className='text-lg font-semibold'>No products found</h1>
+            <p className='text-lg font-semibold'>{t('No products found')}</p>
           </div>
         )}
         <Pagination totalCount={getProductsQuery.data?.data.result.totalElements} />

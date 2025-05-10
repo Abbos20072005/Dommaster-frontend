@@ -31,7 +31,7 @@ const ServicesPage = async () => {
         </BreadcrumbList>
       </Breadcrumb>
       <h1 className='mb-6 text-xl font-bold md:text-3xl'>{t('Services')}</h1>
-      <div className='grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4 md:gap-8'>
+      <div className='grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 md:gap-8'>
         {services.map((service) => (
           <Link
             href={`/services/${service.id}`}

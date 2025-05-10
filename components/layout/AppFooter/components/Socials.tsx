@@ -4,7 +4,7 @@ import { Button } from '@/components/ui/button';
 
 export const Socials = () => {
   return (
-    <div className='my-8 flex gap-3'>
+    <div className='mt-4 flex gap-3 md:mt-6'>
       <Button asChild size='icon' variant='outline'>
         <a href='#' rel='noreferrer' target='_blank'>
           <FacebookIcon className='size-6' />

@@ -39,6 +39,7 @@ interface ProductRequest {
   price_from: number;
   price_to: number;
   q?: string;
+  sale_id?: number;
   sort_by?: string;
 }
 

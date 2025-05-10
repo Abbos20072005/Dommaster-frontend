@@ -14,7 +14,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { getBrands, getItemCategoryById } from '@/utils/api/requests';
+import { getBrands, getItemCategoryById, getSales } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string; subId: string; itemId: string }>;
@@ -40,6 +40,8 @@ const ItemCategoryPage = async ({ params }: Props) => {
 
   const itemCategoryResponse = await getItemCategoryById({ id: itemId });
   const itemCategory = itemCategoryResponse.data.result;
+  const salesResponse = await getSales();
+  const sales = salesResponse.data.result;
 
   if (!itemCategory) return notFound();
 
@@ -53,12 +55,21 @@ const ItemCategoryPage = async ({ params }: Props) => {
       to: 1000000
     },
     {
-      name: t('Brand'),
+      name: t('Brands'),
       type: 'RADIO',
       request_var: 'brand',
       filter_items: brands.map((brand) => ({
         value: String(brand.id),
         label: brand.name
+      }))
+    },
+    {
+      name: t('Sales'),
+      type: 'RADIO',
+      request_var: 'sale_id',
+      filter_items: sales.map((sale) => ({
+        value: String(sale.id),
+        label: sale.name
       }))
     }
   ];

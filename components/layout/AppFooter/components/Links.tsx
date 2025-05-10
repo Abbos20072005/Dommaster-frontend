@@ -6,8 +6,8 @@ export const Links = () => {
   const t = useTranslations();
 
   return (
-    <div className='col-span-2 grid grid-cols-2 gap-6 md:gap-9 lg:gap-x-20 xl:gap-x-36'>
-      <div className='row-span-2'>
+    <div className='flex gap-6 md:gap-9 lg:gap-14 xl:gap-x-20'>
+      <div>
         <p className='mb-3 text-lg font-semibold'>{t('About us')}</p>
         <ul>
           <li>

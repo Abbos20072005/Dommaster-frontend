@@ -19,8 +19,8 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
       )}
       {...props}
     >
-      <BaseLayout className='!py-0'>
-        <div className='flex flex-col justify-between gap-6 lg:flex-row'>
+      <BaseLayout>
+        <div className='flex flex-col justify-between gap-4 md:gap-6 lg:flex-row'>
           <div>
             <div className='mb-5'>
               <div className='mb-3 text-sm font-medium'>{t('Have a question? Call us')}</div>

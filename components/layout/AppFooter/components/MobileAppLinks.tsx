@@ -6,7 +6,7 @@ export const MobileAppLinks = () => {
   const t = useTranslations();
   return (
     <div>
-      <div className='border-primary-foreground/60 max-w-[330px] rounded-3xl border px-6 pt-6 md:w-[330px]'>
+      <div className='border-primary-foreground/60 max-w-[330px] rounded-3xl border p-4 md:w-[330px] md:px-6 md:pt-6'>
         <p className='mb-5 max-w-[250px] font-semibold'>
           {t('Order in the new app and get bonuses')}
         </p>
@@ -21,7 +21,7 @@ export const MobileAppLinks = () => {
             src='https://media.obi.ru/media/wysiwyg/footer-app/qr.png'
             width={145}
           />
-          <div className='mb-4 flex shrink-0 gap-2 md:flex-col'>
+          <div className='flex shrink-0 gap-2 md:flex-col'>
             <a href='#' className='block'>
               <Image
                 alt='App Store'

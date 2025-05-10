@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/accordion';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Skeleton } from '@/components/ui/skeleton';
 import { usePathname, useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { getCategories } from '@/utils/api/requests';
@@ -29,6 +30,20 @@ export const FilterCategories = () => {
   });
 
   const categories = getCategoriesQuery.data?.data.result;
+
+  if (getCategoriesQuery.isLoading)
+    return (
+      <div className='space-y-4'>
+        {Array.from({ length: 3 }).map((_, index) => (
+          <React.Fragment key={index}>
+            <Skeleton className='h-5 w-full' />
+            <Skeleton className='h-5 w-3/4' />
+            <Skeleton className='h-5 w-1/4' />
+            <Skeleton className='h-5 w-2/4' />
+          </React.Fragment>
+        ))}
+      </div>
+    );
 
   return (
     <Accordion type='single' collapsible>

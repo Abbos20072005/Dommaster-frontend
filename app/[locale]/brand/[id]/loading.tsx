@@ -38,7 +38,7 @@ const SearchPage = () => {
           <Skeleton className='h-6 w-32 md:h-8' />
         </h1>
         <div className='gap-8 lg:flex'>
-          <aside className='hidden w-52 lg:block xl:w-60'>
+          <aside className='hidden w-60 lg:block lg:w-64'>
             <FilterSkeleton />
           </aside>
           <div className='lg:flex-1'>
