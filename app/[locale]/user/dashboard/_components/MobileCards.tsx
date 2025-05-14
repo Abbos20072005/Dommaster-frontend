@@ -11,7 +11,7 @@ import { Link } from '@/i18n/navigation';
 import { useAuth, useFavorites } from '@/utils/stores';
 
 const navLinks = [
-  { href: '/user/orders/all', label: 'My orders', authorized: true },
+  { href: '/user/orders/active', label: 'My orders', authorized: true },
   { href: '/user/orders/history', label: 'Purchase history', authorized: true },
   { href: '/user/reviews', label: 'My reviews and questions', authorized: true },
   { href: '/user/promo', label: 'Promo codes', authorized: true },

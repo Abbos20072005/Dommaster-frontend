@@ -26,9 +26,6 @@ export const PopularCategoriesSectionSkeleton = () => {
               <div className='aspect-square'>
                 <Skeleton className='size-full' />
               </div>
-              <div className='aspect-square'>
-                <Skeleton className='size-full' />
-              </div>
             </CarouselItem>
           ))}
         </CarouselContent>

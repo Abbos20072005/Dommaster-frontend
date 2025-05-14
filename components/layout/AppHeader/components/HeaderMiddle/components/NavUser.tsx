@@ -58,7 +58,7 @@ export const NavUser = ({ ...props }: Props) => {
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
-              <Link href='/user/orders/all'>
+              <Link href='/user/orders/active'>
                 <ListChecksIcon />
                 {t('My orders')}
               </Link>

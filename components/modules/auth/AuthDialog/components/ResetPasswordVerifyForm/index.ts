@@ -1,0 +1,1 @@
+export { ResetPasswordVerifyForm } from './ResetPasswordVerifyForm';

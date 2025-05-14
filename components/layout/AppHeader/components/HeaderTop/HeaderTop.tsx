@@ -1,8 +1,9 @@
-import { ChevronDownIcon, MapPinIcon } from 'lucide-react';
+import { ChevronDownIcon, MapPinIcon, ScaleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -81,6 +82,15 @@ export const HeaderTop = () => {
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Button className='h-6 px-2' size='sm' variant='secondary'>
+              <ScaleIcon />
+              {t('Buy as a legal entity')}
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side='bottom'>{t('In the process of development')}</TooltipContent>
+        </Tooltip>
       </div>
       <div className='flex items-center gap-4'>
         <LocaleSwitcher />

@@ -1,6 +1,10 @@
 import type { HTMLAttributes } from 'react';
 
+import { useTranslations } from 'next-intl';
+import React from 'react';
+
 import { Button } from '@/components/ui/button';
+import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
 import { Spinner } from '@/components/ui/spinner';
@@ -23,66 +27,73 @@ export const VerifyForm = ({
   onSuccess,
   ...props
 }: Props) => {
+  const t = useTranslations();
   const { form, state, functions } = useVerifyForm({ otpKey, setOtpKey, onSuccess });
 
   return (
-    <div className={cn('grid gap-6', className)} {...props}>
-      <Form {...form}>
-        <form className='grid gap-3' onSubmit={form.handleSubmit(functions.onSubmit)}>
-          <FormField
-            render={({ field }) => (
-              <FormItem className='flex flex-col items-center'>
-                <FormControl>
-                  <InputOTP maxLength={5} {...field} className='flex justify-center'>
-                    <InputOTPGroup>
-                      <InputOTPSlot index={0} />
-                      <InputOTPSlot index={1} />
-                      <InputOTPSlot index={2} />
-                      <InputOTPSlot index={3} />
-                      <InputOTPSlot index={4} />
-                    </InputOTPGroup>
-                  </InputOTP>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
+    <>
+      <DialogHeader className='mb-6'>
+        <DialogTitle className='text-2xl'>{t('Verify')}</DialogTitle>
+        <DialogDescription>{t('We have send sms code to your phone number')}.</DialogDescription>
+      </DialogHeader>
+      <div className={cn('grid gap-6', className)} {...props}>
+        <Form {...form}>
+          <form className='grid gap-3' onSubmit={form.handleSubmit(functions.onSubmit)}>
+            <FormField
+              render={({ field }) => (
+                <FormItem className='flex flex-col items-center'>
+                  <FormControl>
+                    <InputOTP maxLength={5} {...field} className='flex justify-center'>
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} />
+                        <InputOTPSlot index={1} />
+                        <InputOTPSlot index={2} />
+                        <InputOTPSlot index={3} />
+                        <InputOTPSlot index={4} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+              name='otp_code'
+              control={form.control}
+            />
+            {state.showResetButton ? (
+              <Button
+                className='mx-auto w-fit'
+                disabled={state.isResendPending}
+                size='sm'
+                type='button'
+                variant='ghost'
+                onClick={functions.onResendCode}
+              >
+                {state.isResendPending && <Spinner />}
+                {t('Resend code')}
+              </Button>
+            ) : (
+              <div className='text-muted-foreground h-8 text-center'>
+                {state.minutesLeftToNewReset}:{state.secondsLeftToNewReset}
+              </div>
             )}
-            name='otp_code'
-            control={form.control}
-          />
-          {state.showResetButton ? (
-            <Button
-              className='mx-auto w-fit'
-              disabled={state.isResendPending}
-              size='sm'
-              type='button'
-              variant='ghost'
-              onClick={functions.onResendCode}
-            >
-              {state.isResendPending && <Spinner />}
-              Resend code
-            </Button>
-          ) : (
-            <div className='text-muted-foreground h-8 text-center'>
-              {state.minutesLeftToNewReset}:{state.secondsLeftToNewReset}
+            <div className='grid grid-cols-2 gap-3'>
+              <Button
+                className='mt-2'
+                disabled={state.isPending}
+                type='button'
+                variant='outline'
+                onClick={onCancel}
+              >
+                {t('Back')}
+              </Button>
+              <Button className='mt-2' disabled={state.isPending} type='submit'>
+                {state.isPending && <Spinner />}
+                {t('Verify')}
+              </Button>
             </div>
-          )}
-          <div className='grid grid-cols-2 gap-3'>
-            <Button
-              className='mt-2'
-              disabled={state.isPending}
-              type='button'
-              variant='outline'
-              onClick={onCancel}
-            >
-              Back
-            </Button>
-            <Button className='mt-2' disabled={state.isPending} type='submit'>
-              {state.isPending && <Spinner />}
-              Verify
-            </Button>
-          </div>
-        </form>
-      </Form>
-    </div>
+          </form>
+        </Form>
+      </div>
+    </>
   );
 };

@@ -39,8 +39,24 @@ type ResendResponse = ApiResponse<{
 }>;
 
 interface ForgotPasswordRequest {
-  password: string;
   phone_number: string;
 }
 
-type ForgotPasswordResponse = number;
+type ForgotPasswordResponse = ApiResponse<{
+  otp_key: string;
+}>;
+
+interface ResetPasswordVerifyRequest {
+  otp_code: number;
+  otp_key: string;
+}
+
+type ResetPasswordVerifyResponse = ApiResponse<{
+  reset_token: string;
+}>;
+
+interface ResetPasswordRequest {
+  confirm_new_password: string;
+  new_password: string;
+  reset_token: string;
+}

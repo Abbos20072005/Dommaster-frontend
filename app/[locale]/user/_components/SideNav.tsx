@@ -11,7 +11,7 @@ const navLinks = [
     title: 'Purchases',
     authorized: true,
     items: [
-      { href: '/user/orders/all', label: 'My orders' },
+      { href: '/user/orders/active', label: 'My orders' },
       { href: '/user/orders/history', label: 'Purchase history' }
     ]
   },

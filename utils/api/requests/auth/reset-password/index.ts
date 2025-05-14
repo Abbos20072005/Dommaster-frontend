@@ -1,4 +1,4 @@
 import { api } from '@/utils/api/instance';
 
-export const putResetPassword = ({ otpKey, config }: RequestConfig & { otpKey: number | string }) =>
-  api.put<VerifyResponse>(`auth/reset-password/${otpKey}`, undefined, config);
+export const postResetPassword = ({ data, config }: RequestConfig<ResetPasswordRequest>) =>
+  api.post('auth/reset/password/', data, config);

@@ -35,7 +35,7 @@ export const BannerCarousel = async () => {
                 target='_blank'
               >
                 <Image
-                  alt='banner'
+                  alt={banner.title}
                   className='size-full rounded-lg object-cover md:hidden md:rounded-xl'
                   height={230}
                   src={banner.mobile_image}
@@ -43,7 +43,7 @@ export const BannerCarousel = async () => {
                   priority={index === 0}
                 />
                 <Image
-                  alt='banner'
+                  alt={banner.title}
                   className='hidden size-full rounded-lg object-cover md:block md:rounded-xl'
                   height={413}
                   src={banner.desktop_image}

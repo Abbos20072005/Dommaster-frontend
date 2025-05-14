@@ -1,4 +1,4 @@
 import { api } from '@/utils/api/instance';
 
-export const postForgotPassword = ({ config, data }: RequestConfig<ForgotPasswordRequest>) =>
-  api.post<ForgotPasswordResponse>('auth/forget-password', data, config);
+export const patchForgotPassword = ({ config, data }: RequestConfig<ForgotPasswordRequest>) =>
+  api.patch<ForgotPasswordResponse>('auth/forgot/password/', data, config);

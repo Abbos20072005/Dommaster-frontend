@@ -1,1 +1,7 @@
-export type AuthTabs = 'forgotPassword' | 'login' | 'register' | 'verify';
+export type AuthTabs =
+  | 'forgotPassword'
+  | 'login'
+  | 'register'
+  | 'resetPassword'
+  | 'resetPasswordVerify'
+  | 'verify';

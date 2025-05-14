@@ -75,6 +75,6 @@ interface Video {
 type VideosResponse = ApiResponse<Video[]>;
 type VideoResponse = ApiResponse<Video>;
 
-type Widget = { type: 'addsbrands'; data: AddsBrand } | { type: 'banner'; data: Banner };
+type Main = { type: 'addsbrands'; data: AddsBrand } | { type: 'banner'; data: Banner };
 
-type WidgetsResponse = ApiResponse<Widget[]>;
+type MainResponse = ApiResponse<Main[]>;

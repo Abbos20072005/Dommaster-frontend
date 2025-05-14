@@ -5,6 +5,3 @@ export const getBrands = (requestConfig?: RequestConfig) =>
 
 export const getAddsBrands = (requestConfig?: RequestConfig) =>
   api.get<AddsBrandsResponse>('/adds/brands/', requestConfig?.config);
-
-// export const getWidgets = (requestConfig?: RequestConfig) =>
-// 	api.get<WidgetsResponse>('/base/test/', requestConfig?.config);
