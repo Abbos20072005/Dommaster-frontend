@@ -40,23 +40,46 @@ export const PopularCategoriesSection = async () => {
       {/* Desktop */}
       <Carousel className='hidden md:block' opts={{ align: 'start' }}>
         <CarouselContent className='ml-2 md:-ml-4'>
-          {categories.map((item) => (
-            <CarouselItem key={item.id} className='basis-1/6 space-y-4 pl-2 md:pl-4 lg:basis-1/7'>
-              <Link
-                href={`/category/${item.id}`}
-                className='bg-muted relative block aspect-square rounded-md p-3'
-              >
-                <div className='relative z-1 font-semibold'>{item.name}</div>
-                <Image
-                  alt={item.name}
-                  className='absolute inset-0 size-full rounded-lg object-contain'
-                  height={128}
-                  src={item.image}
-                  width={128}
-                />
-              </Link>
-            </CarouselItem>
-          ))}
+          {categories
+            .filter((_, index) => index % 2 === 0)
+            .map((item, index) => {
+              const nextItem = categories[index * 2 + 1];
+              return (
+                <CarouselItem
+                  key={item.id}
+                  className='basis-1/6 space-y-4 pl-2 md:pl-4 lg:basis-1/7'
+                >
+                  <Link
+                    href={`/category/${item.id}`}
+                    className='bg-muted relative block aspect-square rounded-md p-3'
+                  >
+                    <div className='relative z-1 font-semibold'>{item.name}</div>
+                    <Image
+                      alt={item.name}
+                      className='absolute inset-0 size-full rounded-lg object-contain'
+                      height={128}
+                      src={item.image}
+                      width={128}
+                    />
+                  </Link>
+                  {nextItem && (
+                    <Link
+                      href={`/category/${nextItem.id}`}
+                      className='bg-muted relative block aspect-square rounded-md p-3'
+                    >
+                      <div className='relative z-1 font-semibold'>{nextItem.name}</div>
+                      <Image
+                        alt={nextItem.name}
+                        className='absolute inset-0 size-full rounded-lg object-contain'
+                        height={192}
+                        src={nextItem.image}
+                        width={128}
+                      />
+                    </Link>
+                  )}
+                </CarouselItem>
+              );
+            })}
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
