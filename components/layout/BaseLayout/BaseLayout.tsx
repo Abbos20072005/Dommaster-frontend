@@ -10,7 +10,7 @@ export const BaseLayout = ({ fixed, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'mx-auto max-w-[1272px] px-4 md:px-5',
+        'mx-auto max-w-[1400px] px-4 md:px-5',
         fixed && 'flex flex-grow flex-col overflow-hidden',
         className
       )}

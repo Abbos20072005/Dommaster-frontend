@@ -27,9 +27,11 @@ export const DiscountProductsSection = () => {
     return (
       <section>
         <BaseLayout>
-          <div className='bg-muted px-4 pt-4'>
-            <Skeleton className='mb-2 h-5 w-32' />
-            <Skeleton className='h-8 w-1/2' />
+          <div className='bg-muted px-2 pt-2'>
+            <div className='px-4 py-2'>
+              <Skeleton className='mb-2 h-5 w-32' />
+              <Skeleton className='h-8 w-1/2' />
+            </div>
             <ProductListSkeleton />
           </div>
         </BaseLayout>
@@ -47,7 +49,7 @@ export const DiscountProductsSection = () => {
   return (
     <section>
       <BaseLayout className='px-0'>
-        <div className='relative px-4 pt-4'>
+        <div className='relative px-2 pt-4'>
           <Image
             alt={sales.name}
             className='absolute inset-0 -z-1 size-full rounded-2xl object-cover'
@@ -55,12 +57,14 @@ export const DiscountProductsSection = () => {
             src={sales.bg_image}
             width={1200}
           />
-          <p className='text-primary-foreground mb-2 text-sm'>
-            {format(sales.discount_from, 'dd MMMM', { locale: localeMap[locale as Locale] })} –{' '}
-            {format(sales.discount_to, 'dd MMMM', { locale: localeMap[locale as Locale] })}
-          </p>
-          <h2 className='text-primary-foreground text-lg font-bold md:text-2xl'>{sales.name}</h2>
-          <ProductList products={sales.products} />
+          <div className='px-4 py-2'>
+            <p className='text-primary-foreground mb-2 text-sm'>
+              {format(sales.discount_from, 'dd MMMM', { locale: localeMap[locale as Locale] })} –{' '}
+              {format(sales.discount_to, 'dd MMMM', { locale: localeMap[locale as Locale] })}
+            </p>
+            <h2 className='text-primary-foreground text-lg font-bold md:text-2xl'>{sales.name}</h2>
+          </div>
+          <ProductList className='py-2' products={sales.products} />
         </div>
       </BaseLayout>
     </section>

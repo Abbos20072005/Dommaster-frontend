@@ -10,19 +10,12 @@ interface Props {
 }
 
 export const ProductImagesDesktop = ({ product }: Props) => {
-  const [tab, setTab] = React.useState(-1);
+  const [tab, setTab] = React.useState(0);
 
   return (
     <div className='hidden md:block'>
-      <div className='relative aspect-square'>
-        <Image
-          fill
-          alt={product.name}
-          className='absolute inset-0 z-0 object-contain'
-          src={product.images[0]?.image ?? '/product/no-image.png'}
-          priority
-        />
-        {product.images.length > 1 &&
+      <div className='relative aspect-[4/3]'>
+        {product.images.length > 0 &&
           product.images.map((image, i) => (
             <Image
               fill
@@ -31,11 +24,11 @@ export const ProductImagesDesktop = ({ product }: Props) => {
               className='absolute inset-0 z-1 object-contain'
               hidden={tab !== i}
               src={image.image}
-              loading='lazy'
+              priority={i === 0}
             />
           ))}
 
-        {product.images.length > 1 && (
+        {product.images.length > 0 && (
           <div className='relative z-1 flex size-full'>
             {product.images.map((image, i) => (
               <div key={image.id} className='flex-1' onMouseEnter={() => setTab(i)} />

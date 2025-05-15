@@ -18,9 +18,10 @@ export const ProductCardSkeleton = ({ className, ...props }: Props) => {
         <Skeleton className='h-5 w-27' />
         <Skeleton className='size-5 rounded-full' />
       </div>
-      <Skeleton className='mb-1 aspect-square w-full rounded-md' />
-      <div className='mb-4'>
+      <Skeleton className='mb-1 aspect-[4/3] w-full rounded-md' />
+      <div className='mb-2'>
         <Skeleton className='mb-2 h-3.5 w-27' />
+        <Skeleton className='mb-2 h-3.5 w-full' />
         <Skeleton className='mb-2 h-3.5 w-full' />
         <Skeleton className='mb-2 h-3.5 w-3/4' />
       </div>

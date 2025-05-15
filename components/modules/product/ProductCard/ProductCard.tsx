@@ -17,7 +17,7 @@ export const ProductCard = ({ product, className, ...props }: Props) => {
   return (
     <div
       className={cn(
-        'bg-background flex flex-col rounded-lg border p-3 transition-shadow hover:shadow-md sm:p-4',
+        'bg-background flex flex-col rounded-lg border p-3 transition-shadow hover:shadow-md',
         className
       )}
       {...props}
@@ -42,16 +42,16 @@ export const ProductCard = ({ product, className, ...props }: Props) => {
           <Ratings
             className='gap-0.5 md:gap-1'
             rating={product.rating}
-            classNameIcon='text-secondary size-3.5 md:size-4'
+            classNameIcon='text-secondary size-3.5'
           />
           {product.comments_quantity > 0 && (
             <span className='text-muted-foreground text-sm'>{product.comments_quantity}</span>
           )}
         </Link>
       </div>
-      <div className='mb-4 flex-1'>
+      <div className='mb-2 flex-1'>
         <Link href={`/product/${product.id}`}>
-          <span className='line-clamp-4 text-sm leading-5'>{product.name}</span>
+          <span className='line-clamp-3 text-sm leading-5'>{product.name}</span>
         </Link>
       </div>
       <div className='mb-2'>

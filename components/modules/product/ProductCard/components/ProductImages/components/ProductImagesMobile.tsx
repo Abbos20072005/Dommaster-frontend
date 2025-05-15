@@ -31,7 +31,7 @@ export const ProductImagesMobile = ({ product }: Props) => {
         <CarouselContent>
           {product.images.map((image, i) => (
             <CarouselItem key={image.id}>
-              <div className='relative aspect-square'>
+              <div className='relative aspect-[4/3]'>
                 <Image
                   fill
                   alt={product.name}
