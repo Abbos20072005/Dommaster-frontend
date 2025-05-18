@@ -84,7 +84,7 @@ export const HeaderTop = () => {
         </DropdownMenu>
         <Tooltip delayDuration={0}>
           <TooltipTrigger asChild>
-            <Button className='h-6 px-2' size='sm' variant='secondary'>
+            <Button className='h-6 px-2' size='sm' variant='secondaryFlat'>
               <ScaleIcon />
               {t('Buy as a legal entity')}
             </Button>
@@ -98,7 +98,7 @@ export const HeaderTop = () => {
           href='tel:+998712099944'
           className='hover:text-secondary text-foreground/70 text-sm font-bold transition-colors'
         >
-          +998 71 209 99 44
+          +998 97 900 50 05
         </Link>
       </div>
     </BaseLayout>

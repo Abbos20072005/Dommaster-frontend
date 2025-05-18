@@ -3,17 +3,20 @@
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ru, uz } from 'date-fns/locale';
-import { useLocale } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import type { Locale } from '@/i18n/routing';
 
 import { BaseLayout } from '@/components/layout';
 import { ProductList, ProductListSkeleton } from '@/components/modules/product';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Link } from '@/i18n/navigation';
 import { getSaleMain } from '@/utils/api/requests';
 
 export const DiscountProductsSection = () => {
+  const t = useTranslations();
   const getSaleMainQuery = useQuery({
     queryKey: ['saleMain'],
     staleTime: 0,
@@ -32,7 +35,7 @@ export const DiscountProductsSection = () => {
               <Skeleton className='mb-1 h-5 w-32' />
               <Skeleton className='h-8 w-1/2' />
             </div>
-            <ProductListSkeleton />
+            <ProductListSkeleton hideCart hideControl />
           </div>
         </BaseLayout>
       </section>
@@ -57,14 +60,24 @@ export const DiscountProductsSection = () => {
             src={sales.bg_image}
             width={1200}
           />
-          <div className='px-4'>
-            <p className='text-primary-foreground mb-1 text-sm'>
-              {format(sales.discount_from, 'dd MMMM', { locale: localeMap[locale as Locale] })} –{' '}
-              {format(sales.discount_to, 'dd MMMM', { locale: localeMap[locale as Locale] })}
-            </p>
-            <h2 className='text-primary-foreground text-lg font-bold md:text-2xl'>{sales.name}</h2>
+          <div className='flex items-center justify-between gap-4 px-4'>
+            <div>
+              <p className='text-primary-foreground mb-1 text-sm'>
+                {format(sales.discount_from, 'dd MMMM', { locale: localeMap[locale as Locale] })} –{' '}
+                {format(sales.discount_to, 'dd MMMM', { locale: localeMap[locale as Locale] })}
+              </p>
+              <h2 className='text-primary-foreground text-lg font-bold md:text-2xl'>
+                {sales.name}
+              </h2>
+            </div>
+            <Button className='hidden md:block' variant='outline'>
+              <Link href={`/sale/${sales.id}`}>{t('View all')}</Link>
+            </Button>
           </div>
-          <ProductList className='py-2' products={sales.products} />
+          <ProductList hideCart className='py-2' hideControl products={sales.products} />
+          <Button className='mb-4 w-full md:hidden' size='sm' variant='outline'>
+            <Link href={`/sale/${sales.id}`}>{t('View all')}</Link>
+          </Button>
         </div>
       </BaseLayout>
     </section>

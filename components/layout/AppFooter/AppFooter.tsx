@@ -14,7 +14,7 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
   return (
     <footer
       className={cn(
-        'bg-primary text-primary-foreground mt-10 pt-6 pb-20 md:pt-10 lg:py-14',
+        'bg-primary text-primary-foreground mt-10 pt-6 pb-20 md:pt-10 md:pb-10',
         className
       )}
       {...props}
@@ -25,7 +25,7 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
             <div className='mb-5'>
               <div className='mb-3 text-sm font-medium'>{t('Have a question? Call us')}</div>
               <a href='tel:+998712099944' className='text-2xl font-semibold'>
-                +998 71 209 99 44
+                +998 97 900 50 05
               </a>
             </div>
             <div>
@@ -41,7 +41,7 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
           <MobileAppLinks />
         </div>
 
-        <Separator className='my-6 md:my-10' />
+        <Separator className='my-6' />
 
         <div className='flex flex-col justify-between gap-6 lg:flex-row'>
           <p className='text-primary-foreground/60 max-w-3xl text-center text-sm lg:text-left'>

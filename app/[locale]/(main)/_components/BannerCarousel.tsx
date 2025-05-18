@@ -30,7 +30,7 @@ export const BannerCarousel = async () => {
             >
               <a
                 href={banner.link}
-                className='block aspect-[3/1] md:aspect-[5/1]'
+                className='block aspect-[3/1] md:aspect-[6/1]'
                 rel='noreferrer noopenner'
                 target='_blank'
               >

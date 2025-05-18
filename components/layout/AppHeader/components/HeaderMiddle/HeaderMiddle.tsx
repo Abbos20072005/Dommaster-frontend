@@ -12,7 +12,7 @@ import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/utils/stores';
 
-import { Catalog, NavUser } from './components';
+import { NavUser } from './components';
 import { useHeaderMiddle } from './hooks';
 
 export const HeaderMiddle = () => {
@@ -42,7 +42,6 @@ export const HeaderMiddle = () => {
           </div>
         </Link>
         <div className='flex flex-1 gap-2'>
-          <Catalog />
           <Search />
         </div>
         <div className='ml-auto flex items-center justify-between gap-4 lg:gap-6'>

@@ -3,6 +3,7 @@
 import { format } from 'date-fns';
 import { EditIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import React from 'react';
 
 import { ProductCommentDialog } from '@/components/modules/product';
@@ -10,6 +11,7 @@ import { Button } from '@/components/ui/button';
 import { Ratings } from '@/components/ui/rating';
 import { Spinner } from '@/components/ui/spinner';
 
+import { CommentReplies } from './components';
 import { useProductComments } from './hooks';
 
 export const ProductComments = () => {
@@ -58,18 +60,32 @@ export const ProductComments = () => {
               </span>
             </div>
           </div>
+          {comment.images.length > 0 && (
+            <div className='flex gap-2 overflow-x-auto'>
+              {comment.images.map((image) => (
+                <Image
+                  key={image.id}
+                  alt={comment.comment}
+                  className='size-20 rounded-md object-cover'
+                  height={140}
+                  src={image.image}
+                  width={160}
+                />
+              ))}
+            </div>
+          )}
           <p className='text-sm'>{comment.comment}</p>
+          <CommentReplies comment={comment} />
         </article>
       ))}
       {state.hasNextPage && (
         <Button
           className='w-full'
-          disabled={state.isFetchingNextPage}
           size='sm'
           variant='outline'
+          isLoading={state.isFetchingNextPage}
           onClick={functions.onLoadMore}
         >
-          <Spinner show={state.isFetchingNextPage} />
           {t('Load more')}
         </Button>
       )}

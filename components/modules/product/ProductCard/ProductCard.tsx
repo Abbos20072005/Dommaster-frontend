@@ -9,25 +9,29 @@ import { ProductCart, ProductControl, ProductImages, ProductPrice } from './comp
 
 type Props = React.ComponentProps<'div'> & {
   product: Product;
+  hideCart?: boolean;
+  hideControl?: boolean;
 };
 
-export const ProductCard = ({ product, className, ...props }: Props) => {
+export const ProductCard = ({ product, className, hideCart, hideControl, ...props }: Props) => {
   const t = useTranslations();
 
   return (
     <div
       className={cn(
-        'bg-background flex flex-col rounded-lg border p-3 transition-shadow hover:shadow-md',
+        'bg-background flex flex-col rounded-lg border p-3 transition-shadow hover:shadow-md md:p-4',
         className
       )}
       {...props}
     >
-      <div className='flex justify-between'>
-        <p className='text-muted-foreground text-sm'>
-          {t('code')}: {product.id}
-        </p>
-        <ProductControl product={product} />
-      </div>
+      {!hideControl && (
+        <div className='flex justify-between'>
+          <p className='text-muted-foreground text-sm'>
+            {t('code')}: {product.id}
+          </p>
+          <ProductControl product={product} />
+        </div>
+      )}
       <div className='relative mb-1'>
         <Link href={`/product/${product.id}`} aria-label={product.name}>
           <ProductImages product={product} />
@@ -54,10 +58,14 @@ export const ProductCard = ({ product, className, ...props }: Props) => {
           <span className='line-clamp-3 text-sm leading-5'>{product.name}</span>
         </Link>
       </div>
-      <div className='mb-2'>
+      <div>
         <ProductPrice product={product} />
       </div>
-      <ProductCart product={product} />
+      {!hideCart && (
+        <div className='mt-2'>
+          <ProductCart product={product} />
+        </div>
+      )}
     </div>
   );
 };

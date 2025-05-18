@@ -19,6 +19,7 @@ export * from './brands/{id}';
 export * from './cart';
 export * from './categories';
 export * from './comments';
+export * from './comments/reply';
 export * from './favorites';
 export * from './main';
 export * from './orders';

@@ -9,9 +9,10 @@ import { Link } from '@/i18n/navigation';
 interface Props {
   categoryId: number;
   subCategory: SubCategory;
+  onClose: () => void;
 }
 
-export const ItemCategories = ({ subCategory, categoryId }: Props) => {
+export const ItemCategories = ({ subCategory, onClose, categoryId }: Props) => {
   return (
     <div key={subCategory.id}>
       <Accordion type='single' collapsible>
@@ -20,19 +21,24 @@ export const ItemCategories = ({ subCategory, categoryId }: Props) => {
             <div>
               <AccordionTrigger className='hover:text-secondary p-0' />
             </div>
-            <Link href={`/category/${categoryId}/${subCategory.id}`} className='text-sm'>
-              <span className='hover:text-secondary font-medium transition-colors'>
+            <Link
+              href={`/category/${categoryId}/${subCategory.id}`}
+              className='text-sm'
+              onClick={onClose}
+            >
+              <span className='hover:text-secondary font-semibold transition-colors'>
                 {subCategory.name}
               </span>
             </Link>
           </div>
           <AccordionContent className='pb-0'>
-            <ul className='mt-4 ml-9 space-y-4'>
+            <ul className='mt-4 ml-6 space-y-4'>
               {subCategory.product_item_categories.map((itemCategory) => (
                 <li key={itemCategory.id}>
                   <Link
                     href={`/category/${categoryId}/${subCategory.id}/${itemCategory.id}`}
                     className='text-sm'
+                    onClick={onClose}
                   >
                     <span className='hover:text-secondary transition-colors'>
                       {itemCategory.name}

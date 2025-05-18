@@ -46,7 +46,7 @@ export const AddsBrandsSection = () => {
         ) : item.type === 'banner' ? (
           <a
             href={item.data.link}
-            className='block aspect-[3/1] md:aspect-[5/1]'
+            className='block aspect-[3/1] md:aspect-[6/1]'
             rel='noreferrer noopenner'
             target='_blank'
           >

@@ -6,14 +6,14 @@ export const getComments = (requestConfig?: RequestConfig) =>
 export const getMyComments = (requestConfig?: RequestConfig) =>
   api.get<ProductCommentsResponse>('/comments/me/', requestConfig?.config);
 
-export const postComment = ({ data, config }: RequestConfig<ProductCommentRequest>) =>
+export const postComment = ({ data, config }: RequestConfig<FormData>) =>
   api.post<ProductCommentResponse>('/comments/', data, config);
 
 export const patchCommentById = ({
   id,
   data,
   config
-}: RequestConfig<ProductCommentRequest> & { id: number | string }) =>
+}: RequestConfig<FormData> & { id: number | string }) =>
   api.patch<ProductCommentResponse>(`/comments/${id}/`, data, config);
 
 export const deleteCommentById = ({ id, config }: RequestConfig & { id: number | string }) =>

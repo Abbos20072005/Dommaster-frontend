@@ -15,9 +15,18 @@ import { cn } from '@/lib/utils';
 type Props = React.ComponentProps<'div'> & {
   view?: 'carousel' | 'grid';
   products: Product[];
+  hideCart?: boolean;
+  hideControl?: boolean;
 };
 
-export const ProductList = ({ view = 'carousel', products, className, ...props }: Props) => {
+export const ProductList = ({
+  view = 'carousel',
+  hideControl,
+  hideCart,
+  products,
+  className,
+  ...props
+}: Props) => {
   return (
     <>
       {view === 'grid' && (
@@ -29,7 +38,12 @@ export const ProductList = ({ view = 'carousel', products, className, ...props }
           {...props}
         >
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard
+              key={product.id}
+              hideCart={hideCart}
+              hideControl={hideControl}
+              product={product}
+            />
           ))}
         </div>
       )}
@@ -41,6 +55,8 @@ export const ProductList = ({ view = 'carousel', products, className, ...props }
                 <ProductCard
                   key={product.id}
                   className='max-w-[170px] min-w-[170px]'
+                  hideCart={hideCart}
+                  hideControl={hideControl}
                   product={product}
                 />
               ))}
@@ -53,7 +69,12 @@ export const ProductList = ({ view = 'carousel', products, className, ...props }
                   key={product.id}
                   className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5'
                 >
-                  <ProductCard className='h-full' product={product} />
+                  <ProductCard
+                    className='h-full'
+                    hideCart={hideCart}
+                    hideControl={hideControl}
+                    product={product}
+                  />
                 </CarouselItem>
               ))}
             </CarouselContent>

@@ -3,6 +3,7 @@
 import { format } from 'date-fns';
 import { EditIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import React from 'react';
 
 import { AuthDialog } from '@/components/modules/auth';
@@ -12,6 +13,7 @@ import { Ratings } from '@/components/ui/rating';
 import { Spinner } from '@/components/ui/spinner';
 import { useAuth } from '@/utils/stores';
 
+import { CommentReplies } from './components/CommentReplies/CommentReplies';
 import { useProductComments } from './hooks';
 
 interface Props {
@@ -85,9 +87,9 @@ export const ProductComments = ({ product }: Props) => {
           )}
         </div>
       )}
-      <div className='space-y-6 text-sm md:space-y-10'>
+      <div className='space-y-3 divide-y text-sm md:space-y-5'>
         {state.comments?.map((comment) => (
-          <article key={comment.id} className='space-y-3'>
+          <article key={comment.id} className='space-y-3 pb-3 md:pb-5'>
             <div>
               <div className='mb-1 flex items-center gap-2'>
                 <span className='font-bold'>{comment.customer.full_name}</span>
@@ -110,21 +112,22 @@ export const ProductComments = ({ product }: Props) => {
                 </span>
               </div>
             </div>
-            {/*{review.images.length > 0 && (*/}
-            {/*  <div className='flex gap-2'>*/}
-            {/*    {review.images.map((image) => (*/}
-            {/*      <Image*/}
-            {/*        key={image.id}*/}
-            {/*        alt={product.name}*/}
-            {/*        className='h-35 w-40 rounded-md object-cover'*/}
-            {/*        height={140}*/}
-            {/*        src={image.image}*/}
-            {/*        width={160}*/}
-            {/*      />*/}
-            {/*    ))}*/}
-            {/*  </div>*/}
-            {/*)}*/}
+            {comment.images.length > 0 && (
+              <div className='flex gap-2'>
+                {comment.images.map((image) => (
+                  <Image
+                    key={image.id}
+                    alt={product.name}
+                    className='size-20 rounded-md object-cover'
+                    height={140}
+                    src={image.image}
+                    width={160}
+                  />
+                ))}
+              </div>
+            )}
             <p className='text-sm'>{comment.comment}</p>
+            <CommentReplies comment={comment} />
           </article>
         ))}
         {state.hasNextPage && (

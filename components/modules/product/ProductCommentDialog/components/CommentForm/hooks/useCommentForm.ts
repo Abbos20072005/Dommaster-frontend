@@ -21,7 +21,8 @@ export const useCommentForm = ({ onSuccess, defaultValues }: Props) => {
     resolver: zodResolver(commentFormSchema),
     defaultValues: {
       product_rating: defaultValues?.product_rating ?? undefined,
-      comment: defaultValues?.comment ?? ''
+      comment: defaultValues?.comment ?? '',
+      images: []
     }
   });
 
@@ -43,11 +44,17 @@ export const useCommentForm = ({ onSuccess, defaultValues }: Props) => {
       onSuccess?.(data);
     }
   });
+  const onSubmit = (values: CommentFormSchema) => {
+    const fd = new FormData();
+    fd.append('comment', values.comment);
+    fd.append('product_rating', values.product_rating.toString());
+    for (const image of values.images) {
+      fd.append('images', image);
+    }
 
-  const onSubmit = (data: CommentFormSchema) => {
     isEdit
-      ? patchCommentMutation.mutate({ id: defaultValues.id, data })
-      : postCommentMutation.mutate({ data, config: { params: { product_id: id } } });
+      ? patchCommentMutation.mutate({ id: defaultValues.id, data: fd })
+      : postCommentMutation.mutate({ data: fd, config: { params: { product_id: id } } });
   };
 
   return {

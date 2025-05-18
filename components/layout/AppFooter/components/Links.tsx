@@ -6,7 +6,7 @@ export const Links = () => {
   const t = useTranslations();
 
   return (
-    <div className='flex gap-6 md:gap-9 lg:gap-14 xl:gap-x-20'>
+    <div className='flex gap-6 md:gap-9 lg:gap-8 xl:gap-x-20'>
       <div>
         <p className='mb-3 text-lg font-semibold'>{t('About us')}</p>
         <ul>

@@ -1,22 +1,19 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { PercentIcon } from 'lucide-react';
+import { ChevronRightIcon, MenuIcon, PercentIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger
-} from '@/components/ui/dropdown-menu';
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useDebouncedValue } from '@/hooks';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { getCategories, getSales } from '@/utils/api/requests';
+import { getCategories } from '@/utils/api/requests';
 
 import { SubCategories } from './components';
 
@@ -27,12 +24,12 @@ export const HeaderBottom = () => {
   const [tab, setTab] = React.useState<number>(-1);
   const openDebounced = useDebouncedValue(open, 200);
 
-  const getSalesQuery = useQuery({
-    queryKey: ['sales'],
-    queryFn: () => getSales()
-  });
+  // const getSalesQuery = useQuery({
+  //   queryKey: ['sales'],
+  //   queryFn: () => getSales()
+  // });
 
-  const sales = getSalesQuery?.data?.data.result || [];
+  // const sales = getSalesQuery?.data?.data.result || [];
 
   const getCategoriesQuery = useQuery({
     queryKey: ['categories'],
@@ -50,53 +47,97 @@ export const HeaderBottom = () => {
   }, []);
 
   return (
-    <div className='relative' onMouseLeave={() => setOpen(false)}>
-      <BaseLayout className={cn('py-1', { 'mt-16': offset > 32 })}>
-        <nav className='flex h-5 flex-wrap justify-between gap-4 overflow-clip'>
-          <DropdownMenu>
-            <DropdownMenuTrigger className='text-primary flex items-center gap-1 text-sm font-bold text-nowrap transition-colors'>
+    <div
+      className='relative'
+      onMouseLeave={() => {
+        setOpen(false);
+        setTab(-1);
+      }}
+    >
+      <BaseLayout
+        className={cn('flex items-center gap-3', { 'mt-16': offset > 32 })}
+        onMouseEnter={() => setOpen(true)}
+      >
+        <Tooltip delayDuration={0}>
+          <TooltipTrigger asChild>
+            <Button size='sm' variant='primaryFlat'>
               <PercentIcon className='size-4' />
               {t('Sale')}
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align='start'>
-              {sales.map((item) => (
-                <DropdownMenuItem asChild key={item.id}>
-                  <Link href={`/sale/${item.id}`}>{item.name}</Link>
-                </DropdownMenuItem>
-              ))}
-            </DropdownMenuContent>
-          </DropdownMenu>
+            </Button>
+          </TooltipTrigger>
+          <TooltipContent side='bottom'>{t('In the process of development')}</TooltipContent>
+        </Tooltip>
+        <Button size='sm' variant='primaryFlat' onClick={() => setOpen((prev) => !prev)}>
+          {open ? <XIcon /> : <MenuIcon />}
+          <div className='font-semibold'>{t('Catalog')}</div>
+        </Button>
+        <nav className='no-scrollbar flex min-w-0 flex-1 gap-2 overflow-x-auto'>
           {getCategoriesQuery.isLoading
             ? Array.from({ length: 15 }).map((_, index) => (
-                <Skeleton key={index} className='h-4 w-28' />
+                <Skeleton key={index} className='h-8 w-28' />
               ))
             : categories?.map((item, index) => (
-                <Link
-                  href={`/category/${item.id}`}
+                <Button
+                  asChild
                   key={item.id}
-                  className={cn('hover:text-secondary text-sm text-nowrap transition-colors', {
-                    'text-secondary': tab === index && open
-                  })}
-                  onMouseEnter={() => {
-                    setOpen(true);
-                    setTab(index);
-                  }}
+                  size='sm'
+                  variant={tab === index ? 'secondaryFlat' : 'muted'}
                 >
-                  <span>{item.name}</span>
-                </Link>
+                  <Link
+                    href={`/category/${item.id}`}
+                    onClick={() => setOpen(false)}
+                    onMouseEnter={() => {
+                      setOpen(true);
+                      setTab(index);
+                    }}
+                  >
+                    <Image
+                      alt={item.name}
+                      className='size-4'
+                      height={16}
+                      src={item.icon}
+                      width={16}
+                    />
+                    {item.name}
+                  </Link>
+                </Button>
               ))}
         </nav>
       </BaseLayout>
       <div
         className={cn(
-          'bg-background invisible absolute inset-x-0 top-full z-20 scale-96 opacity-0 shadow-[0_150px_200px_rgba(0,0,0,0.2)] transition-all',
+          'bg-background invisible absolute inset-x-0 top-full z-20 h-[60vh] scale-96 opacity-0 shadow-[0_400px_1000px_rgba(0,0,0,0.3)] transition-all',
           { 'visible scale-100 opacity-100': openDebounced }
         )}
       >
-        <BaseLayout>
-          <div className='flex gap-20 overflow-x-auto py-6'>
-            {tab !== -1 && categories && <SubCategories category={categories[tab]} />}
+        <BaseLayout className='flex h-full gap-10 py-6'>
+          <div className='-ml-2 overflow-y-auto border-r'>
+            <ul className='w-60 overflow-y-auto pr-2 lg:w-72'>
+              {categories?.map((item, index) => (
+                <li
+                  key={item.id}
+                  className={cn(
+                    'flex items-center gap-3 px-3 py-2',
+                    tab === index && 'text-secondary bg-muted cursor-pointer rounded-md'
+                  )}
+                  onMouseEnter={() => setTab(index)}
+                >
+                  <Image
+                    alt={item.name}
+                    className='size-4'
+                    height={16}
+                    src={item.icon}
+                    width={16}
+                  />
+                  <span className='min-w-0 flex-1 truncate text-sm'>{item.name}</span>
+                  {tab === index && <ChevronRightIcon className='size-4' />}
+                </li>
+              ))}
+            </ul>
           </div>
+          {tab !== -1 && categories && (
+            <SubCategories category={categories[tab]} onClose={() => setOpen(false)} />
+          )}
         </BaseLayout>
       </div>
     </div>
