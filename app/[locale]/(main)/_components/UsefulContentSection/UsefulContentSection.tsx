@@ -17,10 +17,14 @@ export const UsefulContentSection = async () => {
         <Tabs defaultValue='news'>
           <div className='flex items-center justify-between'>
             <TabsList className='w-full sm:w-auto'>
-              <TabsTrigger value='news'>{t('News')}</TabsTrigger>
-              <TabsTrigger value='articles'>{t('Articles')}</TabsTrigger>
-              <TabsTrigger value='reviews'>{t('Reviews')}</TabsTrigger>
-              <TabsTrigger value='videos'>{t('Videos')}</TabsTrigger>
+              <TabsTrigger className='px-10' value='news'>
+                {t('News')}
+              </TabsTrigger>
+              {/*<TabsTrigger value='articles'>{t('Articles')}</TabsTrigger>*/}
+              {/*<TabsTrigger value='reviews'>{t('Reviews')}</TabsTrigger>*/}
+              <TabsTrigger className='px-10' value='videos'>
+                {t('Videos')}
+              </TabsTrigger>
             </TabsList>
             <TabsContent className='hidden flex-none sm:block' value='news'>
               <Button asChild size='sm' variant='muted'>
