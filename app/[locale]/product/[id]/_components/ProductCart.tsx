@@ -62,7 +62,10 @@ export const ProductCart = ({ product }: Props) => {
               onChange={functions.onCartCountChange}
             />
             <Button asChild className='shrink-0' variant='outline'>
-              <Link href='/cart'>{t('To cart')}</Link>
+              <Link href='/cart'>
+                <ShoppingCartIcon />
+                {t('To cart')}
+              </Link>
             </Button>
           </div>
         )}

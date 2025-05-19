@@ -8,6 +8,13 @@ import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
 import { Button } from '@/components/ui/button';
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious
+} from '@/components/ui/carousel';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { useDebouncedValue } from '@/hooks';
@@ -48,7 +55,7 @@ export const HeaderBottom = () => {
 
   return (
     <div
-      className='relative'
+      className='group relative'
       onMouseLeave={() => {
         setOpen(false);
         setTab(-1);
@@ -71,38 +78,47 @@ export const HeaderBottom = () => {
           {open ? <XIcon /> : <MenuIcon />}
           <div className='font-semibold'>{t('Catalog')}</div>
         </Button>
-        <nav className='no-scrollbar flex min-w-0 flex-1 gap-2 overflow-x-auto'>
-          {getCategoriesQuery.isLoading
-            ? Array.from({ length: 15 }).map((_, index) => (
-                <Skeleton key={index} className='h-8 w-28' />
-              ))
-            : categories?.map((item, index) => (
-                <Button
-                  asChild
-                  key={item.id}
-                  size='sm'
-                  variant={tab === index ? 'secondaryFlat' : 'muted'}
-                >
-                  <Link
-                    href={`/category/${item.id}`}
-                    onClick={() => setOpen(false)}
-                    onMouseEnter={() => {
-                      setOpen(true);
-                      setTab(index);
-                    }}
-                  >
-                    <Image
-                      alt={item.name}
-                      className='size-4'
-                      height={16}
-                      src={item.icon}
-                      width={16}
-                    />
-                    {item.name}
-                  </Link>
-                </Button>
-              ))}
-        </nav>
+        <Carousel className='min-w-0 flex-1' opts={{ dragFree: true, slidesToScroll: 3 }}>
+          <CarouselContent className='-ml-2'>
+            {getCategoriesQuery.isLoading
+              ? Array.from({ length: 15 }).map((_, index) => (
+                  <CarouselItem key={index} className='max-w-fit pl-2'>
+                    <Skeleton className='h-8 w-28' />
+                  </CarouselItem>
+                ))
+              : categories?.map((item, index) => (
+                  <CarouselItem key={index} className='max-w-fit pl-2'>
+                    <Button asChild size='sm' variant={tab === index ? 'secondaryFlat' : 'muted'}>
+                      <Link
+                        href={`/category/${item.id}`}
+                        onClick={() => setOpen(false)}
+                        onMouseEnter={() => {
+                          setOpen(true);
+                          setTab(index);
+                        }}
+                      >
+                        <Image
+                          alt={item.name}
+                          className='size-4'
+                          height={16}
+                          src={item.icon}
+                          width={16}
+                        />
+                        {item.name}
+                      </Link>
+                    </Button>
+                  </CarouselItem>
+                ))}
+          </CarouselContent>
+          <CarouselPrevious
+            className='-left-2 opacity-0 shadow-[15px_0px_20px_15px_#ffffff] transition-opacity group-hover:opacity-100'
+            size='iconSm'
+          />
+          <CarouselNext
+            className='-right-2 opacity-0 shadow-[-15px_0px_20px_15px_#ffffff] transition-opacity group-hover:opacity-100'
+            size='iconSm'
+          />
+        </Carousel>
       </BaseLayout>
       <div
         className={cn(
