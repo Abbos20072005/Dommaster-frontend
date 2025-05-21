@@ -1,4 +1,13 @@
 {
+  "Answer": "Answer",
+  "Write your answer": "Write your answer",
+  "Write your question": "Write your question",
+  "benefits": {
+    "1":"A wide range of building materials is always in stock",
+    "2": "Delivery of building materials within two hours or at any convenient time",
+    "3": "Easy return of goods that are not needed within 360 days",
+    "4": "Multi-level quality management system according to ISO 9001"
+  },
   "File size must be less than 5MB": "File size must be less than 5MB",
   "Maximum 5 files allowed": "Maximum 5 files allowed",
   "A password reset code will be sent to your phone number": "A password reset code will be sent to your phone number",

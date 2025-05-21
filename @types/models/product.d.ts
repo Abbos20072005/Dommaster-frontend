@@ -24,6 +24,13 @@ interface Product {
     value: string;
     unit: string;
   }[];
+  comment_ratings: {
+    1: number;
+    2: number;
+    3: number;
+    4: number;
+    5: number;
+  } | null;
   images: {
     id: number;
     product: number;

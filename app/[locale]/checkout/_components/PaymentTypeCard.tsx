@@ -9,16 +9,11 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
-
-const paymentTypes = [
-  { value: 'CLICK', label: 'Click Uz', image: '/payments/click.png' },
-  { value: 'PAYME', label: 'Payme', image: '/payments/payme.png' },
-  { value: 'UZUM', label: 'Uzum', image: '/payments/uzum.png' }
-];
+import { paymentMethods } from '@/utils/constants/paymentSource';
 
 export const PaymentTypeCard = () => {
   const t = useTranslations();
-  const [type, setType] = useQueryState('payment_type', { defaultValue: 'CLICK' });
+  const [type, setType] = useQueryState('payment_method', { defaultValue: '1' });
 
   return (
     <Card variant='outline'>
@@ -27,7 +22,7 @@ export const PaymentTypeCard = () => {
       </CardHeader>
       <CardContent className='flex gap-4'>
         <RadioGroup className='grid w-full grid-cols-3 gap-2' value={type} onValueChange={setType}>
-          {paymentTypes.map((item) => (
+          {paymentMethods.map((item) => (
             <React.Fragment key={item.value}>
               <RadioGroupItem
                 aria-label={item.label}

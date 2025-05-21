@@ -5,6 +5,7 @@ import { EditIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { QuestionReplies } from '@/app/[locale]/product/[id]/_components/ProductBody/components/ProductQuestions/components/QuestionReplies/QuestionReplies';
 import { AuthDialog } from '@/components/modules/auth';
 import { ProductQuestionDialog } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
@@ -85,6 +86,7 @@ export const ProductQuestions = ({ product }: Props) => {
               </div>
             </div>
             <p className='text-sm'>{question.question}</p>
+            <QuestionReplies question={question} />
           </article>
         ))}
         {state.hasNextPage && (

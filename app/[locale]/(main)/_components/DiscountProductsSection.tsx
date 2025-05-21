@@ -29,13 +29,19 @@ export const DiscountProductsSection = () => {
   if (getSaleMainQuery.isLoading)
     return (
       <section>
-        <BaseLayout>
-          <div className='bg-muted px-2 pt-2'>
-            <div className='px-4'>
-              <Skeleton className='mb-1 h-5 w-32' />
-              <Skeleton className='h-8 w-1/2' />
+        <BaseLayout className='px-0'>
+          <div className='bg-muted rounded-2xl px-2 pt-4'>
+            <div className='flex items-center justify-between px-4'>
+              <div className='flex-1'>
+                <Skeleton className='mb-1 h-5 w-32' />
+                <Skeleton className='h-7 w-3/4 lg:h-8 lg:w-1/2' />
+              </div>
+              <Skeleton className='hidden h-11 w-25 md:block' />
             </div>
             <ProductListSkeleton hideCart hideControl />
+            <div className='pb-4'>
+              <Skeleton className='h-8 w-full md:hidden' />
+            </div>
           </div>
         </BaseLayout>
       </section>

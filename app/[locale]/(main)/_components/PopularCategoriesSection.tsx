@@ -23,9 +23,9 @@ export const PopularCategoriesSection = async () => {
           <Link
             href={`/category/${item.id}`}
             key={item.id}
-            className='bg-muted relative block size-25 rounded-md p-2 [word-break:break-word]'
+            className='bg-muted relative block size-20 rounded-md p-2'
           >
-            <div className='relative z-1 text-xs'>{item.name}</div>
+            <div className='relative z-1 text-xs [word-break:break-word]'>{item.name}</div>
             <Image
               alt={item.name}
               className='absolute inset-0 size-full rounded-lg object-contain'

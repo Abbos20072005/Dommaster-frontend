@@ -1,6 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import { WheelGesturesPlugin } from 'embla-carousel-wheel-gestures';
 import { ChevronRightIcon, MenuIcon, PercentIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -78,12 +79,16 @@ export const HeaderBottom = () => {
           {open ? <XIcon /> : <MenuIcon />}
           <div className='font-semibold'>{t('Catalog')}</div>
         </Button>
-        <Carousel className='min-w-0 flex-1' opts={{ dragFree: true, slidesToScroll: 3 }}>
+        <Carousel
+          className='min-w-0 flex-1'
+          plugins={[WheelGesturesPlugin()]}
+          opts={{ dragFree: true, slidesToScroll: 3 }}
+        >
           <CarouselContent className='-ml-2'>
             {getCategoriesQuery.isLoading
               ? Array.from({ length: 15 }).map((_, index) => (
                   <CarouselItem key={index} className='max-w-fit pl-2'>
-                    <Skeleton className='h-8 w-28' />
+                    <Skeleton className='h-8 w-36' />
                   </CarouselItem>
                 ))
               : categories?.map((item, index) => (

@@ -10,4 +10,4 @@ export const getOrderById = ({ id, config }: RequestConfig & { id: number | stri
   api.get<OrderResponse>(`/order/${id}/`, config);
 
 export const postOrder = ({ data, config }: RequestConfig<OrderRequest>) =>
-  api.post<OrderResponse>('/order/', data, config);
+  api.post<ApiResponse<string>>('/order/', data, config);

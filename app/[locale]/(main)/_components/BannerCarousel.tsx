@@ -18,16 +18,14 @@ export const BannerCarousel = async () => {
   if (!banners.length) return null;
 
   return (
-    <BaseLayout className='px-0 md:px-4'>
+    <BaseLayout>
       <AutoPlayCarousel delay={4000} opts={{ loop: true }}>
         <CarouselContent
           className={cn('-ml-2 md:-ml-4', { 'justify-center': banners.length === 1 })}
+          noOverflowHiddenOnMobile
         >
-          {(banners.length === 2 ? [...banners, ...banners] : banners).map((banner, index) => (
-            <CarouselItem
-              key={`${banner.id}-${index}`}
-              className='basis-[calc(100%-32px)] pl-2 md:basis-full md:pl-4'
-            >
+          {banners.map((banner, index) => (
+            <CarouselItem key={`${banner.id}-${index}`} className='basis-full pl-2 md:pl-4'>
               <a
                 href={banner.link}
                 className='block aspect-[3/1] md:aspect-[6/1]'

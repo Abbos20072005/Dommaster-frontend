@@ -6,6 +6,7 @@ import {
   AddsBrandsSection,
   BannerCarousel,
   BannerCarouselLoading,
+  BenefitsCards,
   BrandsSection,
   BrandsSectionLoading,
   DiscountProductsSection,
@@ -25,6 +26,7 @@ const Home = () => {
           <Suspense fallback={<PopularCategoriesSectionSkeleton />}>
             <PopularCategoriesSection />
           </Suspense>
+          <BenefitsCards />
           <Suspense fallback={<BannerCarouselLoading />}>
             <BannerCarousel />
           </Suspense>

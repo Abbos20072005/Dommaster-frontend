@@ -26,6 +26,7 @@ export * from './orders';
 export * from './products';
 export * from './promos';
 export * from './questions';
+export * from './questions/reply';
 export * from './sales';
 export * from './search';
 export * from './services';

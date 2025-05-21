@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { useAuth } from '@/utils/stores';
 
+import { QuestionReplies } from './components/QuestionReplies/QuestionReplies';
 import { useProductQuestions } from './hooks';
 
 export const ProductQuestions = () => {
@@ -57,6 +58,7 @@ export const ProductQuestions = () => {
             </div>
           </div>
           <p className='text-sm'>{question.question}</p>
+          <QuestionReplies question={question} />
         </article>
       ))}
       {state.hasNextPage && (

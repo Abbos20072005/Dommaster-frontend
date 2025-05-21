@@ -2,9 +2,9 @@
 
 import { useMutation } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import { parseAsInteger, useQueryState } from 'nuqs';
 import React from 'react';
 
-import { PromoCodeChecker } from '@/app/[locale]/checkout/_components/PromoCodeChecker';
 import { useCart } from '@/components/modules/cart';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -16,8 +16,11 @@ import { formatPrice } from '@/lib/utils';
 import { postOrder } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 
+import { PromoCodeChecker } from './PromoCodeChecker';
+
 export const PriceCalculationCard = () => {
   const t = useTranslations();
+  const [paymentMethod] = useQueryState('payment_method', parseAsInteger.withDefault(1));
   const { user } = useAuth();
   const { cart, availableCartItems, isSuccess, isFetching } = useCart();
   const router = useRouter();
@@ -28,12 +31,17 @@ export const PriceCalculationCard = () => {
   }, [cart, user]);
 
   const postOrderMutation = useMutation({
-    mutationFn: postOrder
+    mutationFn: postOrder,
+    onSuccess: ({ data }) => {
+      window.location.replace(data.result);
+    }
   });
 
   const onSubmit = () => {
     if (!user) return;
-    postOrderMutation.mutate({ data: { promocode: promo?.code } });
+    postOrderMutation.mutate({
+      data: { promocode: promo?.code, is_web: true, payment_type: paymentMethod }
+    });
   };
 
   return (
@@ -79,10 +87,10 @@ export const PriceCalculationCard = () => {
         </div>
         <Button
           className='mb-0 w-full'
-          disabled={!cart?.cart_items.length || isFetching}
+          disabled={!cart?.cart_items.length || isFetching || postOrderMutation.isPending}
           onClick={onSubmit}
         >
-          {isFetching ? <Spinner /> : t('Pay')}
+          {isFetching || postOrderMutation.isPending ? <Spinner /> : t('Pay')}
         </Button>
         <Separator className='my-4' />
         <PromoCodeChecker value={promo} onSuccess={setPromo} />

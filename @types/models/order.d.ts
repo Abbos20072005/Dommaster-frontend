@@ -26,7 +26,15 @@ interface Order extends Omit<OrderPreview, 'order_items'> {
   }[];
 }
 
+enum PaymentMethod {
+  Click = 1,
+  Payme = 2,
+  Uzum = 3
+}
+
 interface OrderRequest {
+  is_web: boolean;
+  payment_type: PaymentMethod;
   promocode?: string;
 }
 

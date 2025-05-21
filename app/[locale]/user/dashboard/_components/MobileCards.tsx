@@ -16,6 +16,7 @@ const navLinks = [
   { href: '/user/reviews', label: 'My reviews and questions', authorized: true },
   { href: '/user/promo', label: 'Promo codes', authorized: true },
   { href: '/user/personal-info', label: 'Personal info', authorized: true },
+  { href: '/user/addresses', label: 'My addresses', authorized: true },
   { href: '/cart', label: 'Cart', authorized: false },
   { href: '/user/favorites', label: 'Favorites', authorized: false }
 ];
