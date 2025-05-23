@@ -11,3 +11,9 @@ export const getOrderById = ({ id, config }: RequestConfig & { id: number | stri
 
 export const postOrder = ({ data, config }: RequestConfig<OrderRequest>) =>
   api.post<ApiResponse<string>>('/order/', data, config);
+
+export const postOrderPay = ({ data, config }: RequestConfig<OrderPayRequest>) =>
+  api.post<ApiResponse<string>>('/order/pay/', data, config);
+
+export const postOrderCancel = ({ id, config }: RequestConfig & { id: number | string }) =>
+  api.post<OrderResponse>(`/order/${id}/cancel/`, config);

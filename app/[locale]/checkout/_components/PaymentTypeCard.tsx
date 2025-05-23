@@ -9,7 +9,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { cn } from '@/lib/utils';
-import { paymentMethods } from '@/utils/constants/paymentSource';
+import { paymentMethods } from '@/utils/constants/paymentMethods';
 
 export const PaymentTypeCard = () => {
   const t = useTranslations();

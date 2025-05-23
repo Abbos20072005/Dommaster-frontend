@@ -1,7 +1,10 @@
 import { format } from 'date-fns';
+import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
+import { OrderCancelAction } from '@/app/[locale]/user/orders/_components/OrderCancelAction';
+import { OrderPayDialog } from '@/app/[locale]/user/orders/_components/OrderPayDialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -13,8 +16,8 @@ import {
   CardTitle
 } from '@/components/ui/card';
 import { Link, usePathname } from '@/i18n/navigation';
-import { formatPrice } from '@/lib/utils';
-import { orderStatusMap } from '@/utils/constants/orderStatus';
+import { cn, formatPrice } from '@/lib/utils';
+import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
 
 interface Props {
   order: OrderPreview;
@@ -23,6 +26,7 @@ interface Props {
 export const OrderItem = ({ order }: Props) => {
   const t = useTranslations();
   const pathname = usePathname();
+
   return (
     <Card variant='outline'>
       <Link href={`/${pathname}/${order.id}`}>
@@ -35,7 +39,9 @@ export const OrderItem = ({ order }: Props) => {
           </div>
           <div className='flex flex-col-reverse items-end gap-1 sm:flex-row sm:items-center sm:gap-2'>
             <span className='text-sm'>
-              <Badge variant='outline'>{orderStatusMap[order.status]}</Badge>
+              <Badge className={cn(orderStatusColorMap[order.status])} variant='outline'>
+                {t(orderStatusMap[order.status])}
+              </Badge>
             </span>
             <span className='font-bold'>
               {formatPrice(order.total_price)} {t('som')}
@@ -62,6 +68,21 @@ export const OrderItem = ({ order }: Props) => {
         <Button asChild size='sm' variant='muted'>
           <Link href={`/${pathname}/${order.id}`}>{t('Order details')}</Link>
         </Button>
+        {order.status === 0 && (
+          <>
+            <OrderPayDialog asChild orderId={order.id}>
+              <Button size='sm' variant='primaryFlat'>
+                {t('Pay order')}
+              </Button>
+            </OrderPayDialog>
+            <OrderCancelAction asChild orderId={order.id}>
+              <Button size='sm' variant='destructiveFlat'>
+                <XIcon />
+                {t('Cancel')}
+              </Button>
+            </OrderCancelAction>
+          </>
+        )}
       </CardFooter>
     </Card>
   );

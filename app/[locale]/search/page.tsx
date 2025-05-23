@@ -3,7 +3,7 @@ import React from 'react';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
-import { getBrands, getSales } from '@/utils/api/requests';
+import { getBrands } from '@/utils/api/requests';
 
 interface Props {
   searchParams: Promise<{ q: string }>;
@@ -14,8 +14,8 @@ const SearchPage = async ({ searchParams }: Props) => {
   const t = await getTranslations();
   const brandsResponse = await getBrands();
   const brands = brandsResponse.data.result || [];
-  const salesResponse = await getSales();
-  const sales = salesResponse.data.result;
+  // const salesResponse = await getSales();
+  // const sales = salesResponse.data.result;
 
   const filters: Filter[] = [
     {
@@ -34,16 +34,16 @@ const SearchPage = async ({ searchParams }: Props) => {
         value: String(brand.id),
         label: brand.name
       }))
-    },
-    {
-      name: t('Sales'),
-      type: 'RADIO',
-      request_var: 'sale_id',
-      filter_items: sales.map((sale) => ({
-        value: String(sale.id),
-        label: sale.name
-      }))
     }
+    // {
+    //   name: t('Sales'),
+    //   type: 'RADIO',
+    //   request_var: 'sale_id',
+    //   filter_items: sales.map((sale) => ({
+    //     value: String(sale.id),
+    //     label: sale.name
+    //   }))
+    // }
   ];
 
   return (

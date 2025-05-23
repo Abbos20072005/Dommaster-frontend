@@ -38,5 +38,11 @@ interface OrderRequest {
   promocode?: string;
 }
 
+interface OrderPayRequest {
+  is_web: boolean;
+  order_id: number;
+  payment_type: PaymentMethod;
+}
+
 type OrdersResponse = ApiResponse<Pagination<OrderPreview>>;
 type OrderResponse = ApiResponse<Order>;

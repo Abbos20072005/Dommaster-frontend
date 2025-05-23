@@ -11,7 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { getBrandById, getSales } from '@/utils/api/requests';
+import { getBrandById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -22,8 +22,8 @@ const SearchPage = async ({ params }: Props) => {
   const { id } = await params;
   const brandResponse = await getBrandById({ id });
   const brand = brandResponse.data.result;
-  const salesResponse = await getSales();
-  const sales = salesResponse.data.result;
+  // const salesResponse = await getSales();
+  // const sales = salesResponse.data.result;
 
   const filters: Filter[] = [
     {
@@ -33,16 +33,16 @@ const SearchPage = async ({ params }: Props) => {
       filter_items: [],
       from: 0,
       to: 1000000
-    },
-    {
-      name: t('Sales'),
-      type: 'RADIO',
-      request_var: 'sale_id',
-      filter_items: sales.map((sale) => ({
-        value: String(sale.id),
-        label: sale.name
-      }))
     }
+    // {
+    //   name: t('Sales'),
+    //   type: 'RADIO',
+    //   request_var: 'sale_id',
+    //   filter_items: sales.map((sale) => ({
+    //     value: String(sale.id),
+    //     label: sale.name
+    //   }))
+    // }
   ];
 
   return (
