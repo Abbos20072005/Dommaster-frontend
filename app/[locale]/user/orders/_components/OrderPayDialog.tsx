@@ -1,6 +1,6 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
@@ -30,20 +30,20 @@ interface Props extends React.ComponentProps<typeof DialogTrigger> {
 export const OrderPayDialog = ({ orderId, children, ...props }: Props) => {
   const t = useTranslations();
   const [method, setMethod] = React.useState('1');
-  const [open, setOpen] = React.useState(false);
+  const [_, setOpen] = React.useState(false);
 
-  const getOrderPayQuery = useQuery({
-    queryKey: ['order-pay', orderId],
-    enabled: open,
-    queryFn: () =>
-      postOrderPay({ data: { order_id: orderId, payment_type: +method, is_web: true } })
+  const postOrderPayMutation = useMutation({
+    mutationFn: postOrderPay,
+    onSuccess: ({ data }) => {
+      setOpen(false);
+      window.location.replace(data.result);
+    }
   });
 
-  const url = getOrderPayQuery.data?.data.result;
-
   const onPay = () => {
-    if (!url) return;
-    window.location.replace(url);
+    postOrderPayMutation.mutate({
+      data: { order_id: orderId, payment_type: +method, is_web: true }
+    });
   };
 
   return (
@@ -91,7 +91,7 @@ export const OrderPayDialog = ({ orderId, children, ...props }: Props) => {
           <DialogClose asChild>
             <Button variant='outline'>{t('Cancel')}</Button>
           </DialogClose>
-          <Button isLoading={getOrderPayQuery.isPending} onClick={onPay}>
+          <Button isLoading={postOrderPayMutation.isPending} onClick={onPay}>
             {t('Pay')}
           </Button>
         </DialogFooter>

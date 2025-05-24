@@ -40,7 +40,7 @@ export const CommentForm = ({ onSuccess, defaultValues }: Props) => {
 
   return (
     <Form {...form}>
-      <form className='space-y-4' onSubmit={form.handleSubmit(functions.onSubmit)}>
+      <form className='min-w-0 space-y-4' onSubmit={form.handleSubmit(functions.onSubmit)}>
         <FormField
           render={({ field }) => (
             <FormItem className='space-y-1'>
