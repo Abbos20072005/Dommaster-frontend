@@ -133,14 +133,16 @@ export const HeaderBottom = () => {
       >
         <BaseLayout className='flex h-full gap-10 py-6'>
           <div className='-ml-2 overflow-y-auto border-r'>
-            <ul className='w-60 overflow-y-auto pr-2 lg:w-72'>
+            <div className='w-60 overflow-y-auto pr-2 lg:w-72'>
               {categories?.map((item, index) => (
-                <li
+                <Link
+                  href={`/category/${item.id}`}
                   key={item.id}
                   className={cn(
                     'flex items-center gap-3 px-3 py-2',
-                    tab === index && 'text-secondary bg-muted cursor-pointer rounded-md'
+                    tab === index && 'text-secondary bg-secondary/8 cursor-pointer rounded-md'
                   )}
+                  onClick={() => setOpen(false)}
                   onMouseEnter={() => setTab(index)}
                 >
                   <Image
@@ -150,11 +152,11 @@ export const HeaderBottom = () => {
                     src={item.icon}
                     width={16}
                   />
-                  <span className='min-w-0 flex-1 truncate text-sm'>{item.name}</span>
+                  <span className='min-w-0 flex-1 truncate text-sm font-medium'>{item.name}</span>
                   {tab === index && <ChevronRightIcon className='size-4' />}
-                </li>
+                </Link>
               ))}
-            </ul>
+            </div>
           </div>
           {tab !== -1 && categories && (
             <SubCategories category={categories[tab]} onClose={() => setOpen(false)} />
