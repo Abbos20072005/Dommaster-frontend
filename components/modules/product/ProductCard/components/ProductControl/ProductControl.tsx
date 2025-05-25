@@ -20,6 +20,10 @@ export const ProductControl = ({ product }: Props) => {
   const [liked, setLiked] = React.useState(product.is_favourite);
   const queryClient = useQueryClient();
 
+  React.useEffect(() => {
+    setLiked(product.is_favourite);
+  }, [product.is_favourite]);
+
   const postFavoriteMutation = useMutation({
     mutationFn: postFavorite,
     onSuccess: () => {

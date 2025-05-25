@@ -51,7 +51,9 @@ const CartPage = () => {
             <CartCalculation />
           </div>
         </div>
-        <RecentlyViewedProducts />
+        <div className='px-4 md:px-0'>
+          <RecentlyViewedProducts />
+        </div>
       </BaseLayout>
     </div>
   );

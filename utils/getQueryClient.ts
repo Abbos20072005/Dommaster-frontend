@@ -10,7 +10,7 @@ const makeQueryClient = () =>
       queries: {
         retry: false,
         refetchOnWindowFocus: false,
-        staleTime: 60 * 1000 // 1m
+        staleTime: 0
       }
     },
     queryCache: new QueryCache({

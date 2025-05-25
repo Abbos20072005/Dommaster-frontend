@@ -29,13 +29,13 @@ export const ProductCart = ({ product }: Props) => {
     );
 
   return (
-    <div className='grid grid-cols-[2fr_1fr] gap-2'>
+    <div className='gap-2 md:grid md:grid-cols-[2fr_1fr]'>
       <CartCounter
         maxValue={product.quantity}
         value={state.cartCount}
         onChange={functions.onCartCountChange}
       />
-      <Button asChild className='shrink-0' size='sm' variant='outline'>
+      <Button asChild className='hidden shrink-0 md:flex' size='sm' variant='outline'>
         <Link href='/cart'>
           <CheckIcon />
         </Link>
