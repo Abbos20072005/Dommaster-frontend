@@ -67,8 +67,8 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
       lang={locale}
       suppressHydrationWarning
     >
-      <Providers>
-        <NextIntlClientProvider>
+      <NextIntlClientProvider>
+        <Providers>
           <body className='flex min-h-screen flex-col font-sans antialiased'>
             <AppHeader />
             <main className='flex-1'>{children}</main>
@@ -88,8 +88,8 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
               </ChatDialog>
             </div>
           </body>
-        </NextIntlClientProvider>
-      </Providers>
+        </Providers>
+      </NextIntlClientProvider>
     </html>
   );
 };

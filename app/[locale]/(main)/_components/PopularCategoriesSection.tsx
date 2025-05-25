@@ -46,7 +46,9 @@ export const PopularCategoriesSection = async () => {
                 href={`/category/${item.id}`}
                 className='bg-muted relative block aspect-square rounded-md p-2.5'
               >
-                <div className='relative z-1 text-xs font-semibold lg:text-sm'>{item.name}</div>
+                <div className='relative z-1 text-xs leading-4.5 font-medium [word-break:break-word] lg:text-sm'>
+                  {item.name}
+                </div>
                 <Image
                   alt={item.name}
                   className='absolute inset-0 size-full rounded-lg object-contain'
