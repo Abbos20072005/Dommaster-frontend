@@ -13,7 +13,7 @@ export const registerFormSchema = z
     password: z
       .string()
       .min(1, 'Fill the required field')
-      .min(4, 'Password must be at least 8 characters long'),
+      .min(4, 'Password must be at least 4 characters long'),
     confirm_password: z.string().min(1, 'Fill the required field')
   })
   .refine((data) => data.password === data.confirm_password, {

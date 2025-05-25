@@ -14,7 +14,7 @@ export const PopularCategoriesSectionSkeleton = () => {
       {/* Mobile */}
       <div className='grid grid-flow-col grid-rows-2 gap-2 overflow-x-auto md:hidden'>
         {Array.from({ length: 12 }).map((_, index) => (
-          <Skeleton key={index} className='size-20' />
+          <Skeleton key={index} className='size-25' />
         ))}
       </div>
 

@@ -35,7 +35,7 @@ export const ForgotPasswordForm = ({ onSuccess }: Props) => {
         <form className='grid gap-4' onSubmit={form.handleSubmit(functions.onSubmit)}>
           <FormField
             render={({ field }) => (
-              <FormItem className='min-h-52'>
+              <FormItem className='min-h-40'>
                 <FormLabel>{t('Phone number')}</FormLabel>
                 <FormControl>
                   <PhoneInput placeholder='+998 XX XXX XX XX' {...field} />

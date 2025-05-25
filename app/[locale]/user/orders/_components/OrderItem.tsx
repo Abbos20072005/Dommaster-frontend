@@ -3,8 +3,6 @@ import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-import { OrderCancelAction } from '@/app/[locale]/user/orders/_components/OrderCancelAction';
-import { OrderPayDialog } from '@/app/[locale]/user/orders/_components/OrderPayDialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -19,6 +17,9 @@ import { Link, usePathname } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
 import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
 
+import { OrderCancelAction } from './OrderCancelAction';
+import { OrderPayDialog } from './OrderPayDialog';
+
 interface Props {
   order: OrderPreview;
 }
@@ -26,10 +27,11 @@ interface Props {
 export const OrderItem = ({ order }: Props) => {
   const t = useTranslations();
   const pathname = usePathname();
+  const url = `${pathname}/${order.id}`;
 
   return (
     <Card variant='outline'>
-      <Link href={`/${pathname}/${order.id}`}>
+      <Link href={url}>
         <CardHeader className='flex flex-row items-start justify-between space-y-0 border-b p-4'>
           <div className='space-y-1'>
             <CardTitle className='text-base sm:leading-none md:text-lg'>
@@ -49,7 +51,7 @@ export const OrderItem = ({ order }: Props) => {
           </div>
         </CardHeader>
       </Link>
-      <Link href={`/${pathname}/${order.id}`}>
+      <Link href={url}>
         <CardContent className='flex gap-2 overflow-x-auto p-4'>
           {order.order_items.map((item) => (
             <div key={item.id} className='flex shrink-0 items-center justify-between'>
@@ -66,7 +68,7 @@ export const OrderItem = ({ order }: Props) => {
       </Link>
       <CardFooter className='flex gap-2 px-4 pb-4'>
         <Button asChild size='sm' variant='muted'>
-          <Link href={`/${pathname}/${order.id}`}>{t('Order details')}</Link>
+          <Link href={url}>{t('Order details')}</Link>
         </Button>
         {order.status === 0 && (
           <>

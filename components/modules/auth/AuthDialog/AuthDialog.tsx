@@ -32,7 +32,13 @@ export const AuthDialog = ({ defaultStep = 'login', ...props }: Props) => {
   const authSteps: Record<AuthTabs, React.ReactNode> = {
     login: <LoginForm setAuthTab={setTab} onSuccess={() => setOpen(false)} />,
     register: (
-      <RegisterForm setAuthTab={setTab} onSuccess={({ result }) => setOtpKey(result.otp_key)} />
+      <RegisterForm
+        setAuthTab={setTab}
+        onSuccess={({ result }) => {
+          setOtpKey(result.otp_key);
+          setTab('verify');
+        }}
+      />
     ),
     verify: (
       <VerifyForm

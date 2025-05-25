@@ -8,7 +8,7 @@ export const personalInfoFormSchema = z.object({
     .string()
     .min(1, 'Fill the required field')
     .regex(PHONE_NUMBER_REGEX, 'Invalid phone number'),
-  email: z.string().min(1, 'Fill the required field').email('Invalid email address')
+  email: z.string().min(1, 'Fill the required field').email('Invalid email')
 });
 
 export type PersonalInfoFormSchema = z.infer<typeof personalInfoFormSchema>;

@@ -2,11 +2,13 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
 import { Filter, useFilter } from '@/components/modules/filter';
 import { ProductList, ProductListSkeleton } from '@/components/modules/product';
+import { Button } from '@/components/ui/button';
 import { Pagination } from '@/components/ui/pagination';
 import { getProducts } from '@/utils/api/requests';
 
@@ -20,7 +22,7 @@ interface Props {
 
 export const ProductFilterPaginated = ({ filters, hideCategories, queries }: Props) => {
   const t = useTranslations();
-  const { filter } = useFilter();
+  const { filter, setFilter, isCleared } = useFilter();
   const [q] = useQueryState('q');
   const [sort_by] = useQueryState('sort_by');
 
@@ -69,8 +71,19 @@ export const ProductFilterPaginated = ({ filters, hideCategories, queries }: Pro
         ) : products.length ? (
           <ProductList view='grid' products={products} />
         ) : (
-          <div className='flex h-[50vh] items-center justify-center'>
-            <p className='text-lg font-semibold'>{t('No products found')}</p>
+          <div className='flex h-[50vh] flex-col items-center justify-center gap-3'>
+            <Image alt='not-found' height={150} src='/product/not-found.png' width={150} />
+            <div className='text-center text-base font-semibold md:text-xl'>
+              {t('We couldn’t find any matching products')}
+            </div>
+            <div className='text-muted-foreground text-sm'>
+              {t('Try changing or removing filters')}
+            </div>
+            {!isCleared && (
+              <Button className='mt-4' variant='muted' onClick={() => setFilter(null)}>
+                {t('Reset all filters')}
+              </Button>
+            )}
           </div>
         )}
         <Pagination totalCount={getProductsQuery.data?.data.result.totalElements} />

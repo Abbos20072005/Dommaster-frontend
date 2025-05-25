@@ -54,7 +54,7 @@ export const PromoCodeChecker = ({ value, onSuccess }: Props) => {
         variant='secondary'
       >
         <Spinner show={postPromoCodeCheckerMutation.isPending} />
-        {t('Use')}
+        {t('Apply')}
       </Button>
     </form>
   );

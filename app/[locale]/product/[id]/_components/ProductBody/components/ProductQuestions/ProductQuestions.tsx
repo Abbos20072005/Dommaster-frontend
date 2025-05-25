@@ -34,7 +34,7 @@ export const ProductQuestions = ({ product }: Props) => {
   if (state.questions?.length === 0) {
     return (
       <div className='flex flex-col items-center'>
-        <p className='mb-3 hidden text-3xl font-bold md:block'>{t('Customer Questions')}</p>
+        <p className='mb-3 hidden text-3xl font-bold md:block'>{t('Customer questions')}</p>
         <p className='text-muted-foreground mb-6 text-sm'>
           {t('Be the first to ask a question about this product')}
         </p>
@@ -53,7 +53,7 @@ export const ProductQuestions = ({ product }: Props) => {
 
   return (
     <div>
-      <p className='mb-4 hidden text-3xl font-bold md:mb-8 md:block'>{t('Customer Questions')}</p>
+      <p className='mb-4 hidden text-3xl font-bold md:mb-8 md:block'>{t('Customer questions')}</p>
       <div className='mb-4 md:mb-8'>
         {user ? (
           <ProductQuestionDialog asChild>

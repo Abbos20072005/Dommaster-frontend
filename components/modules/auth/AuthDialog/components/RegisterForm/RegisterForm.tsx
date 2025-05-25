@@ -31,7 +31,7 @@ export const RegisterForm = ({ onSuccess, setAuthTab }: Props) => {
 
   return (
     <>
-      <DialogHeader className='mb-6'>
+      <DialogHeader>
         <DialogTitle className='text-2xl'>{t('Register')}</DialogTitle>
         <DialogDescription>{t('Enter your credentials to register')}</DialogDescription>
       </DialogHeader>
@@ -105,10 +105,10 @@ export const RegisterForm = ({ onSuccess, setAuthTab }: Props) => {
           <Button isLoading={state.isPending}>{t('Register')}</Button>
         </form>
       </Form>
-      <Button className='mt-4 w-full' variant='ghost' onClick={() => setAuthTab('login')}>
+      <Button className='w-full' variant='ghost' onClick={() => setAuthTab('login')}>
         {t('Already have an account')}
       </Button>
-      <Link href='/terms' className='mt-4 block'>
+      <Link href='/terms' className='block'>
         <p className='text-muted-foreground hover:text-foreground text-center text-xs underline'>
           {t(
             'By continuing, you agree to the collection and processing of personal data and the user agreement'

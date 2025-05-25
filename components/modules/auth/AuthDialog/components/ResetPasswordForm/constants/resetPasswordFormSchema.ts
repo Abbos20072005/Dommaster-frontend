@@ -5,7 +5,7 @@ export const resetPasswordFormSchema = z
     new_password: z
       .string()
       .min(1, 'Fill the required field')
-      .min(4, 'Password must be at least 8 characters long'),
+      .min(4, 'Password must be at least 4 characters long'),
     confirm_new_password: z.string().min(1, 'Fill the required field')
   })
   .refine((data) => data.new_password === data.confirm_new_password, {

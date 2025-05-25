@@ -32,7 +32,7 @@ export const LoginForm = ({ onSuccess, setAuthTab }: Props) => {
 
   return (
     <>
-      <DialogHeader className='mb-4'>
+      <DialogHeader>
         <DialogTitle className='text-2xl'>{t('Login')}</DialogTitle>
         <DialogDescription>{t('Login to continue')}</DialogDescription>
       </DialogHeader>
@@ -105,7 +105,7 @@ export const LoginForm = ({ onSuccess, setAuthTab }: Props) => {
           </form>
         </Form>
       </Tabs>
-      <Button className='mt-4 w-full' variant='ghost' onClick={() => setAuthTab('register')}>
+      <Button className='w-full' variant='ghost' onClick={() => setAuthTab('register')}>
         {t('Register')}
       </Button>
     </>

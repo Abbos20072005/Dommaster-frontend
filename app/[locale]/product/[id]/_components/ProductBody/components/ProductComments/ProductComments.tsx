@@ -37,7 +37,7 @@ export const ProductComments = ({ product }: Props) => {
   if (state.comments?.length === 0) {
     return (
       <div className='flex flex-col items-center'>
-        <p className='mb-3 hidden text-3xl font-bold md:block'>{t('Customer Reviews')}</p>
+        <p className='mb-3 hidden text-3xl font-bold md:block'>{t('Customer reviews')}</p>
         <p className='text-muted-foreground mb-6 text-sm'>
           {t('Be the first to review this product')}
         </p>
@@ -59,7 +59,7 @@ export const ProductComments = ({ product }: Props) => {
       <div className='flex flex-col gap-4 md:flex-row'>
         <div className='flex-1'>
           <div className='mb-4 md:mb-8'>
-            <p className='hidden text-3xl font-bold md:block'>{t('Customer Reviews')}</p>
+            <p className='hidden text-3xl font-bold md:block'>{t('Customer reviews')}</p>
             <div className='flex items-center gap-3 pt-3'>
               <Ratings
                 className='gap-1'

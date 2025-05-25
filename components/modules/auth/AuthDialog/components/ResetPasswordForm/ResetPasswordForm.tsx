@@ -27,8 +27,8 @@ export const ResetPasswordForm = ({ onSuccess, resetToken }: Props) => {
   return (
     <>
       <DialogHeader>
-        <DialogTitle className='text-2xl'>{t('Register')}</DialogTitle>
-        <DialogDescription>{t('Enter your credentials to register')}</DialogDescription>
+        <DialogTitle className='text-2xl'>{t('New password')}</DialogTitle>
+        <DialogDescription>{t('Enter your new password and confirm it')}</DialogDescription>
       </DialogHeader>
       <Form {...form}>
         <form className='grid gap-4' onSubmit={form.handleSubmit(functions.onSubmit)}>
@@ -58,7 +58,7 @@ export const ResetPasswordForm = ({ onSuccess, resetToken }: Props) => {
             name='confirm_new_password'
             control={form.control}
           />
-          <Button isLoading={state.isPending}>{t('Register')}</Button>
+          <Button isLoading={state.isPending}>{t('Save')}</Button>
         </form>
       </Form>
     </>
