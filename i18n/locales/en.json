@@ -253,12 +253,12 @@
   "from": "from",
   "metadata": {
     "product": {
-      "description": "{name} at a price of {price} som in the online store Dommaster - description, specifications, equipment, photos, reviews, questions."
+      "description": "{name} at a price of {price} sum in the online store Dommaster - description, specifications, equipment, photos, reviews, questions."
     }
   },
   "question": "question",
   "reviews": "reviews",
-  "som": "som",
+  "sum": "sum",
   "unit": "unit",
   "{count} more": "{count} more",
   "{count} out of 5": "{count} out of 5",

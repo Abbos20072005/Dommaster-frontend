@@ -46,7 +46,7 @@ export const OrderItem = ({ order }: Props) => {
               </Badge>
             </span>
             <span className='font-bold'>
-              {formatPrice(order.total_price)} {t('som')}
+              {formatPrice(order.total_price)} {t('sum')}
             </span>
           </div>
         </CardHeader>

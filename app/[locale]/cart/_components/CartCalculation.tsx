@@ -30,7 +30,7 @@ export const CartCalculation = () => {
               {t('Goods')} ({availableCartItems.length}):
             </p>
             <span>
-              {formatPrice(cart.products_total_price)} {t('som')}
+              {formatPrice(cart.products_total_price)} {t('sum')}
             </span>
           </div>
         )}
@@ -38,14 +38,14 @@ export const CartCalculation = () => {
           <div className='align-center flex justify-between gap-1 text-sm'>
             <p>{t('Your benefit')}</p>
             <p className='text-secondary'>
-              -{formatPrice(cart.saved_price)} {t('som')}
+              -{formatPrice(cart.saved_price)} {t('sum')}
             </p>
           </div>
         )}
         <div className='align-center flex justify-between gap-1 text-xl font-bold'>
           <p>{t('Total')}</p>
           <p>
-            {formatPrice(cart?.total_price ?? 0)} {t('som')}
+            {formatPrice(cart?.total_price ?? 0)} {t('sum')}
           </p>
         </div>
       </CardContent>

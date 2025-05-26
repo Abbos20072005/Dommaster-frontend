@@ -34,13 +34,13 @@ export const ProductCart = ({ product }: Props) => {
         {product.discount_price && (
           <div className='mb-2 flex items-center gap-2'>
             <span className='text-muted-foreground line-through'>
-              {formatPrice(product.price)} {t('som')}
+              {formatPrice(product.price)} {t('sum')}
             </span>
             <Badge variant='secondary'>-{product.discount}%</Badge>
           </div>
         )}
         <div className='text-lg font-bold sm:text-2xl'>
-          {formatPrice(product.discount_price ?? product.price)} {t('som')}
+          {formatPrice(product.discount_price ?? product.price)} {t('sum')}
         </div>
       </CardContent>
       <CardFooter className='p-0'>

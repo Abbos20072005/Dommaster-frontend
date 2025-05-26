@@ -15,13 +15,13 @@ export const ProductPrice = ({ product }: Props) => {
       {product.discount_price && (
         <div className='mb-2 flex items-center gap-2'>
           <span className='text-muted-foreground text-xs line-through'>
-            {formatPrice(product.price)} {t('som')}
+            {formatPrice(product.price)} {t('sum')}
           </span>
           <Badge variant='secondary'>-{product.discount}%</Badge>
         </div>
       )}
       <div className='text-sm font-bold sm:text-lg'>
-        {formatPrice(product.discount_price ?? product.price)} {t('som')}
+        {formatPrice(product.discount_price ?? product.price)} {t('sum')}
       </div>
     </div>
   );

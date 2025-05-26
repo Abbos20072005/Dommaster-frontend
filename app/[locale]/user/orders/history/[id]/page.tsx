@@ -72,7 +72,7 @@ const OrderPage = () => {
           </div>
           <div className='flex flex-col items-end gap-1'>
             <span className='text-lg font-bold'>
-              {formatPrice(order.total_price)} {t('som')}
+              {formatPrice(order.total_price)} {t('sum')}
             </span>
             <span className='text-sm'>
               <Badge className={cn(orderStatusColorMap[order.status])} variant='outline'>
@@ -88,7 +88,7 @@ const OrderPage = () => {
             </Badge>
           </span>
           <span className='font-bold'>
-            {formatPrice(order.total_price)} {t('som')}
+            {formatPrice(order.total_price)} {t('sum')}
           </span>
         </div>
         <OrderProducts order={order} />

@@ -56,12 +56,12 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
           </div>
           <div className='flex flex-wrap items-center gap-2'>
             <p className='font-bold'>
-              {formatPrice((product.discount_price ?? product.price) * state.cartCount)} {t('som')}
+              {formatPrice((product.discount_price ?? product.price) * state.cartCount)} {t('sum')}
             </p>
             {product.discount_price && (
               <>
                 <span className='text-xs line-through'>
-                  {formatPrice(product.price * state.cartCount)} {t('som')}
+                  {formatPrice(product.price * state.cartCount)} {t('sum')}
                 </span>
                 <Badge variant='secondary'>-{product.discount}%</Badge>
               </>
@@ -84,7 +84,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
               state.cartCount === 1 && 'invisible opacity-0'
             )}
           >
-            {formatPrice(product.discount_price ?? product.price)} {t('som')}/{t('unit')}
+            {formatPrice(product.discount_price ?? product.price)} {t('sum')}/{t('unit')}
           </p>
         </div>
         <Button

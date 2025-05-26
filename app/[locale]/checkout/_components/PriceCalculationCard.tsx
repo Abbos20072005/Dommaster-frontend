@@ -56,7 +56,7 @@ export const PriceCalculationCard = () => {
               {t('Goods')} ({cart?.cart_items.length}):
             </p>
             <span>
-              {formatPrice(cart.products_total_price)} {t('som')}
+              {formatPrice(cart.products_total_price)} {t('sum')}
             </span>
           </div>
         )}
@@ -64,7 +64,7 @@ export const PriceCalculationCard = () => {
           <div className='align-center flex justify-between gap-1 text-sm'>
             <p>{t('Your benefit')}</p>
             <p className='text-secondary'>
-              -{formatPrice(cart.saved_price)} {t('som')}
+              -{formatPrice(cart.saved_price)} {t('sum')}
             </p>
           </div>
         )}
@@ -75,14 +75,14 @@ export const PriceCalculationCard = () => {
               <Badge variant='secondary'>-{promo.discount_precent}%</Badge>
             </div>
             <p className='text-secondary'>
-              -{formatPrice(promo.saved_price)} {t('som')}
+              -{formatPrice(promo.saved_price)} {t('sum')}
             </p>
           </div>
         )}
         <div className='align-center flex justify-between gap-1 text-xl font-bold'>
           <p>{t('Total')}</p>
           <p>
-            {formatPrice(promo?.total_price ?? cart?.total_price ?? 0)} {t('som')}
+            {formatPrice(promo?.total_price ?? cart?.total_price ?? 0)} {t('sum')}
           </p>
         </div>
         <Button
