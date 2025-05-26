@@ -13,7 +13,7 @@ export const DesktopCards = () => {
 
   return (
     <div className='hidden md:block'>
-      <h1 className='mb-3 text-2xl font-bold'>{t('Personal info')}</h1>
+      <h1 className='mb-3 text-2xl font-bold'>{t('My cabinet')}</h1>
       <div className='grid grid-cols-2 gap-4'>
         <Link href='/user/promo'>
           <Card className='group' variant='outline'>

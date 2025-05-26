@@ -1,5 +1,8 @@
+import type { Metadata } from 'next';
+
 import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
@@ -15,6 +18,12 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 
 import { CartCalculation, ProductCartList, RecentlyViewedProducts } from './_components';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('Cart') };
+}
 
 const CartPage = () => {
   const t = useTranslations();

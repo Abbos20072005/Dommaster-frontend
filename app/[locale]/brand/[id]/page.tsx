@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
@@ -15,6 +17,14 @@ import { getBrandById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const brandResponse = await getBrandById({ id });
+  const brand = brandResponse.data.result;
+
+  return { title: brand?.name };
 }
 
 const SearchPage = async ({ params }: Props) => {

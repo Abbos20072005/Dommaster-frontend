@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { getTranslations } from 'next-intl/server';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
@@ -14,6 +16,14 @@ import { getBrands, getSaleById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const saleResponse = await getSaleById({ id });
+  const sale = saleResponse.data.result;
+
+  return { title: sale?.name };
 }
 
 const SalePage = async ({ params }: Props) => {

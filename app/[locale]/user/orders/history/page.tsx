@@ -1,11 +1,20 @@
+import type { Metadata } from 'next';
+
 import { ArrowLeftIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
-import { OrdersHistory } from '@/app/[locale]/user/orders/history/_components/OrdersHistory';
 import { AuthWrapper } from '@/components/modules/auth';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+
+import { OrdersHistory } from './_components/OrdersHistory';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('Purchase history') };
+}
 
 const OrdersPage = async () => {
   const t = await getTranslations();

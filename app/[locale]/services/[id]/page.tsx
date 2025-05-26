@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { getTranslations } from 'next-intl/server';
 
 import {
@@ -12,6 +14,14 @@ import { getServiceById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const serviceResponse = await getServiceById({ id });
+  const service = serviceResponse.data.result;
+
+  return { title: service.name };
 }
 
 const ServicePage = async ({ params }: Props) => {

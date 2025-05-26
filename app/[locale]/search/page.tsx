@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
@@ -7,6 +9,12 @@ import { getBrands } from '@/utils/api/requests';
 
 interface Props {
   searchParams: Promise<{ q: string }>;
+}
+
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const { q } = await searchParams;
+
+  return { title: q };
 }
 
 const SearchPage = async ({ searchParams }: Props) => {

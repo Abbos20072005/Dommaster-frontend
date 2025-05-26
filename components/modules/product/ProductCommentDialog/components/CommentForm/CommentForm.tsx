@@ -75,7 +75,7 @@ export const CommentForm = ({ onSuccess, defaultValues }: Props) => {
           <FormField
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Attachments</FormLabel>
+                <FormLabel>{t('Images')}</FormLabel>
                 <FormControl>
                   <FileUpload
                     multiple

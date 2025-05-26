@@ -1,4 +1,5 @@
 {
+  "Images": "Images",
   "{count} units available for purchase": "{count, plural, =1 {# unit available} other {# units available}} for purchase",
   "unit-pluralization": "{count, plural, =1 {# unit} other {# units}}",
   "errorMessages": {
@@ -254,8 +255,19 @@
   },
   "from": "from",
   "metadata": {
+    "title": {
+      "default": "Materials for construction in Dommaster - hypermarket for professionals and business. Original products for manufacturing, construction and services",
+      "template": "official dealer: favorable prices, reviews, catalog of Home products, instructions and selection by parameters - online store Dommaster.uz"
+    },
+    "description": "Dommaster.uz – more than 100 thousand original goods for business: tools, equipment, electrical, plumbing, fasteners. Flexible prices and delivery from 1 day. 365 days for return. Deferred payment for legal entities",
     "product": {
-      "description": "{name} at a price of {price} sum in the online store Dommaster - description, specifications, equipment, photos, reviews, questions."
+      "description": "{name} at a price of {price} sum in the online store Dommaster - description, specifications, equipment, photos ({images}), reviews ({reviews}), questions ({questions})."
+    },
+    "user": {
+      "title": {
+        "default": "Personal cabinet Dommaster.uz",
+        "template": "Personal cabinet Dommaster.uz"
+      }
     }
   },
   "question": "question",

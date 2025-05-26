@@ -1,8 +1,22 @@
+import type { Metadata } from 'next';
+
+import { getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
 
 import { SideNav } from './_components';
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return {
+    title: {
+      default: t('metadata.user.title.default'),
+      template: `%s - ${t('metadata.user.title.template')}`
+    },
+    robots: { index: false, follow: false }
+  };
+}
 
 const UserLayout = async ({ children }: { children: React.ReactNode }) => {
   return (

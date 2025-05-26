@@ -1,5 +1,8 @@
+import type { Metadata } from 'next';
+
 import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 import { AuthWrapper } from '@/components/modules/auth';
 import { Button } from '@/components/ui/button';
@@ -8,6 +11,12 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Link } from '@/i18n/navigation';
 
 import { ProductComments, ProductQuestions } from './_components';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('My reviews and questions') };
+}
 
 const OrdersPage = () => {
   const t = useTranslations();

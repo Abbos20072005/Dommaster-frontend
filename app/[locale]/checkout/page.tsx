@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { ArrowLeftIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import React from 'react';
@@ -20,6 +22,12 @@ import {
   PaymentTypeCard,
   PriceCalculationCard
 } from './_components';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('Checkout') };
+}
 
 const CartPage = async () => {
   const t = await getTranslations();

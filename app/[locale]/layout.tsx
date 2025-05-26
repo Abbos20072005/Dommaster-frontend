@@ -40,10 +40,10 @@ export async function generateMetadata(): Promise<Metadata> {
 
   return {
     title: {
-      default: `${t('Materials for construction in Dommaster')} - ${t('buy in Tashkent, optimal prices in the internet store Dommaster')}`,
-      template: `%s - ${t('buy in Tashkent, optimal prices in the internet store Dommaster')}`
+      default: t('metadata.title.default'),
+      template: `%s - ${t('metadata.title.template')}`
     },
-    description: 'Dommaster'
+    description: t('metadata.description')
   };
 }
 

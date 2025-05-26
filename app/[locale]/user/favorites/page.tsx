@@ -1,5 +1,8 @@
+import type { Metadata } from 'next';
+
 import { ArrowLeftIcon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
 import { ProductListSkeleton } from '@/components/modules/product';
@@ -8,6 +11,12 @@ import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
 
 import { FavoriteProductList } from './_components';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('Favorites') };
+}
 
 const FavoritesPage = () => {
   const t = useTranslations();

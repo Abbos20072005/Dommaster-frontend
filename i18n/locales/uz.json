@@ -1,4 +1,5 @@
 {
+  "Images": "Rasmlar",
   "{count} units available for purchase": "{count} dona xarid qilish mumkin",
   "unit-pluralization": "{count} dona",
   "errorMessages": {
@@ -254,8 +255,19 @@
   },
   "from": "dan",
   "metadata": {
+    "title": {
+      "default": "Dommaster.uz - professionallar va biznes uchun onlayn gipermarket. Ishlab chiqarish, qurilish va xizmatlar uchun original mahsulotlar",
+      "template": "rasmiy diler: qulay narxlar, sharhlar, uy mahsulotlari katalogi, ko'rsatmalar va parametrlar bo'yicha tanlash - Dommaster.uz onlayn-do'koni"
+    },
+    "description": "Dommaster.uz – biznes uchun 100 mingdan ortiq original tovarlar: asboblar, uskunalar, elektr, sanitariya-tesisat, mahkamlagichlar. Moslashuvchan narxlar va 1 kundan boshlab yetkazib berish. 365 kunlik qaytarish siyosati. Yuridik shaxslar uchun kechiktirilgan to'lov",
     "product": {
-      "description": "Dommaster onlayn do'konida {name} - tavsif, texnik xususiyatlar, jihozlar, fotolar, sharhlar, savollar."
+      "description": "Dommaster onlayn do'konida {name} - tavsif, texnik xususiyatlar, jihozlar, fotolar ({images}), sharhlar ({reviews}), savollar ({questions})."
+    },
+    "user": {
+      "title": {
+        "default": "Shaxsiy hisob Dommaster.uz",
+        "template": "Shaxsiy hisob Dommaster.uz"
+      }
     }
   },
   "question": "savol",

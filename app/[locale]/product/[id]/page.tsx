@@ -23,7 +23,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: t('metadata.product.description', {
       name: product?.name,
       price: product.discount_price ?? product?.price,
-      reviews: product?.comments_quantity
+      images: product?.images.length,
+      reviews: product?.comments_quantity,
+      questions: product?.questions_quantity
     })
   };
 }
