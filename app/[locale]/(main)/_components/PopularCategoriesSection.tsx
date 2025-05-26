@@ -38,7 +38,7 @@ export const PopularCategoriesSection = async () => {
       </div>
 
       {/* Desktop */}
-      <Carousel className='hidden md:block' opts={{ align: 'start' }}>
+      <Carousel className='hidden md:block' opts={{ align: 'start', slidesToScroll: 3 }}>
         <CarouselContent className='ml-2 md:-ml-3'>
           {categories.map((item) => (
             <CarouselItem key={item.id} className='basis-1/8 space-y-3 pl-2 md:pl-3 lg:basis-1/9'>

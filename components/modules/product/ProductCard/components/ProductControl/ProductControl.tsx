@@ -49,13 +49,13 @@ export const ProductControl = ({ product }: Props) => {
   return (
     <div className='flex gap-1'>
       <button
-        className={cn('text-muted-foreground hover:text-foreground', {
-          'text-red-500 hover:text-red-600': liked
+        className={cn('text-muted-foreground hover:text-red-500', {
+          'text-red-500': liked
         })}
         type='button'
         onClick={onToggleFavorite}
       >
-        <HeartIcon />
+        <HeartIcon className={cn({ 'fill-red-500': liked })} />
       </button>
     </div>
   );

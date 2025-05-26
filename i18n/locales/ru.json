@@ -1,4 +1,6 @@
 {
+  "{count} units available for purchase": "Можно купить {count} шт",
+  "unit-pluralization": "{count} шт",
   "errorMessages": {
     "default": "Произошла ошибка. Пожалуйста, попробуйте снова",
     "1": "Пожалуйста, войдите для доступа",
@@ -259,7 +261,7 @@
   "question": "вопрос",
   "reviews": "отзывы",
   "sum": "сум",
-  "unit": "единица",
+  "unit": "шт",
   "{count} more": "{count} больше",
   "{count} out of 5": "{count} из 5",
   "{count} products": "{count} продукты"

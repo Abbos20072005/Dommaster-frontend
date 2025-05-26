@@ -1,6 +1,6 @@
 'use client';
 
-import { ShoppingCartIcon } from 'lucide-react';
+import { CheckCheckIcon, ShoppingCartIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -43,7 +43,7 @@ export const ProductCart = ({ product }: Props) => {
           {formatPrice(product.discount_price ?? product.price)} {t('sum')}
         </div>
       </CardContent>
-      <CardFooter className='p-0'>
+      <CardFooter className='flex-col items-start gap-4 p-0'>
         {state.cartCount === 0 ? (
           <Button
             className='w-full'
@@ -67,6 +67,16 @@ export const ProductCart = ({ product }: Props) => {
                 {t('To cart')}
               </Link>
             </Button>
+          </div>
+        )}
+        {product.quantity > 0 && (
+          <div className='flex items-center gap-4'>
+            <div className='text-secondary bg-secondary/10 flex size-8 items-center justify-center rounded-md'>
+              <CheckCheckIcon className='size-5' />
+            </div>
+            <span className='text-sm'>
+              {t('{count} units available for purchase', { count: product.quantity })}
+            </span>
           </div>
         )}
       </CardFooter>

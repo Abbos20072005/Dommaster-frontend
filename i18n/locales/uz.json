@@ -1,4 +1,6 @@
 {
+  "{count} units available for purchase": "{count} dona xarid qilish mumkin",
+  "unit-pluralization": "{count} dona",
   "errorMessages": {
     "default": "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring",
     "1": "Iltimos, tizimga kiring",

@@ -25,7 +25,7 @@ export const ProductCard = ({ product, className, hideCart, hideControl, ...prop
       {...props}
     >
       {!hideControl && (
-        <div className='flex justify-between'>
+        <div className='mb-1 flex justify-between'>
           <p className='text-muted-foreground text-sm'>
             {t('code')}: {product.id}
           </p>
