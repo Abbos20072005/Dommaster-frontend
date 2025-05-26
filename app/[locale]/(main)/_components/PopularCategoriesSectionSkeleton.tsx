@@ -20,9 +20,12 @@ export const PopularCategoriesSectionSkeleton = () => {
 
       {/* Desktop */}
       <Carousel className='hidden md:block' opts={{ align: 'start' }}>
-        <CarouselContent className='ml-2 md:-ml-4'>
+        <CarouselContent className='ml-2 md:-ml-3'>
           {Array.from({ length: 12 }).map((_, index) => (
-            <CarouselItem key={index} className='basis-1/8 space-y-4 pl-2 md:pl-4 lg:basis-1/9'>
+            <CarouselItem
+              key={index}
+              className='basis-[135px] space-y-4 pl-2 md:pl-3 lg:basis-[149px]'
+            >
               <div className='aspect-square'>
                 <Skeleton className='size-full' />
               </div>

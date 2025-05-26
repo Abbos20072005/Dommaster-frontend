@@ -41,10 +41,13 @@ export const PopularCategoriesSection = async () => {
       <Carousel className='hidden md:block' opts={{ align: 'start', slidesToScroll: 3 }}>
         <CarouselContent className='ml-2 md:-ml-3'>
           {categories.map((item) => (
-            <CarouselItem key={item.id} className='basis-1/8 space-y-3 pl-2 md:pl-3 lg:basis-1/9'>
+            <CarouselItem
+              key={item.id}
+              className='basis-[135px] space-y-3 pl-2 md:pl-3 lg:basis-[149px]'
+            >
               <Link
                 href={`/category/${item.id}`}
-                className='bg-muted relative block aspect-square rounded-md p-2.5'
+                className='bg-muted relative block aspect-square rounded-md p-2 lg:p-2.5'
               >
                 <div className='relative z-1 text-xs leading-4.5 font-medium [word-break:break-word] lg:text-sm'>
                   {item.name}
