@@ -41,10 +41,10 @@ interface Product {
 interface ProductRequest {
   brand?: number;
   item_category?: number;
-  page: number;
-  page_size: number;
-  price_from: number;
-  price_to: number;
+  page?: number;
+  page_size?: number;
+  price_from?: number;
+  price_to?: number;
   q?: string;
   sale_id?: number;
   sort_by?: string;
