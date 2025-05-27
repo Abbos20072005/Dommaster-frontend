@@ -38,7 +38,6 @@ export const HeaderTop = () => {
               <Link href='/payment-methods'>
                 <DropdownMenuItem>{t('Payment methods')}</DropdownMenuItem>
               </Link>
-              <DropdownMenuItem>{t('Check order status')}</DropdownMenuItem>
               <Tooltip delayDuration={0}>
                 <DropdownMenuItem asChild className='text-muted-foreground cursor-not-allowed'>
                   <TooltipTrigger disabled className='w-full'>

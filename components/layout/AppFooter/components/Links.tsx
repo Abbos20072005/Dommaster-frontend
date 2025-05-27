@@ -47,11 +47,6 @@ export const Links = () => {
               {t('Payment methods')}
             </Link>
           </li>
-          <li>
-            <button className='hover:text-secondary inline-block text-sm leading-[200%] transition-colors'>
-              {t('Check order status')}
-            </button>
-          </li>
         </ul>
       </div>
     </div>

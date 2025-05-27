@@ -18,7 +18,8 @@ const navLinks = [
   { href: '/user/personal-info', label: 'Personal info', authorized: true },
   { href: '/user/addresses', label: 'My addresses', authorized: true },
   { href: '/cart', label: 'Cart', authorized: false },
-  { href: '/user/favorites', label: 'Favorites', authorized: false }
+  { href: '/user/favorites', label: 'Favorites', authorized: false },
+  { href: '/user/products-history', label: 'Viewed products', authorized: false }
 ];
 
 export const MobileCards = () => {
