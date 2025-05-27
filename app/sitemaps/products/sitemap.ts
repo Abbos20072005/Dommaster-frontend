@@ -20,7 +20,7 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
     url: `${BASE_URL}/product/${product.id}`,
     lastModified: new Date(),
     changeFrequency: 'daily',
-    priority: 0.5,
+    priority: 0.7,
     alternates: {
       languages: {
         en: `${BASE_URL}/en/product/${product.id}`,
