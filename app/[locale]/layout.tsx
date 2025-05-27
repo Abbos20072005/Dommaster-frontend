@@ -49,6 +49,9 @@ export async function generateMetadata(): Promise<Metadata> {
       shortcut: '/favicon-16x16.png',
       apple: '/apple-touch-icon.png'
     },
+    verification: {
+      google: 'JA9JLElDT9wpWV_iVZOtHDd928Y4mox04xGsIiS4vfY'
+    },
     openGraph: {
       title: t('metadata.title.default'),
       description: t('metadata.description'),
