@@ -50,7 +50,8 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: '/apple-touch-icon.png'
     },
     verification: {
-      google: 'JA9JLElDT9wpWV_iVZOtHDd928Y4mox04xGsIiS4vfY'
+      google: 'JA9JLElDT9wpWV_iVZOtHDd928Y4mox04xGsIiS4vfY',
+      yandex: 'cf2ea6baab395be9'
     },
     openGraph: {
       title: t('metadata.title.default'),
