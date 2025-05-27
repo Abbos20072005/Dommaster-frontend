@@ -43,7 +43,38 @@ export async function generateMetadata(): Promise<Metadata> {
       default: t('metadata.title.default'),
       template: `%s - ${t('metadata.title.template')}`
     },
-    description: t('metadata.description')
+    description: t('metadata.description'),
+    icons: {
+      icon: '/favicon.ico',
+      shortcut: '/favicon-16x16.png',
+      apple: '/apple-touch-icon.png'
+    },
+    openGraph: {
+      title: t('metadata.title.default'),
+      description: t('metadata.description'),
+      images: [
+        {
+          url: '/og.png',
+          width: 900,
+          height: 600,
+          alt: t('metadata.title.default')
+        }
+      ],
+      type: 'website'
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: t('metadata.title.default'),
+      description: t('metadata.description'),
+      images: [
+        {
+          url: '/og.png',
+          width: 900,
+          height: 600,
+          alt: t('metadata.title.default')
+        }
+      ]
+    }
   };
 }
 
