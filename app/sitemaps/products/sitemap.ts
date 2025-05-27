@@ -1,10 +1,10 @@
 import type { MetadataRoute } from 'next';
 
-import { getProducts } from '@/utils/api/requests';
+import { getProducts, getSitemapProducts } from '@/utils/api/requests';
 import { BASE_URL } from '@/utils/constants';
 
 export async function generateSitemaps() {
-  const products = await getProducts({ data: { page: 1, page_size: 10000 } });
+  const products = await getSitemapProducts({ data: { page: 1, page_size: 10000 } });
 
   return Array.from({ length: products.data.result.totalPages }).map((_, index) => ({
     id: index + 1
