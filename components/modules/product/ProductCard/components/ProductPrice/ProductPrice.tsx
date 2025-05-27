@@ -22,10 +22,10 @@ export const ProductPrice = ({ product }: Props) => {
       )}
       <div className='flex flex-wrap-reverse items-center justify-between gap-1'>
         <div className='text-sm font-bold text-nowrap md:text-lg'>
-          {formatPrice(product.discount_price ?? 100 * product.price)} {t('sum')}
+          {formatPrice(product.discount_price ?? product.price)} {t('sum')}
         </div>
         {product.quantity > 0 && (
-          <div className='text-muted-foreground text-xs text-nowrap md:text-sm'>
+          <div className='bg-secondary/10 text-secondary rounded-sm px-1 text-xs font-medium text-nowrap md:text-sm'>
             {t('unit-pluralization', { count: product.quantity })}
           </div>
         )}
