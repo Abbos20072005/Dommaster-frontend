@@ -30,7 +30,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
     queryFn: () => getSearch({ config: { params: { q: searchInput } } })
   });
 
-  const searchResults = getSearchQuery.data?.data.result || [];
+  const searchResults = getSearchQuery.data?.data.result;
 
   const getViewedProductsQuery = useQuery({
     queryKey: ['viewedProducts'],
@@ -39,7 +39,11 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
     queryFn: () => getViewedProducts({ config: { params: { page_size: 5 } } })
   });
 
-  const viewedProducts = getViewedProductsQuery.data?.data.result.content;
+  const viewedProducts = getViewedProductsQuery.data?.data.result.content ?? [];
+
+  const products = searchResults?.products ?? [];
+  const categories = searchResults?.categories ?? [];
+  const brands = searchResults?.brands ?? [];
 
   return (
     <div className='divide-y'>
@@ -85,10 +89,10 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
           </ul>
         </div>
       )}
-      {!!searchResults.length && (
+      {!!products.length && (
         <div className='px-3 py-3'>
           <ul>
-            {searchResults.map((item) => (
+            {products.map((item) => (
               <li key={item}>
                 <Link
                   href={`/search?q=${item}`}
@@ -111,7 +115,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
           <p className='mb-2 text-sm font-bold'>{t('Recently viewed')}</p>
           {viewedProducts?.map((product) => (
             <Link href={`/product/${product.id}`} key={product.id} onClick={onClose}>
-              <article className='hover:bg-muted group flex gap-2 rounded-md px-4 py-2.5 transition-colors'>
+              <article className='hover:bg-muted flex gap-2 rounded-md px-4 py-2.5 transition-colors'>
                 <Image
                   alt={'product'}
                   className='bg-background size-14 rounded-md object-contain'
@@ -138,6 +142,54 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
               </article>
             </Link>
           ))}
+        </div>
+      )}
+      {!!categories.length && (
+        <div className='px-3 py-3'>
+          <p className='mb-2 text-sm font-bold'>{t('Categories')}</p>
+          <div className='grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-2'>
+            {categories.map((item) => (
+              <Link
+                href={`/category/${item.id}`}
+                key={item.id}
+                className='bg-muted hover:bg-secondary/10 flex items-center gap-3 rounded-md p-2 transition-colors'
+                onClick={() => onClose()}
+              >
+                <Image
+                  alt={item.name}
+                  className='size-10 rounded-sm object-contain'
+                  height={40}
+                  src={item.image ?? '/product/no-image.png'}
+                  width={40}
+                />
+                <span className='text-sm font-medium'>{item.name}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+      {!!brands.length && (
+        <div className='px-3 py-3'>
+          <p className='mb-2 text-sm font-bold'>{t('Brands')}</p>
+          <div className='grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-2'>
+            {brands.map((item) => (
+              <Link
+                href={`/brand/${item.id}`}
+                key={item.id}
+                className='bg-muted hover:bg-secondary/10 flex items-center gap-3 rounded-md p-2 transition-colors'
+                onClick={() => onClose()}
+              >
+                <Image
+                  alt={item.name}
+                  className='h-10 w-auto rounded-sm object-contain'
+                  height={40}
+                  src={item.image ?? '/product/no-image.png'}
+                  width={140}
+                />
+                <span className='text-sm font-medium'>{item.name}</span>
+              </Link>
+            ))}
+          </div>
         </div>
       )}
     </div>
