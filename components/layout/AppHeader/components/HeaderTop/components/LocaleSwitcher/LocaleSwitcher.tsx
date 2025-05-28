@@ -30,7 +30,7 @@ export const LocaleSwitcher = () => {
   const queryClient = useQueryClient();
   const onLocaleChange = (locale: Locale) => {
     startTransition(() => {
-      Cookies.set('NEXT_LOCALE', locale);
+      Cookies.set('NEXT_LOCALE', locale, { expires: 365 });
       queryClient.invalidateQueries();
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`

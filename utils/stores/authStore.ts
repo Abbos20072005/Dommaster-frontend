@@ -27,7 +27,7 @@ export const useAuthStore = create<AuthState>()((set) => {
       accessToken,
       setAccessToken: (accessToken) =>
         set((state) => {
-          Cookies.set(COOKIES.ACCESS_TOKEN, accessToken);
+          Cookies.set(COOKIES.ACCESS_TOKEN, accessToken, { expires: 7 });
           return { ...state, auth: { ...state.auth, accessToken } };
         }),
       resetAccessToken: () =>
@@ -38,7 +38,7 @@ export const useAuthStore = create<AuthState>()((set) => {
       refreshToken,
       setRefreshToken: (refreshToken) =>
         set((state) => {
-          Cookies.set(COOKIES.REFRESH_TOKEN, refreshToken);
+          Cookies.set(COOKIES.REFRESH_TOKEN, refreshToken, { expires: 14 });
           return { ...state, auth: { ...state.auth, refreshToken } };
         }),
       resetRefreshToken: () =>
