@@ -16,7 +16,7 @@ export const loginFormSchema = (withEmail: boolean) =>
     password: z
       .string()
       .min(1, 'Fill the required field')
-      .min(8, 'Password must be at least 8 characters long')
+      .min(8, 'Password must be at least 4 characters long')
   });
 
 export type LoginFormSchema = z.infer<ReturnType<typeof loginFormSchema>>;
