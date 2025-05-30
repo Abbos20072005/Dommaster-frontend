@@ -19,15 +19,12 @@ type BannersResponse = ApiResponse<Banner[]>;
 interface ChatMessage {
   chat: number;
   created_at: string;
-  file: string;
   id: number;
+  image: string | null;
   is_answer: boolean;
   message: string;
 }
 
-interface ChatMessageRequest {
-  message: string;
-}
 type ChatMessagesResponse = ApiResponse<ChatMessage[]>;
 type ChatMessageResponse = ApiResponse<ChatMessage>;
 

@@ -1385,3 +1385,5 @@ export {
   //
   useStore as useFileUpload
 };
+
+export type { FileUploadRootProps as FileUploadProps };

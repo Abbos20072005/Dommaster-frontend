@@ -76,6 +76,15 @@ export const MessageList = () => {
                   message.is_answer ? 'bg-muted rounded-bl-none' : 'bg-muted rounded-br-none'
                 )}
               >
+                {message.image && (
+                  <Image
+                    alt={message.image}
+                    className='mb-1 max-h-40 w-auto rounded-sm'
+                    height={160}
+                    src={message.image}
+                    width={160}
+                  />
+                )}
                 <p className='text-sm'>{message.message}</p>
                 <p className='text-muted-foreground mt-1 text-end text-xs'>
                   {format(message.created_at, 'HH:mm')}
