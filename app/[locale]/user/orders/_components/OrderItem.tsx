@@ -37,7 +37,9 @@ export const OrderItem = ({ order }: Props) => {
             <CardTitle className='text-base sm:leading-none md:text-lg'>
               {t('Order')} #{order.id}
             </CardTitle>
-            <CardDescription>{format(order.created_at, 'dd MMM')}</CardDescription>
+            <CardDescription>
+              {format(order.created_at, 'dd MMM')} - {order.order_location?.name}
+            </CardDescription>
           </div>
           <div className='flex flex-col-reverse items-end gap-1 sm:flex-row sm:items-center sm:gap-2'>
             <span className='text-sm'>

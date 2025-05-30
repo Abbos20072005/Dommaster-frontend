@@ -1,4 +1,8 @@
 {
+  "Order status": "Статус заказа",
+  "Order address": "Адрес доставки",
+  "Back to orders": "Назад к заказам",
+  "Recipient": "Получатель",
   "Images": "Изображения",
   "{count} units available for purchase": "Можно купить {count} шт",
   "unit-pluralization": "{count} шт",
@@ -121,7 +125,7 @@
   "Information for investors": "Информация для инвесторов",
   "Invalid email": "Неверная почта",
   "Invalid phone number": "Неверный номер телефона",
-  "Load more": "Загружать больше",
+  "Load more": "Загрузить больше",
   "Location is outside the available area": "Локация за пределами доступной области",
   "Login": "Войти",
   "Login or create an account to view your orders, track your purchase history, manage addresses, and more": "Войдите в систему или создайте учетную запись для просмотра ваших заказов, отслеживает историю покупок, управление адресами и многое другое",

@@ -1,4 +1,8 @@
 {
+  "Order status": "Order status",
+  "Order address": "Order address",
+  "Back to orders": "Back to orders",
+  "Recipient": "Recipient",
   "Images": "Images",
   "{count} units available for purchase": "{count, plural, =1 {# unit available} other {# units available}} for purchase",
   "unit-pluralization": "{count, plural, =1 {# unit} other {# units}}",

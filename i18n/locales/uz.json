@@ -1,4 +1,8 @@
 {
+  "Order status": "Buyurtma holati",
+  "Order address": "Buyurtma manzili",
+  "Back to orders": "Buyurtmalarga qaytish",
+  "Recipient": "Qabul qiluvchi",
   "Images": "Rasmlar",
   "{count} units available for purchase": "{count} dona xarid qilish mumkin",
   "unit-pluralization": "{count} dona",

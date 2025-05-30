@@ -10,6 +10,7 @@ interface OrderPreview {
   created_at: string;
   customer: User;
   id: number;
+  order_location: Address;
   status: OrderStatus;
   total_price: number;
   order_items: {

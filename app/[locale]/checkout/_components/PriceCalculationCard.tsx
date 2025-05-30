@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import { parseAsInteger, useQueryState } from 'nuqs';
 import React from 'react';
@@ -13,7 +13,7 @@ import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
-import { postOrder } from '@/utils/api/requests';
+import { getCustomerAddresses, postOrder } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 
 import { PromoCodeChecker } from './PromoCodeChecker';
@@ -25,6 +25,14 @@ export const PriceCalculationCard = () => {
   const { cart, availableCartItems, isSuccess, isFetching } = useCart();
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
+
+  const getAddressesQuery = useQuery({
+    queryKey: ['customerAddresses'],
+    queryFn: () => getCustomerAddresses()
+  });
+
+  const addresses = getAddressesQuery.data?.data.result;
+  const isAddressSelected = !!addresses?.find((item) => item.is_default);
 
   React.useEffect(() => {
     if (isSuccess && !availableCartItems.length) router.push('/cart');
@@ -86,8 +94,13 @@ export const PriceCalculationCard = () => {
           </p>
         </div>
         <Button
+          disabled={
+            !cart?.cart_items.length ||
+            isFetching ||
+            postOrderMutation.isPending ||
+            !isAddressSelected
+          }
           className='mb-0 w-full'
-          disabled={!cart?.cart_items.length || isFetching || postOrderMutation.isPending}
           onClick={onSubmit}
         >
           {isFetching || postOrderMutation.isPending ? <Spinner /> : t('Pay')}

@@ -69,7 +69,7 @@ export const DeliveryCard = () => {
             <UserIcon className='text-secondary' />
           </div>
           <div className='flex-1 space-y-2'>
-            <CardTitle className='font-semibold'>Получатель</CardTitle>
+            <CardTitle className='font-semibold'>{t('Recipient')}</CardTitle>
             {user ? (
               <div className='flex flex-wrap space-x-2 text-sm'>
                 <span>{user?.full_name}</span>

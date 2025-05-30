@@ -6,22 +6,24 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
-import { OrderProducts } from '@/app/[locale]/user/orders/active/[id]/_components/OrderProducts';
+import { OrderProducts } from '@/app/[locale]/user/orders/history/[id]/_components/OrderProducts';
 import { AuthWrapper } from '@/components/modules/auth';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card, CardDescription } from '@/components/ui/card';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
-import { cn, formatPrice } from '@/lib/utils';
+import { cn, formatPhoneNumber, formatPrice } from '@/lib/utils';
 import { getOrderById } from '@/utils/api/requests';
 import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
+import { useAuth } from '@/utils/stores';
 
 const OrderPage = () => {
   const t = useTranslations();
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuth();
   const getOrderIdQuery = useQuery({
-    queryKey: ['historyActive', id],
+    queryKey: ['ordersHistory', id],
     queryFn: () => getOrderById({ id: +id })
   });
 
@@ -39,7 +41,7 @@ const OrderPage = () => {
 
   return (
     <AuthWrapper>
-      <div className='mb-4 flex items-center border-b md:hidden'>
+      <div className='flex items-center border-b md:hidden'>
         <Button asChild className='size-13' size='icon' variant='ghost'>
           <Link href='/user/orders/history'>
             <ArrowLeftIcon className='text-muted-foreground size-5' />
@@ -55,44 +57,60 @@ const OrderPage = () => {
         </div>
         <div className='size-13' />
       </div>
-      <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
-        <div className='mb-3 hidden items-center justify-between border-b pb-3 md:flex'>
-          <div className='flex items-center gap-2'>
-            <Button asChild size='icon' variant='ghost'>
-              <Link href='/user/orders/history'>
-                <ArrowLeftIcon className='text-muted-foreground size-5' />
-              </Link>
-            </Button>
-            <div>
+      <div className='flex flex-col items-start divide-y md:gap-4 md:divide-y-0 lg:flex-row'>
+        <div className='flex flex-1 flex-col divide-y md:gap-4 md:divide-y-0'>
+          <Card className='rounded-none p-4 shadow-none md:rounded-md md:p-5 md:shadow-sm'>
+            <div className='-ml-3 hidden gap-2 md:flex'>
+              <Button asChild size='sm' variant='ghost'>
+                <Link href='/user/orders/history'>
+                  <ArrowLeftIcon className='text-muted-foreground size-5' />
+                  {t('Back to orders')}
+                </Link>
+              </Button>
+            </div>
+            <div className='hidden md:block'>
               <h1 className='text-2xl font-bold'>
                 {t('Order')} #{order.id}
               </h1>
               <CardDescription>{format(order.created_at, 'dd MMM')}</CardDescription>
             </div>
-          </div>
-          <div className='flex flex-col items-end gap-1'>
-            <span className='text-lg font-bold'>
-              {formatPrice(order.total_price)} {t('sum')}
-            </span>
-            <span className='text-sm'>
-              <Badge className={cn(orderStatusColorMap[order.status])} variant='outline'>
-                {t(orderStatusMap[order.status])}
-              </Badge>
-            </span>
-          </div>
+            <div className='md:mt-4'>
+              <div className='text-sm font-bold'>{t('Order address')}:</div>
+              <div className='text-sm font-medium'>{order.order_location?.name}</div>
+              <p className='text-muted-foreground text-sm'>{order.order_location?.location_name}</p>
+            </div>
+            {user && (
+              <div className='mt-4'>
+                <div className='text-sm font-bold'>{t('Recipient')}:</div>
+                <div className='flex flex-wrap space-x-2 text-sm'>
+                  <span>{user?.full_name}</span>
+                  <span className='text-muted-foreground'>
+                    {formatPhoneNumber(user?.phone_number)}
+                  </span>
+                </div>
+              </div>
+            )}
+          </Card>
+          <Card className='px-4 shadow-none md:shadow-sm'>
+            <OrderProducts order={order} />
+          </Card>
         </div>
-        <div className='mb-4 flex justify-between gap-1 md:hidden'>
-          <span className='text-sm'>
+        <Card className='w-full shadow-none md:shadow-sm lg:w-68 lg:min-w-68'>
+          <CardHeader className='flex-row items-center justify-between'>
+            <CardTitle>{t('Order status')}</CardTitle>
             <Badge className={cn(orderStatusColorMap[order.status])} variant='outline'>
               {t(orderStatusMap[order.status])}
             </Badge>
-          </span>
-          <span className='font-bold'>
-            {formatPrice(order.total_price)} {t('sum')}
-          </span>
-        </div>
-        <OrderProducts order={order} />
-      </Card>
+          </CardHeader>
+          <CardContent className='space-y-2'>
+            <div className='mb-4'>
+              <p className='text-xl font-bold'>
+                {formatPrice(order.total_price)} {t('sum')}
+              </p>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </AuthWrapper>
   );
 };

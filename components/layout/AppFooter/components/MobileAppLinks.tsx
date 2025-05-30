@@ -34,9 +34,9 @@ export const MobileAppLinks = () => {
         </div>
         <Image
           alt='QR'
-          className='hidden size-[145px] sm:block'
+          className='hidden size-[145px] object-contain sm:block'
           height={145}
-          src='https://media.obi.ru/media/wysiwyg/footer-app/qr.png'
+          src='/footer/qr-code.png'
           width={145}
         />
       </div>
