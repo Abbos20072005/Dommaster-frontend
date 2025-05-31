@@ -11,3 +11,5 @@ type SearchResponse = ApiResponse<{
     image: string;
   }[];
 }>;
+
+type MostSearchedResponse = ApiResponse<string[]>;

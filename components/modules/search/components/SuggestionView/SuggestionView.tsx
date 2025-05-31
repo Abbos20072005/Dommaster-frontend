@@ -7,7 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
-import { getSearch, getViewedProducts } from '@/utils/api/requests';
+import { getMostSearched, getSearch, getViewedProducts } from '@/utils/api/requests';
 import { useAuth, useSearchHistoryStore } from '@/utils/stores';
 
 interface Props {
@@ -30,6 +30,11 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
     queryFn: () => getSearch({ config: { params: { q: searchInput } } })
   });
 
+  const getMostSearchedQuery = useQuery({
+    queryKey: ['mostSearched', searchInput],
+    queryFn: () => getMostSearched()
+  });
+
   const searchResults = getSearchQuery.data?.data.result;
 
   const getViewedProductsQuery = useQuery({
@@ -40,13 +45,14 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
   });
 
   const viewedProducts = getViewedProductsQuery.data?.data.result.content ?? [];
+  const mostSearchedProducts = getMostSearchedQuery.data?.data.result ?? [];
 
   const products = searchResults?.products ?? [];
   const categories = searchResults?.categories ?? [];
   const brands = searchResults?.brands ?? [];
 
   return (
-    <div className='divide-y'>
+    <div className='max-h-[80vh] divide-y overflow-y-auto'>
       {!!searchHistory.length && (
         <div className='p-3'>
           <div className='flex items-center justify-between'>
@@ -90,9 +96,31 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
         </div>
       )}
       {!!products.length && (
-        <div className='px-3 py-3'>
+        <div className='p-3'>
           <ul>
             {products.map((item) => (
+              <li key={item}>
+                <Link
+                  href={`/search?q=${item}`}
+                  className='hover:bg-muted block rounded-md py-2.5 transition-colors md:px-4'
+                  onClick={() => {
+                    onClose();
+                    searchHistoryStore.addSearchHistory(item);
+                    setSearchInput(item);
+                  }}
+                >
+                  <span className='text-sm'>{item}</span>
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+      {!searchInput && !!mostSearchedProducts.length && (
+        <div className='p-3'>
+          <p className='mb-2 text-sm font-bold'>{t('Frequently searched')}</p>
+          <ul>
+            {mostSearchedProducts.map((item) => (
               <li key={item}>
                 <Link
                   href={`/search?q=${item}`}
