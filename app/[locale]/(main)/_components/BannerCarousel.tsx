@@ -18,7 +18,7 @@ export const BannerCarousel = async () => {
   if (!banners.length) return null;
 
   return (
-    <BaseLayout>
+    <BaseLayout className='overflow-hidden'>
       <AutoPlayCarousel delay={4000} opts={{ loop: true }}>
         <CarouselContent
           className={cn('-ml-2 md:-ml-4', { 'justify-center': banners.length === 1 })}

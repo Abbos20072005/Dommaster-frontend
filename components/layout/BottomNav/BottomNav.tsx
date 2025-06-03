@@ -21,18 +21,18 @@ export const BottomNav = () => {
   const { cart } = useCart();
 
   return (
-    <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 gap-4 py-2 shadow-md md:hidden'>
+    <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 py-2 shadow-md md:hidden'>
       <NavigationLink
         href='/'
         activeClassName='text-foreground'
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
         <HomeIcon className='size-5' />
-        <span className='text-xs font-medium'>{t('Home')}</span>
+        <span className='text-xs font-medium text-nowrap'>{t('Home')}</span>
       </NavigationLink>
       <MobileCatalogDialog className='text-muted-foreground flex flex-col items-center transition-colors'>
         <PackageSearchIcon className='size-5' />
-        <span className='text-xs font-medium'>{t('Catalog')}</span>
+        <span className='text-xs font-medium text-nowrap'>{t('Catalog')}</span>
       </MobileCatalogDialog>
       <NavigationLink
         href='/cart'
@@ -47,7 +47,7 @@ export const BottomNav = () => {
           )}
           <ShoppingCartIcon className='size-5' />
         </div>
-        <span className='text-xs font-medium'>{t('Cart')}</span>
+        <span className='text-xs font-medium text-nowrap'>{t('Cart')}</span>
       </NavigationLink>
       <NavigationLink
         href='/user/favorites'
@@ -62,7 +62,7 @@ export const BottomNav = () => {
           )}
           <HeartIcon className='size-5' />
         </div>
-        <span className='text-xs font-medium'>{t('Favorites')}</span>
+        <span className='text-xs font-medium text-nowrap'>{t('Favorites')}</span>
       </NavigationLink>
       <NavigationLink
         href='/user/dashboard'
@@ -70,7 +70,7 @@ export const BottomNav = () => {
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
         <UserCircleIcon className='size-5' />
-        <span className='text-xs font-medium'>{t('Profile')}</span>
+        <span className='text-xs font-medium text-nowrap'>{t('Profile')}</span>
       </NavigationLink>
     </div>
   );

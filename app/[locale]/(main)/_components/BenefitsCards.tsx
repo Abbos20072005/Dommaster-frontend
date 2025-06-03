@@ -37,7 +37,7 @@ const items = [
 export const BenefitsCards = () => {
   const t = useTranslations();
   return (
-    <section>
+    <section className='overflow-hidden'>
       <BaseLayout>
         <Carousel>
           <CarouselContent className='-ml-2 sm:-ml-4' noOverflowHiddenOnMobile>
