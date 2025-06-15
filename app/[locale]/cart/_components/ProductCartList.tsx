@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { Trash2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -34,6 +35,12 @@ export const ProductCartList = () => {
   const onToggleAll = () => {
     postCartBulkMutation.mutate({
       data: { is_checked: !isAllChecked }
+    });
+  };
+
+  const onDeleteSelected = () => {
+    postCartBulkMutation.mutate({
+      data: { is_delete: true }
     });
   };
 
@@ -93,6 +100,15 @@ export const ProductCartList = () => {
         <div className='flex items-center gap-2'>
           <Checkbox checked={isAllChecked} id='select-all' onCheckedChange={onToggleAll} />
           <Label htmlFor='select-all'>{t('Select all')}</Label>
+          {cart.cart_items.some((item) => item.is_checked) && (
+            <button
+              className='text-muted-foreground hover:text-secondary flex items-center gap-1 px-2 text-sm'
+              onClick={onDeleteSelected}
+            >
+              <Trash2Icon className='size-4' />
+              {t('Delete selected')}
+            </button>
+          )}
         </div>
         <div>
           <Spinner

@@ -25,4 +25,5 @@ interface CartItemRequest {
 
 interface CartBulkRequest {
   is_checked?: boolean;
+  is_delete?: boolean;
 }
