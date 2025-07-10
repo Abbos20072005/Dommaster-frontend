@@ -21,7 +21,7 @@ const Error = ({ reset }: Props) => {
         </p>
         <div className='grid grid-cols-2 gap-3'>
           <Button className='uppercase' variant='outline' onClick={reset}>
-            <Link href='/'>Retry</Link>
+            Retry
           </Button>
           <Button asChild className='uppercase'>
             <Link href='/'>go home</Link>

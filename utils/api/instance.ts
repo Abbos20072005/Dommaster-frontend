@@ -1,5 +1,6 @@
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { notFound } from 'next/navigation';
 
 import { getToken } from '@/utils/api/getAccessToken';
 import { getServerLocale } from '@/utils/api/getServerLocale';
@@ -26,5 +27,16 @@ api.interceptors.request.use(async (config) => {
 
   return config;
 });
+
+api.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response.status === 404) {
+      notFound();
+    }
+
+    return Promise.reject(error);
+  }
+);
 
 export { api };
