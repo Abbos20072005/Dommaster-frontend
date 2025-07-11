@@ -17,6 +17,7 @@ import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
+import { BASE_URL } from '@/utils/constants';
 
 import '@/styles/globals.css';
 
@@ -58,7 +59,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t('metadata.description'),
       images: [
         {
-          url: '/og.png',
+          url: `${BASE_URL}/og.png`,
           width: 900,
           height: 600,
           alt: t('metadata.title.default')
@@ -72,7 +73,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t('metadata.description'),
       images: [
         {
-          url: '/og.png',
+          url: `${BASE_URL}/og.png`,
           width: 900,
           height: 600,
           alt: t('metadata.title.default')
