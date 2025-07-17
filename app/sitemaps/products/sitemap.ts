@@ -1,20 +1,24 @@
 import type { MetadataRoute } from 'next';
 
-import { getProducts, getSitemapProducts } from '@/utils/api/requests';
 import { BASE_URL } from '@/utils/constants';
 
 export async function generateSitemaps() {
-  const products = await getSitemapProducts({ data: { page: 1, page_size: 10000 } });
-
-  return Array.from({ length: products.data.result.totalPages }).map((_, index) => ({
+  const res = await fetch(`${process.env.API_URL}product/filter/&page_size=1`, {
+    method: 'POST',
+  });
+  const data = await res.json() as ProductsResponse;
+  return Array.from({
+    length: Math.ceil(data.result.totalElements / 10000)
+ }).map((_, index) => ({
     id: index + 1
   }));
 }
 
 export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
-  const res = await getProducts({ data: { page: id, page_size: 10000 } });
-  const products = res.data.result.content || [];
+  const res = await fetch(`${process.env.API_URL}product/filter/?page=${id}&page_size=10000`)
+  const data = await res.json() as ProductsResponse;
+  const products = data.result.content || [];
 
   return products.map((product) => ({
     url: `${BASE_URL}/product/${product.id}`,

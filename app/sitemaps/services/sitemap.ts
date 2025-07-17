@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next';
 
-import { getServices } from '@/utils/api/requests';
 import { BASE_URL } from '@/utils/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const res = await getServices();
-  const services = res.data.result || [];
+  const res = await fetch(`${process.env.API_URL}services/`);
+  const data = await res.json() as ServicesResponse;
+  const services = data.result || [];
 
   return services.map((service) => ({
     url: `${BASE_URL}/services/${service.id}`,

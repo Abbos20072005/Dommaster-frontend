@@ -1,12 +1,14 @@
 import type { MetadataRoute } from 'next';
 
-import { getProducts } from '@/utils/api/requests';
 import { BASE_URL } from '@/utils/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const productsRes = await getProducts({ data: { page: 1, page_size: 1 } });
+  const res = await fetch(`${process.env.API_URL}product/filter/?page=1&page_size=1`, {
+    method: 'POST',
+  });
+  const data = await res.json()
   const productPages = Array.from({
-    length: Math.ceil(productsRes.data.result.totalElements / 10000)
+    length: Math.ceil(data.result.totalElements / 10000)
   }).map((_, index) => ({
     id: index + 1
   }));

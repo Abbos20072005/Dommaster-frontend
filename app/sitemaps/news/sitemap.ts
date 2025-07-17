@@ -1,11 +1,11 @@
 import type { MetadataRoute } from 'next';
 
-import { getNewsList } from '@/utils/api/requests';
 import { BASE_URL } from '@/utils/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const res = await getNewsList({ config: { params: { page_size: 10000 } } });
-  const news = res.data.result.content || [];
+  const res = await fetch(`${process.env.API_URL}base/news/?page_size=10000`);
+  const data = await res.json() as NewsListResponse;
+  const news = data.result.content || [];
 
   return news.map((news) => ({
     url: `${BASE_URL}/news/${news.id}`,

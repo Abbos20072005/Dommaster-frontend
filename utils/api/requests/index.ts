@@ -30,4 +30,3 @@ export * from './questions/reply';
 export * from './sales';
 export * from './search';
 export * from './services';
-export * from './sitemap';

@@ -1,12 +1,12 @@
 import type { MetadataRoute } from 'next';
 
-import { getCategories } from '@/utils/api/requests';
 import { BASE_URL } from '@/utils/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
-  const res = await getCategories();
-  const categories = res.data.result || [];
+  const res = await fetch(`${process.env.API_URL}categories/`)
+  const data = await res.json() as CategoriesResponse;
+  const categories = data.result || [];
 
   return [
     ...categories.map((category) => ({
