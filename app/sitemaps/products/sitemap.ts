@@ -3,7 +3,7 @@ import type { MetadataRoute } from 'next';
 import { BASE_URL } from '@/utils/constants';
 
 export async function generateSitemaps() {
-  const res = await fetch(`${process.env.API_URL}product/filter/&page_size=1`, {
+  const res = await fetch(`${process.env.API_URL}product/filter/?page_size=1`, {
     method: 'POST',
   });
   const data = await res.json() as ProductsResponse;
