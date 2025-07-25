@@ -16,7 +16,9 @@ export async function generateSitemaps() {
 
 export default async function sitemap({ id }: { id: number }): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
-  const res = await fetch(`${process.env.API_URL}product/filter/?page=${id}&page_size=10000`)
+  const res = await fetch(`${process.env.API_URL}product/filter/?page=${id}&page_size=10000`, {
+    method: 'POST',
+  })
   const data = await res.json() as ProductsResponse;
   const products = data.result.content || [];
 
