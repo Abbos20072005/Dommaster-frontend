@@ -77,7 +77,7 @@ const SubCategoryPage = async ({ params }: Props) => {
                 alt={itemCategory.name}
                 className='mx-auto h-15 w-22 rounded-md object-contain md:w-15'
                 height={60}
-                src='https://cdn.vseinstrumenti.ru/imgtmbnf/400x400/img/cats/1774.jpg?hash=20250319092945'
+                src={itemCategory.image}
                 width={60}
               />
             </Link>
