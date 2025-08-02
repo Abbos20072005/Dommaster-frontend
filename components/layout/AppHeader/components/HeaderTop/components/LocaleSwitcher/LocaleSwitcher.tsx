@@ -31,6 +31,8 @@ export const LocaleSwitcher = () => {
   const onLocaleChange = (locale: Locale) => {
     startTransition(() => {
       Cookies.set('NEXT_LOCALE', locale, { expires: 365 });
+    });
+    setTimeout(() => {
       queryClient.invalidateQueries();
       router.replace(
         // @ts-expect-error -- TypeScript will validate that only known `params`
@@ -39,7 +41,7 @@ export const LocaleSwitcher = () => {
         { pathname, params },
         { locale }
       );
-    });
+    }, 100);
   };
 
   return (
