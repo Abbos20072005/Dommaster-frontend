@@ -8,7 +8,7 @@ export const routing = defineRouting({
   defaultLocale: 'uz',
 
   // The prefix for the default locale
-  localePrefix: 'as-needed'
+  localePrefix: 'always'
 });
 
 export type Locale = (typeof routing.locales)[number];
