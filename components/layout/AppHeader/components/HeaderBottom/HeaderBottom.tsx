@@ -127,17 +127,17 @@ export const HeaderBottom = () => {
       </BaseLayout>
       <div
         className={cn(
-          'bg-background invisible absolute inset-x-0 top-full z-20 h-[60vh] scale-96 opacity-0 shadow-[0_400px_1000px_rgba(0,0,0,0.3)] transition-all',
+          'bg-background invisible absolute inset-x-0 top-full z-20 h-[80vh] scale-96 opacity-0 shadow-[0_400px_1000px_rgba(0,0,0,0.3)] transition-all',
           { 'visible scale-100 opacity-100': openDebounced }
         )}
       >
         <BaseLayout className='flex h-full gap-10 py-6'>
-          <div className='-ml-2 overflow-y-auto border-r'>
-            <div className='w-60 overflow-y-auto pr-2 lg:w-72'>
-              {categories?.map((item, index) => (
+          <div className='-ml-2 w-60 shrink-0 overflow-y-auto border-r pr-2 lg:w-72'>
+            {categories &&
+              [...categories, ...categories, ...categories]?.map((item, index) => (
                 <Link
                   href={`/category/${item.id}`}
-                  key={item.id}
+                  key={index}
                   className={cn(
                     'flex items-center gap-3 px-3 py-2',
                     tab === index && 'text-secondary bg-secondary/8 cursor-pointer rounded-md'
@@ -156,11 +156,12 @@ export const HeaderBottom = () => {
                   {tab === index && <ChevronRightIcon className='size-4' />}
                 </Link>
               ))}
-            </div>
           </div>
-          {tab !== -1 && categories && (
-            <SubCategories category={categories[tab]} onClose={() => setOpen(false)} />
-          )}
+          <div className='overflow-y-auto'>
+            {tab !== -1 && categories && (
+              <SubCategories category={categories[tab]} onClose={() => setOpen(false)} />
+            )}
+          </div>
         </BaseLayout>
       </div>
     </div>
