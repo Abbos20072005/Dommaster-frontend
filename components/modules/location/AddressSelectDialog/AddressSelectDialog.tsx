@@ -22,7 +22,7 @@ export const AddressSelectDialog = ({ defaultValues, ...props }: Props) => {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger {...props} />
-      <DialogContent className='block h-dvh px-0 pb-0 sm:h-auto sm:max-w-3xl sm:rounded-xl sm:px-5 sm:pb-5'>
+      <DialogContent className='block h-dvh px-0 pb-0 sm:h-auto sm:max-w-5xl sm:rounded-xl sm:px-5 sm:pb-5'>
         <DialogHeader>
           <DialogTitle>{t('Select address')}</DialogTitle>
         </DialogHeader>

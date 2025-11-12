@@ -4,8 +4,8 @@ import { BASE_URL } from '@/utils/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // Google's limit is 50,000 URLs per sitemap
-  const res = await fetch(`${process.env.API_URL}categories/`)
-  const data = await res.json() as CategoriesResponse;
+  const res = await fetch(`${process.env.API_URL}categories/`);
+  const data = (await res.json()) as CategoriesResponse;
   const categories = data.result || [];
 
   return [
@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       priority: 0.7,
       alternates: {
         languages: {
+          uz: `${BASE_URL}/uz/category/${category.id}`,
           en: `${BASE_URL}/en/category/${category.id}`,
           ru: `${BASE_URL}/ru/category/${category.id}`
         }
@@ -29,6 +30,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         priority: 0.7,
         alternates: {
           languages: {
+            uz: `${BASE_URL}/uz/category/${category.id}/${subCategory.id}`,
             en: `${BASE_URL}/en/category/${category.id}/${subCategory.id}`,
             ru: `${BASE_URL}/ru/category/${category.id}/${subCategory.id}`
           }
@@ -44,6 +46,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
           priority: 0.7,
           alternates: {
             languages: {
+              uz: `${BASE_URL}/uz/category/${category.id}/${subCategory.id}/${itemCategory.id}`,
               en: `${BASE_URL}/en/category/${category.id}/${subCategory.id}/${itemCategory.id}`,
               ru: `${BASE_URL}/ru/category/${category.id}/${subCategory.id}/${itemCategory.id}`
             }

@@ -42,7 +42,7 @@ const buttonVariants = cva(
 );
 
 interface ButtonPropsBase
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
+  extends React.ComponentProps<'button'>,
     VariantProps<typeof buttonVariants> {}
 
 export type ButtonProps = ButtonPropsBase &

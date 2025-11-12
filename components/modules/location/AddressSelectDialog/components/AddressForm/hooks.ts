@@ -2,8 +2,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
-import { useLocationName } from '@/components/modules/location/useLocationName';
 import { patchCustomerAddress, postCustomerAddress } from '@/utils/api/requests';
+import { MAP } from '@/utils/constants';
 
 import type { AddressSchema } from './constants';
 
@@ -20,12 +20,20 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
     resolver: zodResolver(addressSchema),
     defaultValues: {
       name: defaultValues?.name || '',
-      coordinates: defaultValues && [defaultValues.latitude, defaultValues.longitude]
-    }
+      address: defaultValues
+        ? {
+            location_name: defaultValues.location_name,
+            latitude: defaultValues.latitude,
+            longitude: defaultValues.longitude
+          }
+        : {
+            location_name: '',
+            longitude: MAP.center[0],
+            latitude: MAP.center[1]
+          }
+    },
+    mode: 'onChange'
   });
-  const coordinates = form.watch('coordinates');
-
-  const locationName = useLocationName(coordinates);
 
   const putUserMutation = useMutation({
     mutationFn: patchCustomerAddress,
@@ -48,9 +56,9 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
   const onSubmit = (values: AddressSchema) => {
     const data: AddressRequest = {
       name: values.name,
-      location_name: locationName!,
-      latitude: coordinates[0],
-      longitude: coordinates[1]
+      location_name: values.address.location_name,
+      latitude: values.address.latitude,
+      longitude: values.address.longitude
     };
     if (isEdit) putUserMutation.mutate({ id: defaultValues.id, data });
     else postUserMutation.mutate({ data });
@@ -61,8 +69,7 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
       onSubmit
     },
     state: {
-      isPending: putUserMutation.isPending || postUserMutation.isPending,
-      locationName
+      isPending: putUserMutation.isPending || postUserMutation.isPending
     }
   };
 };

@@ -75,7 +75,10 @@ export const ProductCart = ({ product }: Props) => {
               <CheckCheckIcon className='size-5' />
             </div>
             <span className='text-sm'>
-              {t('{count} units available for purchase', { count: product.quantity })}
+              {t('{count} {unit} available for purchase', {
+                count: product.quantity,
+                unit: t(product.unit)
+              })}
             </span>
           </div>
         )}

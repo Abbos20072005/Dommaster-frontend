@@ -9,6 +9,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 1,
       alternates: {
         languages: {
+          uz: `${BASE_URL}/uz`,
           en: `${BASE_URL}/en`,
           ru: `${BASE_URL}/ru`
         }
@@ -21,6 +22,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          uz: `${BASE_URL}/uz/about`,
           en: `${BASE_URL}/en/about`,
           ru: `${BASE_URL}/ru/about`
         }
@@ -33,6 +35,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          uz: `${BASE_URL}/uz/courier-delivery`,
           en: `${BASE_URL}/en/courier-delivery`,
           ru: `${BASE_URL}/ru/courier-delivery`
         }
@@ -45,6 +48,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          uz: `${BASE_URL}/uz/payment-methods`,
           en: `${BASE_URL}/en/payment-methods`,
           ru: `${BASE_URL}/ru/payment-methods`
         }
@@ -57,6 +61,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.8,
       alternates: {
         languages: {
+          uz: `${BASE_URL}/uz/requisites`,
           en: `${BASE_URL}/en/requisites`,
           ru: `${BASE_URL}/ru/requisites`
         }
@@ -69,6 +74,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
       alternates: {
         languages: {
+          uz: `${BASE_URL}/uz/services`,
           en: `${BASE_URL}/en/services`,
           ru: `${BASE_URL}/ru/services`
         }

@@ -26,7 +26,7 @@ export const ProductPrice = ({ product }: Props) => {
         </div>
         {product.quantity > 0 && (
           <div className='bg-secondary/10 text-secondary rounded-sm px-1 text-xs font-medium text-nowrap md:text-sm'>
-            {t('unit-pluralization', { count: product.quantity })}
+            {t('unit-pluralization', { count: product.quantity, unit: t(product.unit) })}
           </div>
         )}
       </div>

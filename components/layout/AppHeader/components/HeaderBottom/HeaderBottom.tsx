@@ -127,7 +127,7 @@ export const HeaderBottom = () => {
       </BaseLayout>
       <div
         className={cn(
-          'bg-background invisible absolute inset-x-0 top-full z-20 h-[80vh] scale-96 opacity-0 shadow-[0_400px_1000px_rgba(0,0,0,0.3)] transition-all',
+          'bg-background invisible absolute inset-x-0 top-full z-20 h-[70vh] scale-96 opacity-0 shadow-[0_400px_1000px_rgba(0,0,0,0.3)] transition-all',
           { 'visible scale-100 opacity-100': openDebounced }
         )}
       >

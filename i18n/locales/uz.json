@@ -278,9 +278,15 @@
   "reviews": "sharhlar",
   "sum": "so'm",
   "unit": "dona",
-  "unit-pluralization": "{count} dona",
+  "unit-pluralization": "{count} {unit}",
   "{count} more": "yana {count} ta",
   "{count} out of 5": "5 dan {count}",
   "{count} products": "{count} ta mahsulot",
-  "{count} units available for purchase": "{count} dona xarid qilish mumkin"
+  "{count} {unit} available for purchase": "{count} {unit} xarid qilish mumkin",
+  "pcs": "dona",
+  "sm": "sm",
+  "m": "m",
+  "l": "l",
+  "kg": "kg",
+  "g": "g"
 }

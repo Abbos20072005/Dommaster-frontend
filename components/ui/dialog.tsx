@@ -53,6 +53,8 @@ const DialogContent = ({
           className
         )}
         data-slot='dialog-content'
+        onTouchMove={(e) => e.stopPropagation()}
+        onWheel={(e) => e.stopPropagation()}
         {...props}
       >
         {children}

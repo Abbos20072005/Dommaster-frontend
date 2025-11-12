@@ -278,9 +278,15 @@
   "reviews": "отзывы",
   "sum": "сум",
   "unit": "шт",
-  "unit-pluralization": "{count} шт",
+  "unit-pluralization": "{count} {unit}",
   "{count} more": "{count} больше",
   "{count} out of 5": "{count} из 5",
   "{count} products": "{count} продукты",
-  "{count} units available for purchase": "Можно купить {count} шт"
+  "{count} {unit} available for purchase": "Можно купить {count} {unit}",
+  "pcs": "шт.",
+  "sm": "см",
+  "m": "м",
+  "l": "л",
+  "kg": "кг",
+  "g": "г"
 }

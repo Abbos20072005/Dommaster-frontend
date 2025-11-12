@@ -1,3 +1,5 @@
+type ProductUnit = 'g' | 'kg' | 'l' | 'm' | 'pcs' | 'sm';
+
 interface Product {
   categories: Category[];
   comments_quantity: number;
@@ -15,6 +17,7 @@ interface Product {
   quantity: number;
   questions_quantity: number;
   rating: number | null;
+  unit: ProductUnit;
   breadcrumbs: {
     id: number;
     name: string;

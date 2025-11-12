@@ -278,9 +278,15 @@
   "reviews": "reviews",
   "sum": "sum",
   "unit": "unit",
-  "unit-pluralization": "{count, plural, =1 {# unit} other {# units}}",
+  "unit-pluralization": "{count} {unit}",
   "{count} more": "{count} more",
   "{count} out of 5": "{count} out of 5",
   "{count} products": "{count} products",
-  "{count} units available for purchase": "{count, plural, =1 {# unit available} other {# units available}} for purchase"
+  "{count} {unit} available for purchase": "{count} {unit} available for purchase",
+  "pcs": "pcs",
+  "sm": "sm",
+  "m": "m",
+  "l": "l",
+  "kg": "kg",
+  "g": "g"
 }
