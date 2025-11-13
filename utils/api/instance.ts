@@ -1,8 +1,6 @@
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import { notFound } from 'next/navigation';
 
-import { routing } from '@/i18n/routing';
 import { getToken } from '@/utils/api/getAccessToken';
 import { getServerLocale } from '@/utils/api/getServerLocale';
 import { useAuthStore } from '@/utils/stores';
@@ -20,7 +18,8 @@ api.interceptors.request.use(async (config) => {
     locale = await getServerLocale();
   } else {
     token = useAuthStore.getState().auth.accessToken;
-    locale = Cookies.get('NEXT_LOCALE') || routing.defaultLocale;
+    locale = 'ru';
+    // locale = Cookies.get('NEXT_LOCALE') || routing.defaultLocale;
   }
   if (token) config.headers.Authorization = `Bearer ${token}`;
 

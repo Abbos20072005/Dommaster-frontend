@@ -2,7 +2,7 @@
 
 import { useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
-import { CheckIcon, ChevronDownIcon, LanguagesIcon } from 'lucide-react';
+import { CheckIcon, LanguagesIcon } from 'lucide-react';
 import { useLocale } from 'next-intl';
 import { useParams } from 'next/navigation';
 import * as React from 'react';
@@ -47,14 +47,16 @@ export const LocaleSwitcher = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger
+        disabled
         className={cn(
-          'hover:text-secondary flex items-center gap-1 text-sm transition-colors outline-none',
+          'flex items-center gap-0.5 text-sm transition-colors outline-none',
           isPending && 'transition-opacity [&:disabled]:opacity-30'
         )}
       >
         <LanguagesIcon className='size-4' />
-        <span>{currentLocale[0].toUpperCase() + currentLocale.slice(1)}</span>
-        <ChevronDownIcon className='size-4' />
+        {/*<span>{currentLocale[0].toUpperCase() + currentLocale.slice(1)}</span>*/}
+        <span>Ru</span>
+        {/*<ChevronDownIcon className='size-4' />*/}
       </DropdownMenuTrigger>
       <DropdownMenuContent>
         {routing.locales.map((locale) => (
