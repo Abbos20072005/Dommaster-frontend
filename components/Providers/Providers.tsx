@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React from 'react';
 
+import { LoginProvider } from '@/components/Providers/LoginProvider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { makeQueryClient } from '@/utils/getQueryClient';
 
@@ -20,7 +21,9 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
       <NuqsAdapter>
         <FavoritesProvider>
           <AuthProvider>
-            <TooltipProvider>{children}</TooltipProvider>
+            <TooltipProvider>
+              <LoginProvider>{children}</LoginProvider>
+            </TooltipProvider>
           </AuthProvider>
         </FavoritesProvider>
       </NuqsAdapter>
