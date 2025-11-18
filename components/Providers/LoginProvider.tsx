@@ -27,7 +27,7 @@ export const LoginProvider = ({ children }: PropsWithChildren) => {
     <>
       {children}
       {showPassword && (
-        <div className='bg-background fixed grid h-screen w-screen place-items-center'>
+        <div className='bg-background fixed z-10000 grid h-screen w-screen place-items-center'>
           <div className='w-full max-w-sm space-y-2'>
             <Card variant='outline'>
               <CardContent className='space-y-4 p-4'>
