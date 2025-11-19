@@ -17,11 +17,11 @@
   --card-foreground: hsl(20 14.3% 4.1%);
   --popover: hsl(0 0% 100%);
   --popover-foreground: hsl(20 14.3% 4.1%);
-  --primary: hsl(224 47% 24%);
+  --primary: hsl(223 66% 30%);
   --primary-foreground: hsl(0 0% 100%);
   --secondary: hsl(15 100% 57%);
   --secondary-foreground: hsl(0 0% 100%);
-  --tertiary: hsl(224 47% 24%);
+  --tertiary: hsl(223 59% 24%);
   --tertiary-foreground: hsl(0 0% 100%);
   --muted: hsl(210 14% 97%);
   --muted-foreground: hsl(207 5% 60%);
@@ -31,7 +31,7 @@
   --destructive-foreground: hsl(60 9.1% 97.8%);
   --border: hsl(20 5.9% 90%);
   --input: hsl(20 5.9% 90%);
-  --ring: hsl(224 47% 24%);
+  --ring: hsl(223 66% 30%);
   --radius: 0.75rem;
   --chart-1: 12 76% 61%;
   --chart-2: 173 58% 39%;
