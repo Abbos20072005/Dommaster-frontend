@@ -52,7 +52,7 @@ export const UsefulContentSection = async () => {
             </TabsContent>
             <TabsContent className='hidden flex-none sm:block' value='videos'>
               <Button asChild size='sm' variant='muted'>
-                <a href='https://www.youtube.com/dommaster' rel='noreferrer' target='_blank'>
+                <a href='https://www.youtube.com/buildex' rel='noreferrer' target='_blank'>
                   {t('View all')}
                   <ArrowRightIcon />
                 </a>

@@ -45,8 +45,8 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
 
         <div className='flex flex-col justify-between gap-6 lg:flex-row'>
           <p className='text-primary-foreground/60 max-w-3xl text-center text-sm lg:text-left'>
-            {new Date().getFullYear()} ©dommaster.uz. Все права защищены. Указанная стоимость
-            товаров и условия их приобретения действительны по состоянию на текущую дату
+            {new Date().getFullYear()} ©buildex.uz. Все права защищены. Указанная стоимость товаров
+            и условия их приобретения действительны по состоянию на текущую дату
           </p>
         </div>
       </BaseLayout>

@@ -61,7 +61,7 @@ export const CommentReplyItem = ({ reply, comment }: Props) => {
         <div className='mb-1 flex items-center gap-2'>
           <span className='font-bold'>
             {reply.is_admin ? (
-              <span className='text-secondary'>Dommaster.uz</span>
+              <span className='text-secondary'>Buildex.uz</span>
             ) : (
               reply.customer.full_name
             )}

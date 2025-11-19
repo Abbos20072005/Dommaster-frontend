@@ -28,7 +28,7 @@ export const HeaderMiddle = () => {
         <Link href='/'>
           <div className='flex items-center justify-center gap-1'>
             <Image
-              alt='dommaster'
+              alt='buildex'
               className='animate-spin-y w-10 pb-1 duration-[5s]'
               height={26}
               src='/logo.png'
@@ -36,8 +36,8 @@ export const HeaderMiddle = () => {
               priority
             />
             <span className='text-2xl font-bold'>
-              <span className='text-secondary'>DOM</span>
-              <span className='text-primary'>MASTER</span>
+              <span className='text-primary'>BUILD</span>
+              <span className='text-secondary'>EX</span>
             </span>
           </div>
         </Link>

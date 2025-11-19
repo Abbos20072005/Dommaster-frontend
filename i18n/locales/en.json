@@ -106,7 +106,7 @@
   "Login to continue": "Login to continue",
   "Login to manage your account": "Login to manage your account",
   "Logout": "Logout",
-  "Materials for construction in Dommaster": "Materials for construction in Dommaster",
+  "Materials for construction in Buildex": "Materials for construction in Buildex",
   "Maximum 5 files allowed": "Maximum 5 files allowed",
   "Mon – Sun: from 07:00 – 22:00": "Mon – Sun: from 07:00 – 22:00",
   "My addresses": "My addresses",
@@ -226,7 +226,7 @@
     "3": "Easy return of goods that are not needed within 360 days",
     "4": "Multi-level quality management system according to ISO 9001"
   },
-  "buy in Tashkent, optimal prices in the internet store Dommaster": "buy in Tashkent, optimal prices in the internet store Dommaster",
+  "buy in Tashkent, optimal prices in the internet store Buildex": "buy in Tashkent, optimal prices in the internet store Buildex",
   "code": "code",
   "errorMessages": {
     "default": "Something went wrong. Please try again.",
@@ -260,17 +260,17 @@
   "from": "from",
   "metadata": {
     "title": {
-      "default": "Building materials in Dommaster - buy building materials in the Dommaster online store with delivery in Tashkent wholesale and retail",
-      "template": "buy in Tashkent, best prices in the Dommaster online store"
+      "default": "Building materials in Buildex - buy building materials in the Buildex online store with delivery in Tashkent wholesale and retail",
+      "template": "buy in Tashkent, best prices in the Buildex online store"
     },
-    "description": "Dommaster.uz – more than 100 thousand original goods for business: tools, equipment, electrical, plumbing, fasteners. Flexible prices and delivery from 1 day. 365 days for return. Deferred payment for legal entities",
+    "description": "Buildex.uz – more than 100 thousand original goods for business: tools, equipment, electrical, plumbing, fasteners. Flexible prices and delivery from 1 day. 365 days for return. Deferred payment for legal entities",
     "product": {
-      "description": "{name} at a price of {price} sum in the online store Dommaster - description, specifications, equipment, photos ({images}), reviews ({reviews}), questions ({questions})."
+      "description": "{name} at a price of {price} sum in the online store Buildex - description, specifications, equipment, photos ({images}), reviews ({reviews}), questions ({questions})."
     },
     "user": {
       "title": {
-        "default": "Personal cabinet Dommaster.uz",
-        "template": "Personal cabinet Dommaster.uz"
+        "default": "Personal cabinet Buildex.uz",
+        "template": "Personal cabinet Buildex.uz"
       }
     }
   },

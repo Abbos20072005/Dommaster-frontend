@@ -15,7 +15,7 @@ export const MobileHeader = () => {
         <Link href='/'>
           <div className='flex items-center justify-center gap-1'>
             <Image
-              alt='dommaster'
+              alt='buildex'
               className='animate-spin-y w-8 pb-1 duration-[5s]'
               height={21}
               src='/logo.png'
