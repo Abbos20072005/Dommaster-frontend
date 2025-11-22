@@ -9,7 +9,7 @@ import { getMostSoldProducts } from '@/utils/api/requests';
 export const MostSoldProductsSection = () => {
   const t = useTranslations();
   const getMostSoldProductsQuery = useQuery({
-    queryKey: ['mostSoldProducts'],
+    queryKey: ['products', 'mostSold'],
     staleTime: 0,
     queryFn: () => getMostSoldProducts()
   });

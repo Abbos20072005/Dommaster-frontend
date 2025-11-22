@@ -6,5 +6,3 @@ export { LocationSelectCombobox } from './LocationSelectCombobox';
 
 export { LocationSelectMap } from './LocationSelectMap';
 export * from './types';
-
-export { YandexMap } from './YandexMap';

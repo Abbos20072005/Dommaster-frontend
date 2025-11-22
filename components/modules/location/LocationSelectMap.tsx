@@ -81,7 +81,7 @@ export const LocationSelectMap = ({ value, onValueChange }: Props) => {
         />
       </div>
       <YMapComponentsProvider apiKey={process.env.YANDEX_KEY || ''} lang='uz_UZ'>
-        <YMap className='h-full' location={mapPosition}>
+        <YMap location={mapPosition}>
           <YMapDefaultSchemeLayer />
           <YMapDefaultFeaturesLayer />
 

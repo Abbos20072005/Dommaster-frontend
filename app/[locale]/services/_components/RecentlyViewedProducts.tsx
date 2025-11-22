@@ -12,7 +12,7 @@ export const RecentlyViewedProducts = () => {
   const t = useTranslations();
   const { user } = useAuth();
   const getProductByIdQuery = useQuery({
-    queryKey: ['recentlyViewedProducts'],
+    queryKey: ['products', 'recentlyViewed'],
     staleTime: 0,
     enabled: !!user,
     queryFn: () => getViewedProducts()

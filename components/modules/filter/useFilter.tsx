@@ -6,7 +6,7 @@ const defaultValues = {
   page: 1,
   page_size: 20,
   price_from: 0,
-  price_to: 1000000,
+  price_to: 100000000,
   item_category: null,
   brand: null,
   sale_id: null

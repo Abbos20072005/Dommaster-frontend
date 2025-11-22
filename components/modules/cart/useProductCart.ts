@@ -15,6 +15,7 @@ export const useProductCart = (product: Product) => {
     mutationFn: postCart,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
     }
   });
 
@@ -22,6 +23,7 @@ export const useProductCart = (product: Product) => {
     mutationFn: patchCart,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cart'] });
+      queryClient.invalidateQueries({ queryKey: ['products'] });
     }
   });
 

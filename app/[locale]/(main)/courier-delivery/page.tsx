@@ -2,9 +2,23 @@
 
 import { useTranslations } from 'next-intl';
 import React from 'react';
+import {
+  YMap,
+  YMapComponentsProvider,
+  YMapControls,
+  YMapDefaultFeaturesLayer,
+  YMapDefaultSchemeLayer,
+  YMapFeature,
+  YMapGeolocationControl,
+  YMapZoomControl
+} from 'ymap3-components';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
-import { YandexMap } from '@/components/modules/location';
+import {
+  COMMON_LOCATION_PARAMS,
+  getAllCoordinates,
+  getBounds
+} from '@/components/modules/location';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,6 +27,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { MAP } from '@/utils/constants';
 
 const CourierDeliveryPage = () => {
   const t = useTranslations();
@@ -35,7 +50,32 @@ const CourierDeliveryPage = () => {
         </Breadcrumb>
         <h1 className='text-xl font-bold md:text-3xl lg:text-4xl'>{t('Delivery in Tashkent')}</h1>
         <div className='h-[500px]'>
-          <YandexMap className='rounded-lg' mapRef={mapRef} />
+          <YMapComponentsProvider apiKey={process.env.YANDEX_KEY || ''} lang='uz_UZ'>
+            <YMap
+              className='h-full'
+              location={{ bounds: getBounds(getAllCoordinates(MAP.availablePolygon)) }}
+            >
+              <YMapDefaultSchemeLayer />
+              <YMapDefaultFeaturesLayer />
+
+              <YMapFeature
+                style={{
+                  fill: 'var(--secondary)',
+                  stroke: [{ color: 'var(--secondary)', width: 2 }],
+                  fillOpacity: 0.1
+                }}
+                geometry={{
+                  type: 'MultiPolygon',
+                  coordinates: MAP.availablePolygon
+                }}
+              />
+
+              <YMapControls position='right'>
+                <YMapGeolocationControl {...COMMON_LOCATION_PARAMS} />
+                <YMapZoomControl />
+              </YMapControls>
+            </YMap>
+          </YMapComponentsProvider>
         </div>
         <p className='text-lg font-bold md:text-2xl'>{t('Delivery price')}: 100 000 UZS</p>
       </BaseLayout>

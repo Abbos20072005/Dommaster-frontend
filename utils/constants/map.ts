@@ -1,7 +1,7 @@
 import type { LngLat } from '@yandex/ymaps3-types';
 
 export const MAP = {
-  center: [69.2401, 41.2995],
+  center: [69.2401, 41.2995] as LngLat,
   zoom: 11,
   availablePolygon: [
     [

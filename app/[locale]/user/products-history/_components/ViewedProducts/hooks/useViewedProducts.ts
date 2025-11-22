@@ -4,7 +4,7 @@ import { getViewedProducts } from '@/utils/api/requests';
 
 export const useViewedProducts = () => {
   const getViewedProductsQuery = useInfiniteQuery({
-    queryKey: ['infinityViewedProducts'],
+    queryKey: ['products', 'infinityViewed'],
     staleTime: 0,
     queryFn: ({ pageParam }) =>
       getViewedProducts({

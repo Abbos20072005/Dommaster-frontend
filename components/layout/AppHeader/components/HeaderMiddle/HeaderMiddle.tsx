@@ -35,10 +35,7 @@ export const HeaderMiddle = () => {
               width={40}
               priority
             />
-            <span className='text-2xl font-bold'>
-              <span className='text-primary'>BUILD</span>
-              <span className='text-secondary'>EX</span>
-            </span>
+            <span className='text-primary text-2xl font-bold'>BUILDEX</span>
           </div>
         </Link>
         <div className='flex flex-1 gap-2'>

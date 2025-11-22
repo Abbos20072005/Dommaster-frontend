@@ -42,7 +42,7 @@ const SearchPage = async ({ params }: Props) => {
       name: t('Price'),
       filter_items: [],
       from: 0,
-      to: 1000000
+      to: 100000000
     }
     // {
     //   name: t('Sales'),

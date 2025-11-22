@@ -38,7 +38,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
   const searchResults = getSearchQuery.data?.data.result;
 
   const getViewedProductsQuery = useQuery({
-    queryKey: ['viewedProducts'],
+    queryKey: ['products', 'viewed'],
     staleTime: 0,
     enabled: !!user,
     queryFn: () => getViewedProducts({ config: { params: { page_size: 5 } } })
