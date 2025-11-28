@@ -14,7 +14,7 @@ export const FavoriteProductList = () => {
   const t = useTranslations();
   const { favorites, setFavorites } = useFavorites();
   const getFavoritesQuery = useQuery({
-    queryKey: ['favorites'],
+    queryKey: ['products', 'favorites'],
     staleTime: 0,
     queryFn: async () => {
       const res = await getFavorites();

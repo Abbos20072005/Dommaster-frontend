@@ -26,16 +26,23 @@ export const HeaderMiddle = () => {
     >
       <BaseLayout className='flex h-16 items-center gap-4'>
         <Link href='/'>
-          <div className='flex items-center justify-center gap-1'>
+          <div className='flex items-center justify-center gap-2'>
             <Image
               alt='buildex'
-              className='animate-spin-y w-10 pb-1 duration-[5s]'
-              height={26}
+              className='animate-spin-y size-9 duration-[5s]'
+              height={36}
               src='/logo.png'
-              width={40}
+              width={36}
               priority
             />
-            <span className='text-primary text-2xl font-bold'>BUILDEX</span>
+            <Image
+              alt='buildex'
+              className='h-7 w-auto'
+              height={28}
+              src='/logo-text.png'
+              width={128}
+              priority
+            />
           </div>
         </Link>
         <div className='flex flex-1 gap-2'>

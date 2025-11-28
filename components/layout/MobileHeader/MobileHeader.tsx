@@ -13,19 +13,23 @@ export const MobileHeader = () => {
     <header className='bg-background sticky inset-x-0 -top-12 z-50 gap-3 md:hidden'>
       <div className='flex h-12 items-center justify-between px-4 pt-2'>
         <Link href='/'>
-          <div className='flex items-center justify-center gap-1'>
+          <div className='flex items-center justify-center gap-1.5'>
             <Image
               alt='buildex'
-              className='animate-spin-y w-8 pb-1 duration-[5s]'
-              height={21}
+              className='animate-spin-y size-7 duration-[5s]'
+              height={28}
               src='/logo.png'
-              width={32}
+              width={28}
               priority
             />
-            <span className='text-xl font-bold'>
-              <span className='text-secondary'>DOM</span>
-              <span className='text-primary'>MASTER</span>
-            </span>
+            <Image
+              alt='buildex'
+              className='h-5.5 w-auto'
+              height={24}
+              src='/logo-text.png'
+              width={93}
+              priority
+            />
           </div>
         </Link>
         <div className='flex items-center gap-3'>

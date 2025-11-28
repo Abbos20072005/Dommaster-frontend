@@ -106,7 +106,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
     >
       <NextIntlClientProvider>
         <Providers>
-          <NextTopLoader color='var(--primary)' />
+          <NextTopLoader color='var(--primary)' showSpinner={false} />
           <body className='flex min-h-screen flex-col font-sans antialiased'>
             <AppHeader />
             <main className='flex-1'>{children}</main>

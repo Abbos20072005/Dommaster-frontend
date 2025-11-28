@@ -38,7 +38,7 @@ export const ProductControl = ({ product }: Props) => {
       } else {
         setLiked(false);
       }
-      queryClient.invalidateQueries({ queryKey: ['favorites'] });
+      queryClient.invalidateQueries({ queryKey: ['products', 'favorites'] });
     }
   });
 
