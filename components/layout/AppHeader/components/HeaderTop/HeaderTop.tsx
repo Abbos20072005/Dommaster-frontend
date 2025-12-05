@@ -92,10 +92,10 @@ export const HeaderTop = () => {
       <div className='flex items-center gap-4'>
         <LocaleSwitcher />
         <Link
-          href='tel:+998712099944'
+          href='tel:+998774430909'
           className='hover:text-secondary text-foreground/70 text-sm font-bold transition-colors'
         >
-          +998 97 900 50 05
+          +998 77 443 09 09
         </Link>
       </div>
     </BaseLayout>

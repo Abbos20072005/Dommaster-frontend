@@ -1,1 +1,1 @@
-export const BASE_URL = 'https://dommaster.uz';
+export const BASE_URL = 'https://buildex.uz';

@@ -80,7 +80,7 @@ export const UsefulContentSection = async () => {
           <TabsContent value='videos'>
             <VideosTab />
             <Button asChild className='mt-2 w-full sm:hidden' size='sm' variant='muted'>
-              <a href='https://www.youtube.com/dommaster' rel='noreferrer' target='_blank'>
+              <a href='https://www.youtube.com/buildex' rel='noreferrer' target='_blank'>
                 {t('View all')}
               </a>
             </Button>
