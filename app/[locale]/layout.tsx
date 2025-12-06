@@ -52,7 +52,7 @@ export async function generateMetadata(): Promise<Metadata> {
       apple: '/apple-touch-icon.png'
     },
     verification: {
-      google: 'JA9JLElDT9wpWV_iVZOtHDd928Y4mox04xGsIiS4vfY',
+      google: 'lv09WTXqHseTIi7QrNrGB3JgW9XDVKrt0NA0BjOQe6o',
       yandex: 'cf2ea6baab395be9'
     },
     openGraph: {
