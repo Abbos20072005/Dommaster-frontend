@@ -6,7 +6,6 @@ import { getTranslations } from 'next-intl/server';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
-import Script from 'next/script';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
 
@@ -107,7 +106,6 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
       suppressHydrationWarning
     >
       <body className='flex min-h-screen flex-col font-sans antialiased'>
-        <Script src='https://telegram.org/js/telegram-web-app.js' strategy='beforeInteractive' />
         <NextIntlClientProvider>
           <Providers>
             <NextTopLoader height={5} color='var(--secondary)' showSpinner={false} />
