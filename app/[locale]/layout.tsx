@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import { Inter, Roboto_Mono } from 'next/font/google';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
+import Script from 'next/script';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
 
@@ -14,6 +15,7 @@ import type { Locale } from '@/i18n/routing';
 import { AppFooter, AppHeader, BottomNav } from '@/components/layout';
 import { ChatDialog } from '@/components/modules/chat';
 import { Providers } from '@/components/Providers';
+import { TelegramWebAppInit } from '@/components/TelegramWebAppInit';
 import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
@@ -107,6 +109,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
       <NextIntlClientProvider>
         <Providers>
           <NextTopLoader color='var(--primary)' showSpinner={false} />
+          <TelegramWebAppInit />
           <body className='flex min-h-screen flex-col font-sans antialiased'>
             <AppHeader />
             <main className='flex-1'>{children}</main>
@@ -125,6 +128,10 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
                 </Button>
               </ChatDialog>
             </div>
+            <Script
+              src='https://telegram.org/js/telegram-web-app.js'
+              strategy='afterInteractive' // Loads after page is interactive
+            />
           </body>
         </Providers>
       </NextIntlClientProvider>

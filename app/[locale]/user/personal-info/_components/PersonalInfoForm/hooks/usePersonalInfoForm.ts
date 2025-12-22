@@ -5,6 +5,7 @@ import { toast } from 'sonner';
 
 import { handleFormServerErrors } from '@/lib/utils';
 import { patchMe } from '@/utils/api/requests';
+import { useAuth } from '@/utils/stores';
 
 import type { PersonalInfoFormSchema } from '../constants';
 
@@ -15,6 +16,7 @@ interface Props {
 }
 
 export const usePersonalInfoForm = ({ defaultValues }: Props) => {
+  const { setUser } = useAuth();
   const form = useForm<PersonalInfoFormSchema>({
     resolver: zodResolver(personalInfoFormSchema),
     defaultValues: {
@@ -29,6 +31,7 @@ export const usePersonalInfoForm = ({ defaultValues }: Props) => {
     onSuccess: ({ data }) => {
       toast.success('Personal info updated successfully');
       form.reset(data.result);
+      setUser(data.result);
     },
     onError: (error) => {
       handleFormServerErrors(error, form.setError);

@@ -1,8 +1,19 @@
+import type { QueryKey } from '@tanstack/react-query';
+
 import { MutationCache, QueryCache, QueryClient } from '@tanstack/react-query';
 import { AxiosError } from 'axios';
 import { toast } from 'sonner';
 
 import { useAuthStore } from '@/utils/stores';
+
+declare module '@tanstack/react-query' {
+  interface Register {
+    mutationMeta: {
+      invalidatesQuery?: QueryKey;
+      withoutToastOnError?: boolean;
+    };
+  }
+}
 
 export const makeQueryClient = (t: (key: string) => string) =>
   new QueryClient({
@@ -29,6 +40,13 @@ export const makeQueryClient = (t: (key: string) => string) =>
           toast.error(t(`errorMessages.${errorCode}`));
         } else {
           toast.error(t('errorMessages.default'));
+        }
+      },
+      onSuccess: (_data, _variables, _context, mutation) => {
+        if (mutation.meta?.invalidatesQuery) {
+          makeQueryClient(t).invalidateQueries({
+            queryKey: mutation.meta.invalidatesQuery
+          });
         }
       }
     })

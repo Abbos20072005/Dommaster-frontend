@@ -68,7 +68,7 @@ export const OrderItem = ({ order }: Props) => {
           ))}
         </CardContent>
       </Link>
-      <CardFooter className='flex gap-2 px-4 pb-4'>
+      <CardFooter className='flex flex-wrap gap-2 px-4 pb-4'>
         <Button asChild size='sm' variant='muted'>
           <Link href={url}>{t('Order details')}</Link>
         </Button>
