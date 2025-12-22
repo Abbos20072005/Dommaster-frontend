@@ -55,7 +55,11 @@ export const TelegramWebAppInit = () => {
     if (initialPathnameRef.current !== null && pathname !== initialPathnameRef.current) {
       return true;
     }
-    return typeof window !== 'undefined' && window.history.length > 1;
+    try {
+      return typeof window !== 'undefined' && window.history && window.history.length > 1;
+    } catch {
+      return false;
+    }
   };
 
   // Handle back button click
@@ -77,28 +81,40 @@ export const TelegramWebAppInit = () => {
 
   // Update back button visibility based on navigation state
   useEffect(() => {
-    if (canGoBack()) {
-      WebApp.BackButton.show();
-    } else {
+    try {
+      if (canGoBack()) {
+        WebApp.BackButton.show();
+      } else {
+        WebApp.BackButton.hide();
+      }
+    } catch {
+      // Fallback: hide back button if there's an error
       WebApp.BackButton.hide();
     }
   }, [pathname]);
 
   // Handle browser popstate for history changes
   useEffect(() => {
+    if (typeof window === 'undefined') return;
+
     let timeoutId: NodeJS.Timeout;
 
     const handlePopState = () => {
       timeoutId = setTimeout(() => {
-        // Check current pathname after popstate
-        const currentPath = window.location.pathname;
-        const canNavigateBack =
-          (initialPathnameRef.current !== null && currentPath !== initialPathnameRef.current) ||
-          window.history.length > 1;
+        try {
+          // Check current pathname after popstate
+          const currentPath = window.location.pathname;
+          const canNavigateBack =
+            (initialPathnameRef.current !== null && currentPath !== initialPathnameRef.current) ||
+            (typeof window !== 'undefined' && window.history && window.history.length > 1);
 
-        if (canNavigateBack) {
-          WebApp.BackButton.show();
-        } else {
+          if (canNavigateBack) {
+            WebApp.BackButton.show();
+          } else {
+            WebApp.BackButton.hide();
+          }
+        } catch {
+          // Fallback: hide back button if there's an error accessing history
           WebApp.BackButton.hide();
         }
       }, 0);
