@@ -130,7 +130,13 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
             </div>
             <Script
               src='https://telegram.org/js/telegram-web-app.js'
-              strategy='afterInteractive' // Loads after page is interactive
+              strategy='afterInteractive'
+              onLoad={() => {
+                // Dispatch event when script is loaded
+                if (typeof window !== 'undefined') {
+                  window.dispatchEvent(new Event('telegram-web-app-loaded'));
+                }
+              }}
             />
           </body>
         </Providers>

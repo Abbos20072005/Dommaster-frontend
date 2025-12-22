@@ -1,7 +1,7 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 // Global Declaration for window.Telegram
 declare global {
@@ -12,65 +12,120 @@ declare global {
   }
 }
 
+const initTelegramWebApp = (router: ReturnType<typeof useRouter>) => {
+  if (typeof window === 'undefined' || !window.Telegram?.WebApp) {
+    return null;
+  }
+
+  const webApp = window.Telegram.WebApp;
+
+  // Initialize Telegram Web App
+  webApp.ready(); // Signal app is ready
+  webApp.expand(); // Expand the app to full height
+
+  // Disable vertical swipes to prevent closing the app on swipe down
+  if (webApp.isVersionAtLeast('7.7')) {
+    webApp.disableVerticalSwipes();
+  }
+
+  webApp.enableClosingConfirmation(); // Confirm before closing
+
+  // Back button setup - store handler reference for cleanup
+  const backButtonHandler = () => {
+    router.back();
+  };
+  webApp.BackButton.show();
+  webApp.BackButton.onClick(backButtonHandler);
+
+  // Header and Background Customization
+  // Use themeParams if available, otherwise use fallback colors
+  const theme = webApp.themeParams;
+  if (theme) {
+    webApp.setHeaderColor(theme.bg_color || '#FFFFFF');
+    webApp.setBackgroundColor(theme.secondary_bg_color || '#F0F0F0');
+    webApp.setBottomBarColor(theme.bottom_bar_bg_color || '#000000');
+  } else {
+    // Fallback colors
+    webApp.setHeaderColor('#00257AFF');
+    webApp.setBackgroundColor('#FFB700FF');
+    webApp.setBottomBarColor('#000000FF');
+  }
+
+  // Listen for theme changes and re-apply
+  const themeChangedHandler = () => {
+    const updatedTheme = webApp.themeParams;
+    if (updatedTheme) {
+      webApp.setHeaderColor(updatedTheme.bg_color || '#FFFFFF');
+      webApp.setBackgroundColor(updatedTheme.secondary_bg_color || '#F0F0F0');
+      webApp.setBottomBarColor(updatedTheme.bottom_bar_bg_color || '#000000');
+    }
+  };
+
+  webApp.onEvent('themeChanged', themeChangedHandler);
+
+  // Return cleanup function
+  return () => {
+    webApp.BackButton.hide();
+    webApp.BackButton.offClick(backButtonHandler);
+    webApp.offEvent('themeChanged', themeChangedHandler);
+  };
+};
+
 export const TelegramWebAppInit = () => {
   const router = useRouter();
+  const cleanupRef = useRef<(() => void) | null>(null);
+  const initializedRef = useRef(false);
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
-      const webApp = window.Telegram.WebApp;
+    // Function to check and initialize Telegram Web App
+    const checkAndInit = () => {
+      if (initializedRef.current) return;
 
-      webApp.ready(); // Signal app is ready
-      webApp.expand(); // Expand the app to full height
-
-      // Disable vertical swipes to prevent closing the app on swipe down
-      if (webApp.isVersionAtLeast('7.7')) {
-        webApp.disableVerticalSwipes();
+      if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
+        initializedRef.current = true;
+        cleanupRef.current = initTelegramWebApp(router) || null;
       }
+    };
 
-      webApp.enableClosingConfirmation(); // Confirm before closing
+    // Check immediately
+    checkAndInit();
 
-      // Back button setup (from previous)
-      webApp.BackButton.show();
-      webApp.BackButton.onClick(() => {
-        router.back();
-      });
+    // If not available, set up listeners and polling
+    if (!initializedRef.current) {
+      // Listen for custom event when script loads
+      const handleScriptLoad = () => {
+        checkAndInit();
+      };
 
-      // Header and Background Customization
-      // Option 1: Use predefined keywords for theme consistency
-      webApp.setHeaderColor('#00257AFF'); // Matches main background
-      webApp.setBackgroundColor('#FFB700FF'); // Secondary for contrast
-      webApp.setBottomBarColor('#000000FF'); // Bottom bar (Bot API 7.10+)
+      window.addEventListener('telegram-web-app-loaded', handleScriptLoad);
 
-      // Option 2: Use hex values (e.g., for branding)
-      // webApp.setHeaderColor('#FFFFFF'); // White header
-      // webApp.setBackgroundColor('#F0F0F0'); // Light gray background
-      // webApp.setBottomBarColor('#000000'); // Black bottom bar
+      // Also poll as a fallback (with timeout)
+      const maxAttempts = 50; // 5 seconds max (50 * 100ms)
+      let attempts = 0;
 
-      // Option 3: Dynamic from themeParams (recommended for light/dark adaptation)
-      const theme = webApp.themeParams;
-      if (theme) {
-        webApp.setHeaderColor(theme.bg_color || '#FFFFFF'); // Fallback to white
-        webApp.setBackgroundColor(theme.secondary_bg_color || '#F0F0F0');
-        webApp.setBottomBarColor(theme.bottom_bar_bg_color || '#000000');
-      }
+      const intervalId = setInterval(() => {
+        attempts++;
+        checkAndInit();
 
-      // Listen for theme changes and re-apply
-      webApp.onEvent('themeChanged', () => {
-        const updatedTheme = webApp.themeParams;
-        if (updatedTheme) {
-          webApp.setHeaderColor(updatedTheme.bg_color || '#FFFFFF');
-          webApp.setBackgroundColor(updatedTheme.secondary_bg_color || '#F0F0F0');
-          webApp.setBottomBarColor(updatedTheme.bottom_bar_bg_color || '#000000');
+        if (initializedRef.current || attempts >= maxAttempts) {
+          clearInterval(intervalId);
         }
-      });
+      }, 100);
 
-      // Cleanup (optional)
       return () => {
-        webApp.BackButton.hide();
-        webApp.BackButton.onClick(() => {});
-        webApp.offEvent('themeChanged', () => {});
+        clearInterval(intervalId);
+        window.removeEventListener('telegram-web-app-loaded', handleScriptLoad);
+        if (cleanupRef.current) {
+          cleanupRef.current();
+        }
       };
     }
+
+    return () => {
+      if (cleanupRef.current) {
+        cleanupRef.current();
+      }
+    };
   }, [router]);
 
   return null;
