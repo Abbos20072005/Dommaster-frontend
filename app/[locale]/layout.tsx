@@ -110,7 +110,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
         <Script src='https://telegram.org/js/telegram-web-app.js' strategy='beforeInteractive' />
         <NextIntlClientProvider>
           <Providers>
-            <NextTopLoader color='var(--primary)' showSpinner={false} />
+            <NextTopLoader height={5} color='var(--secondary)' showSpinner={false} />
             <TelegramWebAppInit />
             <AppHeader />
             <main className='flex-1'>{children}</main>
