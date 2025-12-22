@@ -14,12 +14,12 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
   return (
     <footer
       className={cn(
-        'bg-primary text-primary-foreground mt-10 pt-6 pb-20 md:pt-10 md:pb-10',
+        'md:bg-primary text-primary-foreground pt-6 pb-20 md:mt-10 md:pt-10 md:pb-10',
         className
       )}
       {...props}
     >
-      <BaseLayout>
+      <BaseLayout className='hidden md:block'>
         <div className='flex flex-col justify-between gap-4 md:gap-6 lg:flex-row'>
           <div>
             <div className='mb-5'>

@@ -11,7 +11,6 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { useCart } from '@/components/modules/cart';
-import { MobileCatalogDialog } from '@/components/modules/catalog';
 import { NavigationLink } from '@/components/NavigationLink';
 import { useFavorites } from '@/utils/stores';
 
@@ -21,19 +20,23 @@ export const BottomNav = () => {
   const { cart } = useCart();
 
   return (
-    <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 py-2 shadow-md md:hidden'>
+    <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 rounded-t-lg pt-3 pb-4 shadow-md md:hidden'>
       <NavigationLink
         href='/'
         activeClassName='text-foreground'
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
-        <HomeIcon className='size-5' />
+        <HomeIcon className='size-6' />
         <span className='text-xs font-medium text-nowrap'>{t('Home')}</span>
       </NavigationLink>
-      <MobileCatalogDialog className='text-muted-foreground flex flex-col items-center transition-colors'>
-        <PackageSearchIcon className='size-5' />
+      <NavigationLink
+        href='/catalog'
+        activeClassName='text-foreground'
+        className='text-muted-foreground flex flex-col items-center transition-colors'
+      >
+        <PackageSearchIcon className='size-6' />
         <span className='text-xs font-medium text-nowrap'>{t('Catalog')}</span>
-      </MobileCatalogDialog>
+      </NavigationLink>
       <NavigationLink
         href='/cart'
         activeClassName='text-foreground'
@@ -45,7 +48,7 @@ export const BottomNav = () => {
               {cart.cart_items.length}
             </div>
           )}
-          <ShoppingCartIcon className='size-5' />
+          <ShoppingCartIcon className='size-6' />
         </div>
         <span className='text-xs font-medium text-nowrap'>{t('Cart')}</span>
       </NavigationLink>
@@ -60,7 +63,7 @@ export const BottomNav = () => {
               {favorites.length}
             </div>
           )}
-          <HeartIcon className='size-5' />
+          <HeartIcon className='size-6' />
         </div>
         <span className='text-xs font-medium text-nowrap'>{t('Favorites')}</span>
       </NavigationLink>
@@ -69,7 +72,7 @@ export const BottomNav = () => {
         activeClassName='text-foreground'
         className='text-muted-foreground flex flex-col items-center transition-colors'
       >
-        <UserCircleIcon className='size-5' />
+        <UserCircleIcon className='size-6' />
         <span className='text-xs font-medium text-nowrap'>{t('Profile')}</span>
       </NavigationLink>
     </div>

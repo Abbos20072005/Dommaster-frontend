@@ -79,7 +79,7 @@ const ItemCategoryPage = async ({ params }: Props) => {
         <Breadcrumb className='mb-2 md:mb-4'>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>
+              <BreadcrumbLink href='/catalog'>{t('Catalog')}</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
