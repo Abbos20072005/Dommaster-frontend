@@ -3,62 +3,82 @@
 import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
-// Global Declaration for window.Telegram
+// Global Declaration for window.Telegram (narrowed to what's actually used)
 declare global {
   interface Window {
-    Telegram: {
-      WebApp: WebApp;
+    Telegram?: {
+      WebApp?: WebApp;
     };
   }
 }
 
-const initTelegramWebApp = (router: ReturnType<typeof useRouter>, updateBackButton: () => void) => {
+// Type for WebApp (inferred from usage; expand as needed based on Telegram docs)
+interface WebApp {
+  disableVerticalSwipes: () => void;
+  enableClosingConfirmation: () => void;
+  expand: () => void;
+  isVersionAtLeast: (version: string) => boolean;
+  offEvent: (event: 'themeChanged', handler: () => void) => void;
+  onEvent: (event: 'themeChanged', handler: () => void) => void;
+  ready: () => void;
+  setBackgroundColor: (color: string) => void;
+  setBottomBarColor: (color: string) => void;
+  setHeaderColor: (color: string) => void;
+  BackButton: {
+    onClick: (handler: () => void) => void;
+    offClick: (handler: () => void) => void;
+    show: () => void;
+    hide: () => void;
+  };
+}
+
+// Initialization function (extracted and typed for clarity)
+const initTelegramWebApp = (
+  router: ReturnType<typeof useRouter>,
+  updateBackButton: () => void
+): (() => void) => {
   if (typeof window === 'undefined' || !window.Telegram?.WebApp) {
-    return null;
+    return () => {}; // Empty cleanup if not available
   }
 
   const webApp = window.Telegram.WebApp;
 
-  // Initialize Telegram Web App
-  webApp.ready(); // Signal app is ready
-  webApp.expand(); // Expand the app to full height
+  webApp.ready();
+  webApp.expand();
 
-  // Disable vertical swipes to prevent closing the app on swipe down
   if (webApp.isVersionAtLeast('7.7')) {
     webApp.disableVerticalSwipes();
   }
 
-  webApp.enableClosingConfirmation(); // Confirm before closing
+  webApp.enableClosingConfirmation();
 
-  // Back button setup - store handler reference for cleanup
+  // Back button handler
   const backButtonHandler = () => {
     router.back();
   };
   webApp.BackButton.onClick(backButtonHandler);
 
-  // Initial back button visibility check
+  // Initial back button update
   updateBackButton();
 
-  // Header and Background Customization
-  // Use primary color for header (light mode only)
-  webApp.setHeaderColor('#00257AFF'); // Primary color
-  webApp.setBackgroundColor('#FFFFFFFF'); // White background
-  webApp.setBottomBarColor('#000000FF'); // Black bottom bar
+  // Color settings (forcing light mode as per original)
+  webApp.setHeaderColor('#00257AFF');
+  webApp.setBackgroundColor('#FFFFFFFF');
+  webApp.setBottomBarColor('#000000FF');
 
-  // Listen for theme changes but keep using primary color
+  // Theme change handler (overrides to keep light mode)
   const themeChangedHandler = () => {
     webApp.setHeaderColor('#00257AFF');
     webApp.setBackgroundColor('#FFFFFFFF');
     webApp.setBottomBarColor('#000000FF');
   };
-
   webApp.onEvent('themeChanged', themeChangedHandler);
 
-  // Return cleanup function
+  // Cleanup function
   return () => {
-    webApp.BackButton.hide();
     webApp.BackButton.offClick(backButtonHandler);
     webApp.offEvent('themeChanged', themeChangedHandler);
+    webApp.BackButton.hide(); // Ensure hidden on cleanup
   };
 };
 
@@ -69,26 +89,27 @@ export const TelegramWebAppInit = () => {
   const initializedRef = useRef(false);
   const webAppRef = useRef<WebApp | null>(null);
   const initialPathnameRef = useRef<string | null>(null);
-  const previousPathnameRef = useRef<string | null>(null);
 
-  // Function to check if we can go back
-  const canGoBack = () => {
-    // If pathname has changed from initial, we can go back
+  // Set initial pathname on first render (useEffect with [] ensures it runs once)
+  useEffect(() => {
+    if (initialPathnameRef.current === null) {
+      initialPathnameRef.current = pathname;
+    }
+  }, []); // Empty deps: Runs once after mount
+
+  // Determine if back navigation is possible
+  const canGoBack = (): boolean => {
+    // Primary check: Has pathname changed from initial?
     if (initialPathnameRef.current !== null && pathname !== initialPathnameRef.current) {
       return true;
     }
-    // Check browser history as fallback (only if history length > 1)
-    if (typeof window !== 'undefined' && window.history.length > 1) {
-      // Double check we're not on the initial page
-      return pathname !== initialPathnameRef.current;
-    }
-    return false;
+    // Fallback: Browser history length (though less reliable in Next.js client routing)
+    return typeof window !== 'undefined' && window.history.length > 1;
   };
 
-  // Function to update back button visibility
+  // Update back button visibility
   const updateBackButton = () => {
     if (!webAppRef.current) return;
-
     if (canGoBack()) {
       webAppRef.current.BackButton.show();
     } else {
@@ -96,76 +117,50 @@ export const TelegramWebAppInit = () => {
     }
   };
 
-  // Initialize initial pathname on mount
+  // Update back button on pathname changes
   useEffect(() => {
-    if (initialPathnameRef.current === null) {
-      initialPathnameRef.current = pathname;
-    }
-  }, []);
-
-  useEffect(() => {
-    // Update back button when pathname changes
     updateBackButton();
-    previousPathnameRef.current = pathname;
   }, [pathname]);
 
-  // Listen to popstate (browser back/forward) to update history state
+  // Handle browser popstate for history changes
   useEffect(() => {
-    let timeoutId: NodeJS.Timeout | null = null;
-
     const handlePopState = () => {
-      // When user goes back, check if we still have history
-      if (typeof window !== 'undefined') {
-        // Small delay to let history update
-        timeoutId = setTimeout(() => {
-          updateBackButton();
-        }, 0);
-      }
+      // Debounce slightly to allow state to settle
+      setTimeout(updateBackButton, 0);
     };
 
     window.addEventListener('popstate', handlePopState);
 
     return () => {
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
       window.removeEventListener('popstate', handlePopState);
     };
-  }, [pathname]);
+  }, []); // Empty deps: Listener is static
 
+  // Main initialization effect
   useEffect(() => {
-    // Function to check and initialize Telegram Web App
     const checkAndInit = () => {
       if (initializedRef.current) return;
 
       if (typeof window !== 'undefined' && window.Telegram?.WebApp) {
         initializedRef.current = true;
-        const webApp = window.Telegram.WebApp;
-        webAppRef.current = webApp;
-        cleanupRef.current = initTelegramWebApp(router, updateBackButton) || null;
+        webAppRef.current = window.Telegram.WebApp;
+        cleanupRef.current = initTelegramWebApp(router, updateBackButton);
       }
     };
 
-    // Check immediately
     checkAndInit();
 
-    // If not available, set up listeners and polling
     if (!initializedRef.current) {
-      // Listen for custom event when script loads
-      const handleScriptLoad = () => {
-        checkAndInit();
-      };
-
+      // Listener for custom event (if script loads dynamically)
+      const handleScriptLoad = () => checkAndInit();
       window.addEventListener('telegram-web-app-loaded', handleScriptLoad);
 
-      // Also poll as a fallback (with timeout)
-      const maxAttempts = 50; // 5 seconds max (50 * 100ms)
+      // Polling fallback (max 5s)
+      const maxAttempts = 50;
       let attempts = 0;
-
       const intervalId = setInterval(() => {
         attempts++;
         checkAndInit();
-
         if (initializedRef.current || attempts >= maxAttempts) {
           clearInterval(intervalId);
         }
@@ -176,6 +171,7 @@ export const TelegramWebAppInit = () => {
         window.removeEventListener('telegram-web-app-loaded', handleScriptLoad);
         if (cleanupRef.current) {
           cleanupRef.current();
+          cleanupRef.current = null;
         }
       };
     }
@@ -183,6 +179,7 @@ export const TelegramWebAppInit = () => {
     return () => {
       if (cleanupRef.current) {
         cleanupRef.current();
+        cleanupRef.current = null;
       }
     };
   }, [router]);
