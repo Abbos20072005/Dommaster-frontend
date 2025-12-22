@@ -1,35 +1,55 @@
 'use client';
 
-import WebApp from '@twa-dev/sdk';
 import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export const TelegramWebAppInit = () => {
   const router = useRouter();
   const pathname = usePathname();
   const initialPathnameRef = useRef<string | null>(null);
   const backButtonHandlerRef = useRef<(() => void) | null>(null);
+  const [webAppLoaded, setWebAppLoaded] = useState(false);
+  const webAppRef = useRef<any>(null);
 
-  // Initialize Telegram Web App on mount
+  // Dynamically load Telegram Web App SDK only on client side
   useEffect(() => {
-    // Configure Web App settings
-    WebApp.ready();
-    WebApp.expand();
+    if (typeof window === 'undefined') return;
 
-    if (WebApp.isVersionAtLeast('7.7')) {
-      WebApp.disableVerticalSwipes();
-    }
+    const loadWebApp = async () => {
+      try {
+        const WebApp = (await import('@twa-dev/sdk')).default;
+        webAppRef.current = WebApp;
 
-    WebApp.enableClosingConfirmation();
+        // Configure Web App settings
+        WebApp.ready();
+        WebApp.expand();
 
-    // Force light mode colors
-    WebApp.setHeaderColor('#00257AFF');
-    WebApp.setBackgroundColor('#FFFFFFFF');
-    WebApp.setBottomBarColor('#000000FF');
+        if (WebApp.isVersionAtLeast('7.7')) {
+          WebApp.disableVerticalSwipes();
+        }
+
+        WebApp.enableClosingConfirmation();
+
+        // Force light mode colors
+        WebApp.setHeaderColor('#00257AFF');
+        WebApp.setBackgroundColor('#FFFFFFFF');
+        WebApp.setBottomBarColor('#000000FF');
+
+        setWebAppLoaded(true);
+      } catch (error) {
+        // Silently fail if SDK can't be loaded (e.g., not in Telegram environment)
+        console.warn('Telegram Web App SDK failed to load:', error);
+      }
+    };
+
+    loadWebApp();
   }, []);
 
   // Handle theme changes to maintain light mode
   useEffect(() => {
+    if (!webAppLoaded || !webAppRef.current) return;
+
+    const WebApp = webAppRef.current;
     const handleThemeChange = () => {
       WebApp.setHeaderColor('#00257AFF');
       WebApp.setBackgroundColor('#FFFFFFFF');
@@ -41,14 +61,14 @@ export const TelegramWebAppInit = () => {
     return () => {
       WebApp.offEvent('themeChanged', handleThemeChange);
     };
-  }, []);
+  }, [webAppLoaded]);
 
   // Track initial pathname
   useEffect(() => {
     if (initialPathnameRef.current === null) {
       initialPathnameRef.current = pathname;
     }
-  }, []);
+  }, [pathname]);
 
   // Determine if back navigation is possible
   const canGoBack = (): boolean => {
@@ -64,6 +84,9 @@ export const TelegramWebAppInit = () => {
 
   // Handle back button click
   useEffect(() => {
+    if (!webAppLoaded || !webAppRef.current) return;
+
+    const WebApp = webAppRef.current;
     const handler = () => {
       router.back();
     };
@@ -77,10 +100,13 @@ export const TelegramWebAppInit = () => {
         backButtonHandlerRef.current = null;
       }
     };
-  }, [router]);
+  }, [router, webAppLoaded]);
 
   // Update back button visibility based on navigation state
   useEffect(() => {
+    if (!webAppLoaded || !webAppRef.current) return;
+
+    const WebApp = webAppRef.current;
     try {
       if (canGoBack()) {
         WebApp.BackButton.show();
@@ -91,12 +117,13 @@ export const TelegramWebAppInit = () => {
       // Fallback: hide back button if there's an error
       WebApp.BackButton.hide();
     }
-  }, [pathname]);
+  }, [pathname, webAppLoaded]);
 
   // Handle browser popstate for history changes
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    if (typeof window === 'undefined' || !webAppLoaded || !webAppRef.current) return;
 
+    const WebApp = webAppRef.current;
     let timeoutId: NodeJS.Timeout;
 
     const handlePopState = () => {
@@ -128,7 +155,7 @@ export const TelegramWebAppInit = () => {
         clearTimeout(timeoutId);
       }
     };
-  }, []);
+  }, [webAppLoaded]);
 
   return null;
 };
