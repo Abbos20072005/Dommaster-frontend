@@ -8,7 +8,6 @@ import {
   UserCircleIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import React from 'react';
 
 import { useCart } from '@/components/modules/cart';
 import { NavigationLink } from '@/components/NavigationLink';
@@ -20,11 +19,11 @@ export const BottomNav = () => {
   const { cart } = useCart();
 
   return (
-    <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 rounded-t-lg pt-3 pb-4 shadow-md md:hidden'>
+    <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 rounded-t-lg px-1 pt-3 pb-4 shadow-md md:hidden'>
       <NavigationLink
         href='/'
         activeClassName='text-foreground'
-        className='text-muted-foreground flex flex-col items-center transition-colors'
+        className='text-muted-foreground flex flex-col items-center gap-1 transition-colors'
       >
         <HomeIcon className='size-6' />
         <span className='text-xs font-medium text-nowrap'>{t('Home')}</span>
@@ -32,7 +31,7 @@ export const BottomNav = () => {
       <NavigationLink
         href='/catalog'
         activeClassName='text-foreground'
-        className='text-muted-foreground flex flex-col items-center transition-colors'
+        className='text-muted-foreground flex flex-col items-center gap-1 transition-colors'
       >
         <PackageSearchIcon className='size-6' />
         <span className='text-xs font-medium text-nowrap'>{t('Catalog')}</span>
@@ -40,7 +39,7 @@ export const BottomNav = () => {
       <NavigationLink
         href='/cart'
         activeClassName='text-foreground'
-        className='text-muted-foreground flex flex-col items-center transition-colors'
+        className='text-muted-foreground flex flex-col items-center gap-1 transition-colors'
       >
         <div className='relative'>
           {!!cart?.cart_items.length && (
@@ -55,7 +54,7 @@ export const BottomNav = () => {
       <NavigationLink
         href='/user/favorites'
         activeClassName='text-foreground'
-        className='text-muted-foreground flex flex-col items-center transition-colors'
+        className='text-muted-foreground flex flex-col items-center gap-1 transition-colors'
       >
         <div className='relative'>
           {!!favorites?.length && (
@@ -70,7 +69,7 @@ export const BottomNav = () => {
       <NavigationLink
         href='/user/dashboard'
         activeClassName='text-foreground'
-        className='text-muted-foreground flex flex-col items-center transition-colors'
+        className='text-muted-foreground flex flex-col items-center gap-1 transition-colors'
       >
         <UserCircleIcon className='size-6' />
         <span className='text-xs font-medium text-nowrap'>{t('Profile')}</span>
