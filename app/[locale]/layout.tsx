@@ -106,11 +106,12 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
       lang={locale}
       suppressHydrationWarning
     >
-      <NextIntlClientProvider>
-        <Providers>
-          <NextTopLoader color='var(--primary)' showSpinner={false} />
-          <TelegramWebAppInit />
-          <body className='flex min-h-screen flex-col font-sans antialiased'>
+      <body className='flex min-h-screen flex-col font-sans antialiased'>
+        <Script src='https://telegram.org/js/telegram-web-app.js' strategy='beforeInteractive' />
+        <NextIntlClientProvider>
+          <Providers>
+            <NextTopLoader color='var(--primary)' showSpinner={false} />
+            <TelegramWebAppInit />
             <AppHeader />
             <main className='flex-1'>{children}</main>
             <AppFooter />
@@ -128,19 +129,9 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
                 </Button>
               </ChatDialog>
             </div>
-            <Script
-              src='https://telegram.org/js/telegram-web-app.js'
-              strategy='afterInteractive'
-              onLoad={() => {
-                // Dispatch event when script is loaded
-                if (typeof window !== 'undefined') {
-                  window.dispatchEvent(new Event('telegram-web-app-loaded'));
-                }
-              }}
-            />
-          </body>
-        </Providers>
-      </NextIntlClientProvider>
+          </Providers>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 };
