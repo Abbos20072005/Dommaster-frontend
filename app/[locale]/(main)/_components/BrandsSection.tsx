@@ -26,12 +26,12 @@ export const BrandsSection = async () => {
 
         {/* Mobile */}
         <div className='overflow-x-auto md:hidden'>
-          <div className='flex h-9 gap-2'>
+          <div className='flex h-16 gap-4'>
             {brands.map((item) => (
-              <Link href={`/brand/${item.id}`} key={item.id} className='block h-9 rounded-md'>
+              <Link href={`/brand/${item.id}`} key={item.id} className='block h-16 rounded-md'>
                 <Image
                   alt={item.name}
-                  className='size-full min-w-22 object-contain p-1'
+                  className='size-full min-w-26 object-contain p-1'
                   height={36}
                   src={item.image}
                   width={88}
