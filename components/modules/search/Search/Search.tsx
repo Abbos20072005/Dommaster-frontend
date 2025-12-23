@@ -50,7 +50,7 @@ export const Search = () => {
             autoComplete='off'
             onChange={(e) => setSearchInput(e.target.value)}
             onFocus={() => setPopoverOpen(true)}
-            placeholder='Саморез'
+            placeholder='Саморез, электрика'
           />
           {mounted && searchInput && (
             <button

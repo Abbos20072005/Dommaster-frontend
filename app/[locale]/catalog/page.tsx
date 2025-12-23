@@ -4,10 +4,6 @@ import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import React from 'react';
 
-import {
-  MostSoldProductsSection,
-  RecentlyViewedProducts
-} from '@/app/[locale]/category/[id]/_components';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { Link } from '@/i18n/navigation';
 import { getCategories } from '@/utils/api/requests';
@@ -50,8 +46,6 @@ const CategoryPage = async () => {
             </Link>
           ))}
         </div>
-        <MostSoldProductsSection />
-        <RecentlyViewedProducts />
       </BaseLayout>
     </div>
   );

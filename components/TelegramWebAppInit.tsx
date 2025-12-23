@@ -1,10 +1,9 @@
 'use client';
 
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
 
 export const TelegramWebAppInit = () => {
-  const router = useRouter();
   const pathname = usePathname();
   const initialPathnameRef = useRef<string | null>(null);
   const backButtonHandlerRef = useRef<(() => void) | null>(null);
@@ -37,7 +36,6 @@ export const TelegramWebAppInit = () => {
 
         setWebAppLoaded(true);
       } catch (error) {
-        // Silently fail if SDK can't be loaded (e.g., not in Telegram environment)
         console.warn('Telegram Web App SDK failed to load:', error);
       }
     };
@@ -45,7 +43,7 @@ export const TelegramWebAppInit = () => {
     loadWebApp();
   }, []);
 
-  // Handle theme changes to maintain light mode
+  // Handle theme changes to maintain light mode and track initial pathname
   useEffect(() => {
     if (!webAppLoaded || !webAppRef.current) return;
 
@@ -58,41 +56,41 @@ export const TelegramWebAppInit = () => {
 
     WebApp.onEvent('themeChanged', handleThemeChange);
 
-    return () => {
-      WebApp.offEvent('themeChanged', handleThemeChange);
-    };
-  }, [webAppLoaded]);
-
-  // Track initial pathname
-  useEffect(() => {
+    // Set initial pathname if not already set
     if (initialPathnameRef.current === null) {
       initialPathnameRef.current = pathname;
     }
-  }, [pathname]);
 
-  // Determine if back navigation is possible
+    return () => {
+      WebApp.offEvent('themeChanged', handleThemeChange);
+    };
+  }, [webAppLoaded, pathname]);
+
+  // Simplified: Check if current pathname differs from initial (reliable in webviews)
   const canGoBack = (): boolean => {
-    if (initialPathnameRef.current !== null && pathname !== initialPathnameRef.current) {
-      return true;
-    }
-    try {
-      return typeof window !== 'undefined' && window.history && window.history.length > 1;
-    } catch {
-      return false;
-    }
+    return initialPathnameRef.current !== null && pathname !== initialPathnameRef.current;
   };
 
-  // Handle back button click
+  // Handle back button setup and visibility
   useEffect(() => {
     if (!webAppLoaded || !webAppRef.current) return;
 
     const WebApp = webAppRef.current;
+
+    // Handler uses window.history.back() for better webview compatibility
     const handler = () => {
-      router.back();
+      window.history.back();
     };
 
     backButtonHandlerRef.current = handler;
     WebApp.BackButton.onClick(handler);
+
+    // Update visibility
+    if (canGoBack()) {
+      WebApp.BackButton.show();
+    } else {
+      WebApp.BackButton.hide();
+    }
 
     return () => {
       if (backButtonHandlerRef.current) {
@@ -100,62 +98,7 @@ export const TelegramWebAppInit = () => {
         backButtonHandlerRef.current = null;
       }
     };
-  }, [router, webAppLoaded]);
-
-  // Update back button visibility based on navigation state
-  useEffect(() => {
-    if (!webAppLoaded || !webAppRef.current) return;
-
-    const WebApp = webAppRef.current;
-    try {
-      if (canGoBack()) {
-        WebApp.BackButton.show();
-      } else {
-        WebApp.BackButton.hide();
-      }
-    } catch {
-      // Fallback: hide back button if there's an error
-      WebApp.BackButton.hide();
-    }
-  }, [pathname, webAppLoaded]);
-
-  // Handle browser popstate for history changes
-  useEffect(() => {
-    if (typeof window === 'undefined' || !webAppLoaded || !webAppRef.current) return;
-
-    const WebApp = webAppRef.current;
-    let timeoutId: NodeJS.Timeout;
-
-    const handlePopState = () => {
-      timeoutId = setTimeout(() => {
-        try {
-          // Check current pathname after popstate
-          const currentPath = window.location.pathname;
-          const canNavigateBack =
-            (initialPathnameRef.current !== null && currentPath !== initialPathnameRef.current) ||
-            (typeof window !== 'undefined' && window.history && window.history.length > 1);
-
-          if (canNavigateBack) {
-            WebApp.BackButton.show();
-          } else {
-            WebApp.BackButton.hide();
-          }
-        } catch {
-          // Fallback: hide back button if there's an error accessing history
-          WebApp.BackButton.hide();
-        }
-      }, 0);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      if (timeoutId) {
-        clearTimeout(timeoutId);
-      }
-    };
-  }, [webAppLoaded]);
+  }, [webAppLoaded, pathname]);
 
   return null;
 };

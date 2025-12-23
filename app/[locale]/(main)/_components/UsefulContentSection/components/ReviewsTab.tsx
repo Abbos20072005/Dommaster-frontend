@@ -27,7 +27,7 @@ export const ReviewsTab = async () => {
               >
                 <CardHeader className='flex-1 p-3'>
                   <CardTitle className='leading-5'>{item.title}</CardTitle>
-                  <CardDescription className='line-clamp-6 text-sm'>
+                  <CardDescription className='line-clamp-2 text-sm md:line-clamp-4'>
                     {item.short_description}
                   </CardDescription>
                 </CardHeader>

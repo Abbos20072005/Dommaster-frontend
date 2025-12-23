@@ -17,8 +17,6 @@ import {
 import { Link } from '@/i18n/navigation';
 import { getCategoryById } from '@/utils/api/requests';
 
-import { MostSoldProductsSection, RecentlyViewedProducts } from './_components';
-
 interface Props {
   params: Promise<{ id: string }>;
 }
@@ -77,8 +75,6 @@ const CategoryPage = async ({ params }: Props) => {
             </Link>
           ))}
         </div>
-        <MostSoldProductsSection />
-        <RecentlyViewedProducts />
       </BaseLayout>
     </div>
   );

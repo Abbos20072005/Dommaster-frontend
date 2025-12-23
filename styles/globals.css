@@ -125,6 +125,13 @@
   [role='button']:not(:disabled) {
     cursor: pointer;
   }
+  /* Set caret color to black for all text inputs on iOS */
+  input,
+  textarea,
+  [contenteditable] {
+    caret-color: var(--primary);
+    -webkit-text-fill-color: initial;
+  }
   /* Custom scrollbar styling. */
   ::-webkit-scrollbar {
     width: 5px;

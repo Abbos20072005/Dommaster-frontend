@@ -1,6 +1,6 @@
 'use client';
 
-import { ArrowLeftIcon, XIcon } from 'lucide-react';
+import { ArrowLeftIcon, SearchIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useQueryState } from 'nuqs';
 import React from 'react';
@@ -60,7 +60,7 @@ export const MobileSearch = ({ children, ...props }: Props) => {
       <DialogTrigger asChild {...props}>
         {children}
       </DialogTrigger>
-      <DialogContent className='flex h-dvh flex-col gap-0 p-0' hideCloseButton>
+      <DialogContent className='flex h-dvh flex-col gap-0 p-0 sm:max-w-full' hideCloseButton>
         <DialogHeader className='flex flex-row border-b p-2'>
           <DialogTitle className='sr-only'>{t('Search')}</DialogTitle>
           <DialogClose asChild>
@@ -68,21 +68,24 @@ export const MobileSearch = ({ children, ...props }: Props) => {
               <ArrowLeftIcon className='size-5' />
             </Button>
           </DialogClose>
-          <div className='flex flex-1'>
+          <div className='relative flex flex-1'>
+            <div className='absolute top-1/2 left-2 -translate-y-1/2'>
+              <SearchIcon className='text-muted-foreground size-4.5' />
+            </div>
             <Input
               ref={searchRef}
-              className='h-auto flex-1 border-none py-0 !ring-transparent'
+              className='bg-muted h-auto flex-1 border-none px-8 py-0 !ring-transparent'
               id='search'
               type='text'
               value={searchInput}
               autoComplete='off'
               onChange={(e) => setSearchInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && onSearch(e)}
-              placeholder='Саморез, доставка'
+              placeholder='Саморез, электрика'
             />
             {mounted && searchInput && (
               <button
-                className='flex size-8 shrink-0 items-center justify-center rounded-e-md'
+                className='absolute top-1/2 right-0.5 flex size-8 shrink-0 -translate-y-1/2 items-center justify-center rounded-e-md'
                 type='button'
                 onClick={() => {
                   setSearchInput('');

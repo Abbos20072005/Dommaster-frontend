@@ -36,7 +36,6 @@ export const AddressForm = ({ defaultValues, onSuccess }: Props) => {
             'fixed inset-x-4 bottom-4 z-10 text-white sm:hidden',
             !form.formState.isDirty ? 'invisible' : 'visible'
           )}
-          disabled={state.isPending || !form.formState.isDirty || !form.formState.isValid}
           type='submit'
         >
           <Spinner show={state.isPending} />

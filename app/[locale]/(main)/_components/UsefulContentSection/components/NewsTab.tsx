@@ -34,7 +34,7 @@ export const NewsTab = async () => {
                   width={320}
                 />
                 <CardHeader className='flex-1 p-3'>
-                  <p className='text-sm'>{item.title}</p>
+                  <p className='line-clamp-2 text-sm md:line-clamp-4'>{item.title}</p>
                 </CardHeader>
                 <CardFooter className='p-3 pt-0'>
                   <span className='text-muted-foreground text-sm'>

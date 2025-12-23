@@ -52,7 +52,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
   const brands = searchResults?.brands ?? [];
 
   return (
-    <div className='max-h-[80vh] divide-y overflow-y-auto'>
+    <div className='divide-y overflow-y-auto md:max-h-[80vh]'>
       {!!searchHistory.length && (
         <div className='p-3'>
           <div className='flex items-center justify-between'>

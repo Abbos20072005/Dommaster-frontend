@@ -53,7 +53,7 @@ export const MobileHeader = () => {
             variant='outline'
           >
             <SearchIcon />
-            Саморез, доставка
+            Саморез, электрика
           </Button>
         </MobileSearch>
       </div>

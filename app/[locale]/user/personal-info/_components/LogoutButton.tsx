@@ -20,7 +20,7 @@ export const LogoutButton = () => {
     router.push('/');
   };
   return (
-    <Button variant='ghost' onClick={onLogout}>
+    <Button variant='ghostDestructive' onClick={onLogout}>
       <LogOutIcon />
       {t('Logout')}
     </Button>

@@ -24,8 +24,8 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 
   if (user === null) {
     return (
-      <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
-        <p className='mb-3 hidden text-2xl font-bold md:block'>{t('Login or register')}</p>
+      <Card className='p-4 shadow-none md:p-5 md:shadow-sm'>
+        <p className='mb-3 text-lg font-bold md:text-2xl'>{t('Login or register')}</p>
         <p className='max-w-lg text-sm'>
           {t(
             'Login or create an account to view your orders, track your purchase history, manage addresses, and more'
