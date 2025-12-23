@@ -40,10 +40,18 @@ export const MobileSearch = ({ children, ...props }: Props) => {
   }, [searchValue]);
 
   React.useEffect(() => {
-    if (open) {
-      setTimeout(() => {
-        searchRef.current?.focus();
-      }, 0);
+    if (open && searchRef.current) {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          setTimeout(() => {
+            const input = searchRef.current;
+            if (input) {
+              input.focus();
+              input.click();
+            }
+          }, 150);
+        });
+      });
     }
   }, [open]);
 
