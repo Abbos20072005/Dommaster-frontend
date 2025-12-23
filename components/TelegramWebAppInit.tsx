@@ -23,6 +23,9 @@ export const TelegramWebAppInit = () => {
       // Mount the back button (required before using it)
       backButton.mount();
 
+      // Mount closing behavior (required before using it)
+      closingBehavior.mount();
+
       // Configure Mini App - use ready() to expand
       miniApp.ready();
 
@@ -55,10 +58,18 @@ export const TelegramWebAppInit = () => {
       initialPathnameRef.current = pathname;
       historyStackRef.current = [pathname];
     } else {
-      // Track navigation: add to stack if it's a new pathname
+      // Track navigation: add to stack if it's a new pathname (forward navigation)
       const lastPath = historyStackRef.current[historyStackRef.current.length - 1];
       if (pathname !== lastPath) {
-        historyStackRef.current.push(pathname);
+        // Check if this is forward navigation (new page) or back navigation
+        const pathIndex = historyStackRef.current.indexOf(pathname);
+        if (pathIndex === -1) {
+          // New page - add to stack
+          historyStackRef.current.push(pathname);
+        } else {
+          // Back navigation - remove everything after this path
+          historyStackRef.current = historyStackRef.current.slice(0, pathIndex + 1);
+        }
       }
     }
   }, [pathname]);
@@ -66,22 +77,23 @@ export const TelegramWebAppInit = () => {
   // Colors are set once during initialization
   // Theme changes are handled by re-applying colors if needed
 
-  // Check if we can go back using history stack
+  // Check if we can go back - primarily check if we're at the initial pathname
   const canGoBack = (): boolean => {
     if (typeof window === 'undefined') return false;
+    if (initialPathnameRef.current === null) return false;
 
-    // Check if we have browser history
-    if (window.history.length > 1) {
-      return true;
+    // Primary check: if we're at the initial pathname, we can't go back
+    if (pathname === initialPathnameRef.current) {
+      return false;
     }
 
-    // Check if we have navigation history in our stack
+    // Secondary check: if we have navigation history in our stack
     if (historyStackRef.current.length > 1) {
       return true;
     }
 
-    // Check if current pathname differs from initial
-    return initialPathnameRef.current !== null && pathname !== initialPathnameRef.current;
+    // Fallback: check if current pathname differs from initial
+    return pathname !== initialPathnameRef.current;
   };
 
   // Handle back button setup and visibility
@@ -91,10 +103,6 @@ export const TelegramWebAppInit = () => {
 
     // Handler uses window.history.back() for better webview compatibility
     const handler = () => {
-      // Remove current path from stack
-      if (historyStackRef.current.length > 1) {
-        historyStackRef.current.pop();
-      }
       window.history.back();
     };
 
@@ -110,14 +118,11 @@ export const TelegramWebAppInit = () => {
       }
     };
 
+    // Update visibility whenever pathname changes
     updateBackButtonVisibility();
 
     // Listen to popstate events to update back button when user navigates back
     const handlePopState = () => {
-      // Remove last path from stack when going back
-      if (historyStackRef.current.length > 1) {
-        historyStackRef.current.pop();
-      }
       // Clear any existing timeout
       if (timeoutRef.current) {
         clearTimeout(timeoutRef.current);
