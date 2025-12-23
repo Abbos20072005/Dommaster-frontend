@@ -1,6 +1,6 @@
 'use client';
 
-import { backButton, closingBehavior, init, miniApp, viewport } from '@tma.js/sdk-react';
+import { backButton, closingBehavior, init, miniApp, swipeBehavior } from '@tma.js/sdk-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
@@ -20,28 +20,15 @@ export const TelegramWebAppInit = () => {
       init();
       initializedRef.current = true;
 
-      // Mount the back button (required before using it)
       backButton.mount();
-
-      // Mount closing behavior (required before using it)
       closingBehavior.mount();
+      swipeBehavior.mount();
 
-      // Configure Mini App - use ready() to expand
       miniApp.ready();
 
-      // Disable vertical swipes - check if method exists
-      try {
-        if ('disableVerticalSwipes' in viewport) {
-          (viewport as any).disableVerticalSwipes();
-        }
-      } catch {
-        // Method not available
-      }
-
-      // Enable closing confirmation
       closingBehavior.enableConfirmation();
+      swipeBehavior.disableVertical();
 
-      // Force light mode colors
       miniApp.setHeaderColor('#00257AFF');
       miniApp.setBottomBarColor('#000000FF');
     } catch (error) {
