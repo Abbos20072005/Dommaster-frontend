@@ -57,7 +57,7 @@ export const BottomNav = () => {
         className='text-muted-foreground flex flex-col items-center gap-1 transition-colors'
       >
         <div className='relative'>
-          {!!favorites?.length && (
+          {!!favorites.length && (
             <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
               {favorites.length}
             </div>

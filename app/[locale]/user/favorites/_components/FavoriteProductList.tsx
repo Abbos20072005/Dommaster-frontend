@@ -1,37 +1,18 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
-import { ProductList, ProductListSkeleton } from '@/modules/product';
-import { getFavorites } from '@/utils/api/requests';
+import { ProductList } from '@/modules/product';
 import { useFavorites } from '@/utils/stores';
 
 export const FavoriteProductList = () => {
   const t = useTranslations();
-  const { favorites, setFavorites } = useFavorites();
-  const getFavoritesQuery = useQuery({
-    queryKey: ['products', 'favorites'],
-    staleTime: 0,
-    queryFn: async () => {
-      const res = await getFavorites();
-      if (res.data.ok) setFavorites(res.data.result);
-      return res;
-    }
-  });
+  const { favorites } = useFavorites();
 
-  if (getFavoritesQuery.isLoading) {
-    return (
-      <div>
-        <ProductListSkeleton view='grid' count={3} />
-      </div>
-    );
-  }
-
-  if (!favorites || favorites?.length === 0) {
+  if (favorites.length === 0) {
     return (
       <div className='mx-auto grid max-w-lg place-items-center space-y-5 py-10 md:py-20'>
         <Image
@@ -50,5 +31,5 @@ export const FavoriteProductList = () => {
     );
   }
 
-  return <ProductList view='grid' products={favorites.map((item) => item.product)} />;
+  return <ProductList view='grid' products={favorites} />;
 };

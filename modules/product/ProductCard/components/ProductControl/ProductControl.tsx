@@ -1,14 +1,14 @@
 'use client';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { HeartIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import React from 'react';
 import { toast } from 'sonner';
 
 import { useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { postFavorite } from '@/utils/api/requests';
+import { useFavorites } from '@/utils/stores';
 
 interface Props {
   product: Product;
@@ -17,32 +17,30 @@ interface Props {
 export const ProductControl = ({ product }: Props) => {
   const t = useTranslations();
   const router = useRouter();
-  const [liked, setLiked] = React.useState(product.is_favourite);
-  const queryClient = useQueryClient();
+  const { isFavorite, toggleFavorite } = useFavorites();
 
-  React.useEffect(() => {
-    setLiked(product.is_favourite);
-  }, [product.is_favourite]);
+  const isFav = isFavorite(product.id);
 
   const postFavoriteMutation = useMutation({
     mutationFn: postFavorite,
-    onSuccess: () => {
-      if (!liked) {
-        toast(t('Added to favorites'), {
-          action: {
-            label: t('View'),
-            onClick: () => router.push('/user/favorites')
-          }
-        });
-        setLiked(true);
-      } else {
-        setLiked(false);
-      }
-      queryClient.invalidateQueries({ queryKey: ['products'] });
+    onError: () => {
+      toggleFavorite(product);
     }
   });
 
   const onToggleFavorite = () => {
+    const wasFavorite = isFav;
+
+    toggleFavorite(product);
+
+    if (!wasFavorite) {
+      toast(t('Added to favorites'), {
+        action: {
+          label: t('View'),
+          onClick: () => router.push('/user/favorites')
+        }
+      });
+    }
     postFavoriteMutation.mutate({ data: { product: product.id } });
   };
 
@@ -50,12 +48,13 @@ export const ProductControl = ({ product }: Props) => {
     <div className='flex gap-1'>
       <button
         className={cn('text-muted-foreground hover:text-red-500', {
-          'text-red-500': liked
+          'text-red-500': isFav
         })}
+        disabled={postFavoriteMutation.isPending}
         type='button'
         onClick={onToggleFavorite}
       >
-        <HeartIcon className={cn({ 'fill-red-500': liked })} />
+        <HeartIcon className={cn({ 'fill-red-500': isFav })} />
       </button>
     </div>
   );

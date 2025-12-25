@@ -38,7 +38,7 @@ export const DesktopCards = () => {
             <CardContent>
               <p>{t('Favorites')}</p>
               <p className='text-muted-foreground'>
-                {favorites?.length
+                {favorites.length
                   ? t('{count} products', { count: favorites.length })
                   : t('No products')}
               </p>

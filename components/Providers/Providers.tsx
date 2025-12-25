@@ -66,11 +66,11 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
   return (
     <QueryClientProvider client={queryClient}>
       <NuqsAdapter>
-        <FavoritesProvider>
-          <TooltipProvider>
-            <LoginProvider>{children}</LoginProvider>
-          </TooltipProvider>
-        </FavoritesProvider>
+        <TooltipProvider>
+          <LoginProvider>
+            <FavoritesProvider>{children}</FavoritesProvider>
+          </LoginProvider>
+        </TooltipProvider>
       </NuqsAdapter>
     </QueryClientProvider>
   );

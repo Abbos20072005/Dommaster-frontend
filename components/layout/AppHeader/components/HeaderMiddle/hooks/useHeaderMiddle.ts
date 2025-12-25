@@ -22,7 +22,7 @@ export const useHeaderMiddle = () => {
   return {
     state: {
       offset,
-      favoritesLength: favorites?.length,
+      favoritesLength: favorites.length,
       cartItemsLength: cart?.cart_items.length
     }
   };
