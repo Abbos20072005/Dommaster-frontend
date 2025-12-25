@@ -1,21 +1,17 @@
 import type { Metadata, Viewport } from 'next';
 
-import { MessageSquareTextIcon } from 'lucide-react';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { Inter, Roboto_Mono } from 'next/font/google';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
 
 import type { Locale } from '@/i18n/routing';
 
-import { AppFooter, AppHeader, BottomNav } from '@/components/layout';
-import { ChatDialog } from '@/components/modules/chat';
+import { AppFooter, AppHeader, BottomNav, FloatingActions } from '@/components/layout';
 import { Providers } from '@/components/Providers';
 import { TelegramWebAppInit } from '@/components/TelegramWebAppInit';
-import { Button } from '@/components/ui/button';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
@@ -115,18 +111,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
             <AppFooter />
             <BottomNav />
             <Toaster />
-            <div className='fixed right-12 bottom-12 z-50 hidden items-center gap-2 md:flex md:flex-col'>
-              <Button asChild className='rounded-full' size='icon' variant='outline'>
-                <a href='https://t.me/buildexuz' rel='noreferrer' target='_blank'>
-                  <Image alt='telegram' height={40} src='/logos/telegram.png' width={40} />
-                </a>
-              </Button>
-              <ChatDialog asChild>
-                <Button className='rounded-full' size='iconLg' variant='secondary'>
-                  <MessageSquareTextIcon className='size-6' />
-                </Button>
-              </ChatDialog>
-            </div>
+            <FloatingActions />
           </Providers>
         </NextIntlClientProvider>
       </body>

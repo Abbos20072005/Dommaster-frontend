@@ -1,32 +1,42 @@
+import type { InternalAxiosRequestConfig } from 'axios';
+
 import axios from 'axios';
 import { notFound } from 'next/navigation';
 
-import { getToken } from '@/utils/api/getAccessToken';
-import { getServerLocale } from '@/utils/api/getServerLocale';
-import { useAuthStore } from '@/utils/stores';
+import { getClientToken } from './getClientToken';
+import { getServerToken } from './getServerToken';
 
 const api = axios.create({
   withCredentials: true,
   baseURL: process.env.API_URL
 });
 
-api.interceptors.request.use(async (config) => {
-  let token;
-  let locale;
-  if (typeof window === 'undefined') {
-    token = await getToken();
-    locale = await getServerLocale();
-  } else {
-    token = useAuthStore.getState().auth.accessToken;
-    locale = 'ru';
-    // locale = Cookies.get('NEXT_LOCALE') || routing.defaultLocale;
-  }
-  if (token) config.headers.Authorization = `Bearer ${token}`;
-
-  config.headers['Accept-Language'] = locale;
-
-  return config;
+const publicApi = axios.create({
+  baseURL: process.env.API_URL
 });
+
+const getCurrentLocale = (config: InternalAxiosRequestConfig<any>) => {
+  config.headers['Accept-Language'] = 'ru';
+  return config;
+  // TODO later
+  // if (typeof window === 'undefined') {
+  //   return await getServerLocale();
+  // }
+  // return getClientLocale();
+};
+
+const attachAuthToken = async (config: InternalAxiosRequestConfig<any>) => {
+  const token = typeof window === 'undefined' ? await getServerToken() : getClientToken();
+
+  if (token) config.headers.Authorization = `Bearer ${token}`;
+  return config;
+};
+
+api.interceptors.request.use(attachAuthToken);
+
+api.interceptors.request.use(getCurrentLocale);
+
+publicApi.interceptors.request.use(getCurrentLocale);
 
 api.interceptors.response.use(
   (response) => response,
@@ -39,4 +49,4 @@ api.interceptors.response.use(
   }
 );
 
-export { api };
+export { api, publicApi };

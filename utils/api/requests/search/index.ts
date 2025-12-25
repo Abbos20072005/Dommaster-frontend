@@ -1,7 +1,7 @@
-import { api } from '@/utils/api/instance';
+import { publicApi } from '@/utils/api/instance';
 
 export const getSearch = (requestConfig?: RequestConfig) =>
-  api.get<SearchResponse>('/search/', requestConfig?.config);
+  publicApi.get<SearchResponse>('/search/', requestConfig?.config);
 
 export const getMostSearched = (requestConfig?: RequestConfig) =>
-  api.get<MostSearchedResponse>('/most/search/', requestConfig?.config);
+  publicApi.get<MostSearchedResponse>('/most/search/', requestConfig?.config);

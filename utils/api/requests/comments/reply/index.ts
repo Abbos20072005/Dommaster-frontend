@@ -1,10 +1,10 @@
-import { api } from '@/utils/api/instance';
+import { api, publicApi } from '@/utils/api/instance';
 
 export const getCommentReplies = ({
   commentId,
   config
 }: RequestConfig & { commentId: number | string }) =>
-  api.get<ProductCommentRepliesResponse>(`/comment/${commentId}/replies/`, config);
+  publicApi.get<ProductCommentRepliesResponse>(`/comment/${commentId}/replies/`, config);
 
 export const postCommentReply = ({
   commentId,

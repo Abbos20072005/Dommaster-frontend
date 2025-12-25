@@ -1,7 +1,7 @@
-import { api } from '@/utils/api/instance';
+import { api, publicApi } from '@/utils/api/instance';
 
 export const getQuestions = (requestConfig?: RequestConfig) =>
-  api.get<ProductQuestionsResponse>('/questions/list/', requestConfig?.config);
+  publicApi.get<ProductQuestionsResponse>('/questions/list/', requestConfig?.config);
 
 export const getMyQuestions = (requestConfig?: RequestConfig) =>
   api.get<ProductQuestionsResponse>('/questions/me/', requestConfig?.config);

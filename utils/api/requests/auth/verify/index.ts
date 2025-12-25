@@ -1,4 +1,4 @@
-import { api } from '@/utils/api/instance';
+import { publicApi } from '@/utils/api/instance';
 
 export const postVerify = ({ data, config }: RequestConfig<VerifyRequest>) =>
-  api.post<VerifyResponse>('auth/otp/verify/', data, config);
+  publicApi.post<VerifyResponse>('auth/otp/verify/', data, config);

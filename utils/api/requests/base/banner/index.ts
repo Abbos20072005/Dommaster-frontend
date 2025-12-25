@@ -1,4 +1,4 @@
-import { api } from '@/utils/api/instance';
+import { publicApi } from '@/utils/api/instance';
 
 export const getBanners = (requestConfig?: RequestConfig) =>
-  api.get<BannersResponse>('/base/banner/', requestConfig?.config);
+  publicApi.get<BannersResponse>('/base/banner/', requestConfig?.config);

@@ -1,7 +1,7 @@
-import { api } from '@/utils/api/instance';
+import { api, publicApi } from '@/utils/api/instance';
 
 export const getComments = (requestConfig?: RequestConfig) =>
-  api.get<ProductCommentsResponse>('/comments/list/', requestConfig?.config);
+  publicApi.get<ProductCommentsResponse>('/comments/list/', requestConfig?.config);
 
 export const getMyComments = (requestConfig?: RequestConfig) =>
   api.get<ProductCommentsResponse>('/comments/me/', requestConfig?.config);

@@ -1,4 +1,4 @@
-import { api } from '@/utils/api/instance';
+import { publicApi } from '@/utils/api/instance';
 
 export const postResendCode = ({ data, config }: RequestConfig<ResendRequest>) =>
-  api.post<ResendResponse>('auth/otp/resend/', data, config);
+  publicApi.post<ResendResponse>('auth/otp/resend/', data, config);

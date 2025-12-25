@@ -1,4 +1,4 @@
-import { api } from '@/utils/api/instance';
+import { publicApi } from '@/utils/api/instance';
 
 export const getAbout = (requestConfig?: RequestConfig) =>
-  api.get<AboutResponse>('/base/about/', requestConfig?.config);
+  publicApi.get<AboutResponse>('/base/about/', requestConfig?.config);

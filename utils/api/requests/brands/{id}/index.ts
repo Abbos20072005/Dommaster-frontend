@@ -1,4 +1,4 @@
-import { api } from '@/utils/api/instance';
+import { publicApi } from '@/utils/api/instance';
 
 export const getBrandById = ({ id, config }: RequestConfig & { id: number | string }) =>
-  api.get<BrandResponse>(`/brands/${id}/`, config);
+  publicApi.get<BrandResponse>(`/brands/${id}/`, config);
