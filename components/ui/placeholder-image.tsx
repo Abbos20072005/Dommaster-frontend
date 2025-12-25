@@ -1,4 +1,4 @@
-import { Slot } from '@radix-ui/react-slot';
+import { Slot as SlotPrimitive } from 'radix-ui';
 import React from 'react';
 
 import { Icons } from '@/components/Icons';
@@ -16,7 +16,7 @@ export const PlaceholderImage = ({
   className,
   ...props
 }: PlaceholderImageProps) => {
-  const Comp = asChild ? Slot : 'div';
+  const Comp = asChild ? SlotPrimitive.Slot : 'div';
 
   return (
     <Comp className={cn('aspect-square overflow-hidden rounded-md', className)} {...props}>

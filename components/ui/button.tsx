@@ -1,6 +1,6 @@
 import type { VariantProps } from 'class-variance-authority';
 
-import { Slot } from '@radix-ui/react-slot';
+import { Slot as SlotPrimitive } from 'radix-ui';
 import { cva } from 'class-variance-authority';
 import { Loader2Icon } from 'lucide-react';
 import * as React from 'react';
@@ -60,9 +60,9 @@ const Button = ({ className, variant, size, children, ...props }: ButtonProps) =
   const { asChild, ...rest } = props;
   if (asChild) {
     return (
-      <Slot className={cn(buttonVariants({ variant, size, className }))} {...rest}>
+      <SlotPrimitive.Slot className={cn(buttonVariants({ variant, size, className }))} {...rest}>
         {children}
-      </Slot>
+      </SlotPrimitive.Slot>
     );
   }
 
