@@ -5,12 +5,12 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
-import { CartCounter, useProductCart } from '@/components/modules/cart';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
+import { CartCounter, useProductCart } from '@/modules/cart';
 
 interface Props {
   checked?: boolean;

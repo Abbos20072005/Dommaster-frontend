@@ -5,10 +5,10 @@ import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
-import { ProductListSkeleton } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+import { ProductListSkeleton } from '@/modules/product';
 
 import { FavoriteProductList } from './_components';
 

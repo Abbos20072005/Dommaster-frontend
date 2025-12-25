@@ -1,7 +1,6 @@
 import { FilterIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { Filter } from '@/components/modules/filter';
 import { Button } from '@/components/ui/button';
 import {
   Drawer,
@@ -12,6 +11,7 @@ import {
   DrawerTitle,
   DrawerTrigger
 } from '@/components/ui/drawer';
+import { Filter } from '@/modules/filter';
 
 interface Props {
   filters: Filter[];

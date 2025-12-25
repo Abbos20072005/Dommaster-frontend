@@ -4,8 +4,8 @@ import { MessageSquareTextIcon } from 'lucide-react';
 import Image from 'next/image';
 import React from 'react';
 
-import { ChatDialog } from '@/components/modules/chat';
 import { Button } from '@/components/ui/button';
+import { ChatDialog } from '@/modules/chat';
 
 export const FloatingActions = () => {
   return (
@@ -23,4 +23,3 @@ export const FloatingActions = () => {
     </div>
   );
 };
-

@@ -7,13 +7,13 @@ import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
 import { OrderProducts } from '@/app/[locale]/user/orders/history/[id]/_components/OrderProducts';
-import { AuthWrapper } from '@/components/modules/auth';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPhoneNumber, formatPrice } from '@/lib/utils';
+import { AuthWrapper } from '@/modules/auth';
 import { getOrderById } from '@/utils/api/requests';
 import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
 import { useAuth } from '@/utils/stores';

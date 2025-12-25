@@ -5,9 +5,9 @@ import { EditIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { ProductQuestionDialog } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { ProductQuestionDialog } from '@/modules/product';
 import { useAuth } from '@/utils/stores';
 
 import { QuestionReplies } from './components/QuestionReplies/QuestionReplies';

@@ -5,7 +5,6 @@ import { Trash2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { useCart } from '@/components/modules/cart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
@@ -13,6 +12,7 @@ import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
+import { useCart } from '@/modules/cart';
 import { patchCart, postCartBulk } from '@/utils/api/requests';
 
 import { ProductCartItem } from './ProductCartItem';

@@ -6,10 +6,10 @@ import Image from 'next/image';
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
-import { AuthDialog } from '@/components/modules/auth';
-import { Search } from '@/components/modules/search';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { AuthDialog } from '@/modules/auth';
+import { Search } from '@/modules/search';
 import { useAuth } from '@/utils/stores';
 
 import { NavUser } from './components';

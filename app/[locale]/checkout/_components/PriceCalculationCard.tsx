@@ -5,7 +5,6 @@ import { useTranslations } from 'next-intl';
 import { parseAsInteger, useQueryState } from 'nuqs';
 import React from 'react';
 
-import { useCart } from '@/components/modules/cart';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,6 +12,7 @@ import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
+import { useCart } from '@/modules/cart';
 import { getCustomerAddresses, postOrder } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 

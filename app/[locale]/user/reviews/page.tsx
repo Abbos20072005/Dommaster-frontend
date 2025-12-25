@@ -4,11 +4,11 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 
-import { AuthWrapper } from '@/components/modules/auth';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Link } from '@/i18n/navigation';
+import { AuthWrapper } from '@/modules/auth';
 
 import { ProductComments, ProductQuestions } from './_components';
 

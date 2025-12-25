@@ -6,10 +6,10 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { QuestionReplies } from '@/app/[locale]/product/[id]/_components/ProductBody/components/ProductQuestions/components/QuestionReplies/QuestionReplies';
-import { AuthDialog } from '@/components/modules/auth';
-import { ProductQuestionDialog } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { AuthDialog } from '@/modules/auth';
+import { ProductQuestionDialog } from '@/modules/product';
 import { useAuth } from '@/utils/stores';
 
 import { useProductQuestions } from './hooks';

@@ -15,12 +15,12 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { AuthDialog } from '@/components/modules/auth';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { formatPhoneNumber } from '@/lib/utils';
+import { AuthDialog } from '@/modules/auth';
 import { useAuth } from '@/utils/stores';
 
 const navMainLinks = [

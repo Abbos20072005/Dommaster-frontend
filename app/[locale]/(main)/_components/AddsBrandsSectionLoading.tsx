@@ -1,8 +1,8 @@
 import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
-import { ProductListSkeleton } from '@/components/modules/product';
 import { Skeleton } from '@/components/ui/skeleton';
+import { ProductListSkeleton } from '@/modules/product';
 
 export const AddsBrandsSectionLoading = () => {
   return (

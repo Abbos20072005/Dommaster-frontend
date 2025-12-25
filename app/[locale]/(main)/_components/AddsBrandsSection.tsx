@@ -6,9 +6,9 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
-import { ProductList } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import { ProductList } from '@/modules/product';
 import { getMain } from '@/utils/api/requests';
 
 import { AddsBrandsSectionLoading } from './AddsBrandsSectionLoading';

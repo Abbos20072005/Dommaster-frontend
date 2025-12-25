@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { ProductList, ProductListSkeleton } from '@/components/modules/product';
+import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { getViewedProducts } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 

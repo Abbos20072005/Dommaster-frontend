@@ -2,8 +2,6 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
-import { FilterSkeleton } from '@/components/modules/filter';
-import { ProductListSkeleton } from '@/components/modules/product';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,6 +11,8 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { Skeleton } from '@/components/ui/skeleton';
+import { FilterSkeleton } from '@/modules/filter';
+import { ProductListSkeleton } from '@/modules/product';
 
 const SaleLoading = () => {
   const t = useTranslations();

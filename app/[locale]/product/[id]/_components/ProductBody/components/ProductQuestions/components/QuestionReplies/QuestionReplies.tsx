@@ -3,11 +3,11 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { AuthDialog } from '@/components/modules/auth';
-import { ProductQuestionReplyForm } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { Spinner } from '@/components/ui/spinner';
+import { AuthDialog } from '@/modules/auth';
+import { ProductQuestionReplyForm } from '@/modules/product';
 import { useAuth } from '@/utils/stores';
 
 import { useQuestionReplies } from './hooks';

@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-import { ProductList, ProductListSkeleton } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { getFavorites } from '@/utils/api/requests';
 import { useFavorites } from '@/utils/stores';
 

@@ -3,9 +3,9 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { ProductList, ProductListSkeleton } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { ProductList, ProductListSkeleton } from '@/modules/product';
 
 import { useViewedProducts } from './hooks';
 

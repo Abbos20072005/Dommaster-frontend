@@ -3,13 +3,13 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { AuthDialog } from '@/components/modules/auth';
-import { useCart } from '@/components/modules/cart';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
+import { AuthDialog } from '@/modules/auth';
+import { useCart } from '@/modules/cart';
 import { useAuth } from '@/utils/stores';
 
 export const CartCalculation = () => {

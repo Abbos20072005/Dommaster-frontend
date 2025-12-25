@@ -6,10 +6,10 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
-import { ProductCommentDialog } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Ratings } from '@/components/ui/rating';
 import { Spinner } from '@/components/ui/spinner';
+import { ProductCommentDialog } from '@/modules/product';
 
 import { CommentReplies } from './components';
 import { useProductComments } from './hooks';

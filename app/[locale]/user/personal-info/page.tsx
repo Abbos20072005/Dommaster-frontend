@@ -3,10 +3,10 @@
 import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { AuthWrapper } from '@/components/modules/auth';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+import { AuthWrapper } from '@/modules/auth';
 import { useAuth } from '@/utils/stores';
 
 import { LogoutButton, PersonalInfoForm } from './_components';

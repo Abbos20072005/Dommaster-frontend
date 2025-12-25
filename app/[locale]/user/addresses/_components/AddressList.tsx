@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { AddressSelectDialog } from '@/components/modules/location';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { AddressSelectDialog } from '@/modules/location';
 import { getCustomerAddresses } from '@/utils/api/requests';
 
 import { AddressItem } from './AddressItem';

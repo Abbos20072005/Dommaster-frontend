@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useCart } from '@/components/modules/cart';
+import { useCart } from '@/modules/cart';
 import { useFavorites } from '@/utils/stores';
 
 export const useHeaderMiddle = () => {

@@ -2,8 +2,8 @@
 
 import type { FC } from 'react';
 
-import { useFilter } from '@/components/modules/filter';
 import { cn } from '@/lib/utils';
+import { useFilter } from '@/modules/filter';
 
 import { DOTS, usePagination } from './hooks/usePagination';
 import {

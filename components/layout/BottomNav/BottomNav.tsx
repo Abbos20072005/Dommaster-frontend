@@ -9,8 +9,8 @@ import {
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
-import { useCart } from '@/components/modules/cart';
 import { NavigationLink } from '@/components/NavigationLink';
+import { useCart } from '@/modules/cart';
 import { useFavorites } from '@/utils/stores';
 
 export const BottomNav = () => {

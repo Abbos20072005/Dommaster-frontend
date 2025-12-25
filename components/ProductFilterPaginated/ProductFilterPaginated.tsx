@@ -6,10 +6,10 @@ import Image from 'next/image';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
-import { Filter, useFilter } from '@/components/modules/filter';
-import { ProductList, ProductListSkeleton } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Pagination } from '@/components/ui/pagination';
+import { Filter, useFilter } from '@/modules/filter';
+import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { getProducts } from '@/utils/api/requests';
 
 import { MobileFilterDrawer, ProductsSortBySelect } from './components';

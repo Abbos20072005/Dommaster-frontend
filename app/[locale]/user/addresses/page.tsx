@@ -3,10 +3,10 @@ import type { Metadata } from 'next';
 import { ArrowLeftIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 
-import { AuthWrapper } from '@/components/modules/auth';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
+import { AuthWrapper } from '@/modules/auth';
 
 import { AddressList } from './_components';
 

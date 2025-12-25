@@ -15,11 +15,6 @@ import {
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
-  COMMON_LOCATION_PARAMS,
-  getAllCoordinates,
-  getBounds
-} from '@/components/modules/location';
-import {
   Breadcrumb,
   BreadcrumbItem,
   BreadcrumbLink,
@@ -27,6 +22,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { COMMON_LOCATION_PARAMS, getAllCoordinates, getBounds } from '@/modules/location';
 import { MAP } from '@/utils/constants';
 
 const CourierDeliveryPage = () => {

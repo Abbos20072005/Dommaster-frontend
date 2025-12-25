@@ -4,7 +4,6 @@ import { EditIcon, Trash2Icon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { ProductCommentReplyForm } from '@/components/modules/product';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -16,6 +15,7 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { ProductCommentReplyForm } from '@/modules/product';
 import { deleteCommentReplyById } from '@/utils/api/requests';
 import { useAuth } from '@/utils/stores';
 

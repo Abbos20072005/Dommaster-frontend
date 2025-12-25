@@ -3,10 +3,10 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { ProductQuestionReplyForm } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { Spinner } from '@/components/ui/spinner';
+import { ProductQuestionReplyForm } from '@/modules/product';
 
 import { useQuestionReplies } from './hooks';
 import { QuestionReplyItem } from './QuestionReplyItem';

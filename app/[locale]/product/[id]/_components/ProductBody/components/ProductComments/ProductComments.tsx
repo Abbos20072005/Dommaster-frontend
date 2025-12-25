@@ -6,12 +6,12 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
-import { AuthDialog } from '@/components/modules/auth';
-import { ProductCommentDialog } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Ratings } from '@/components/ui/rating';
 import { Spinner } from '@/components/ui/spinner';
+import { AuthDialog } from '@/modules/auth';
+import { ProductCommentDialog } from '@/modules/product';
 import { useAuth } from '@/utils/stores';
 
 import { CommentReplies } from './components/CommentReplies/CommentReplies';

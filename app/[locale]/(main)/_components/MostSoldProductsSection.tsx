@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 
 import { BaseLayout } from '@/components/layout';
-import { ProductList, ProductListSkeleton } from '@/components/modules/product';
+import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { getMostSoldProducts } from '@/utils/api/requests';
 
 export const MostSoldProductsSection = () => {

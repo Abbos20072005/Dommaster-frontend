@@ -5,11 +5,11 @@ import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { AddressSelectDialog } from '@/components/modules/location';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Spinner } from '@/components/ui/spinner';
+import { AddressSelectDialog } from '@/modules/location';
 import { getCustomerAddresses, patchCustomerAddress } from '@/utils/api/requests';
 
 import { AddressItem } from './AddressItem';

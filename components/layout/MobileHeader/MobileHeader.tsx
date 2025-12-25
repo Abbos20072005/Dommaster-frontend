@@ -3,10 +3,10 @@ import Image from 'next/image';
 import React from 'react';
 
 import { LocaleSwitcher } from '@/components/layout/AppHeader/components/HeaderTop/components';
-import { ChatDialog } from '@/components/modules/chat';
-import { MobileSearch } from '@/components/modules/search';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import { ChatDialog } from '@/modules/chat';
+import { MobileSearch } from '@/modules/search';
 
 export const MobileHeader = () => {
   return (

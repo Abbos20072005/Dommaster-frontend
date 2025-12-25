@@ -9,10 +9,10 @@ import Image from 'next/image';
 import type { Locale } from '@/i18n/routing';
 
 import { BaseLayout } from '@/components/layout';
-import { ProductList, ProductListSkeleton } from '@/components/modules/product';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@/i18n/navigation';
+import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { getSaleMain } from '@/utils/api/requests';
 
 export const DiscountProductsSection = () => {
