@@ -1,9 +1,8 @@
 'use client';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { Trash2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -20,15 +19,14 @@ import { ProductCartItem } from './ProductCartItem';
 export const ProductCartList = () => {
   const t = useTranslations();
 
-  const { cart, isLoading, isFetching } = useCart();
+  const { cart, isLoading } = useCart();
 
   const isAllChecked = cart?.cart_items.every((item) => item.is_checked);
 
-  const queryClient = useQueryClient();
   const postCartBulkMutation = useMutation({
     mutationFn: postCartBulk,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
+    meta: {
+      invalidatesQuery: ['products', 'cart']
     }
   });
 
@@ -46,8 +44,8 @@ export const ProductCartList = () => {
 
   const patchCartMutation = useMutation({
     mutationFn: patchCart,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
+    meta: {
+      invalidatesQuery: ['products', 'cart']
     }
   });
 
@@ -113,7 +111,7 @@ export const ProductCartList = () => {
         <div>
           <Spinner
             className='text-primary size-4'
-            show={isFetching || postCartBulkMutation.isPending || patchCartMutation.isPending}
+            show={postCartBulkMutation.isPending || patchCartMutation.isPending}
           />
         </div>
       </CardHeader>

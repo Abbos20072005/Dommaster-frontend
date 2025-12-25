@@ -8,7 +8,7 @@ interface FavoritesStore {
   toggleFavorite: (product: Product) => void;
 }
 
-export const useFavorites = create<FavoritesStore>()((set, get) => ({
+export const useFavoritesStore = create<FavoritesStore>()((set, get) => ({
   favorites: [],
   favoritesMap: {},
 

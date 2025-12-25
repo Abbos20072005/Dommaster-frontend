@@ -1,50 +1,49 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import React from 'react';
+import { useMutation } from '@tanstack/react-query';
 
 import { patchCart, postCart } from '@/utils/api/requests';
+import { useCartStore } from '@/utils/stores';
 
 export const useProductCart = (product: Product) => {
-  const [cartCount, setCartCount] = React.useState(product.in_cart_quantity);
-  const queryClient = useQueryClient();
-
-  React.useEffect(() => {
-    setCartCount(product.in_cart_quantity);
-  }, [product.in_cart_quantity]);
+  const { cartItemsQuantityMap, setCartItemQuantity } = useCartStore();
 
   const postCartMutation = useMutation({
-    mutationFn: postCart,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
-      queryClient.invalidateQueries({ queryKey: ['products'] });
-    }
+    mutationFn: postCart
   });
 
   const patchCartMutation = useMutation({
-    mutationFn: patchCart,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['cart'] });
-      queryClient.invalidateQueries({ queryKey: ['products'] });
-    }
+    mutationFn: patchCart
   });
 
   const onAddToCart = () => {
-    postCartMutation.mutate({ data: { product: product.id, quantity: 1 } });
-    setCartCount(1);
+    const previousQuantity = cartItemsQuantityMap[product.id] ?? 0;
+    setCartItemQuantity(product.id, 1);
+    postCartMutation.mutate(
+      { data: { product: product.id, quantity: 1 } },
+      { onError: () => setCartItemQuantity(product.id, previousQuantity) }
+    );
   };
 
   const onCartCountChange = (value: number) => {
-    patchCartMutation.mutate({ data: { product: product.id, quantity: value } });
-    setCartCount(value);
+    const previousQuantity = cartItemsQuantityMap[product.id] ?? 0;
+    setCartItemQuantity(product.id, value);
+    patchCartMutation.mutate(
+      { data: { product: product.id, quantity: value } },
+      { onError: () => setCartItemQuantity(product.id, previousQuantity) }
+    );
   };
 
   const onRemoveFromCart = () => {
-    patchCartMutation.mutate({ data: { product: product.id, quantity: 0 } });
-    setCartCount(0);
+    const previousQuantity = cartItemsQuantityMap[product.id] ?? 0;
+    setCartItemQuantity(product.id, 0);
+    patchCartMutation.mutate(
+      { data: { product: product.id, quantity: 0 } },
+      { onError: () => setCartItemQuantity(product.id, previousQuantity) }
+    );
   };
 
   return {
     state: {
-      cartCount,
+      cartCount: cartItemsQuantityMap[product.id] ?? 0,
       isCartAdding: postCartMutation.isPending
     },
     functions: {

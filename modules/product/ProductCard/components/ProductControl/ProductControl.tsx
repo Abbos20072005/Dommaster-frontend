@@ -8,7 +8,7 @@ import { toast } from 'sonner';
 import { useRouter } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { postFavorite } from '@/utils/api/requests';
-import { useFavorites } from '@/utils/stores';
+import { useFavoritesStore } from '@/utils/stores';
 
 interface Props {
   product: Product;
@@ -17,7 +17,7 @@ interface Props {
 export const ProductControl = ({ product }: Props) => {
   const t = useTranslations();
   const router = useRouter();
-  const { isFavorite, toggleFavorite } = useFavorites();
+  const { isFavorite, toggleFavorite } = useFavoritesStore();
 
   const isFav = isFavorite(product.id);
 

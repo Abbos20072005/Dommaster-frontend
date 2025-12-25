@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getFavorites } from '@/utils/api/requests';
-import { useFavorites } from '@/utils/stores';
+import { useFavoritesStore } from '@/utils/stores';
 
-export const FavoritesProvider = ({ children }: React.PropsWithChildren) => {
-  const { setFavorites } = useFavorites();
+export const FavoritesProvider = () => {
+  const { setFavorites } = useFavoritesStore();
 
   useQuery({
     queryKey: ['products', 'favorites'],
@@ -16,5 +16,5 @@ export const FavoritesProvider = ({ children }: React.PropsWithChildren) => {
     }
   });
 
-  return children;
+  return null;
 };

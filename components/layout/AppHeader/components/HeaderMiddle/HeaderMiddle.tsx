@@ -3,7 +3,6 @@
 import { HandPlatterIcon, HeartIcon, ShoppingCartIcon, UserCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
-import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
 import { Link } from '@/i18n/navigation';

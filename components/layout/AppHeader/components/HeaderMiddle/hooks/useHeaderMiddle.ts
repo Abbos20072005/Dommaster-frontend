@@ -1,12 +1,11 @@
 import React from 'react';
 
-import { useCart } from '@/modules/cart';
-import { useFavorites } from '@/utils/stores';
+import { useCartStore, useFavoritesStore } from '@/utils/stores';
 
 export const useHeaderMiddle = () => {
   const [offset, setOffset] = React.useState(0);
-  const { favorites } = useFavorites();
-  const { cart } = useCart();
+  const { favorites } = useFavoritesStore();
+  const { cartItemsLength } = useCartStore();
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -23,7 +22,7 @@ export const useHeaderMiddle = () => {
     state: {
       offset,
       favoritesLength: favorites.length,
-      cartItemsLength: cart?.cart_items.length
+      cartItemsLength
     }
   };
 };

@@ -5,11 +5,11 @@ import { useTranslations } from 'next-intl';
 
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
-import { useFavorites } from '@/utils/stores';
+import { useFavoritesStore } from '@/utils/stores';
 
 export const DesktopCards = () => {
   const t = useTranslations();
-  const { favorites } = useFavorites();
+  const { favorites } = useFavoritesStore();
 
   return (
     <div className='hidden md:block'>

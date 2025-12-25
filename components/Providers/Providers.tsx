@@ -14,7 +14,8 @@ import { LoginProvider } from '@/components/Providers/LoginProvider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { COOKIES } from '@/utils/constants';
 
-import { FavoritesProvider } from './FavoritesProvider';
+import { CartProvider } from './CartSync';
+import { FavoritesProvider } from './FavoritesSync';
 
 declare module '@tanstack/react-query' {
   interface Register {
@@ -68,7 +69,9 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
       <NuqsAdapter>
         <TooltipProvider>
           <LoginProvider>
-            <FavoritesProvider>{children}</FavoritesProvider>
+            <CartProvider />
+            <FavoritesProvider />
+            {children}
           </LoginProvider>
         </TooltipProvider>
       </NuqsAdapter>

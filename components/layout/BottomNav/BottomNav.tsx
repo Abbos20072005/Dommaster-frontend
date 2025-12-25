@@ -11,11 +11,11 @@ import { useTranslations } from 'next-intl';
 
 import { NavigationLink } from '@/components/NavigationLink';
 import { useCart } from '@/modules/cart';
-import { useFavorites } from '@/utils/stores';
+import { useFavoritesStore } from '@/utils/stores';
 
 export const BottomNav = () => {
   const t = useTranslations();
-  const { favorites } = useFavorites();
+  const { favorites } = useFavoritesStore();
   const { cart } = useCart();
 
   return (

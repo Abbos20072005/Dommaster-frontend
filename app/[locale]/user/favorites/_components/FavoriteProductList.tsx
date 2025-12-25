@@ -6,11 +6,11 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { ProductList } from '@/modules/product';
-import { useFavorites } from '@/utils/stores';
+import { useFavoritesStore } from '@/utils/stores';
 
 export const FavoriteProductList = () => {
   const t = useTranslations();
-  const { favorites } = useFavorites();
+  const { favorites } = useFavoritesStore();
 
   if (favorites.length === 0) {
     return (

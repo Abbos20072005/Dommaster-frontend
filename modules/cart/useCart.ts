@@ -1,12 +1,25 @@
 import { useQuery } from '@tanstack/react-query';
 
 import { getCartList } from '@/utils/api/requests';
+import { useCartStore } from '@/utils/stores';
 
 export const useCart = () => {
+  const { setCartItems } = useCartStore();
   const getCartListQuery = useQuery({
-    queryKey: ['cart'],
+    queryKey: ['products', 'cart'],
     staleTime: 0,
-    queryFn: () => getCartList()
+    queryFn: async () => {
+      const res = await getCartList();
+      if (res.data.ok) {
+        setCartItems(
+          res.data.result.cart_items.map((item) => ({
+            productId: item.product.id,
+            quantity: item.quantity
+          }))
+        );
+      }
+      return res;
+    }
   });
 
   const cart = getCartListQuery.data?.data.result;
