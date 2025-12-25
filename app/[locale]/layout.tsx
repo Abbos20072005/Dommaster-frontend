@@ -44,9 +44,18 @@ export async function generateMetadata(): Promise<Metadata> {
     },
     description: t('metadata.description'),
     icons: {
-      icon: '/favicon.ico',
-      shortcut: '/favicon-16x16.png',
-      apple: '/apple-touch-icon.png'
+      icon: {
+        url: '/favicon.ico',
+        type: 'image/x-icon'
+      },
+      shortcut: {
+        url: '/favicon-16x16.png',
+        type: 'image/png'
+      },
+      apple: {
+        url: '/apple-touch-icon.png',
+        type: 'image/png'
+      }
     },
     verification: {
       google: 'lv09WTXqHseTIi7QrNrGB3JgW9XDVKrt0NA0BjOQe6o',
