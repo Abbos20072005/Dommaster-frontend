@@ -6,15 +6,15 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import { useAuth } from '@/utils/stores';
+import { useAuth } from '@/modules/auth';
 
 import { AuthDialog } from './AuthDialog';
 
 export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations();
-  const { user } = useAuth();
+  const { user, isPending } = useAuth();
 
-  if (user === undefined) {
+  if (isPending) {
     return (
       <div className='flex items-center justify-center py-20'>
         <Spinner />
@@ -22,7 +22,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
     );
   }
 
-  if (user === null) {
+  if (!user) {
     return (
       <Card className='p-4 shadow-none md:p-5 md:shadow-sm'>
         <p className='mb-3 text-lg font-bold md:text-2xl'>{t('Login or register')}</p>

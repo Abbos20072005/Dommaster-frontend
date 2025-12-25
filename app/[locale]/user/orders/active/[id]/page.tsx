@@ -15,10 +15,9 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPhoneNumber, formatPrice } from '@/lib/utils';
-import { AuthWrapper } from '@/modules/auth';
+import { AuthWrapper, useAuth } from '@/modules/auth';
 import { getOrderById } from '@/utils/api/requests';
 import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
-import { useAuth } from '@/utils/stores';
 
 const OrderPage = () => {
   const t = useTranslations();

@@ -1,4 +1,3 @@
-import { useQueryClient } from '@tanstack/react-query';
 import { EditIcon, ListChecksIcon, LogOutIcon, MapPinIcon, UserCircleIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -13,7 +12,7 @@ import {
 } from '@/components/ui/dropdown-menu';
 import { Link, useRouter } from '@/i18n/navigation';
 import { formatPhoneNumber } from '@/lib/utils';
-import { useAuth } from '@/utils/stores';
+import { useAuth } from '@/modules/auth';
 
 interface Props extends React.ComponentProps<typeof DropdownMenuTrigger> {}
 
@@ -22,11 +21,9 @@ export const NavUser = ({ ...props }: Props) => {
   const { user, reset } = useAuth();
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
-  const queryClient = useQueryClient();
 
   const onLogout = () => {
     reset();
-    queryClient.invalidateQueries();
     router.refresh();
   };
 

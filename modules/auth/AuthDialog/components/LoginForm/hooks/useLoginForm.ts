@@ -1,10 +1,11 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import Cookies from 'js-cookie';
 import { useForm } from 'react-hook-form';
 
 import { useRouter } from '@/i18n/navigation';
 import { postLogin } from '@/utils/api/requests';
-import { useAuth } from '@/utils/stores';
+import { COOKIES } from '@/utils/constants';
 
 import type { LoginFormSchema } from '../constants';
 
@@ -25,15 +26,14 @@ export const useLoginForm = ({ onSuccess, withEmail }: Props) => {
     }
   });
 
-  const authStore = useAuth();
   const queryClient = useQueryClient();
   const router = useRouter();
 
   const postLoginMutation = useMutation({
     mutationFn: postLogin,
     onSuccess: ({ data }) => {
-      authStore.setAccessToken(data.access_token);
-      authStore.setRefreshToken(data.refresh_token);
+      Cookies.set(COOKIES.ACCESS_TOKEN, data.access_token);
+      Cookies.set(COOKIES.REFRESH_TOKEN, data.refresh_token);
       onSuccess?.(data);
       queryClient.invalidateQueries();
       router.refresh();

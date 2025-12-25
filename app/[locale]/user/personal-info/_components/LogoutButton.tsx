@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import { useRouter } from '@/i18n/navigation';
-import { useAuth } from '@/utils/stores';
+import { useAuth } from '@/modules/auth';
 
 export const LogoutButton = () => {
   const t = useTranslations();

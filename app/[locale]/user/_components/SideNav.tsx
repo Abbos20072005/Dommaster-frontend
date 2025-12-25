@@ -4,7 +4,7 @@ import { useTranslations } from 'next-intl';
 
 import { NavigationLink } from '@/components/NavigationLink';
 import { Card } from '@/components/ui/card';
-import { useAuth } from '@/utils/stores';
+import { useAuth } from '@/modules/auth';
 
 const navLinks = [
   {

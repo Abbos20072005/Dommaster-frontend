@@ -8,9 +8,8 @@ import React from 'react';
 import { BaseLayout } from '@/components/layout';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { AuthDialog } from '@/modules/auth';
+import { AuthDialog, useAuth } from '@/modules/auth';
 import { Search } from '@/modules/search';
-import { useAuth } from '@/utils/stores';
 
 import { NavUser } from './components';
 import { useHeaderMiddle } from './hooks';

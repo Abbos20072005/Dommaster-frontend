@@ -18,13 +18,9 @@ import { cn } from '@/lib/utils';
 
 import { usePersonalInfoForm } from './hooks';
 
-interface Props {
-  defaultValues?: User;
-}
-
-export const PersonalInfoForm = ({ defaultValues }: Props) => {
+export const PersonalInfoForm = () => {
   const t = useTranslations();
-  const { form, state, functions } = usePersonalInfoForm({ defaultValues });
+  const { form, state, functions } = usePersonalInfoForm();
 
   return (
     <Form {...form}>

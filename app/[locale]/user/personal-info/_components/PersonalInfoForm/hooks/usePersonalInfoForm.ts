@@ -4,25 +4,21 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
 import { handleFormServerErrors } from '@/lib/utils';
+import { useAuthed } from '@/modules/auth';
 import { patchMe } from '@/utils/api/requests';
-import { useAuth } from '@/utils/stores';
 
 import type { PersonalInfoFormSchema } from '../constants';
 
 import { personalInfoFormSchema } from '../constants';
 
-interface Props {
-  defaultValues?: User;
-}
-
-export const usePersonalInfoForm = ({ defaultValues }: Props) => {
-  const { setUser } = useAuth();
+export const usePersonalInfoForm = () => {
+  const { user } = useAuthed();
   const form = useForm<PersonalInfoFormSchema>({
     resolver: zodResolver(personalInfoFormSchema),
     defaultValues: {
-      full_name: defaultValues?.full_name || '',
-      email: defaultValues?.email || '',
-      phone_number: defaultValues?.phone_number || ''
+      full_name: user.full_name || '',
+      email: user.email || '',
+      phone_number: user.phone_number || ''
     }
   });
 
@@ -31,7 +27,9 @@ export const usePersonalInfoForm = ({ defaultValues }: Props) => {
     onSuccess: ({ data }) => {
       toast.success('Personal info updated successfully');
       form.reset(data.result);
-      setUser(data.result);
+    },
+    meta: {
+      invalidatesQuery: ['auth', 'me']
     },
     onError: (error) => {
       handleFormServerErrors(error, form.setError);

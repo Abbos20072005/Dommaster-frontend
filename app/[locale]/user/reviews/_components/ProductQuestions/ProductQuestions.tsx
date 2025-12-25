@@ -7,8 +7,8 @@ import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { useAuth } from '@/modules/auth';
 import { ProductQuestionDialog } from '@/modules/product';
-import { useAuth } from '@/utils/stores';
 
 import { QuestionReplies } from './components/QuestionReplies/QuestionReplies';
 import { useProductQuestions } from './hooks';

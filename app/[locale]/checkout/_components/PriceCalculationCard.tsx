@@ -12,9 +12,9 @@ import { Separator } from '@/components/ui/separator';
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
+import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
 import { getCustomerAddresses, postOrder } from '@/utils/api/requests';
-import { useAuth } from '@/utils/stores';
 
 import { PromoCodeChecker } from './PromoCodeChecker';
 

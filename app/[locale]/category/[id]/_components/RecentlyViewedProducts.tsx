@@ -4,9 +4,9 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { useAuth } from '@/modules/auth';
 import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { getViewedProducts } from '@/utils/api/requests';
-import { useAuth } from '@/utils/stores';
 
 export const RecentlyViewedProducts = () => {
   const t = useTranslations();

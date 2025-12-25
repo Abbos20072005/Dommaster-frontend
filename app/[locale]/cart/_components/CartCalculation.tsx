@@ -8,9 +8,8 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
-import { AuthDialog } from '@/modules/auth';
+import { AuthDialog, useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
-import { useAuth } from '@/utils/stores';
 
 export const CartCalculation = () => {
   const t = useTranslations();

@@ -6,9 +6,8 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { Spinner } from '@/components/ui/spinner';
-import { AuthDialog } from '@/modules/auth';
+import { AuthDialog, useAuth } from '@/modules/auth';
 import { ProductQuestionReplyForm } from '@/modules/product';
-import { useAuth } from '@/utils/stores';
 
 import { useQuestionReplies } from './hooks';
 import { QuestionReplyItem } from './QuestionReplyItem';

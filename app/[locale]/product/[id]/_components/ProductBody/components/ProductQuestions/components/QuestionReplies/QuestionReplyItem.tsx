@@ -15,9 +15,9 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { useAuth } from '@/modules/auth';
 import { ProductQuestionReplyForm } from '@/modules/product';
 import { deleteQuestionReplyById } from '@/utils/api/requests';
-import { useAuth } from '@/utils/stores';
 
 interface Props {
   question: ProductQuestion;

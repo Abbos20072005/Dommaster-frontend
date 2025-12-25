@@ -9,14 +9,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { formatPhoneNumber } from '@/lib/utils';
+import { useAuth } from '@/modules/auth';
 import { getCustomerAddresses } from '@/utils/api/requests';
-import { useAuth } from '@/utils/stores';
 
 import { SelectAddressDialog } from './SelectAddressDialog';
 
 export const DeliveryCard = () => {
   const t = useTranslations();
-  const { user } = useAuth();
+  const { user, isPending } = useAuth();
   const getAddressesQuery = useQuery({
     queryKey: ['customerAddresses'],
     queryFn: () => getCustomerAddresses()
@@ -72,16 +72,18 @@ export const DeliveryCard = () => {
             <CardTitle className='font-semibold'>{t('Recipient')}</CardTitle>
             {user ? (
               <div className='flex flex-wrap space-x-2 text-sm'>
-                <span>{user?.full_name}</span>
+                <span>{user.full_name}</span>
                 <span className='text-muted-foreground'>
-                  {formatPhoneNumber(user?.phone_number)}
+                  {formatPhoneNumber(user.phone_number)}
                 </span>
               </div>
             ) : (
-              <div className='flex flex-wrap items-center gap-2'>
-                <Skeleton className='h-5 w-20' />
-                <Skeleton className='h-5 w-24' />
-              </div>
+              isPending && (
+                <div className='flex flex-wrap items-center gap-2'>
+                  <Skeleton className='h-5 w-20' />
+                  <Skeleton className='h-5 w-24' />
+                </div>
+              )
             )}
           </div>
         </Card>

@@ -1,5 +1,3 @@
-'use client';
-
 import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
@@ -7,13 +5,11 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Link } from '@/i18n/navigation';
 import { AuthWrapper } from '@/modules/auth';
-import { useAuth } from '@/utils/stores';
 
 import { LogoutButton, PersonalInfoForm } from './_components';
 
 const PersonalInfoPage = () => {
   const t = useTranslations();
-  const { user } = useAuth();
 
   return (
     <>
@@ -29,7 +25,7 @@ const PersonalInfoPage = () => {
       <AuthWrapper>
         <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
           <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Personal info')}</h1>
-          {user && <PersonalInfoForm defaultValues={user} />}
+          <PersonalInfoForm />
           <div className='mt-4'>
             <LogoutButton />
           </div>

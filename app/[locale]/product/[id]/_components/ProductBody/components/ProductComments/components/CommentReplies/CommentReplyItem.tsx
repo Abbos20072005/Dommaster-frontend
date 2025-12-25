@@ -15,9 +15,9 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
+import { useAuth } from '@/modules/auth';
 import { ProductCommentReplyForm } from '@/modules/product';
 import { deleteCommentReplyById } from '@/utils/api/requests';
-import { useAuth } from '@/utils/stores';
 
 interface Props {
   comment: ProductComment;

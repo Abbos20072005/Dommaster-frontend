@@ -20,8 +20,7 @@ import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { formatPhoneNumber } from '@/lib/utils';
-import { AuthDialog } from '@/modules/auth';
-import { useAuth } from '@/utils/stores';
+import { AuthDialog, useAuth } from '@/modules/auth';
 
 const navMainLinks = [
   { href: '/user/orders/active', icon: ShoppingBagIcon, label: 'My orders', authorized: true },
@@ -41,9 +40,9 @@ const navMainLinks = [
 
 export const MobileCards = () => {
   const t = useTranslations();
-  const { user } = useAuth();
+  const { user, isPending } = useAuth();
 
-  if (user === undefined) {
+  if (isPending) {
     return (
       <div className='flex items-center justify-center py-20 md:hidden'>
         <Spinner />
@@ -54,19 +53,7 @@ export const MobileCards = () => {
   return (
     <div className='md:hidden'>
       <div>
-        {user === null ? (
-          <div className='px-4 pt-4'>
-            <p className='mb-3 font-semibold'>{t('Login to manage your account')}</p>
-            <div className='grid grid-cols-2 gap-2 py-4'>
-              <AuthDialog asChild defaultStep='register'>
-                <Button>{t('Register')}</Button>
-              </AuthDialog>
-              <AuthDialog asChild>
-                <Button variant='outline'>{t('Login')}</Button>
-              </AuthDialog>
-            </div>
-          </div>
-        ) : (
+        {user ? (
           <div className='bg-primary text-primary-foreground rounded-b-lg p-4'>
             <div className='mb-4 flex items-center md:hidden'>
               <div className='size-8' />
@@ -90,6 +77,18 @@ export const MobileCards = () => {
                 </div>
                 <div className='text-xs'>{formatPhoneNumber(user.phone_number)}</div>
               </Link>
+            </div>
+          </div>
+        ) : (
+          <div className='px-4 pt-4'>
+            <p className='mb-3 font-semibold'>{t('Login to manage your account')}</p>
+            <div className='grid grid-cols-2 gap-2 py-4'>
+              <AuthDialog asChild defaultStep='register'>
+                <Button>{t('Register')}</Button>
+              </AuthDialog>
+              <AuthDialog asChild>
+                <Button variant='outline'>{t('Login')}</Button>
+              </AuthDialog>
             </div>
           </div>
         )}

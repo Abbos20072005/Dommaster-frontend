@@ -7,8 +7,9 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
+import { useAuth } from '@/modules/auth';
 import { getMostSearched, getSearch, getViewedProducts } from '@/utils/api/requests';
-import { useAuth, useSearchHistoryStore } from '@/utils/stores';
+import { useSearchHistoryStore } from '@/utils/stores';
 
 interface Props {
   searchInput: string;

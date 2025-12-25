@@ -8,9 +8,8 @@ import React from 'react';
 import { QuestionReplies } from '@/app/[locale]/product/[id]/_components/ProductBody/components/ProductQuestions/components/QuestionReplies/QuestionReplies';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
-import { AuthDialog } from '@/modules/auth';
+import { AuthDialog, useAuth } from '@/modules/auth';
 import { ProductQuestionDialog } from '@/modules/product';
-import { useAuth } from '@/utils/stores';
 
 import { useProductQuestions } from './hooks';
 
