@@ -3,6 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { Trash2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
-import { CartCounter, useProductCart } from '@/modules/cart';
+import { CartCounter, useCart, useProductCart } from '@/modules/cart';
 
 interface Props {
   checked?: boolean;
@@ -20,9 +20,14 @@ interface Props {
 
 export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) => {
   const t = useTranslations();
+  const { refetch } = useCart();
   const { state, functions } = useProductCart(product);
 
   const notValidQuantity = product.quantity < product.in_cart_quantity;
+
+  const onDeleteFromCart = () => {
+    functions.onRemoveFromCart().then(() => refetch());
+  };
 
   return (
     <div key={product.id} className='flex flex-1 flex-col gap-4 py-4 sm:flex-row'>
@@ -91,7 +96,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
           className='text-muted-foreground'
           size='sm'
           variant='ghost'
-          onClick={functions.onRemoveFromCart}
+          onClick={onDeleteFromCart}
         >
           <TrashIcon />
           {t('Delete')}

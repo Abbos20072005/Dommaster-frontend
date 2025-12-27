@@ -32,10 +32,10 @@ export const useProductCart = (product: Product) => {
     );
   };
 
-  const onRemoveFromCart = () => {
+  const onRemoveFromCart = async () => {
     const previousQuantity = cartItemsQuantityMap[product.id] ?? 0;
     setCartItemQuantity(product.id, 0);
-    patchCartMutation.mutate(
+    return await patchCartMutation.mutateAsync(
       { data: { product: product.id, quantity: 0 } },
       { onError: () => setCartItemQuantity(product.id, previousQuantity) }
     );
