@@ -1,6 +1,13 @@
 'use client';
 
-import { backButton, closingBehavior, init, miniApp, swipeBehavior } from '@tma.js/sdk-react';
+import {
+  backButton,
+  closingBehavior,
+  init,
+  miniApp,
+  swipeBehavior,
+  viewport
+} from '@tma.js/sdk-react';
 import { usePathname } from 'next/navigation';
 import { useEffect, useRef } from 'react';
 
@@ -29,6 +36,7 @@ export const TelegramWebAppInit = () => {
       closingBehavior.enableConfirmation();
       swipeBehavior.disableVertical();
 
+      viewport.expand();
       miniApp.setHeaderColor('#00257AFF');
       miniApp.setBottomBarColor('#000000FF');
     } catch (error) {

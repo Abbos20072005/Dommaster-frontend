@@ -5,6 +5,7 @@ import {
   EyeIcon,
   HeartIcon,
   HistoryIcon,
+  InfoIcon,
   MapPinIcon,
   MessageCircleIcon,
   SettingsIcon,
@@ -35,7 +36,8 @@ const navMainLinks = [
   { href: '/user/addresses', icon: MapPinIcon, label: 'My addresses', authorized: true },
   { href: '/cart', icon: ShoppingCartIcon, label: 'Cart', authorized: false },
   { href: '/user/favorites', icon: HeartIcon, label: 'Favorites', authorized: false },
-  { href: '/user/products-history', icon: EyeIcon, label: 'Viewed products', authorized: false }
+  { href: '/user/products-history', icon: EyeIcon, label: 'Viewed products', authorized: false },
+  { href: '/about', icon: InfoIcon, label: 'About us' }
 ];
 
 export const MobileCards = () => {
