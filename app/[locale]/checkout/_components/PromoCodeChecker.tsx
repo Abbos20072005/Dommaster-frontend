@@ -4,7 +4,6 @@ import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Spinner } from '@/components/ui/spinner';
 import { postPromoCodeChecker } from '@/utils/api/requests';
 
 interface Props {
@@ -45,15 +44,11 @@ export const PromoCodeChecker = ({ value, onSuccess }: Props) => {
         placeholder={t('Promo code')}
       />
       <Button
-        disabled={
-          !promoCodeInput ||
-          postPromoCodeCheckerMutation.isPending ||
-          value?.code === promoCodeInput
-        }
+        disabled={!promoCodeInput || value?.code === promoCodeInput}
         type='submit'
         variant='secondary'
+        isLoading={postPromoCodeCheckerMutation.isPending}
       >
-        <Spinner show={postPromoCodeCheckerMutation.isPending} />
         {t('Apply')}
       </Button>
     </form>

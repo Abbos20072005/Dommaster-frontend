@@ -27,7 +27,6 @@ import {
   FileUploadTrigger
 } from '@/components/ui/file-upload';
 import { Input } from '@/components/ui/input';
-import { Spinner } from '@/components/ui/spinner';
 import { MessageList } from '@/modules/chat/ChatDialog/components';
 import { postChatMessage } from '@/utils/api/requests';
 
@@ -133,12 +132,13 @@ export const ChatDialog = ({ children, ...props }: Props) => {
                 placeholder={t('Write a message')}
               />
               <Button
-                disabled={postChatMessageMutation.isPending || (!message.trim() && !image)}
+                disabled={!message.trim() && !image}
                 size='icon'
                 type='submit'
                 variant='secondary'
+                isLoading={postChatMessageMutation.isPending}
               >
-                {postChatMessageMutation.isPending ? <Spinner /> : <SendIcon />}
+                <SendIcon />
               </Button>
             </form>
           </FileUpload>

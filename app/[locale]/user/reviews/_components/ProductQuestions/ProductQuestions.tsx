@@ -64,12 +64,11 @@ export const ProductQuestions = () => {
       {state.hasNextPage && (
         <Button
           className='w-full'
-          disabled={state.isFetchingNextPage}
           size='sm'
           variant='outline'
+          isLoading={state.isFetchingNextPage}
           onClick={functions.onLoadMore}
         >
-          <Spinner show={state.isFetchingNextPage} />
           {t('Load more')}
         </Button>
       )}

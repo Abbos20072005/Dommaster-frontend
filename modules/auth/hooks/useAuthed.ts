@@ -17,7 +17,7 @@ export const useAuthed = () => {
   const reset = () => {
     Cookies.remove(COOKIES.ACCESS_TOKEN);
     Cookies.remove(COOKIES.REFRESH_TOKEN);
-    queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+    queryClient.clear();
   };
 
   return {

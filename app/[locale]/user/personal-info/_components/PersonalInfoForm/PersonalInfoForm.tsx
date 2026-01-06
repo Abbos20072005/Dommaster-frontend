@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { PhoneInput } from '@/components/ui/phone-input';
-import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 
 import { usePersonalInfoForm } from './hooks';
@@ -74,8 +73,7 @@ export const PersonalInfoForm = () => {
           <Button type='button' variant='muted' onClick={() => form.reset()}>
             {t('Cancel')}
           </Button>
-          <Button disabled={state.isPending} type='submit'>
-            {state.isPending && <Spinner />}
+          <Button type='submit' isLoading={state.isPending}>
             {t('Save')}
           </Button>
         </div>

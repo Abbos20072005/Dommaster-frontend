@@ -8,7 +8,6 @@ import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { getNewsList } from '@/utils/api/requests';
 
@@ -84,9 +83,9 @@ export const NewsList = () => {
           disabled={getNewsQuery.isFetchingNextPage}
           size='sm'
           variant='outline'
+          isLoading={getNewsQuery.isFetchingNextPage}
           onClick={onLoadMore}
         >
-          <Spinner show={getNewsQuery.isFetchingNextPage} />
           {t('Load more')}
         </Button>
       )}

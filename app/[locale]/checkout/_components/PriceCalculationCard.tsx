@@ -9,7 +9,6 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
@@ -101,9 +100,10 @@ export const PriceCalculationCard = () => {
             !isAddressSelected
           }
           className='mb-0 w-full'
+          isLoading={isFetching || postOrderMutation.isPending}
           onClick={onSubmit}
         >
-          {isFetching || postOrderMutation.isPending ? <Spinner /> : t('Pay')}
+          {t('Pay')}
         </Button>
         <Separator className='my-4' />
         <PromoCodeChecker value={promo} onSuccess={setPromo} />

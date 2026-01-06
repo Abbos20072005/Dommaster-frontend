@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
-import React from 'react';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';

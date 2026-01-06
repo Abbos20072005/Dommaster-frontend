@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { getArticles } from '@/utils/api/requests';
 
@@ -79,9 +78,9 @@ export const ArticlesList = () => {
           disabled={getArticlesQuery.isFetchingNextPage}
           size='sm'
           variant='outline'
+          isLoading={getArticlesQuery.isFetchingNextPage}
           onClick={onLoadMore}
         >
-          <Spinner show={getArticlesQuery.isFetchingNextPage} />
           {t('Load more')}
         </Button>
       )}

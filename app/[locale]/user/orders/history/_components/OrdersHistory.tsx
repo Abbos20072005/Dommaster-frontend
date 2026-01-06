@@ -49,12 +49,11 @@ export const OrdersHistory = () => {
       {getOrdersHistoryQuery.hasNextPage && (
         <Button
           className='mt-4 w-full'
-          disabled={getOrdersHistoryQuery.isFetchingNextPage}
           size='sm'
           variant='outline'
+          isLoading={getOrdersHistoryQuery.isFetchingNextPage}
           onClick={() => getOrdersHistoryQuery.fetchNextPage()}
         >
-          <Spinner show={getOrdersHistoryQuery.isFetchingNextPage} />
           {t('Load more')}
         </Button>
       )}

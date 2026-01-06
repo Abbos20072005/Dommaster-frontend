@@ -14,7 +14,6 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
 import { useAuth } from '@/modules/auth';
 import { ProductQuestionReplyForm } from '@/modules/product';
 import { deleteQuestionReplyById } from '@/utils/api/requests';
@@ -87,12 +86,11 @@ export const QuestionReplyItem = ({ reply, question }: Props) => {
                   <AlertDialogFooter>
                     <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
                     <Button
-                      disabled={deleteQuestionReplyMutation.isPending}
                       size='sm'
                       variant='destructive'
+                      isLoading={deleteQuestionReplyMutation.isPending}
                       onClick={onDelete}
                     >
-                      <Spinner show={deleteQuestionReplyMutation.isPending} />
                       {t('Delete')}
                     </Button>
                   </AlertDialogFooter>

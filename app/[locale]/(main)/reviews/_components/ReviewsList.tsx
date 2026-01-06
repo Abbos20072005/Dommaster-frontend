@@ -7,7 +7,6 @@ import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import { Card, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { getReviews } from '@/utils/api/requests';
 
@@ -79,9 +78,9 @@ export const ReviewsList = () => {
           disabled={getReviewsQuery.isFetchingNextPage}
           size='sm'
           variant='outline'
+          isLoading={getReviewsQuery.isFetchingNextPage}
           onClick={onLoadMore}
         >
-          <Spinner show={getReviewsQuery.isFetchingNextPage} />
           {t('Load more')}
         </Button>
       )}

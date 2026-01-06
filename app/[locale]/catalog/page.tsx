@@ -25,7 +25,7 @@ const CategoryPage = async () => {
     <div>
       <MobileHeader />
       <BaseLayout className='mt-2 space-y-4 md:mt-4 md:space-y-8'>
-        <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{t('Catalog')}</h1>
+        <h1 className='text-lg font-bold md:text-2xl lg:text-3xl'>{t('Catalog')}</h1>
         <div className='grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2 md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] md:gap-4'>
           {categories.map((item) => (
             <Link

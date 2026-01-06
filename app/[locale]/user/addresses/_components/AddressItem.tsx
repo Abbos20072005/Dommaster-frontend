@@ -14,7 +14,6 @@ import {
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Spinner } from '@/components/ui/spinner';
 import { AddressSelectDialog } from '@/modules/location';
 import { deleteCustomerAddress } from '@/utils/api/requests';
 
@@ -64,12 +63,11 @@ export const AddressItem = ({ address }: Props) => {
             <AlertDialogFooter>
               <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
               <Button
-                disabled={deleteAddressMutation.isPending}
                 size='sm'
                 variant='destructive'
+                isLoading={deleteAddressMutation.isPending}
                 onClick={onDeleteAddress}
               >
-                <Spinner show={deleteAddressMutation.isPending} />
                 {t('Delete')}
               </Button>
             </AlertDialogFooter>

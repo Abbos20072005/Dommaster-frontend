@@ -49,12 +49,11 @@ export const OrdersActive = () => {
       {getOrdersActiveQuery.hasNextPage && (
         <Button
           className='mt-4 w-full'
-          disabled={getOrdersActiveQuery.isFetchingNextPage}
           size='sm'
           variant='outline'
+          isLoading={getOrdersActiveQuery.isFetchingNextPage}
           onClick={() => getOrdersActiveQuery.fetchNextPage()}
         >
-          <Spinner show={getOrdersActiveQuery.isFetchingNextPage} />
           {t('Load more')}
         </Button>
       )}

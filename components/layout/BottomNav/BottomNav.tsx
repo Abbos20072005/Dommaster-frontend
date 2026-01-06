@@ -10,16 +10,15 @@ import {
 import { useTranslations } from 'next-intl';
 
 import { NavigationLink } from '@/components/NavigationLink';
-import { useCart } from '@/modules/cart';
-import { useFavoritesStore } from '@/utils/stores';
+import { useCartStore, useFavoritesStore } from '@/utils/stores';
 
 export const BottomNav = () => {
   const t = useTranslations();
   const { favorites } = useFavoritesStore();
-  const { cart } = useCart();
+  const { cartItemsLength } = useCartStore();
 
   return (
-    <div className='bg-background fixed inset-x-0 bottom-0 grid grid-cols-5 rounded-t-lg px-1 pt-3 pb-4 shadow-md md:hidden'>
+    <div className='bg-background fixed inset-x-0 bottom-0 z-50 grid grid-cols-5 rounded-t-lg px-1 pt-3 pb-4 shadow-md md:hidden'>
       <NavigationLink
         href='/'
         activeClassName='text-foreground'
@@ -42,9 +41,9 @@ export const BottomNav = () => {
         className='text-muted-foreground flex flex-col items-center gap-1 transition-colors'
       >
         <div className='relative'>
-          {!!cart?.cart_items.length && (
+          {!!cartItemsLength && (
             <div className='bg-secondary text-secondary-foreground absolute -top-0.5 -right-2 flex h-4 items-center justify-center rounded-full px-1.5 text-xs font-bold'>
-              {cart.cart_items.length}
+              {cartItemsLength}
             </div>
           )}
           <ShoppingCartIcon className='size-6' />

@@ -13,7 +13,6 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
 import { AddressSelectDialog } from '@/modules/location';
 import { deleteCustomerAddress } from '@/utils/api/requests';
 
@@ -63,12 +62,11 @@ export const AddressItem = ({ address, ...props }: Props) => {
             <AlertDialogFooter>
               <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
               <Button
-                disabled={deleteAddressMutation.isPending}
                 size='sm'
                 variant='destructive'
+                isLoading={deleteAddressMutation.isPending}
                 onClick={onDeleteAddress}
               >
-                <Spinner show={deleteAddressMutation.isPending} />
                 {t('Delete')}
               </Button>
             </AlertDialogFooter>

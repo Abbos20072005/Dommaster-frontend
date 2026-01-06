@@ -10,7 +10,6 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { PasswordInput } from '@/components/ui/password-input';
-import { Spinner } from '@/components/ui/spinner';
 
 import { useSecurityForm } from './hooks';
 
@@ -46,8 +45,7 @@ export const SecurityForm = () => {
           name='passwordConfirm'
           control={form.control}
         />
-        <Button disabled={state.isPending} type='submit'>
-          {state.isPending && <Spinner />}
+        <Button type='submit' isLoading={state.isPending}>
           Save
         </Button>
       </form>

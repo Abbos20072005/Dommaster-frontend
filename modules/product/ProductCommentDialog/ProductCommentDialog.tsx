@@ -22,7 +22,6 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { Spinner } from '@/components/ui/spinner';
 import { deleteCommentById } from '@/utils/api/requests';
 
 import { CommentForm } from './components';
@@ -77,12 +76,11 @@ export const ProductCommentDialog = ({ children, defaultValues, ...props }: Prop
                 <AlertDialogFooter>
                   <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
                   <Button
-                    disabled={deleteCommentMutation.isPending}
                     size='sm'
                     variant='destructive'
+                    isLoading={deleteCommentMutation.isPending}
                     onClick={onDelete}
                   >
-                    <Spinner show={deleteCommentMutation.isPending} />
                     {t('Delete')}
                   </Button>
                 </AlertDialogFooter>

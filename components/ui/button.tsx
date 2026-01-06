@@ -1,14 +1,14 @@
 import type { VariantProps } from 'class-variance-authority';
 
-import { Slot as SlotPrimitive } from 'radix-ui';
 import { cva } from 'class-variance-authority';
-import { Loader2Icon } from 'lucide-react';
+import { Slot as SlotPrimitive } from 'radix-ui';
 import * as React from 'react';
 
+import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 [&_svg]:shrink-0 shrink-0 ring-ring/10 dark:ring-ring/20 dark:outline-ring/40 outline-ring/50 focus-visible:ring-4 focus-visible:outline-1 aria-invalid:focus-visible:ring-0",
+  'inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive',
   {
     variants: {
       variant: {
@@ -26,13 +26,13 @@ const buttonVariants = cva(
         link: 'text-secondary underline-offset-4 hover:underline'
       },
       size: {
-        default: 'h-11 px-4 py-2 has-[>svg]:px-3',
-        sm: 'h-8 px-4 has-[>svg]:px-2.5',
-        xs: 'h-6 px-4 text-xs has-[>svg]:px-2',
-        lg: 'h-13 px-6 has-[>svg]:px-4',
-        iconLg: 'size-13',
-        icon: 'size-11',
-        iconSm: 'size-8'
+        default: "h-11 px-4 py-2 has-[>svg]:px-3 [&_svg:not([class*='size-'])]:size-5",
+        sm: "h-8 px-4 has-[>svg]:px-2.5 [&_svg:not([class*='size-'])]:size-4.5",
+        xs: "h-6 px-4 text-xs has-[>svg]:px-2 [&_svg:not([class*='size-'])]:size-3.5",
+        lg: "h-13 px-6 has-[>svg]:px-4 [&_svg:not([class*='size-'])]:size-5.5",
+        iconLg: "size-13 [&_svg:not([class*='size-'])]:size-5.5",
+        icon: "size-11 [&_svg:not([class*='size-'])]:size-5",
+        iconSm: "size-8 [&_svg:not([class*='size-'])]:size-4.5"
       }
     },
     defaultVariants: {
@@ -70,12 +70,26 @@ const Button = ({ className, variant, size, children, ...props }: ButtonProps) =
 
   return (
     <button
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn('relative overflow-hidden', buttonVariants({ variant, size, className }))}
       disabled={isLoading || disabled}
       {...otherProps}
     >
-      {isLoading && <Loader2Icon className='ml-2 size-4 animate-spin' />}
-      {children}
+      <span
+        className={cn(
+          'absolute inset-0 flex items-center justify-center transition-transform duration-300',
+          isLoading ? 'translate-y-0' : '-translate-y-full'
+        )}
+      >
+        <Spinner />
+      </span>
+      <span
+        className={cn(
+          'flex items-center justify-center gap-2 transition-transform duration-300',
+          isLoading ? 'translate-y-[150%]' : 'translate-y-0'
+        )}
+      >
+        {children}
+      </span>
     </button>
   );
 };

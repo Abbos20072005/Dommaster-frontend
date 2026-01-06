@@ -24,9 +24,11 @@ export const FilterCategories = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
 
+  const brand = searchParams.get('brand');
+
   const getCategoriesQuery = useQuery({
-    queryKey: ['categories'],
-    queryFn: () => getCategories()
+    queryKey: ['categories', brand],
+    queryFn: () => getCategories({ config: { params: { brand } } })
   });
 
   const categories = getCategoriesQuery.data?.data.result;

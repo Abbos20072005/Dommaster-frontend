@@ -1,11 +1,9 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
-import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { Spinner } from '@/components/ui/spinner';
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { AuthDialog, useAuth } from '@/modules/auth';
@@ -53,14 +51,15 @@ export const CartCalculation = () => {
           <Button
             className='w-full'
             disabled={!availableCartItems.length || isFetching}
+            isLoading={isFetching}
             onClick={() => router.push('/checkout')}
           >
-            {isFetching ? <Spinner /> : t('Proceed to checkout')}
+            {t('Proceed to checkout')}
           </Button>
         ) : (
           <AuthDialog asChild>
-            <Button className='w-full' disabled={!availableCartItems.length || isFetching}>
-              {isFetching ? <Spinner /> : t('Proceed to checkout')}
+            <Button className='w-full' disabled={!availableCartItems.length} isLoading={isFetching}>
+              {t('Proceed to checkout')}
             </Button>
           </AuthDialog>
         )}

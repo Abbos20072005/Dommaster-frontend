@@ -42,12 +42,7 @@ const OrderPage = () => {
 
   return (
     <AuthWrapper>
-      <div className='flex items-center border-b md:hidden'>
-        <Button asChild className='size-13' size='icon' variant='ghost'>
-          <Link href='/user/orders/active'>
-            <ArrowLeftIcon className='text-muted-foreground size-5' />
-          </Link>
-        </Button>
+      <div className='flex h-12 items-center border-b md:hidden'>
         <div className='flex-1 text-center'>
           <h1 className='text-center font-bold md:hidden'>
             {t('Order')} #{order.id}
@@ -56,7 +51,6 @@ const OrderPage = () => {
             {format(order.created_at, 'dd MMM')}
           </CardDescription>
         </div>
-        <div className='size-13' />
       </div>
       <div className='flex flex-col items-start divide-y md:gap-4 md:divide-y-0 lg:flex-row'>
         <div className='flex flex-1 flex-col divide-y md:gap-4 md:divide-y-0'>

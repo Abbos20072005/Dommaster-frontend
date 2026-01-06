@@ -12,7 +12,6 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 import { LocationSelectMap } from '@/modules/location';
 
@@ -36,8 +35,8 @@ export const AddressForm = ({ defaultValues, onSuccess }: Props) => {
             !form.formState.isDirty ? 'invisible' : 'visible'
           )}
           type='submit'
+          isLoading={state.isPending}
         >
-          <Spinner show={state.isPending} />
           {t('Save')}
         </Button>
         <div className='flex items-end gap-4 px-4 sm:px-0'>
@@ -56,10 +55,11 @@ export const AddressForm = ({ defaultValues, onSuccess }: Props) => {
           />
           <Button
             className='hidden text-white sm:block'
-            disabled={state.isPending || !form.formState.isDirty || !form.formState.isValid}
+            disabled={!form.formState.isDirty || !form.formState.isValid}
             type='submit'
+            isLoading={state.isPending}
           >
-            {state.isPending ? <Spinner /> : t('Save')}
+            {t('Save')}
           </Button>
         </div>
         <FormField

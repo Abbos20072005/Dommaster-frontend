@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button';
 import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Form, FormControl, FormField, FormItem, FormMessage } from '@/components/ui/form';
 import { InputOTP, InputOTPGroup, InputOTPSlot } from '@/components/ui/input-otp';
-import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
 
 import { useResetPasswordVerifyForm } from './hooks';
@@ -62,13 +61,12 @@ export const ResetPasswordVerifyForm = ({
             {state.showResetButton ? (
               <Button
                 className='mx-auto w-fit'
-                disabled={state.isResendPending}
                 size='sm'
                 type='button'
                 variant='ghost'
+                isLoading={state.isResendPending}
                 onClick={functions.onResendCode}
               >
-                {state.isResendPending && <Spinner />}
                 {t('Resend code')}
               </Button>
             ) : (
@@ -86,8 +84,7 @@ export const ResetPasswordVerifyForm = ({
               >
                 {t('Back')}
               </Button>
-              <Button className='mt-2' disabled={state.isPending} type='submit'>
-                {state.isPending && <Spinner />}
+              <Button className='mt-2' type='submit' isLoading={state.isPending}>
                 {t('Verify')}
               </Button>
             </div>

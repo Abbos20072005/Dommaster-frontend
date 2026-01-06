@@ -8,7 +8,7 @@ import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
 import { getBrands } from '@/utils/api/requests';
 
 interface Props {
-  searchParams: Promise<{ q: string }>;
+  searchParams: Promise<{ q: string; item_category: string }>;
 }
 
 export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
@@ -18,9 +18,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 }
 
 const SearchPage = async ({ searchParams }: Props) => {
-  const { q } = await searchParams;
+  const { q, item_category } = await searchParams;
   const t = await getTranslations();
-  const brandsResponse = await getBrands();
+  const brandsResponse = await getBrands({ config: { params: { category: item_category } } });
   const brands = brandsResponse.data.result || [];
   // const salesResponse = await getSales();
   // const sales = salesResponse.data.result;

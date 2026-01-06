@@ -62,12 +62,11 @@ export const QuestionReplies = ({ question }: Props) => {
                 ))}
                 {state.hasNextPage && (
                   <Button
-                    disabled={state.isFetchingNextPage}
                     size='sm'
                     variant='outline'
+                    isLoading={state.isFetchingNextPage}
                     onClick={functions.onLoadMore}
                   >
-                    <Spinner show={state.isFetchingNextPage} />
                     {t('Load more')}
                   </Button>
                 )}

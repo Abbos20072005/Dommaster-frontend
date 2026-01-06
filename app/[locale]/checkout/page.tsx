@@ -1,8 +1,6 @@
 import type { Metadata } from 'next';
 
-import { ArrowLeftIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
-import React from 'react';
 
 import { BaseLayout } from '@/components/layout';
 import {
@@ -13,8 +11,6 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { Button } from '@/components/ui/button';
-import { Link } from '@/i18n/navigation';
 
 import {
   CartProductsCard,
@@ -34,14 +30,8 @@ const CartPage = async () => {
 
   return (
     <div>
-      <div className='mb-4 flex items-center border-b md:hidden'>
-        <Button asChild className='size-13' size='icon' variant='ghost'>
-          <Link href='/cart'>
-            <ArrowLeftIcon className='text-muted-foreground size-5' />
-          </Link>
-        </Button>
+      <div className='mb-4 flex h-12 items-center border-b md:hidden'>
         <h1 className='flex-1 text-center font-bold md:hidden'>{t('Checkout')}</h1>
-        <div className='size-13' />
       </div>
       <BaseLayout className='mt-2 px-2 md:mt-4 md:px-4'>
         <Breadcrumb className='hidden md:mb-4 md:block'>

@@ -22,7 +22,6 @@ import {
   DialogTitle,
   DialogTrigger
 } from '@/components/ui/dialog';
-import { Spinner } from '@/components/ui/spinner';
 import { deleteQuestionById } from '@/utils/api/requests';
 
 import { QuestionForm } from './components';
@@ -80,9 +79,9 @@ export const ProductQuestionDialog = ({ children, defaultValues, ...props }: Pro
                     disabled={deleteQuestionMutation.isPending}
                     size='sm'
                     variant='destructive'
+                    isLoading={deleteQuestionMutation.isPending}
                     onClick={onDelete}
                   >
-                    <Spinner show={deleteQuestionMutation.isPending} />
                     {t('Delete')}
                   </Button>
                 </AlertDialogFooter>

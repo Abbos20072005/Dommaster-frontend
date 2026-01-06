@@ -4,7 +4,6 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
 import { ProductList, ProductListSkeleton } from '@/modules/product';
 
 import { useViewedProducts } from './hooks';
@@ -26,12 +25,11 @@ export const ViewedProducts = () => {
       {state.hasNextPage && (
         <Button
           className='w-full'
-          disabled={state.isFetchingNextPage}
           size='sm'
           variant='outline'
+          isLoading={state.isFetchingNextPage}
           onClick={functions.onLoadMore}
         >
-          <Spinner show={state.isFetchingNextPage} />
           {t('Load more')}
         </Button>
       )}
