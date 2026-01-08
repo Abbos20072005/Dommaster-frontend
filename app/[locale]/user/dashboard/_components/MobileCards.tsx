@@ -1,5 +1,6 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import {
   ChevronRightIcon,
   EyeIcon,
@@ -22,6 +23,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { formatPhoneNumber } from '@/lib/utils';
 import { AuthDialog, useAuth } from '@/modules/auth';
+import { COOKIES } from '@/utils/constants';
 
 const navMainLinks = [
   { href: '/user/orders/active', icon: ShoppingBagIcon, label: 'My orders', authorized: true },
@@ -44,7 +46,7 @@ export const MobileCards = () => {
   const t = useTranslations();
   const { user, isPending } = useAuth();
 
-  if (isPending) {
+  if (!!Cookies.get(COOKIES.ACCESS_TOKEN) && isPending) {
     return (
       <div className='flex items-center justify-center py-20 md:hidden'>
         <Spinner />

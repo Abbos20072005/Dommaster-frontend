@@ -8,83 +8,60 @@ import {
   swipeBehavior,
   viewport
 } from '@tma.js/sdk-react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { useEffect, useRef } from 'react';
+
+const STORAGE_KEY = '__tg_nav_depth__';
 
 export const TelegramWebAppInit = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const initializedRef = useRef(false);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
 
+  // ---------- INIT ----------
   useEffect(() => {
-    if (typeof window === 'undefined' || initializedRef.current) return;
+    if (initializedRef.current) return;
 
-    try {
-      // Initialize the SDK
-      init();
-      initializedRef.current = true;
+    init();
+    initializedRef.current = true;
 
-      backButton.mount();
-      closingBehavior.mount();
-      swipeBehavior.mount();
+    backButton.mount();
+    closingBehavior.mount();
+    swipeBehavior.mount();
 
-      miniApp.ready();
+    miniApp.ready();
+    closingBehavior.enableConfirmation();
+    swipeBehavior.disableVertical();
 
-      closingBehavior.enableConfirmation();
-      swipeBehavior.disableVertical();
-
-      viewport.expand();
-      miniApp.setHeaderColor('#00257AFF');
-      miniApp.setBottomBarColor('#000000FF');
-    } catch (error) {
-      console.warn('Telegram Web App SDK failed to initialize:', error);
-    }
+    viewport.expand();
+    miniApp.setHeaderColor('#00257AFF');
+    miniApp.setBottomBarColor('#000000FF');
   }, []);
 
-  const canGoBack = (): boolean => {
-    if (typeof window === 'undefined') return false;
-
-    return window.history.length > 1;
-  };
-
+  // ---------- NAV TRACK ----------
   useEffect(() => {
-    if (!initializedRef.current || !backButton.isMounted()) return;
-    if (typeof window === 'undefined') return;
+    const raw = sessionStorage.getItem(STORAGE_KEY);
+    const depth = raw ? Number(raw) : 0;
 
+    sessionStorage.setItem(STORAGE_KEY, String(depth + 1));
+
+    if (depth > 0) backButton.show();
+    else backButton.hide();
+  }, [pathname]);
+
+  // ---------- BACK BUTTON ----------
+  useEffect(() => {
     const handler = () => {
-      window.history.back();
+      const raw = sessionStorage.getItem(STORAGE_KEY);
+      const depth = raw ? Number(raw) : 1;
+
+      sessionStorage.setItem(STORAGE_KEY, String(Math.max(depth - 1, 0)));
+      router.back();
     };
 
     backButton.onClick(handler);
-
-    const updateBackButtonVisibility = () => {
-      if (canGoBack()) {
-        backButton.show();
-      } else {
-        backButton.hide();
-      }
-    };
-
-    updateBackButtonVisibility();
-
-    const handlePopState = () => {
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-      }
-      timeoutRef.current = setTimeout(updateBackButtonVisibility, 0);
-    };
-
-    window.addEventListener('popstate', handlePopState);
-
-    return () => {
-      window.removeEventListener('popstate', handlePopState);
-      if (timeoutRef.current) {
-        clearTimeout(timeoutRef.current);
-        timeoutRef.current = null;
-      }
-      backButton.offClick(handler);
-    };
-  }, [pathname]);
+    return () => backButton.offClick(handler);
+  }, [router]);
 
   return null;
 };

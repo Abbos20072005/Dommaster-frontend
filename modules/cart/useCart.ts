@@ -11,7 +11,6 @@ export const useCart = () => {
       const res = await getCartList();
       if (res.data.ok) {
         const isSynced = getIsCartItemsSynced(res.data.result.cart_items);
-        console.log(isSynced);
         if (!isSynced) syncCart(res.data.result);
       }
       return res;

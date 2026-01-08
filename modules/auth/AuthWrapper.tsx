@@ -1,5 +1,6 @@
 'use client';
 
+import Cookies from 'js-cookie';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -7,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { useAuth } from '@/modules/auth';
+import { COOKIES } from '@/utils/constants';
 
 import { AuthDialog } from './AuthDialog';
 
@@ -14,7 +16,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations();
   const { user, isPending } = useAuth();
 
-  if (isPending) {
+  if (!!Cookies.get(COOKIES.ACCESS_TOKEN) && isPending) {
     return (
       <div className='flex items-center justify-center py-20'>
         <Spinner />
