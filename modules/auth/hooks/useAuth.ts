@@ -7,6 +7,7 @@ import { COOKIES } from '@/utils/constants';
 export const useAuth = () => {
   const getUsersMeQuery = useQuery({
     queryKey: ['auth', 'me'],
+    enabled: !!Cookies.get(COOKIES.ACCESS_TOKEN),
     queryFn: () => getMe()
   });
 

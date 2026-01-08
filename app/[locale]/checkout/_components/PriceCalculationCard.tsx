@@ -40,7 +40,7 @@ export const PriceCalculationCard = () => {
   const postOrderMutation = useMutation({
     mutationFn: postOrder,
     onSuccess: ({ data }) => {
-      window.location.replace(data.result);
+      window.location.href = data.result;
     }
   });
 
