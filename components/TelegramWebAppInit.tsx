@@ -8,10 +8,9 @@ import {
   swipeBehavior,
   viewport
 } from '@tma.js/sdk-react';
-import { usePathname, useRouter } from 'next/navigation';
-import { useEffect, useRef } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
-const STORAGE_KEY = '__tg_nav_depth__';
+import { usePathname, useRouter } from '@/i18n/navigation';
 
 export const TelegramWebAppInit = () => {
   const pathname = usePathname();
@@ -41,32 +40,24 @@ export const TelegramWebAppInit = () => {
   }, []);
 
   // ---------- NAV TRACK ----------
-  useEffect(() => {
-    if (typeof window === 'undefined' || !initializedRef.current || !backButton.isMounted()) return;
-
-    const raw = sessionStorage.getItem(STORAGE_KEY);
-    const depth = raw ? Number(raw) : 0;
-
-    sessionStorage.setItem(STORAGE_KEY, String(depth + 1));
-
-    if (depth > 0) backButton.show();
-    else backButton.hide();
-  }, [pathname]);
-
-  // ---------- BACK BUTTON ----------
-  useEffect(() => {
-    if (typeof window === 'undefined' || !initializedRef.current || !backButton.isMounted()) return;
-    const handler = () => {
-      const raw = sessionStorage.getItem(STORAGE_KEY);
-      const depth = raw ? Number(raw) : 1;
-
-      sessionStorage.setItem(STORAGE_KEY, String(Math.max(depth - 1, 0)));
-      router.back();
-    };
-
-    backButton.onClick(handler);
-    return () => backButton.offClick(handler);
+  const onBackButtonClick = useCallback(() => {
+    router.back();
   }, [router]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined' || !initializedRef.current || !backButton.isMounted()) return;
+
+    if (pathname === '/' && backButton.isVisible()) {
+      backButton.hide();
+    } else if (pathname !== '/' && !backButton.isVisible()) {
+      backButton.show();
+    }
+
+    backButton.onClick(onBackButtonClick);
+    return () => {
+      backButton.offClick(onBackButtonClick);
+    };
+  }, [pathname, backButton, onBackButtonClick]);
 
   return null;
 };
