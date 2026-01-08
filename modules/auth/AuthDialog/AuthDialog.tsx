@@ -3,14 +3,14 @@
 import React from 'react';
 
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/dialog';
-import { ForgotPasswordForm } from '@/modules/auth/AuthDialog/components/ForgotPasswordForm';
-import { ResetPasswordForm } from '@/modules/auth/AuthDialog/components/ResetPasswordForm';
-import { ResetPasswordVerifyForm } from '@/modules/auth/AuthDialog/components/ResetPasswordVerifyForm';
 
 import type { AuthTabs } from './types';
 
+import { ForgotPasswordForm } from './components/ForgotPasswordForm';
 import { LoginForm } from './components/LoginForm';
 import { RegisterForm } from './components/RegisterForm';
+import { ResetPasswordForm } from './components/ResetPasswordForm';
+import { ResetPasswordVerifyForm } from './components/ResetPasswordVerifyForm';
 import { VerifyForm } from './components/VerifyForm';
 
 interface Props extends React.ComponentProps<typeof DialogTrigger> {
@@ -86,7 +86,7 @@ export const AuthDialog = ({ defaultStep = 'login', ...props }: Props) => {
       open={open}
     >
       <DialogTrigger {...props} />
-      <DialogContent className='h-dvh w-full sm:h-auto sm:max-w-[430px]'>
+      <DialogContent className='h-dvh w-full overflow-y-auto sm:h-auto sm:max-w-[430px]'>
         {authSteps[tab]}
       </DialogContent>
     </Dialog>
