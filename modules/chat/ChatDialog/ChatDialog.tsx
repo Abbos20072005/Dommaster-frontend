@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { ImageIcon, SendIcon, XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -40,13 +40,14 @@ export const ChatDialog = ({ children, ...props }: Props) => {
   const [message, setMessage] = React.useState('');
   const [image, setImage] = React.useState<File>();
 
-  const queryClient = useQueryClient();
   const postChatMessageMutation = useMutation({
     mutationFn: postChatMessage,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['chat-messages'] });
       setMessage('');
       setImage(undefined);
+    },
+    meta: {
+      invalidatesQuery: ['chat-messages']
     }
   });
 

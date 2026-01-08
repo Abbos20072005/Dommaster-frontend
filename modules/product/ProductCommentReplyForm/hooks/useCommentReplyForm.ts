@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
 import { patchCommentReplyById, postCommentReply } from '@/utils/api/requests';
@@ -23,20 +23,23 @@ export const useCommentReplyForm = ({ onSuccess, commentId, defaultValues }: Pro
     }
   });
 
-  const queryClient = useQueryClient();
   const postCommentReplyMutation = useMutation({
     mutationFn: postCommentReply,
     onSuccess: ({ data }) => {
-      queryClient.invalidateQueries({ queryKey: ['productCommentReplies', commentId] });
       onSuccess?.(data);
+    },
+    meta: {
+      invalidatesQuery: ['productCommentReplies', commentId]
     }
   });
 
   const patchCommentReplyMutation = useMutation({
     mutationFn: patchCommentReplyById,
     onSuccess: ({ data }) => {
-      queryClient.invalidateQueries({ queryKey: ['productCommentReplies', commentId] });
       onSuccess?.(data);
+    },
+    meta: {
+      invalidatesQuery: ['productCommentReplies', commentId]
     }
   });
 

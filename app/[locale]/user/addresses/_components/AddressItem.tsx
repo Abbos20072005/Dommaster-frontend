@@ -1,4 +1,4 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { EditIcon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -26,12 +26,10 @@ export const AddressItem = ({ address }: Props) => {
   const [openDelete, setOpenDelete] = React.useState(false);
   const deleteAddressMutation = useMutation({
     mutationFn: deleteCustomerAddress,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['customerAddresses'] });
+    meta: {
+      invalidatesQuery: ['customerAddresses']
     }
   });
-
-  const queryClient = useQueryClient();
 
   const onDeleteAddress = () => {
     deleteAddressMutation.mutate({ id: address.id });

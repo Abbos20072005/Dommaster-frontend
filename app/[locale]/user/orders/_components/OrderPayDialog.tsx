@@ -36,7 +36,7 @@ export const OrderPayDialog = ({ orderId, children, ...props }: Props) => {
     mutationFn: postOrderPay,
     onSuccess: ({ data }) => {
       setOpen(false);
-      window.location.replace(data.result);
+      window.location.href = data.result;
     }
   });
 

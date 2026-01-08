@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -10,6 +11,7 @@ import type { SecurityFormSchema } from '../constants';
 import { securityFormSchema } from '../constants';
 
 export const useSecurityForm = () => {
+  const t = useTranslations();
   const form = useForm<SecurityFormSchema>({
     resolver: zodResolver(securityFormSchema),
     defaultValues: {
@@ -18,11 +20,14 @@ export const useSecurityForm = () => {
     }
   });
 
+  const queryClient = useQueryClient();
+
   const patchPersonalInfoMutation = useMutation({
     mutationFn: patchMe,
     onSuccess: () => {
-      toast.success('Password updated successfully');
+      toast.success(t('Password updated successfully'));
       form.reset();
+      queryClient.invalidateQueries();
     }
   });
 

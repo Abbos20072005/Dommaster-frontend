@@ -20,6 +20,9 @@ export const PromoCodeChecker = ({ value, onSuccess }: Props) => {
     onSuccess: ({ data }) => {
       onSuccess({ ...data.result, code: promoCodeInput });
     },
+    meta: {
+      invalidatesQuery: ['products', 'cart']
+    },
     onError: () => {
       setPromoCodeInput('');
     }

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -31,12 +31,13 @@ export const AddressList = ({ onSave }: Props) => {
     addresses?.find((item) => item.is_default)?.id
   );
 
-  const queryClient = useQueryClient();
   const patchAddressMutation = useMutation({
     mutationFn: patchCustomerAddress,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['customerAddresses'] });
       onSave?.();
+    },
+    meta: {
+      invalidatesQuery: ['customerAddresses']
     }
   });
 

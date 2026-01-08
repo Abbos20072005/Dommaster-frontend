@@ -203,7 +203,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
           <div className='grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-2'>
             {brands.map((item) => (
               <Link
-                href={`/brand/${item.id}`}
+                href={`/brand/${item.id}?brand=${item.id}`}
                 key={item.id}
                 className='bg-muted hover:bg-secondary/10 flex items-center gap-3 rounded-md p-2 transition-colors'
                 onClick={() => onClose()}

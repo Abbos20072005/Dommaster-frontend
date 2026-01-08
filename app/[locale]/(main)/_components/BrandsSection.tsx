@@ -28,7 +28,11 @@ export const BrandsSection = async () => {
         <div className='overflow-x-auto md:hidden'>
           <div className='flex h-16 gap-4'>
             {brands.map((item) => (
-              <Link href={`/brand/${item.id}`} key={item.id} className='block h-16 rounded-md'>
+              <Link
+                href={`/brand/${item.id}?brand=${item.id}`}
+                key={item.id}
+                className='block h-16 rounded-md'
+              >
                 <Image
                   alt={item.name}
                   className='size-full min-w-26 object-contain p-1'
@@ -46,7 +50,11 @@ export const BrandsSection = async () => {
           <CarouselContent>
             {brands.map((item) => (
               <CarouselItem key={item.id} className='basis-50 space-y-4'>
-                <Link href={`/brand/${item.id}`} key={item.id} className='block h-22 rounded-md'>
+                <Link
+                  href={`/brand/${item.id}?brand=${item.id}`}
+                  key={item.id}
+                  className='block h-22 rounded-md'
+                >
                   <Image
                     alt={item.name}
                     className='size-full object-contain py-2'

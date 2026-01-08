@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
 import { postRegister } from '@/utils/api/requests';
@@ -20,9 +20,13 @@ export const useRegisterForm = (onSuccess?: (data: RegisterResponse) => void) =>
     }
   });
 
+  const queryClient = useQueryClient();
   const postRegisterMutation = useMutation({
     mutationFn: postRegister,
-    onSuccess: ({ data }) => onSuccess?.(data)
+    onSuccess: ({ data }) => {
+      onSuccess?.(data);
+      queryClient.invalidateQueries();
+    }
   });
 
   const onSubmit = ({ confirm_password, ...data }: RegisterFormSchema) => {

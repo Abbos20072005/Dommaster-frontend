@@ -16,7 +16,6 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Link } from '@/i18n/navigation';
 import { getCategoryById } from '@/utils/api/requests';
-import { getQueryClient } from '@/utils/get-query-client';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -35,12 +34,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const CategoryPage = async ({ params }: Props) => {
   const { id } = await params;
   const t = await getTranslations();
-  const queryClient = getQueryClient(t);
-  const getCategoryByIdQuery = await queryClient.ensureQueryData({
-    queryKey: ['categories', id],
-    queryFn: () => getCategoryById({ id })
-  });
-  const category = getCategoryByIdQuery.data.result;
+  const categoryResponse = await getCategoryById({ id });
+  const category = categoryResponse.data.result;
 
   if (!category) return notFound();
 

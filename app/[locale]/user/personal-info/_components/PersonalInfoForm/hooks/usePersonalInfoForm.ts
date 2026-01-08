@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -22,14 +22,14 @@ export const usePersonalInfoForm = () => {
     }
   });
 
+  const queryClient = useQueryClient();
+
   const patchPersonalInfoMutation = useMutation({
     mutationFn: patchMe,
     onSuccess: ({ data }) => {
       toast.success('Personal info updated successfully');
       form.reset(data.result);
-    },
-    meta: {
-      invalidatesQuery: ['auth', 'me']
+      queryClient.invalidateQueries();
     },
     onError: (error) => {
       handleFormServerErrors(error, form.setError);

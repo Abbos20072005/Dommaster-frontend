@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
 import { patchCustomerAddress, postCustomerAddress } from '@/utils/api/requests';
@@ -38,20 +38,22 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
   const putUserMutation = useMutation({
     mutationFn: patchCustomerAddress,
     onSuccess: ({ data }) => {
-      queryClient.invalidateQueries({ queryKey: ['customerAddresses'] });
       onSuccess?.(data.result);
+    },
+    meta: {
+      invalidatesQuery: ['customerAddresses']
     }
   });
 
   const postUserMutation = useMutation({
     mutationFn: postCustomerAddress,
     onSuccess: ({ data }) => {
-      queryClient.invalidateQueries({ queryKey: ['customerAddresses'] });
       onSuccess?.(data.result);
+    },
+    meta: {
+      invalidatesQuery: ['customerAddresses']
     }
   });
-
-  const queryClient = useQueryClient();
 
   const onSubmit = (values: AddressSchema) => {
     const data: AddressRequest = {
