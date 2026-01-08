@@ -33,7 +33,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const ItemCategoryPage = async ({ params }: Props) => {
   const { id, subId, itemId } = await params;
   const t = await getTranslations();
-  const brandsResponse = await getBrands();
+  const brandsResponse = await getBrands({ config: { params: { item_category_id: itemId } } });
   const brands = brandsResponse.data.result || [];
 
   const itemCategoryResponse = await getItemCategoryById({ id: itemId });

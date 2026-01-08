@@ -1,3 +1,6 @@
+'use client';
+
+import { useSuspenseQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
@@ -11,9 +14,12 @@ import {
 import { Link } from '@/i18n/navigation';
 import { getCategories } from '@/utils/api/requests';
 
-export const PopularCategoriesSection = async () => {
-  const categoriesResponse = await getCategories();
-  const categories = categoriesResponse.data.result;
+export const PopularCategoriesSection = () => {
+  const getCategoriesSuspenseQuery = useSuspenseQuery({
+    queryKey: ['categories'],
+    queryFn: () => getCategories()
+  });
+  const categories = getCategoriesSuspenseQuery.data.data.result;
 
   return (
     <BaseLayout>

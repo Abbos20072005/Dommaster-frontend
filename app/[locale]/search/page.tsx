@@ -20,7 +20,9 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
 const SearchPage = async ({ searchParams }: Props) => {
   const { q, item_category } = await searchParams;
   const t = await getTranslations();
-  const brandsResponse = await getBrands({ config: { params: { category: item_category } } });
+  const brandsResponse = await getBrands({
+    config: { params: { item_category_id: item_category } }
+  });
   const brands = brandsResponse.data.result || [];
   // const salesResponse = await getSales();
   // const sales = salesResponse.data.result;

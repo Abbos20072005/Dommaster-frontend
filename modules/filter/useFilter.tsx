@@ -13,15 +13,18 @@ const defaultValues = {
 };
 
 export const useFilter = () => {
-  const [filter, setFilter] = useQueryStates({
-    page: parseAsInteger.withDefault(defaultValues.page).withOptions({ history: 'push' }),
-    page_size: parseAsInteger.withDefault(defaultValues.page_size),
-    price_from: parseAsInteger.withDefault(defaultValues.price_from),
-    price_to: parseAsInteger.withDefault(defaultValues.price_to),
-    item_category: parseAsInteger,
-    brand: parseAsInteger,
-    sale_id: parseAsInteger
-  });
+  const [filter, setFilter] = useQueryStates(
+    {
+      page: parseAsInteger.withDefault(defaultValues.page).withOptions({ history: 'push' }),
+      page_size: parseAsInteger.withDefault(defaultValues.page_size),
+      price_from: parseAsInteger.withDefault(defaultValues.price_from),
+      price_to: parseAsInteger.withDefault(defaultValues.price_to),
+      item_category: parseAsInteger,
+      brand: parseAsInteger,
+      sale_id: parseAsInteger
+    },
+    { shallow: false }
+  );
 
   const isCleared = Object.entries(filter).every(
     ([key, value]) => value === defaultValues[key as keyof typeof filter]

@@ -10,7 +10,7 @@ interface Category {
   }[];
 }
 
-type CategoriesResponse = ApiResponse<Category[]>;
+type CategoriesResponse = ApiResponse<Omit<Category, 'sub_categories'>[]>;
 type CategoryResponse = ApiResponse<Category>;
 
 interface SubCategory {

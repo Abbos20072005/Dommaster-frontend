@@ -4,14 +4,19 @@ import { BASE_URL } from '@/utils/constants';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const res = await fetch(`${process.env.API_URL}product/filter/?page=1&page_size=1`, {
-    method: 'POST',
+    method: 'POST'
   });
-  const data = await res.json()
+  const data = await res.json();
   const productPages = Array.from({
     length: Math.ceil(data.result.totalElements / 10000)
   }).map((_, index) => ({
     id: index + 1
   }));
+
+  // Fetch categories for dynamic sitemap generation
+  const categoriesRes = await fetch(`${process.env.API_URL}categories/`);
+  const categoriesData = (await categoriesRes.json()) as CategoriesResponse;
+  const categories = categoriesData.result || [];
 
   return [
     {
@@ -30,10 +35,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       url: `${BASE_URL}/sitemaps/news/sitemap.xml`,
       lastModified: new Date()
     },
-    {
-      url: `${BASE_URL}/sitemaps/categories/sitemap.xml`,
+    ...categories.map((category) => ({
+      url: `${BASE_URL}/sitemaps/categories/sitemap/${category.id}.xml`,
       lastModified: new Date()
-    },
+    })),
     ...productPages?.map((product) => ({
       url: `${BASE_URL}/sitemaps/products/sitemap/${product.id}.xml`,
       lastModified: new Date()

@@ -16,6 +16,7 @@ import { getBrands, getSaleById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ item_category: string }>;
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -26,14 +27,17 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return { title: sale?.name };
 }
 
-const SalePage = async ({ params }: Props) => {
+const SalePage = async ({ params, searchParams }: Props) => {
   const t = await getTranslations();
   const { id } = await params;
+  const { item_category } = await searchParams;
 
   const saleResponse = await getSaleById({ id });
   const sale = saleResponse.data.result;
 
-  const brandsResponse = await getBrands();
+  const brandsResponse = await getBrands({
+    config: { params: { item_category_id: item_category } }
+  });
   const brands = brandsResponse.data.result || [];
 
   const filters: Filter[] = [

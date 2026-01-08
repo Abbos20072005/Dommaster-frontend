@@ -1,20 +1,15 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { ArrowRightIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
-import { Button } from '@/components/ui/button';
-import { Link } from '@/i18n/navigation';
 import { ProductList } from '@/modules/product';
 import { getMain } from '@/utils/api/requests';
 
 import { AddsBrandsSectionLoading } from './AddsBrandsSectionLoading';
 
 export const AddsBrandsSection = () => {
-  const t = useTranslations();
   const getMainQuery = useQuery({
     queryKey: ['main'],
     staleTime: 0,
@@ -34,12 +29,12 @@ export const AddsBrandsSection = () => {
           <>
             <div className='flex items-center justify-between gap-3'>
               <h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2>
-              <Button asChild size='sm' variant='muted'>
-                <Link href={`/brand/${item.data.id}`} scroll>
-                  {t('View all')}
-                  <ArrowRightIcon />
-                </Link>
-              </Button>
+              {/*<Button asChild size='sm' variant='muted'>*/}
+              {/*  <Link href={`/brand/${item.data.id}`} scroll>*/}
+              {/*    {t('View all')}*/}
+              {/*    <ArrowRightIcon />*/}
+              {/*  </Link>*/}
+              {/*</Button>*/}
             </div>
             <ProductList products={item.data.products} />
           </>

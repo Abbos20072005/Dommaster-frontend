@@ -25,6 +25,31 @@ import { getCategories } from '@/utils/api/requests';
 
 import { SubCategories } from './components';
 
+const SCROLL_OFFSET_THRESHOLD = 32;
+const CAROUSEL_SKELETON_COUNT = 15;
+const CATEGORY_LIST_SKELETON_COUNT = 10;
+
+const CategoryCarouselSkeleton = () => (
+  <>
+    {Array.from({ length: CAROUSEL_SKELETON_COUNT }).map((_, index) => (
+      <CarouselItem key={index} className='max-w-fit pl-2'>
+        <Skeleton className='h-8 w-36' />
+      </CarouselItem>
+    ))}
+  </>
+);
+
+const CategoryListSkeleton = () => (
+  <>
+    {Array.from({ length: CATEGORY_LIST_SKELETON_COUNT }).map((_, index) => (
+      <div key={index} className='flex items-center gap-3 px-3 py-2'>
+        <Skeleton className='size-4 rounded' />
+        <Skeleton className='h-4 flex-1' />
+      </div>
+    ))}
+  </>
+);
+
 export const HeaderBottom = () => {
   const t = useTranslations();
   const [offset, setOffset] = React.useState(0);
@@ -32,19 +57,13 @@ export const HeaderBottom = () => {
   const [tab, setTab] = React.useState<number>(-1);
   const openDebounced = useDebouncedValue(open, 200);
 
-  // const getSalesQuery = useQuery({
-  //   queryKey: ['sales'],
-  //   queryFn: () => getSales()
-  // });
-
-  // const sales = getSalesQuery?.data?.data.result || [];
-
   const getCategoriesQuery = useQuery({
     queryKey: ['categories'],
     queryFn: () => getCategories()
   });
 
   const categories = getCategoriesQuery.data?.data.result;
+  const isLoadingCategories = getCategoriesQuery.isLoading;
 
   React.useEffect(() => {
     const onScroll = () => {
@@ -54,16 +73,26 @@ export const HeaderBottom = () => {
     return () => document.removeEventListener('scroll', onScroll);
   }, []);
 
+  const handleMouseLeave = React.useCallback(() => {
+    setOpen(false);
+    setTab(-1);
+  }, []);
+
+  const handleCategoryHover = React.useCallback((index: number) => {
+    setOpen(true);
+    setTab(index);
+  }, []);
+
+  const handleClose = React.useCallback(() => {
+    setOpen(false);
+  }, []);
+
+  const selectedCategory = tab !== -1 && categories ? categories[tab] : null;
+
   return (
-    <div
-      className='group relative'
-      onMouseLeave={() => {
-        setOpen(false);
-        setTab(-1);
-      }}
-    >
+    <div className='group relative' onMouseLeave={handleMouseLeave}>
       <BaseLayout
-        className={cn('flex items-center gap-3', { 'mt-16': offset > 32 })}
+        className={cn('flex items-center gap-3', { 'mt-16': offset > SCROLL_OFFSET_THRESHOLD })}
         onMouseEnter={() => setOpen(true)}
       >
         <Tooltip delayDuration={0}>
@@ -85,35 +114,30 @@ export const HeaderBottom = () => {
           opts={{ dragFree: true, slidesToScroll: 3 }}
         >
           <CarouselContent className='-ml-2'>
-            {getCategoriesQuery.isLoading
-              ? Array.from({ length: 15 }).map((_, index) => (
-                  <CarouselItem key={index} className='max-w-fit pl-2'>
-                    <Skeleton className='h-8 w-36' />
-                  </CarouselItem>
-                ))
-              : categories?.map((item, index) => (
-                  <CarouselItem key={index} className='max-w-fit pl-2'>
-                    <Button asChild size='sm' variant={tab === index ? 'secondaryFlat' : 'muted'}>
-                      <Link
-                        href={`/category/${item.id}`}
-                        onClick={() => setOpen(false)}
-                        onMouseEnter={() => {
-                          setOpen(true);
-                          setTab(index);
-                        }}
-                      >
-                        <Image
-                          alt={item.name}
-                          className='size-4'
-                          height={16}
-                          src={item.icon}
-                          width={16}
-                        />
-                        {item.name}
-                      </Link>
-                    </Button>
-                  </CarouselItem>
-                ))}
+            {isLoadingCategories ? (
+              <CategoryCarouselSkeleton />
+            ) : (
+              categories?.map((item, index) => (
+                <CarouselItem key={item.id} className='max-w-fit pl-2'>
+                  <Button asChild size='sm' variant={tab === index ? 'secondaryFlat' : 'muted'}>
+                    <Link
+                      href={`/category/${item.id}`}
+                      onClick={handleClose}
+                      onMouseEnter={() => handleCategoryHover(index)}
+                    >
+                      <Image
+                        alt={item.name}
+                        className='size-4'
+                        height={16}
+                        src={item.icon}
+                        width={16}
+                      />
+                      {item.name}
+                    </Link>
+                  </Button>
+                </CarouselItem>
+              ))
+            )}
           </CarouselContent>
           <CarouselPrevious
             className='-left-2 opacity-0 shadow-[15px_0px_20px_15px_#ffffff] transition-opacity group-hover:opacity-100'
@@ -133,26 +157,36 @@ export const HeaderBottom = () => {
       >
         <BaseLayout className='flex h-full gap-10 py-6'>
           <div className='-ml-2 w-60 shrink-0 overflow-y-auto border-r pr-2 lg:w-72'>
-            {categories?.map((item, index) => (
-              <Link
-                href={`/category/${item.id}`}
-                key={index}
-                className={cn(
-                  'flex items-center gap-3 px-3 py-2',
-                  tab === index && 'text-secondary bg-secondary/8 cursor-pointer rounded-md'
-                )}
-                onClick={() => setOpen(false)}
-                onMouseEnter={() => setTab(index)}
-              >
-                <Image alt={item.name} className='size-4' height={16} src={item.icon} width={16} />
-                <span className='min-w-0 flex-1 truncate text-sm font-medium'>{item.name}</span>
-                {tab === index && <ChevronRightIcon className='size-4' />}
-              </Link>
-            ))}
+            {isLoadingCategories ? (
+              <CategoryListSkeleton />
+            ) : (
+              categories?.map((item, index) => (
+                <Link
+                  href={`/category/${item.id}`}
+                  key={item.id}
+                  className={cn(
+                    'flex items-center gap-3 px-3 py-2 transition-colors',
+                    tab === index && 'text-secondary bg-secondary/8 cursor-pointer rounded-md'
+                  )}
+                  onClick={handleClose}
+                  onMouseEnter={() => setTab(index)}
+                >
+                  <Image
+                    alt={item.name}
+                    className='size-4'
+                    height={16}
+                    src={item.icon}
+                    width={16}
+                  />
+                  <span className='min-w-0 flex-1 truncate text-sm font-medium'>{item.name}</span>
+                  {tab === index && <ChevronRightIcon className='size-4' />}
+                </Link>
+              ))
+            )}
           </div>
-          <div className='overflow-y-auto'>
-            {tab !== -1 && categories && (
-              <SubCategories category={categories[tab]} onClose={() => setOpen(false)} />
+          <div className='flex-1 overflow-y-auto'>
+            {selectedCategory && (
+              <SubCategories categoryId={selectedCategory.id} onClose={handleClose} />
             )}
           </div>
         </BaseLayout>
