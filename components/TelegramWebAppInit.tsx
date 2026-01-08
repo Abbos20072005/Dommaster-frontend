@@ -47,11 +47,8 @@ export const TelegramWebAppInit = () => {
   useEffect(() => {
     if (typeof window === 'undefined' || !initializedRef.current || !backButton.isMounted()) return;
 
-    if (pathname === '/' && backButton.isVisible()) {
-      backButton.hide();
-    } else if (pathname !== '/' && !backButton.isVisible()) {
-      backButton.show();
-    }
+    if (pathname === '/') backButton.hide();
+    else if (pathname !== '/') backButton.show();
 
     backButton.onClick(onBackButtonClick);
     return () => {
