@@ -39,7 +39,7 @@ export const MobileHeader = () => {
             </Button>
           </ChatDialog>
           <Button asChild size='iconSm' variant='muted'>
-            <Link href='tel:+998712099944' className='p-1.5'>
+            <Link href='tel:+998712099944' className='p-1.5' target='_blank'>
               <PhoneCallIcon className='size-4' />
             </Link>
           </Button>

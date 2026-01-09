@@ -21,7 +21,7 @@ export const PriceCalculationCard = () => {
   const t = useTranslations();
   const [paymentMethod] = useQueryState('payment_method', parseAsInteger.withDefault(1));
   const { user } = useAuth();
-  const { cart, availableCartItems, isSuccess, isFetching } = useCart();
+  const { cart, availableCartItems, isSuccess, refetch, isFetching } = useCart();
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
 
@@ -40,7 +40,11 @@ export const PriceCalculationCard = () => {
   const postOrderMutation = useMutation({
     mutationFn: postOrder,
     onSuccess: ({ data }) => {
-      window.location.href = data.result;
+      refetch();
+      window.open(data.result, '_blank', 'noopener,noreferrer');
+    },
+    meta: {
+      invalidatesQuery: ['orders']
     }
   });
 

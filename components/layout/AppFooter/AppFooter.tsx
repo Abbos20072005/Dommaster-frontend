@@ -24,7 +24,12 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
           <div>
             <div className='mb-5'>
               <div className='mb-3 text-sm font-medium'>{t('Have a question? Call us')}</div>
-              <a href='tel:+998774430909' className='text-2xl font-semibold'>
+              <a
+                href='tel:+998774430909'
+                className='text-2xl font-semibold'
+                rel='noreferrer'
+                target='_blank'
+              >
                 +998 77 443 09 09
               </a>
             </div>

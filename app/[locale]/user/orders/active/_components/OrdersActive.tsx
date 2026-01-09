@@ -12,7 +12,7 @@ import { getOrdersActive } from '@/utils/api/requests';
 export const OrdersActive = () => {
   const t = useTranslations();
   const getOrdersActiveQuery = useInfiniteQuery({
-    queryKey: ['ordersActive'],
+    queryKey: ['orders', 'active'],
     queryFn: ({ pageParam }) =>
       getOrdersActive({
         config: { params: { page: pageParam, page_size: 10 } }

@@ -1,5 +1,5 @@
 'use client';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useMutation } from '@tanstack/react-query';
 import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -28,18 +28,17 @@ export const OrderCancelAction = ({ orderId, children, ...props }: Props) => {
   const [_, setOpenDelete] = React.useState(false);
   const pathname = usePathname();
 
-  const queryClient = useQueryClient();
-
   const router = useRouter();
 
   const postOrderCancelMutation = useMutation({
     mutationFn: postOrderCancel,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['ordersActive'] });
-      queryClient.invalidateQueries({ queryKey: ['ordersHistory'] });
       toast.success(t('Order canceled'));
       if (pathname !== '/user/orders/active') router.push('/user/orders/active');
       setOpenDelete(false);
+    },
+    meta: {
+      invalidatesQuery: ['orders']
     }
   });
 

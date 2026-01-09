@@ -26,6 +26,7 @@ export const TelegramWebAppInit = () => {
       closingBehavior.mount();
       swipeBehavior.mount();
 
+      miniApp.mount();
       miniApp.ready();
 
       closingBehavior.enableConfirmation();

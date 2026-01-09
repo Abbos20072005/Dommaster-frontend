@@ -12,7 +12,7 @@ import { getOrdersHistory } from '@/utils/api/requests';
 export const OrdersHistory = () => {
   const t = useTranslations();
   const getOrdersHistoryQuery = useInfiniteQuery({
-    queryKey: ['ordersHistory'],
+    queryKey: ['orders', 'history'],
     queryFn: ({ pageParam }) =>
       getOrdersHistory({
         config: { params: { page: pageParam, page_size: 10 } }

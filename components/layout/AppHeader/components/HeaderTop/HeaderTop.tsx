@@ -94,6 +94,7 @@ export const HeaderTop = () => {
         <Link
           href='tel:+998774430909'
           className='hover:text-secondary text-foreground/70 text-sm font-bold transition-colors'
+          target='_blank'
         >
           +998 77 443 09 09
         </Link>
