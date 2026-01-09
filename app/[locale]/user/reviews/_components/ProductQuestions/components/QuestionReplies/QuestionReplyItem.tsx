@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { EditIcon, Trash2Icon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -29,8 +29,13 @@ export const QuestionReplyItem = ({ reply, question }: Props) => {
   const [openReplyForm, setOpenReplyForm] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
 
+  const queryClient = useQueryClient();
+
   const deleteQuestionReplyMutation = useMutation({
     mutationFn: deleteQuestionReplyById,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['productQuestions'] });
+    },
     meta: {
       invalidatesQuery: ['productQuestionReplies', question.id]
     }

@@ -1,5 +1,5 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
 import { patchQuestionReplyById, postQuestionReply } from '@/utils/api/requests';
@@ -22,9 +22,13 @@ export const useQuestionReplyForm = ({ onSuccess, questionId, defaultValues }: P
       answer: defaultValues?.answer ?? ''
     }
   });
+
+  const queryClient = useQueryClient();
+
   const postQuestionReplyMutation = useMutation({
     mutationFn: postQuestionReply,
     onSuccess: ({ data }) => {
+      queryClient.invalidateQueries({ queryKey: ['productQuestions'] });
       onSuccess?.(data);
     },
     meta: {
@@ -35,6 +39,7 @@ export const useQuestionReplyForm = ({ onSuccess, questionId, defaultValues }: P
   const patchQuestionReplyMutation = useMutation({
     mutationFn: patchQuestionReplyById,
     onSuccess: ({ data }) => {
+      queryClient.invalidateQueries({ queryKey: ['productQuestions'] });
       onSuccess?.(data);
     },
     meta: {
