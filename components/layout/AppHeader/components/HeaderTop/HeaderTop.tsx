@@ -73,9 +73,9 @@ export const HeaderTop = () => {
               {/*  </DropdownMenuItem>*/}
               {/*  <TooltipContent side='right'>{t('In the process of development')}</TooltipContent>*/}
               {/*</Tooltip>*/}
-              <Link href='/requisites'>
-                <DropdownMenuItem>{t('Requisites')}</DropdownMenuItem>
-              </Link>
+              {/*<Link href='/requisites'>*/}
+              {/*  <DropdownMenuItem>{t('Requisites')}</DropdownMenuItem>*/}
+              {/*</Link>*/}
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenu>
