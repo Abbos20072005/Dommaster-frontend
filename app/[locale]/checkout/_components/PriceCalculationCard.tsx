@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
+import { ArrowUpRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { parseAsInteger, useQueryState } from 'nuqs';
 import React from 'react';
@@ -9,7 +10,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { useRouter } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
@@ -24,6 +25,7 @@ export const PriceCalculationCard = () => {
   const { cart, availableCartItems, isSuccess, refetch, isFetching } = useCart();
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
+  const [paymentLink, setPaymentLink] = React.useState<string>();
 
   const getAddressesQuery = useQuery({
     queryKey: ['customerAddresses'],
@@ -34,13 +36,14 @@ export const PriceCalculationCard = () => {
   const isAddressSelected = !!addresses?.find((item) => item.is_default);
 
   React.useEffect(() => {
-    if (isSuccess && !availableCartItems.length) router.push('/cart');
+    if (isSuccess && !availableCartItems.length && !paymentLink) router.push('/cart');
   }, [cart, user]);
 
   const postOrderMutation = useMutation({
     mutationFn: postOrder,
     onSuccess: ({ data }) => {
       refetch();
+      setPaymentLink(data.result);
       window.open(data.result, '_blank', 'noopener,noreferrer');
     },
     meta: {
@@ -96,19 +99,28 @@ export const PriceCalculationCard = () => {
             {formatPrice(promo?.total_price ?? cart?.total_price ?? 0)} {t('sum')}
           </p>
         </div>
-        <Button
-          disabled={
-            !cart?.cart_items.length ||
-            isFetching ||
-            postOrderMutation.isPending ||
-            !isAddressSelected
-          }
-          className='mb-0 w-full'
-          isLoading={isFetching || postOrderMutation.isPending}
-          onClick={onSubmit}
-        >
-          {t('Pay')}
-        </Button>
+        {paymentLink ? (
+          <Button asChild className='w-full' variant='outline'>
+            <Link href={paymentLink}>
+              {t('Proceed to payment')}
+              <ArrowUpRightIcon />
+            </Link>
+          </Button>
+        ) : (
+          <Button
+            disabled={
+              !cart?.cart_items.length ||
+              isFetching ||
+              postOrderMutation.isPending ||
+              !isAddressSelected
+            }
+            className='mb-0 w-full'
+            isLoading={isFetching || postOrderMutation.isPending}
+            onClick={onSubmit}
+          >
+            {t('Pay')}
+          </Button>
+        )}
         <Separator className='my-4' />
         <PromoCodeChecker value={promo} onSuccess={setPromo} />
       </CardContent>

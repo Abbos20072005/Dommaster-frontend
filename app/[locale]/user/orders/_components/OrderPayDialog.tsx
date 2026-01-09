@@ -1,6 +1,7 @@
 'use client';
 
 import { useMutation } from '@tanstack/react-query';
+import { ArrowUpRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
@@ -18,6 +19,7 @@ import {
 } from '@/components/ui/dialog';
 import { Label } from '@/components/ui/label';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { postOrderPay } from '@/utils/api/requests';
 import { paymentMethods } from '@/utils/constants/paymentMethods';
@@ -30,12 +32,13 @@ interface Props extends React.ComponentProps<typeof DialogTrigger> {
 export const OrderPayDialog = ({ orderId, children, ...props }: Props) => {
   const t = useTranslations();
   const [method, setMethod] = React.useState('1');
-  const [_, setOpen] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
+  const [paymentLink, setPaymentLink] = React.useState<string>();
 
   const postOrderPayMutation = useMutation({
     mutationFn: postOrderPay,
     onSuccess: ({ data }) => {
-      setOpen(false);
+      setPaymentLink(data.result);
       window.open(data.result, '_blank', 'noopener,noreferrer');
     }
   });
@@ -47,7 +50,15 @@ export const OrderPayDialog = ({ orderId, children, ...props }: Props) => {
   };
 
   return (
-    <Dialog onOpenChange={setOpen}>
+    <Dialog
+      onOpenChange={(isOpen) => {
+        setOpen(isOpen);
+        if (!isOpen) {
+          setPaymentLink(undefined);
+        }
+      }}
+      open={open}
+    >
       <DialogTrigger {...props}>{children}</DialogTrigger>
       <DialogContent>
         <DialogHeader>
@@ -91,9 +102,18 @@ export const OrderPayDialog = ({ orderId, children, ...props }: Props) => {
           <DialogClose asChild>
             <Button variant='outline'>{t('Cancel')}</Button>
           </DialogClose>
-          <Button isLoading={postOrderPayMutation.isPending} onClick={onPay}>
-            {t('Pay')}
-          </Button>
+          {paymentLink ? (
+            <Button asChild variant='outline'>
+              <Link href={paymentLink}>
+                {t('Proceed to payment')}
+                <ArrowUpRightIcon />
+              </Link>
+            </Button>
+          ) : (
+            <Button isLoading={postOrderPayMutation.isPending} onClick={onPay}>
+              {t('Pay')}
+            </Button>
+          )}
         </DialogFooter>
       </DialogContent>
     </Dialog>
