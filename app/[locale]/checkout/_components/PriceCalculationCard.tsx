@@ -9,12 +9,21 @@ import React from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle
+} from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
 import { Link, useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
-import { getCustomerAddresses, postOrder } from '@/utils/api/requests';
+import { getCustomerAddresses, getOrdersActive, postOrder } from '@/utils/api/requests';
 
 import { PromoCodeChecker } from './PromoCodeChecker';
 
@@ -26,6 +35,8 @@ export const PriceCalculationCard = () => {
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
   const [paymentLink, setPaymentLink] = React.useState<string>();
+  const [orderId, setOrderId] = React.useState<number>();
+  const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const getAddressesQuery = useQuery({
     queryKey: ['customerAddresses'],
@@ -41,10 +52,24 @@ export const PriceCalculationCard = () => {
 
   const postOrderMutation = useMutation({
     mutationFn: postOrder,
-    onSuccess: ({ data }) => {
+    onSuccess: async ({ data }) => {
       refetch();
       setPaymentLink(data.result);
       window.open(data.result, '_blank', 'noopener,noreferrer');
+
+      // Fetch the latest order to get the order ID
+      try {
+        const ordersResponse = await getOrdersActive({
+          config: { params: { page: 1, page_size: 1 } }
+        });
+        const latestOrder = ordersResponse.data.result.content?.[0];
+        if (latestOrder) {
+          setOrderId(latestOrder.id);
+          setDialogOpen(true);
+        }
+      } catch (error) {
+        console.error('Failed to fetch order:', error);
+      }
     },
     meta: {
       invalidatesQuery: ['orders']
@@ -99,31 +124,53 @@ export const PriceCalculationCard = () => {
             {formatPrice(promo?.total_price ?? cart?.total_price ?? 0)} {t('sum')}
           </p>
         </div>
-        {paymentLink ? (
-          <Button asChild className='w-full' variant='outline'>
-            <Link href={paymentLink}>
-              {t('Proceed to payment')}
-              <ArrowUpRightIcon />
-            </Link>
-          </Button>
-        ) : (
-          <Button
-            disabled={
-              !cart?.cart_items.length ||
-              isFetching ||
-              postOrderMutation.isPending ||
-              !isAddressSelected
-            }
-            className='mb-0 w-full'
-            isLoading={isFetching || postOrderMutation.isPending}
-            onClick={onSubmit}
-          >
-            {t('Pay')}
-          </Button>
-        )}
+        <Button
+          disabled={
+            !cart?.cart_items.length ||
+            isFetching ||
+            postOrderMutation.isPending ||
+            !isAddressSelected
+          }
+          className='mb-0 w-full'
+          isLoading={isFetching || postOrderMutation.isPending}
+          onClick={onSubmit}
+        >
+          {t('Pay')}
+        </Button>
         <Separator className='my-4' />
         <PromoCodeChecker value={promo} onSuccess={setPromo} />
       </CardContent>
+      <Dialog
+        onOpenChange={(open) => {
+          setDialogOpen(open);
+          if (!open && orderId) {
+            router.push(`/user/orders/active/${orderId}`);
+          }
+        }}
+        open={dialogOpen}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{t('Order created')}</DialogTitle>
+            <DialogDescription>
+              {t('Your order has been created, please proceed to payment')}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button variant='outline'>{orderId ? t('View order') : t('Close')}</Button>
+            </DialogClose>
+            {paymentLink && (
+              <Button asChild>
+                <Link href={paymentLink}>
+                  {t('Proceed to payment')}
+                  <ArrowUpRightIcon />
+                </Link>
+              </Button>
+            )}
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   );
 };
