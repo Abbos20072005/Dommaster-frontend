@@ -3,6 +3,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { Trash2Icon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { useEffect } from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -13,13 +14,21 @@ import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { useCart } from '@/modules/cart';
 import { patchCart, postCartBulk } from '@/utils/api/requests';
+import { useCartStore } from '@/utils/stores';
 
 import { ProductCartItem } from './ProductCartItem';
 
 export const ProductCartList = () => {
   const t = useTranslations();
 
-  const { cart, isLoading } = useCart();
+  const { cart, isLoading, refetch } = useCart();
+  const { getIsCartItemsSynced } = useCartStore();
+
+  useEffect(() => {
+    if (cart && !getIsCartItemsSynced(cart.cart_items)) {
+      refetch();
+    }
+  }, [cart]);
 
   const isAllChecked = cart?.cart_items.every((item) => item.is_checked);
 

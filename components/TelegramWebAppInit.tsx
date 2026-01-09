@@ -8,17 +8,16 @@ import {
   swipeBehavior,
   viewport
 } from '@tma.js/sdk-react';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import { usePathname } from '@/i18n/navigation';
 
 export const TelegramWebAppInit = () => {
   const pathname = usePathname();
-  const initializedRef = useRef(false);
 
   // ---------- INIT ----------
   useEffect(() => {
-    if (typeof window === 'undefined' || initializedRef.current) return;
+    if (typeof window === 'undefined') return;
 
     try {
       init();
@@ -35,8 +34,6 @@ export const TelegramWebAppInit = () => {
       viewport.expand();
       miniApp.setHeaderColor('#00257AFF');
       miniApp.setBottomBarColor('#000000FF');
-
-      initializedRef.current = true;
     } catch (error) {
       console.warn('Telegram Web App SDK failed to initialize:', error);
     }
@@ -49,20 +46,11 @@ export const TelegramWebAppInit = () => {
 
   // ---------- NAV TRACK ----------
   useEffect(() => {
-    if (typeof window === 'undefined' || !initializedRef.current) return;
-
-    if (pathname === '/') {
-      backButton.hide();
-    } else {
-      // Small delay helps avoid Telegram UI race conditions
-      setTimeout(() => backButton.show(), 0);
-    }
+    if (typeof window === 'undefined' || !backButton.isMounted()) return;
+    pathname === '/' ? backButton.hide() : backButton.show();
 
     backButton.onClick(onBackButtonClick);
-
-    return () => {
-      backButton.offClick(onBackButtonClick);
-    };
+    return () => backButton.offClick(onBackButtonClick);
   }, [pathname, onBackButtonClick]);
 
   return null;
