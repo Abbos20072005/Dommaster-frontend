@@ -39,7 +39,7 @@ export const FilterCategories = () => {
         <AccordionItem key={category.id} className='border-none' value={String(category.id)}>
           <AccordionTrigger className='py-2'>{category.name}</AccordionTrigger>
           <AccordionContent className='ml-2'>
-            <CategoryContent brand={brandId} categoryId={category.id} />
+            <CategoryContent brandId={brandId} categoryId={category.id} />
           </AccordionContent>
         </AccordionItem>
       ))}
@@ -75,19 +75,19 @@ const SubCategoriesSkeleton = () => (
 );
 
 interface CategoryContentProps {
-  brand: string | null;
+  brandId: string | null;
   categoryId: number;
 }
 
-const CategoryContent = ({ brand, categoryId }: CategoryContentProps) => {
+const CategoryContent = ({ brandId, categoryId }: CategoryContentProps) => {
   const { filter } = useFilter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const getCategoryQuery = useQuery({
-    queryKey: ['categories', categoryId, brand],
-    queryFn: () => getCategoryById({ id: categoryId, config: { params: { brand } } }),
+    queryKey: ['categories', categoryId, brandId],
+    queryFn: () => getCategoryById({ id: categoryId, config: { params: { brand_id: brandId } } }),
     enabled: !!categoryId
   });
 
