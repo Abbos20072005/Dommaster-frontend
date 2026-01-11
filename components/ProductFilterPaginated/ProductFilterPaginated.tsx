@@ -6,6 +6,8 @@ import Image from 'next/image';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
+import type { FilterDefaultValues } from '@/modules/filter/useFilter';
+
 import { Button } from '@/components/ui/button';
 import { Pagination } from '@/components/ui/pagination';
 import { Filter, useFilter } from '@/modules/filter';
@@ -15,12 +17,18 @@ import { getProducts } from '@/utils/api/requests';
 import { MobileFilterDrawer, ProductsSortBySelect } from './components';
 
 interface Props {
+  filterDefaultValues?: FilterDefaultValues;
   filters: Filter[];
   hideCategories?: boolean;
   queries?: Partial<ProductRequest>;
 }
 
-export const ProductFilterPaginated = ({ filters, hideCategories, queries }: Props) => {
+export const ProductFilterPaginated = ({
+  filterDefaultValues,
+  filters,
+  hideCategories,
+  queries
+}: Props) => {
   const t = useTranslations();
   const { filter, setFilter, isCleared } = useFilter();
   const [q] = useQueryState('q');
@@ -59,7 +67,11 @@ export const ProductFilterPaginated = ({ filters, hideCategories, queries }: Pro
   return (
     <div className='gap-8 lg:flex'>
       <aside className='hidden w-60 lg:block lg:w-64'>
-        <Filter filters={filters} hideCategories={hideCategories} />
+        <Filter
+          defaultValues={filterDefaultValues}
+          filters={filters}
+          hideCategories={hideCategories}
+        />
       </aside>
       <div className='space-y-4 lg:flex-1'>
         <div className='flex items-center justify-between'>

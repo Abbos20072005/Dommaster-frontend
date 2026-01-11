@@ -23,7 +23,7 @@ export const FilterCategories = () => {
   const brandId = searchParams.get('brand');
 
   const getCategoriesQuery = useQuery({
-    queryKey: ['categories', brandId],
+    queryKey: ['categories', { brandId }],
     queryFn: () => getCategories({ config: { params: { brand_id: brandId } } })
   });
 
@@ -87,8 +87,7 @@ const CategoryContent = ({ brandId, categoryId }: CategoryContentProps) => {
 
   const getCategoryQuery = useQuery({
     queryKey: ['categories', categoryId, brandId],
-    queryFn: () => getCategoryById({ id: categoryId, config: { params: { brand_id: brandId } } }),
-    enabled: !!categoryId
+    queryFn: () => getCategoryById({ id: categoryId, config: { params: { brand_id: brandId } } })
   });
 
   const category = getCategoryQuery.data?.data.result;

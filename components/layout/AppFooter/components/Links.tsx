@@ -18,14 +18,14 @@ export const Links = () => {
               {t('About company')}
             </Link>
           </li>
-          <li>
-            <Link
-              href='/requisites'
-              className='hover:text-secondary inline-block text-sm leading-[200%] transition-colors'
-            >
-              {t('Requisites')}
-            </Link>
-          </li>
+          {/*<li>*/}
+          {/*  <Link*/}
+          {/*    href='/requisites'*/}
+          {/*    className='hover:text-secondary inline-block text-sm leading-[200%] transition-colors'*/}
+          {/*  >*/}
+          {/*    {t('Requisites')}*/}
+          {/*  </Link>*/}
+          {/*</li>*/}
         </ul>
       </div>
       <div>

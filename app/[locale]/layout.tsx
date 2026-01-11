@@ -66,7 +66,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t('metadata.description'),
       images: [
         {
-          url: `${BASE_URL}/og.png`,
+          url: `${BASE_URL}/og.jpg`,
           width: 900,
           height: 600,
           alt: t('metadata.title.default')
@@ -80,7 +80,7 @@ export async function generateMetadata(): Promise<Metadata> {
       description: t('metadata.description'),
       images: [
         {
-          url: `${BASE_URL}/og.png`,
+          url: `${BASE_URL}/og.jpg`,
           width: 900,
           height: 600,
           alt: t('metadata.title.default')

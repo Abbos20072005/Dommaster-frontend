@@ -3,18 +3,24 @@
 import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import type { FilterDefaultValues } from '@/modules/filter/useFilter';
+
 import { Button } from '@/components/ui/button';
 import { useFilter } from '@/modules/filter';
 
-export const FilterClearButton = () => {
+interface Props {
+  defaultValues?: FilterDefaultValues;
+}
+
+export const FilterClearButton = ({ defaultValues }: Props) => {
   const t = useTranslations();
-  const { setFilter, isCleared } = useFilter();
+  const { isCleared, onReset } = useFilter(defaultValues);
 
   if (isCleared) return null;
 
   return (
     <div className='flex justify-end'>
-      <Button size='sm' variant='link' onClick={() => setFilter(null)}>
+      <Button size='sm' variant='link' onClick={onReset}>
         <XIcon />
         {t('Reset all filters')}
       </Button>

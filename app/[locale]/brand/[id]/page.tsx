@@ -70,7 +70,11 @@ const SearchPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>{brand.name}</h1>
-        <ProductFilterPaginated filters={filters} queries={{ brand: brand.id }} />
+        <ProductFilterPaginated
+          filterDefaultValues={{ brand: brand.id }}
+          filters={filters}
+          queries={{ brand: brand.id }}
+        />
       </BaseLayout>
     </div>
   );

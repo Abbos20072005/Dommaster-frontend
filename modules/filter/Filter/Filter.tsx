@@ -2,6 +2,8 @@
 
 import React from 'react';
 
+import type { FilterDefaultValues } from '@/modules/filter/useFilter';
+
 import { useMounted } from '@/hooks';
 import { cn } from '@/lib/utils';
 import {
@@ -15,18 +17,19 @@ import {
 import { FilterClearButton } from './components/FilterClearButton';
 
 interface Props extends React.ComponentProps<'div'> {
+  defaultValues?: FilterDefaultValues;
   filters: Filter[];
   hideCategories?: boolean;
 }
 
-export const Filter = ({ className, filters, hideCategories, ...props }: Props) => {
+export const Filter = ({ className, filters, hideCategories, defaultValues, ...props }: Props) => {
   const mounted = useMounted();
 
   if (!mounted) return <FilterSkeleton />;
 
   return (
     <div className={cn(className)} {...props} aria-label='Filter' data-slot='filter'>
-      <FilterClearButton />
+      <FilterClearButton defaultValues={defaultValues} />
       <div className='space-y-7'>
         {!hideCategories && <FilterCategories />}
         {filters.map((filter) => (
