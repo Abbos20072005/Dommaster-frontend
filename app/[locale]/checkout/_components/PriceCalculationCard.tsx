@@ -23,7 +23,7 @@ import { Link, useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
-import { getCustomerAddresses, getOrdersActive, postOrder } from '@/utils/api/requests';
+import { getCustomerAddresses, postOrder } from '@/utils/api/requests';
 
 import { PromoCodeChecker } from './PromoCodeChecker';
 
@@ -47,29 +47,25 @@ export const PriceCalculationCard = () => {
   const isAddressSelected = !!addresses?.find((item) => item.is_default);
 
   React.useEffect(() => {
-    if (isSuccess && !availableCartItems.length && !paymentLink) router.push('/cart');
+    if (isSuccess && !availableCartItems.length && !orderId) router.push('/cart');
   }, [cart, user]);
 
   const postOrderMutation = useMutation({
     mutationFn: postOrder,
     onSuccess: async ({ data }) => {
-      refetch();
-      setPaymentLink(data.result);
-      window.open(data.result, '_blank', 'noopener,noreferrer');
-
-      // Fetch the latest order to get the order ID
-      try {
-        const ordersResponse = await getOrdersActive({
-          config: { params: { page: 1, page_size: 1 } }
-        });
-        const latestOrder = ordersResponse.data.result.content?.[0];
-        if (latestOrder) {
-          setOrderId(latestOrder.id);
+      setOrderId(data.order_id);
+      if (data.result) {
+        setPaymentLink(data.result);
+        const win = window.open(data.result, '_blank', 'noopener,noreferrer');
+        if (win) {
+          router.replace(`/user/orders/active/${data.order_id}`);
+        } else {
           setDialogOpen(true);
         }
-      } catch (error) {
-        console.error('Failed to fetch order:', error);
+      } else {
+        router.replace(`/user/orders/active/${data.order_id}`);
       }
+      refetch();
     },
     meta: {
       invalidatesQuery: ['orders']
@@ -144,7 +140,7 @@ export const PriceCalculationCard = () => {
         onOpenChange={(open) => {
           setDialogOpen(open);
           if (!open && orderId) {
-            router.push(`/user/orders/active/${orderId}`);
+            router.replace(`/user/orders/active/${orderId}`);
           }
         }}
         open={dialogOpen}

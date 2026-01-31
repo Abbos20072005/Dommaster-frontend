@@ -16,6 +16,10 @@ export const paymentMethodMap: Record<
   3: {
     label: 'Uzum',
     image: '/payments/uzum.png'
+  },
+  4: {
+    label: 'Наличные',
+    image: '/payments/cash.png'
   }
 };
 

@@ -30,7 +30,8 @@ interface Order extends Omit<OrderPreview, 'order_items'> {
 enum PaymentMethod {
   Click = 1,
   Payme = 2,
-  Uzum = 3
+  Uzum = 3,
+  Cash = 4
 }
 
 interface OrderRequest {

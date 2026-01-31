@@ -21,7 +21,11 @@ export const PaymentTypeCard = () => {
         <CardTitle className='md:text-xl'>{t('Payment methods')}</CardTitle>
       </CardHeader>
       <CardContent className='flex gap-4'>
-        <RadioGroup className='grid w-full grid-cols-3 gap-2' value={type} onValueChange={setType}>
+        <RadioGroup
+          className='grid w-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2'
+          value={type}
+          onValueChange={setType}
+        >
           {paymentMethods.map((item) => (
             <React.Fragment key={item.value}>
               <RadioGroupItem
