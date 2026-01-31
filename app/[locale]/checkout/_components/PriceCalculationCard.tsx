@@ -131,7 +131,7 @@ export const PriceCalculationCard = () => {
           isLoading={isFetching || postOrderMutation.isPending}
           onClick={onSubmit}
         >
-          {t('Pay')}
+          {t('Confirm')}
         </Button>
         <Separator className='my-4' />
         <PromoCodeChecker value={promo} onSuccess={setPromo} />
