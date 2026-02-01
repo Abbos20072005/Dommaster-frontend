@@ -24,7 +24,7 @@ export const FilterCategories = () => {
 
   const getCategoriesQuery = useQuery({
     queryKey: ['categories', { brandId }],
-    queryFn: () => getCategories({ config: { params: { brand_id: brandId } } })
+    queryFn: () => getCategories({ config: { params: { brand_id: brandId, is_main: true } } })
   });
 
   const categories = getCategoriesQuery.data?.data.result;

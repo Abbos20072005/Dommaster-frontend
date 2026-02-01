@@ -59,7 +59,7 @@ export const HeaderBottom = () => {
 
   const getCategoriesQuery = useQuery({
     queryKey: ['categories'],
-    queryFn: () => getCategories()
+    queryFn: () => getCategories({ config: { params: { is_main: true } } })
   });
 
   const categories = getCategoriesQuery.data?.data.result;

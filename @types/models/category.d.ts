@@ -4,10 +4,6 @@ interface Category {
   image: string;
   name: string;
   sub_categories: SubCategory[];
-  breadcrumbs: {
-    id: number;
-    name: string;
-  }[];
 }
 
 type CategoriesResponse = ApiResponse<Omit<Category, 'sub_categories'>[]>;

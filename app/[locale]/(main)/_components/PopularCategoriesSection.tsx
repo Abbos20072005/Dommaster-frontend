@@ -17,7 +17,7 @@ import { getCategories } from '@/utils/api/requests';
 export const PopularCategoriesSection = () => {
   const getCategoriesSuspenseQuery = useSuspenseQuery({
     queryKey: ['categories'],
-    queryFn: () => getCategories()
+    queryFn: () => getCategories({ config: { params: { is_main: true } } })
   });
   const categories = getCategoriesSuspenseQuery.data.data.result;
 
