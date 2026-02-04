@@ -10,7 +10,6 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
 
-import { LoginProvider } from '@/components/Providers/LoginProvider';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { COOKIES } from '@/utils/constants';
 
@@ -68,11 +67,9 @@ export const Providers = ({ children }: React.PropsWithChildren) => {
     <QueryClientProvider client={queryClient}>
       <NuqsAdapter>
         <TooltipProvider>
-          <LoginProvider>
-            <CartProvider />
-            <FavoritesProvider />
-            {children}
-          </LoginProvider>
+          <CartProvider />
+          <FavoritesProvider />
+          {children}
         </TooltipProvider>
       </NuqsAdapter>
     </QueryClientProvider>
