@@ -1,10 +1,9 @@
 interface Promo {
   code: string;
-  discount: number;
-  end_date: string;
+  discount_precent: number;
+  expires_at: string;
   id: number;
   name: string;
-  start_date: string;
 }
 
 type PromosResponse = ApiResponse<Promo[]>;

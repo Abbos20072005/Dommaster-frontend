@@ -32,7 +32,7 @@ export const PromoCard = ({ promo }: PromoCardProps) => {
     ru
   };
 
-  const endDate = parseISO(promo.end_date);
+  const endDate = parseISO(promo.expires_at);
   const timeRemaining = formatDistanceToNow(endDate, {
     addSuffix: true,
     locale: localeMap[locale as Locale]
@@ -51,11 +51,11 @@ export const PromoCard = ({ promo }: PromoCardProps) => {
           <div>
             <CardTitle className='text-xl'>{promo.name}</CardTitle>
             <CardDescription>
-              {t('Save {discount}% on your purchase', { discount: promo.discount })}
+              {t('Save {discount}% on your purchase', { discount: promo.discount_precent })}
             </CardDescription>
           </div>
           <Badge className='ml-2' variant='secondary'>
-            {promo.discount}% OFF
+            {promo.discount_precent}% OFF
           </Badge>
         </div>
       </CardHeader>
