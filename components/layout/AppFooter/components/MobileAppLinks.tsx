@@ -12,16 +12,16 @@ export const MobileAppLinks = () => {
             {t('Point your camera at the QR to download the app')}
           </p>
           <div className='flex shrink-0 gap-2'>
-            <a href='#' className='block'>
+            <a href='https://play.google.com/store/apps/details?id=uz.buildex.go' className='block'>
               <Image
-                alt='App Store'
+                alt='Google Play'
                 className='h-[35px] w-[110px]'
                 height={35}
                 src='https://media.obi.ru/media/wysiwyg/footer-app/google-play.png'
                 width={110}
               />
             </a>
-            <a href='#' className='block'>
+            <a href='https://apps.apple.com/uz/app/buildex-go/id6755352149' className='block'>
               <Image
                 alt='App Store'
                 className='h-[35px] w-[110px]'
