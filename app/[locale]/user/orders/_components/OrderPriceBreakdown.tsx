@@ -29,14 +29,14 @@ export const OrderPriceBreakdown = ({ order }: Props) => {
           {formatPrice(productsTotal)} {t('sum')}
         </span>
       </div>
-      <div className='flex justify-between gap-1 text-sm'>
-        <span className='font-bold uppercase'>{order.promocode}</span>
-        {savedPrice > 0 && (
-          <p className='text-secondary'>
+      {hasPromo && (
+        <div className='flex justify-between gap-1 text-sm'>
+          <span className='font-bold uppercase'>{order.promocode}</span>
+          <span className='text-secondary'>
             -{formatPrice(savedPrice)} {t('sum')}
-          </p>
-        )}
-      </div>
+          </span>
+        </div>
+      )}
       <div className='flex justify-between gap-1 text-xl font-bold'>
         <p>{t('Total')}</p>
         <p>
