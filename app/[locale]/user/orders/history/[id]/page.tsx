@@ -6,12 +6,13 @@ import { ArrowLeftIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
+import { OrderPriceBreakdown } from '@/app/[locale]/user/orders/_components/OrderPriceBreakdown';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
-import { cn, formatPhoneNumber, formatPrice } from '@/lib/utils';
+import { cn, formatPhoneNumber } from '@/lib/utils';
 import { AuthWrapper, useAuth } from '@/modules/auth';
 import { getOrderById } from '@/utils/api/requests';
 import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
@@ -100,9 +101,7 @@ const OrderPage = () => {
               </CardHeader>
               <CardContent className='space-y-2'>
                 <div className='mb-4'>
-                  <p className='text-xl font-bold'>
-                    {formatPrice(order.total_price)} {t('sum')}
-                  </p>
+                  <OrderPriceBreakdown order={order} />
                 </div>
               </CardContent>
             </Card>
