@@ -1,5 +1,6 @@
 import { useTranslations } from 'next-intl';
 
+import { Badge } from '@/components/ui/badge';
 import { formatPrice } from '@/lib/utils';
 
 interface Props {
@@ -15,9 +16,8 @@ const getProductsTotalPrice = (order: Order): number =>
 export const OrderPriceBreakdown = ({ order }: Props) => {
   const t = useTranslations();
   const productsTotal = getProductsTotalPrice(order);
-  const hasPromo = !!order.promocode;
   const savedPrice =
-    hasPromo && productsTotal > order.total_price ? productsTotal - order.total_price : 0;
+    order.promocode && productsTotal > order.total_price ? productsTotal - order.total_price : 0;
 
   return (
     <div className='space-y-2'>
@@ -29,12 +29,15 @@ export const OrderPriceBreakdown = ({ order }: Props) => {
           {formatPrice(productsTotal)} {t('sum')}
         </span>
       </div>
-      {hasPromo && (
-        <div className='flex justify-between gap-1 text-sm'>
-          <span className='font-bold uppercase'>{order.promocode}</span>
-          <span className='text-secondary'>
+      {order.promocode && (
+        <div className='align-center flex justify-between gap-1 text-sm'>
+          <div className='flex items-center gap-1'>
+            <span className='font-bold uppercase'>{order.promocode.code}</span>
+            <Badge variant='secondary'>-{order.promocode.discount_precent}%</Badge>
+          </div>
+          <p className='text-secondary'>
             -{formatPrice(savedPrice)} {t('sum')}
-          </span>
+          </p>
         </div>
       )}
       <div className='flex justify-between gap-1 text-xl font-bold'>
