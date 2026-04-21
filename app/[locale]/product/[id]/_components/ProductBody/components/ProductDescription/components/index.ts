@@ -1,2 +1,3 @@
-export { ProductCharacteristicsPreview } from './ProductCharacteristicsPreview';
+export { ProductDescriptionPreview } from './ProductDescriptionPreview';
 export { ProductImageCarousel } from './ProductImageCarousel';
+

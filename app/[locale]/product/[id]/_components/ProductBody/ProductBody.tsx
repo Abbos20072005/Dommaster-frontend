@@ -23,7 +23,6 @@ import {
   ProductCharacteristics,
   ProductComments,
   ProductDescription,
-  ProductDetails,
   ProductQuestions
 } from './components';
 
@@ -87,14 +86,7 @@ export const ProductBody = () => {
           <TabsTrigger size='lg' value='description' variant='underline'>
             {t('Description')}
           </TabsTrigger>
-          <TabsTrigger
-            disabled={!product.description}
-            size='lg'
-            value='details'
-            variant='underline'
-          >
-            {t('Details')}
-          </TabsTrigger>
+
           <TabsTrigger
             disabled={!product.characteristics.length}
             size='lg'
@@ -116,9 +108,7 @@ export const ProductBody = () => {
           <TabsContent value='description'>
             <ProductDescription product={product} />
           </TabsContent>
-          <TabsContent value='details'>
-            <ProductDetails description={product.description} />
-          </TabsContent>
+
           <TabsContent value='characteristics'>
             <ProductCharacteristics characteristics={product.characteristics} />
           </TabsContent>
@@ -141,10 +131,14 @@ export const ProductBody = () => {
           collapsible
           onValueChange={setTab}
         >
-          <AccordionItem disabled={!product.description} value='details'>
-            <AccordionTrigger>{t('Details')}</AccordionTrigger>
+
+          <AccordionItem disabled={!product.description} value='description-mobile'>
+            <AccordionTrigger>{t('Description')}</AccordionTrigger>
             <AccordionContent>
-              <ProductDetails description={product.description} />
+              <div
+                className='prose prose-sm max-w-max'
+                dangerouslySetInnerHTML={{ __html: product.description }}
+              />
             </AccordionContent>
           </AccordionItem>
           <AccordionItem disabled={!product.characteristics.length} value='characteristics'>
