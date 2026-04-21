@@ -137,7 +137,7 @@ export const ProductBody = () => {
             <AccordionContent>
               <div
                 className='prose prose-sm max-w-max'
-                dangerouslySetInnerHTML={{ __html: product.description }}
+                dangerouslySetInnerHTML={{ __html: product.description ?? '' }}
               />
             </AccordionContent>
           </AccordionItem>
