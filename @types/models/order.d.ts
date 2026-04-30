@@ -21,6 +21,7 @@ interface OrderPreview {
 
 interface Order extends Omit<OrderPreview, 'order_items'> {
   promocode: Promo | null;
+  ofd_url: string | null;
   order_items: {
     id: number;
     quantity: number;

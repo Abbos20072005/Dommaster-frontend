@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
-import { ArrowLeftIcon } from 'lucide-react';
+import { ArrowLeftIcon, DownloadIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 
@@ -103,6 +103,14 @@ const OrderPage = () => {
                 <div className='mb-4'>
                   <OrderPriceBreakdown order={order} />
                 </div>
+                {order.ofd_url && (
+                  <Button asChild className='w-full' size='sm'>
+                    <a href={order.ofd_url} rel='noopener noreferrer' target='_blank'>
+                      <DownloadIcon />
+                      {t('Download receipt')}
+                    </a>
+                  </Button>
+                )}
               </CardContent>
             </Card>
           </div>
