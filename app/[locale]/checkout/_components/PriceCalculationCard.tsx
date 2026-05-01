@@ -1,42 +1,28 @@
 'use client';
 
 import { useMutation, useQuery } from '@tanstack/react-query';
-import { ArrowUpRightIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import { parseAsInteger, useQueryState } from 'nuqs';
 import React from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from '@/components/ui/dialog';
 import { Separator } from '@/components/ui/separator';
-import { Link, useRouter } from '@/i18n/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
-import { getCustomerAddresses, postOrder } from '@/utils/api/requests';
+import { getCustomerAddresses, postOrder, postPaymentHold } from '@/utils/api/requests';
 
 import { PromoCodeChecker } from './PromoCodeChecker';
 
 export const PriceCalculationCard = () => {
   const t = useTranslations();
-  const [paymentMethod] = useQueryState('payment_method', parseAsInteger.withDefault(1));
   const { user } = useAuth();
   const { cart, availableCartItems, isSuccess, refetch, isFetching } = useCart();
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
-  const [paymentLink, setPaymentLink] = React.useState<string>();
   const [orderId, setOrderId] = React.useState<number>();
-  const [dialogOpen, setDialogOpen] = React.useState(false);
 
   const getAddressesQuery = useQuery({
     queryKey: ['customerAddresses'],
@@ -50,21 +36,18 @@ export const PriceCalculationCard = () => {
     if (isSuccess && !availableCartItems.length && !orderId) router.push('/cart');
   }, [cart, user]);
 
+  const paymentHoldMutation = useMutation({
+    mutationFn: postPaymentHold,
+    onSuccess: (_, variables) => {
+      router.replace(`/user/orders/active/${variables.data.order_id}`);
+    }
+  });
+
   const postOrderMutation = useMutation({
     mutationFn: postOrder,
     onSuccess: async ({ data }) => {
       setOrderId(data.order_id);
-      if (data.result) {
-        setPaymentLink(data.result);
-        const win = window.open(data.result, '_blank', 'noopener,noreferrer');
-        if (win) {
-          router.replace(`/user/orders/active/${data.order_id}`);
-        } else {
-          setDialogOpen(true);
-        }
-      } else {
-        router.replace(`/user/orders/active/${data.order_id}`);
-      }
+      paymentHoldMutation.mutate({ data: { order_id: data.order_id } });
       refetch();
     },
     meta: {
@@ -72,10 +55,12 @@ export const PriceCalculationCard = () => {
     }
   });
 
+  const isLoading = isFetching || postOrderMutation.isPending || paymentHoldMutation.isPending;
+
   const onSubmit = () => {
     if (!user) return;
     postOrderMutation.mutate({
-      data: { promocode: promo?.code, is_web: true, payment_type: paymentMethod }
+      data: { promocode: promo?.code, is_web: true, payment_type: 1 }
     });
   };
 
@@ -123,12 +108,11 @@ export const PriceCalculationCard = () => {
         <Button
           disabled={
             !cart?.cart_items.length ||
-            isFetching ||
-            postOrderMutation.isPending ||
+            isLoading ||
             !isAddressSelected
           }
           className='mb-0 w-full'
-          isLoading={isFetching || postOrderMutation.isPending}
+          isLoading={isLoading}
           onClick={onSubmit}
         >
           {t('Confirm')}
@@ -136,37 +120,6 @@ export const PriceCalculationCard = () => {
         <Separator className='my-4' />
         <PromoCodeChecker value={promo} onSuccess={setPromo} />
       </CardContent>
-      <Dialog
-        onOpenChange={(open) => {
-          setDialogOpen(open);
-          if (!open && orderId) {
-            router.replace(`/user/orders/active/${orderId}`);
-          }
-        }}
-        open={dialogOpen}
-      >
-        <DialogContent>
-          <DialogHeader>
-            <DialogTitle>{t('Order created')}</DialogTitle>
-            <DialogDescription>
-              {t('Your order has been created, please proceed to payment')}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button variant='outline'>{orderId ? t('View order') : t('Close')}</Button>
-            </DialogClose>
-            {paymentLink && (
-              <Button asChild>
-                <Link href={paymentLink}>
-                  {t('Proceed to payment')}
-                  <ArrowUpRightIcon />
-                </Link>
-              </Button>
-            )}
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </Card>
   );
 };

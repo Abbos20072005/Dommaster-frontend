@@ -1,3 +1,6 @@
+'use client';
+
+import { useMutation } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -15,14 +18,32 @@ import {
 } from '@/components/ui/card';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
+import { postPaymentHold } from '@/utils/api/requests';
 import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
 
 import { OrderCancelAction } from './OrderCancelAction';
-import { OrderPayDialog } from './OrderPayDialog';
 
 interface Props {
   order: OrderPreview;
 }
+
+const PayOrderButton = ({ orderId }: { orderId: number }) => {
+  const t = useTranslations();
+  const mutation = useMutation({
+    mutationFn: postPaymentHold
+  });
+
+  return (
+    <Button
+      isLoading={mutation.isPending}
+      size='sm'
+      variant='primaryFlat'
+      onClick={() => mutation.mutate({ data: { order_id: orderId } })}
+    >
+      {t('Pay order')}
+    </Button>
+  );
+};
 
 export const OrderItem = ({ order }: Props) => {
   const t = useTranslations();
@@ -74,11 +95,7 @@ export const OrderItem = ({ order }: Props) => {
         </Button>
         {order.status === 0 && (
           <>
-            <OrderPayDialog asChild orderId={order.id}>
-              <Button size='sm' variant='primaryFlat'>
-                {t('Pay order')}
-              </Button>
-            </OrderPayDialog>
+            <PayOrderButton orderId={order.id} />
             <OrderCancelAction asChild orderId={order.id}>
               <Button size='sm' variant='destructiveFlat'>
                 <XIcon />

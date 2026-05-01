@@ -1,5 +1,5 @@
 'use client';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ArrowLeftIcon, DownloadIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -7,7 +7,6 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 import { OrderCancelAction } from '@/app/[locale]/user/orders/_components/OrderCancelAction';
-import { OrderPayDialog } from '@/app/[locale]/user/orders/_components/OrderPayDialog';
 import { OrderPriceBreakdown } from '@/app/[locale]/user/orders/_components/OrderPriceBreakdown';
 import { OrderProducts } from '@/app/[locale]/user/orders/active/[id]/_components/OrderProducts';
 import { Badge } from '@/components/ui/badge';
@@ -17,8 +16,27 @@ import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPhoneNumber } from '@/lib/utils';
 import { AuthWrapper, useAuth } from '@/modules/auth';
-import { getOrderById } from '@/utils/api/requests';
+import { getOrderById, postPaymentHold } from '@/utils/api/requests';
 import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
+
+const PayOrderButton = ({ orderId }: { orderId: number }) => {
+  const t = useTranslations();
+  const mutation = useMutation({
+    mutationFn: postPaymentHold
+  });
+
+  return (
+    <Button
+      className='w-full'
+      isLoading={mutation.isPending}
+      size='sm'
+      variant='primaryFlat'
+      onClick={() => mutation.mutate({ data: { order_id: orderId } })}
+    >
+      {t('Pay order')}
+    </Button>
+  );
+};
 
 const OrderPage = () => {
   const t = useTranslations();
@@ -114,11 +132,7 @@ const OrderPage = () => {
                 )}
                 {order.status === 0 && (
                   <>
-                    <OrderPayDialog asChild orderId={order.id}>
-                      <Button className='w-full' size='sm' variant='primaryFlat'>
-                        {t('Pay order')}
-                      </Button>
-                    </OrderPayDialog>
+                    <PayOrderButton orderId={order.id} />
                     <OrderCancelAction asChild orderId={order.id}>
                       <Button className='w-full' size='sm' variant='destructiveFlat'>
                         {t('Cancel order')}

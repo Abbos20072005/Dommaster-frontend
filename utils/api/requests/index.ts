@@ -16,6 +16,7 @@ export * from './base/reviews';
 export * from './base/videos';
 export * from './brands';
 export * from './brands/{id}';
+export * from './cards';
 export * from './cart';
 export * from './categories';
 export * from './comments';
