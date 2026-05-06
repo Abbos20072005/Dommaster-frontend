@@ -26,6 +26,7 @@ export const ProductCardSkeleton = ({ className, hideCart, hideControl, ...props
       <Skeleton className='mb-1 aspect-[4/3] w-full rounded-md' />
       <div className='mb-2'>
         <Skeleton className='mb-2 h-3.5 w-27' />
+        <Skeleton className='mb-2 h-4 w-20' />
         <Skeleton className='mb-2 h-3.5 w-full' />
         <Skeleton className='mb-2 h-3.5 w-full' />
         <Skeleton className='mb-2 h-3.5 w-3/4' />

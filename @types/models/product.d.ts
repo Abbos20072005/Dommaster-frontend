@@ -39,6 +39,11 @@ interface Product {
     product: number;
     image: string;
   }[];
+  brand?: {
+    id: number;
+    name: string;
+    image: string;
+  } | null;
 }
 
 interface ProductRequest {
