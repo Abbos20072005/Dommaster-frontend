@@ -31,11 +31,11 @@ export const ProductVariantGroups = ({ variantGroups }: Props) => {
                   <Link
                     key={item.id}
                     className={cn(
-                      'flex items-center justify-center overflow-hidden rounded-full border transition-colors',
+                      'flex items-center justify-center overflow-hidden rounded-xl border transition-colors bg-transparent',
                       group.display_type === 'image' ? 'h-14 w-14 p-1' : 'h-8 px-4',
                       isSelected
-                        ? 'border-primary text-primary'
-                        : 'border-transparent bg-secondary text-foreground hover:bg-secondary/80'
+                        ? 'border-secondary text-secondary'
+                        : 'border-primary text-primary hover:bg-primary/10'
                     )}
                     href={`/product/${item.product_id}`}
                   >
