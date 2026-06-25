@@ -44,6 +44,18 @@ interface Product {
     name: string;
     image: string;
   } | null;
+  variant_groups?: {
+    id: number;
+    name: string;
+    display_type: 'text' | 'image';
+    items: {
+      id: number;
+      product_id: number;
+      display_value: string;
+      image: string | null;
+      is_current: boolean;
+    }[];
+  }[];
 }
 
 interface ProductRequest {
