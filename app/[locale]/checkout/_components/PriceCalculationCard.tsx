@@ -70,7 +70,8 @@ export const PriceCalculationCard = () => {
         <CardTitle>{t('Your order')}</CardTitle>
       </CardHeader>
       <CardContent className='space-y-2 p-4 pt-0'>
-        {!!cart?.cart_items.length && (
+        {/* PRICE HIDDEN */}
+        {/* {!!cart?.cart_items.length && (
           <div className='align-center flex justify-between gap-1 text-sm'>
             <p>
               {t('Goods')} ({cart?.cart_items.length}):
@@ -104,7 +105,7 @@ export const PriceCalculationCard = () => {
           <p>
             {formatPrice(promo?.total_price ?? cart?.total_price ?? 0)} {t('sum')}
           </p>
-        </div>
+        </div> */}
         <Button
           disabled={
             !cart?.cart_items.length ||

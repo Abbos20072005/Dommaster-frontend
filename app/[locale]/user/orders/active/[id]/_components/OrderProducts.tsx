@@ -41,7 +41,8 @@ export const OrderProducts = ({ order }: Props) => {
               <span className='text-muted-foreground text-sm'>
                 {quantity} {t('unit')}.
               </span>
-              {product.discount_price && (
+              {/* PRICE HIDDEN */}
+              {/* {product.discount_price && (
                 <div className='mb-2 flex items-center gap-2'>
                   <span className='text-xs line-through'>
                     {formatPrice(product.price * quantity)} {t('sum')}
@@ -51,7 +52,7 @@ export const OrderProducts = ({ order }: Props) => {
               )}
               <div className='text-sm font-bold sm:text-lg'>
                 {formatPrice((product.discount_price ?? product.price) * quantity)} {t('sum')}
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

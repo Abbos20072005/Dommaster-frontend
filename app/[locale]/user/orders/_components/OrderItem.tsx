@@ -68,9 +68,10 @@ export const OrderItem = ({ order }: Props) => {
                 {t(orderStatusMap[order.status])}
               </Badge>
             </span>
-            <span className='font-bold'>
+            {/* PRICE HIDDEN */}
+            {/* <span className='font-bold'>
               {formatPrice(order.total_price)} {t('sum')}
-            </span>
+            </span> */}
           </div>
         </CardHeader>
       </Link>

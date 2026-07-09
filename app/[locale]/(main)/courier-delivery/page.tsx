@@ -73,7 +73,8 @@ const CourierDeliveryPage = () => {
             </YMap>
           </YMapComponentsProvider>
         </div>
-        <p className='text-lg font-bold md:text-2xl'>{t('Delivery price')}: 100 000 UZS</p>
+        {/* PRICE HIDDEN */}
+        {/* <p className='text-lg font-bold md:text-2xl'>{t('Delivery price')}: 100 000 UZS</p> */}
       </BaseLayout>
     </div>
   );

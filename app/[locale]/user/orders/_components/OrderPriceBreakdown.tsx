@@ -21,7 +21,8 @@ export const OrderPriceBreakdown = ({ order }: Props) => {
 
   return (
     <div className='space-y-2'>
-      <div className='flex justify-between gap-1 text-sm'>
+      {/* PRICE HIDDEN */}
+      {/* <div className='flex justify-between gap-1 text-sm'>
         <p>
           {t('Goods')} ({order.order_items.length}):
         </p>
@@ -45,7 +46,7 @@ export const OrderPriceBreakdown = ({ order }: Props) => {
         <p>
           {formatPrice(order.total_price)} {t('sum')}
         </p>
-      </div>
+      </div> */}
     </div>
   );
 };

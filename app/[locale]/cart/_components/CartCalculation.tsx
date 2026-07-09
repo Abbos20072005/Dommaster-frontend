@@ -21,7 +21,8 @@ export const CartCalculation = () => {
         <CardTitle>{t('Your order')}</CardTitle>
       </CardHeader>
       <CardContent className='space-y-2 p-4 pt-0'>
-        {!!cart?.cart_items.length && (
+        {/* PRICE HIDDEN */}
+        {/* {!!cart?.cart_items.length && (
           <div className='align-center flex justify-between gap-1 text-sm'>
             <p>
               {t('Goods')} ({availableCartItems.length}):
@@ -44,7 +45,7 @@ export const CartCalculation = () => {
           <p>
             {formatPrice(cart?.total_price ?? 0)} {t('sum')}
           </p>
-        </div>
+        </div> */}
       </CardContent>
       <CardFooter className='p-4 pt-0'>
         {user ? (

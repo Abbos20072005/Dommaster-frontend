@@ -31,7 +31,8 @@ export const ProductCart = ({ product }: Props) => {
         </>
       )}
       <CardContent className='p-0'>
-        {product.discount_price && (
+        {/* PRICE HIDDEN */}
+        {/* {product.discount_price && (
           <div className='mb-2 flex items-center gap-2'>
             <span className='text-muted-foreground line-through'>
               {formatPrice(product.price)} {t('sum')}
@@ -41,7 +42,7 @@ export const ProductCart = ({ product }: Props) => {
         )}
         <div className='text-lg font-bold sm:text-2xl'>
           {formatPrice(product.discount_price ?? product.price)} {t('sum')}
-        </div>
+        </div> */}
       </CardContent>
       <CardFooter className='flex-col items-start gap-4 p-0'>
         {state.cartCount === 0 ? (
