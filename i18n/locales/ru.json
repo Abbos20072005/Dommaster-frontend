@@ -314,5 +314,7 @@
   "g": "г",
   "pkg": "уп",
   "set": "наб",
-  "Password updated successfully": "Пароль успешно обновлен"
+  "Password updated successfully": "Пароль успешно обновлен",
+  "Are you a foreman": "Вы прораб?",
+  "Foreman description": "Зарегистрируйтесь как прораб, чтобы управлять строительными проектами"
 }

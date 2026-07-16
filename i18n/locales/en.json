@@ -314,5 +314,7 @@
   "g": "g",
   "pkg": "pkg",
   "set": "set",
-  "Password updated successfully": "Password updated successfully"
+  "Password updated successfully": "Password updated successfully",
+  "Are you a foreman": "Are you a foreman?",
+  "Foreman description": "Register as a foreman to manage construction projects"
 }

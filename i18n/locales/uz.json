@@ -314,5 +314,7 @@
   "g": "g",
   "pkg": "qad",
   "set": "to‘p",
-  "Password updated successfully": "Parol muvaffaqiyatli o'zgartirildi"
+  "Password updated successfully": "Parol muvaffaqiyatli o'zgartirildi",
+  "Are you a foreman": "Siz prorabmisiz?",
+  "Foreman description": "Qurilish loyihalarini boshqarish uchun prorab sifatida ro'yxatdan o'ting"
 }

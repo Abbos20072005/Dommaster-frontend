@@ -14,6 +14,7 @@ interface RegisterRequest {
   full_name: string;
   password: string;
   phone_number: string;
+  role?: 'prorab' | 'user';
 }
 
 type RegisterResponse = ApiResponse<{

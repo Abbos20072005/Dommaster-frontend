@@ -16,6 +16,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { PasswordInput } from '@/components/ui/password-input';
 import { PhoneInput } from '@/components/ui/phone-input';
+import { Switch } from '@/components/ui/switch';
 import { Link } from '@/i18n/navigation';
 
 import { useRegisterForm } from './hooks';
@@ -32,11 +33,11 @@ export const RegisterForm = ({ onSuccess, setAuthTab }: Props) => {
   return (
     <>
       <DialogHeader>
-        <DialogTitle className='text-2xl'>{t('Register')}</DialogTitle>
+        <DialogTitle className='text-xl'>{t('Register')}</DialogTitle>
         <DialogDescription>{t('Enter your credentials to register')}</DialogDescription>
       </DialogHeader>
       <Form {...form}>
-        <form className='grid gap-4' onSubmit={form.handleSubmit(functions.onSubmit)}>
+        <form className='grid gap-3' onSubmit={form.handleSubmit(functions.onSubmit)}>
           <FormField
             render={({ field }) => (
               <FormItem>
@@ -100,6 +101,18 @@ export const RegisterForm = ({ onSuccess, setAuthTab }: Props) => {
               </FormItem>
             )}
             name='confirm_password'
+            control={form.control}
+          />
+          <FormField
+            render={({ field }) => (
+              <FormItem className='bg-muted/50 flex flex-row items-center justify-between rounded-lg border px-3 py-2'>
+                <FormLabel className='text-sm'>{t('Are you a foreman')}</FormLabel>
+                <FormControl>
+                  <Switch checked={field.value} onCheckedChange={field.onChange} />
+                </FormControl>
+              </FormItem>
+            )}
+            name='is_prorab'
             control={form.control}
           />
           <Button isLoading={state.isPending}>{t('Register')}</Button>
