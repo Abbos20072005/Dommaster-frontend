@@ -1,6 +1,5 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -18,32 +17,14 @@ import {
 } from '@/components/ui/card';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
-import { postPaymentHold } from '@/utils/api/requests';
-import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
+import { getPaymentLabel, orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
 
 import { OrderCancelAction } from './OrderCancelAction';
+import { PayOrderDialog } from './PayOrderDialog';
 
 interface Props {
   order: OrderPreview;
 }
-
-const PayOrderButton = ({ orderId }: { orderId: number }) => {
-  const t = useTranslations();
-  const mutation = useMutation({
-    mutationFn: postPaymentHold
-  });
-
-  return (
-    <Button
-      isLoading={mutation.isPending}
-      size='sm'
-      variant='primaryFlat'
-      onClick={() => mutation.mutate({ data: { order_id: orderId } })}
-    >
-      {t('Pay order')}
-    </Button>
-  );
-};
 
 export const OrderItem = ({ order }: Props) => {
   const t = useTranslations();
@@ -60,6 +41,9 @@ export const OrderItem = ({ order }: Props) => {
             </CardTitle>
             <CardDescription>
               {format(order.created_at, 'dd MMM')} - {order.order_location?.name}
+            </CardDescription>
+            <CardDescription className='text-muted-foreground/70 text-xs'>
+              {getPaymentLabel(t, order.payment_type, order.payment_method)}
             </CardDescription>
           </div>
           <div className='flex flex-col-reverse items-end gap-1 sm:flex-row sm:items-center sm:gap-2'>
@@ -96,7 +80,11 @@ export const OrderItem = ({ order }: Props) => {
         </Button>
         {order.status === 0 && (
           <>
-            <PayOrderButton orderId={order.id} />
+            <PayOrderDialog orderId={order.id}>
+              <Button size='sm' variant='primaryFlat'>
+                {t('Pay order')}
+              </Button>
+            </PayOrderDialog>
             <OrderCancelAction asChild orderId={order.id}>
               <Button size='sm' variant='destructiveFlat'>
                 <XIcon />

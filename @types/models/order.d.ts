@@ -13,6 +13,9 @@ interface OrderPreview {
   order_location: Address;
   status: OrderStatus;
   total_price: number;
+  payment_type: number;
+  payment_method?: string;
+  delivery_type: number;
   order_items: {
     id: number;
     image: string;
@@ -39,13 +42,17 @@ enum PaymentMethod {
 interface OrderRequest {
   is_web: boolean;
   payment_type: PaymentMethod;
+  payment_method?: 'cash' | 'card';
   promocode?: string;
+  address_id?: number;
+  delivery_type?: number;
 }
 
 interface OrderPayRequest {
   is_web: boolean;
   order_id: number;
   payment_type: PaymentMethod;
+  payment_method?: 'cash' | 'card';
 }
 
 type OrdersResponse = ApiResponse<Pagination<OrderPreview>>;

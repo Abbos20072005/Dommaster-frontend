@@ -13,3 +13,12 @@ export const orderStatusColorMap: Record<OrderStatus, string> = {
   3: 'bg-green-100 text-green-600',
   4: 'bg-red-100 text-red-600'
 };
+
+export const getPaymentLabel = (t: (key: string) => string, paymentType?: number, paymentMethod?: string) => {
+  if (paymentType === 4) {
+    if (paymentMethod === 'cash') return `${t('Cash on delivery')}, ${t('Cash')}`;
+    if (paymentMethod === 'card') return `${t('Cash on delivery')}, ${t('Card')}`;
+    return t('Cash on delivery');
+  }
+  return t('Pay online by card');
+};

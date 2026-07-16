@@ -13,6 +13,7 @@ import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
 import { getCustomerAddresses, postOrder, postPaymentHold } from '@/utils/api/requests';
+import { useCheckoutStore } from '@/utils/stores';
 
 import { PromoCodeChecker } from './PromoCodeChecker';
 
@@ -20,6 +21,7 @@ export const PriceCalculationCard = () => {
   const t = useTranslations();
   const { user } = useAuth();
   const { cart, availableCartItems, isSuccess, refetch, isFetching } = useCart();
+  const { paymentOption, cashMethod } = useCheckoutStore();
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
   const [orderId, setOrderId] = React.useState<number>();
@@ -30,7 +32,8 @@ export const PriceCalculationCard = () => {
   });
 
   const addresses = getAddressesQuery.data?.data.result;
-  const isAddressSelected = !!addresses?.find((item) => item.is_default);
+  const defaultAddress = addresses?.find((item) => item.is_default);
+  const isAddressSelected = !!defaultAddress;
 
   React.useEffect(() => {
     if (isSuccess && !availableCartItems.length && !orderId) router.push('/cart');
@@ -47,7 +50,11 @@ export const PriceCalculationCard = () => {
     mutationFn: postOrder,
     onSuccess: async ({ data }) => {
       setOrderId(data.order_id);
-      paymentHoldMutation.mutate({ data: { order_id: data.order_id } });
+      if (paymentOption === 'online') {
+        paymentHoldMutation.mutate({ data: { order_id: data.order_id } });
+      } else {
+        router.replace(`/user/orders/active/${data.order_id}`);
+      }
       refetch();
     },
     meta: {
@@ -59,9 +66,27 @@ export const PriceCalculationCard = () => {
 
   const onSubmit = () => {
     if (!user) return;
-    postOrderMutation.mutate({
-      data: { promocode: promo?.code, is_web: true, payment_type: 1 }
-    });
+
+    if (paymentOption === 'online') {
+      postOrderMutation.mutate({
+        data: {
+          promocode: promo?.code,
+          is_web: true,
+          payment_type: 1,
+          address_id: defaultAddress?.id
+        }
+      });
+    } else {
+      postOrderMutation.mutate({
+        data: {
+          promocode: promo?.code,
+          is_web: true,
+          payment_type: 4,
+          payment_method: cashMethod,
+          address_id: defaultAddress?.id
+        }
+      });
+    }
   };
 
   return (

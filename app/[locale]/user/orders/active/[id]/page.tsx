@@ -1,5 +1,5 @@
 'use client';
-import { useMutation, useQuery } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { ArrowLeftIcon, DownloadIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -8,6 +8,7 @@ import React from 'react';
 
 import { OrderCancelAction } from '@/app/[locale]/user/orders/_components/OrderCancelAction';
 import { OrderPriceBreakdown } from '@/app/[locale]/user/orders/_components/OrderPriceBreakdown';
+import { PayOrderDialog } from '@/app/[locale]/user/orders/_components/PayOrderDialog';
 import { OrderProducts } from '@/app/[locale]/user/orders/active/[id]/_components/OrderProducts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -16,27 +17,8 @@ import { Spinner } from '@/components/ui/spinner';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPhoneNumber } from '@/lib/utils';
 import { AuthWrapper, useAuth } from '@/modules/auth';
-import { getOrderById, postPaymentHold } from '@/utils/api/requests';
-import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
-
-const PayOrderButton = ({ orderId }: { orderId: number }) => {
-  const t = useTranslations();
-  const mutation = useMutation({
-    mutationFn: postPaymentHold
-  });
-
-  return (
-    <Button
-      className='w-full'
-      isLoading={mutation.isPending}
-      size='sm'
-      variant='primaryFlat'
-      onClick={() => mutation.mutate({ data: { order_id: orderId } })}
-    >
-      {t('Pay order')}
-    </Button>
-  );
-};
+import { getOrderById } from '@/utils/api/requests';
+import { getPaymentLabel, orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
 
 const OrderPage = () => {
   const t = useTranslations();
@@ -106,6 +88,12 @@ const OrderPage = () => {
                     </div>
                   </div>
                 )}
+                <div className='mt-4'>
+                  <div className='text-sm font-bold'>{t('Payment method')}:</div>
+                  <div className='text-muted-foreground text-sm'>
+                    {getPaymentLabel(t, order.payment_type, order.payment_method)}
+                  </div>
+                </div>
               </Card>
               <Card className='px-4 shadow-none md:shadow-sm'>
                 <OrderProducts order={order} />
@@ -132,7 +120,11 @@ const OrderPage = () => {
                 )}
                 {order.status === 0 && (
                   <>
-                    <PayOrderButton orderId={order.id} />
+                    <PayOrderDialog orderId={order.id}>
+                      <Button className='w-full' size='sm' variant='primaryFlat'>
+                        {t('Pay order')}
+                      </Button>
+                    </PayOrderDialog>
                     <OrderCancelAction asChild orderId={order.id}>
                       <Button className='w-full' size='sm' variant='destructiveFlat'>
                         {t('Cancel order')}
