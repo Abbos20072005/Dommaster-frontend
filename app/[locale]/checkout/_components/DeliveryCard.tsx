@@ -11,16 +11,23 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { formatPhoneNumber } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { getCustomerAddresses } from '@/utils/api/requests';
+import { DELIVERY_TYPE } from '@/utils/constants';
+import { useCheckoutStore } from '@/utils/stores';
 
 import { SelectAddressDialog } from './SelectAddressDialog';
 
 export const DeliveryCard = () => {
   const t = useTranslations();
   const { user, isPending } = useAuth();
+  const { deliveryType } = useCheckoutStore();
   const getAddressesQuery = useQuery({
     queryKey: ['customerAddresses'],
     queryFn: () => getCustomerAddresses()
   });
+
+  if (deliveryType === DELIVERY_TYPE.Pickup) {
+    return null;
+  }
 
   const addresses = getAddressesQuery.data?.data.result;
   const defaultAddress = addresses?.find((address) => address.is_default);

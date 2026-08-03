@@ -13,6 +13,7 @@ import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
 import { getCustomerAddresses, postOrder, postPaymentHold } from '@/utils/api/requests';
+import { DELIVERY_TYPE } from '@/utils/constants';
 import { useCheckoutStore } from '@/utils/stores';
 
 import { PromoCodeChecker } from './PromoCodeChecker';
@@ -21,7 +22,7 @@ export const PriceCalculationCard = () => {
   const t = useTranslations();
   const { user } = useAuth();
   const { cart, availableCartItems, isSuccess, refetch, isFetching } = useCart();
-  const { paymentOption, cashMethod } = useCheckoutStore();
+  const { paymentOption, cashMethod, deliveryType, deliveryPrice } = useCheckoutStore();
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
   const [orderId, setOrderId] = React.useState<number>();
@@ -33,7 +34,11 @@ export const PriceCalculationCard = () => {
 
   const addresses = getAddressesQuery.data?.data.result;
   const defaultAddress = addresses?.find((item) => item.is_default);
-  const isAddressSelected = !!defaultAddress;
+  const isDelivery = deliveryType === DELIVERY_TYPE.Delivery;
+  const isAddressSelected = isDelivery ? !!defaultAddress : true;
+  const isDeliveryPriceSelected = isDelivery ? !!deliveryPrice : true;
+  const deliveryTotal = isDelivery && deliveryPrice ? Number(deliveryPrice) : 0;
+  const totalPrice = (promo?.total_price ?? cart?.total_price ?? 0) + deliveryTotal;
 
   React.useEffect(() => {
     if (isSuccess && !availableCartItems.length && !orderId) router.push('/cart');
@@ -67,26 +72,19 @@ export const PriceCalculationCard = () => {
   const onSubmit = () => {
     if (!user) return;
 
-    if (paymentOption === 'online') {
-      postOrderMutation.mutate({
-        data: {
-          promocode: promo?.code,
-          is_web: true,
-          payment_type: 1,
-          address_id: defaultAddress?.id
-        }
-      });
-    } else {
-      postOrderMutation.mutate({
-        data: {
-          promocode: promo?.code,
-          is_web: true,
-          payment_type: 4,
-          payment_method: cashMethod,
-          address_id: defaultAddress?.id
-        }
-      });
-    }
+    const data: OrderRequest = {
+      promocode: promo?.code,
+      is_web: true,
+      payment_type: paymentOption === 'online' ? 1 : 4,
+      payment_method: paymentOption === 'cod' ? cashMethod : undefined,
+      address_id: isDelivery ? defaultAddress?.id : undefined,
+      delivery_type: deliveryType,
+      delivery_price: isDelivery ? (deliveryPrice ?? undefined) : undefined,
+      receiver_name: user.full_name,
+      receiver_phone: user.phone_number
+    };
+
+    postOrderMutation.mutate({ data });
   };
 
   return (
@@ -95,8 +93,7 @@ export const PriceCalculationCard = () => {
         <CardTitle>{t('Your order')}</CardTitle>
       </CardHeader>
       <CardContent className='space-y-2 p-4 pt-0'>
-        {/* PRICE HIDDEN */}
-        {/* {!!cart?.cart_items.length && (
+        {!!cart?.cart_items.length && (
           <div className='align-center flex justify-between gap-1 text-sm'>
             <p>
               {t('Goods')} ({cart?.cart_items.length}):
@@ -125,17 +122,23 @@ export const PriceCalculationCard = () => {
             </p>
           </div>
         )}
+        {isDelivery && !!deliveryPrice && (
+          <div className='align-center flex justify-between gap-1 text-sm'>
+            <p>{t('Delivery price')}</p>
+            <span>
+              {formatPrice(deliveryPrice)} {t('sum')}
+            </span>
+          </div>
+        )}
         <div className='align-center flex justify-between gap-1 text-xl font-bold'>
           <p>{t('Total')}</p>
           <p>
-            {formatPrice(promo?.total_price ?? cart?.total_price ?? 0)} {t('sum')}
+            {formatPrice(totalPrice)} {t('sum')}
           </p>
-        </div> */}
+        </div>
         <Button
           disabled={
-            !cart?.cart_items.length ||
-            isLoading ||
-            !isAddressSelected
+            !cart?.cart_items.length || isLoading || !isAddressSelected || !isDeliveryPriceSelected
           }
           className='mb-0 w-full'
           isLoading={isLoading}

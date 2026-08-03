@@ -154,8 +154,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                 />
                 <div className='space-y-1'>
                   <p className='text-xs'>{product.name}</p>
-                  {/* PRICE HIDDEN */}
-                  {/* <div className='flex items-center gap-2'>
+                  <div className='flex items-center gap-2'>
                     <p className='text-sm font-bold'>
                       {formatPrice(product.discount_price ?? product.price)} {t('sum')}
                     </p>
@@ -167,7 +166,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                         <Badge variant='secondary'>-{product.discount}%</Badge>
                       </div>
                     )}
-                  </div> */}
+                  </div>
                 </div>
               </article>
             </Link>

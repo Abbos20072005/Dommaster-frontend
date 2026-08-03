@@ -12,8 +12,7 @@ export const ProductPrice = ({ product }: Props) => {
 
   return (
     <div>
-      {/* PRICE HIDDEN */}
-      {/* {product.discount_price && (
+      {product.discount_price && (
         <div className='mb-2 flex items-center gap-2'>
           <span className='text-muted-foreground text-xs line-through'>
             {formatPrice(product.price)} {t('sum')}
@@ -30,7 +29,7 @@ export const ProductPrice = ({ product }: Props) => {
             {t('unit-pluralization', { count: product.quantity, unit: t(product.unit) })}
           </div>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

@@ -21,6 +21,7 @@ export * from './cart';
 export * from './categories';
 export * from './comments';
 export * from './comments/reply';
+export * from './delivery';
 export * from './favorites';
 export * from './main';
 export * from './orders';

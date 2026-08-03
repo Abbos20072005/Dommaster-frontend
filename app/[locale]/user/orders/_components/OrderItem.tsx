@@ -17,7 +17,11 @@ import {
 } from '@/components/ui/card';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
-import { getPaymentLabel, orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
+import {
+  getPaymentLabel,
+  orderStatusColorMap,
+  orderStatusMap
+} from '@/utils/constants/orderStatus';
 
 import { OrderCancelAction } from './OrderCancelAction';
 import { PayOrderDialog } from './PayOrderDialog';
@@ -52,10 +56,9 @@ export const OrderItem = ({ order }: Props) => {
                 {t(orderStatusMap[order.status])}
               </Badge>
             </span>
-            {/* PRICE HIDDEN */}
-            {/* <span className='font-bold'>
+            <span className='font-bold'>
               {formatPrice(order.total_price)} {t('sum')}
-            </span> */}
+            </span>
           </div>
         </CardHeader>
       </Link>

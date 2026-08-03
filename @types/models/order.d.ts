@@ -25,6 +25,7 @@ interface OrderPreview {
 interface Order extends Omit<OrderPreview, 'order_items'> {
   promocode: Promo | null;
   ofd_url: string | null;
+  delivery_price: string | number | null;
   order_items: {
     id: number;
     quantity: number;
@@ -45,7 +46,10 @@ interface OrderRequest {
   payment_method?: 'cash' | 'card';
   promocode?: string;
   address_id?: number;
-  delivery_type?: number;
+  delivery_type: DeliveryType;
+  delivery_price?: string;
+  receiver_name?: string;
+  receiver_phone?: string;
 }
 
 interface OrderPayRequest {

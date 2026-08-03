@@ -15,6 +15,7 @@ import {
 import {
   CartProductsCard,
   DeliveryCard,
+  DeliveryTypeSelector,
   PaymentMethodSelector,
   PriceCalculationCard
 } from './_components';
@@ -54,6 +55,7 @@ const CartPage = async () => {
         </h1>
         <div className='mx-auto flex flex-col gap-4 lg:flex-row'>
           <div className='flex-1 space-y-4'>
+            <DeliveryTypeSelector />
             <DeliveryCard />
             <CartProductsCard />
             <PaymentMethodSelector />
