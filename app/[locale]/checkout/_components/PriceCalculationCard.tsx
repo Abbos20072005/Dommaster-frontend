@@ -22,7 +22,7 @@ export const PriceCalculationCard = () => {
   const t = useTranslations();
   const { user } = useAuth();
   const { cart, availableCartItems, isSuccess, refetch, isFetching } = useCart();
-  const { paymentOption, cashMethod, deliveryType, deliveryPrice } = useCheckoutStore();
+  const { paymentOption, cashMethod, deliveryType, deliveryPrice, branchId } = useCheckoutStore();
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
   const [orderId, setOrderId] = React.useState<number>();
@@ -35,7 +35,7 @@ export const PriceCalculationCard = () => {
   const addresses = getAddressesQuery.data?.data.result;
   const defaultAddress = addresses?.find((item) => item.is_default);
   const isDelivery = deliveryType === DELIVERY_TYPE.Delivery;
-  const isAddressSelected = isDelivery ? !!defaultAddress : true;
+  const isAddressSelected = isDelivery ? !!defaultAddress : !!branchId;
   const isDeliveryPriceSelected = isDelivery ? !!deliveryPrice : true;
   const deliveryTotal = isDelivery && deliveryPrice ? Number(deliveryPrice) : 0;
   const totalPrice = (promo?.total_price ?? cart?.total_price ?? 0) + deliveryTotal;
@@ -73,13 +73,14 @@ export const PriceCalculationCard = () => {
     if (!user) return;
 
     const data: OrderRequest = {
-      promocode: promo?.code,
-      is_web: true,
-      payment_type: paymentOption === 'online' ? 1 : 4,
-      payment_method: paymentOption === 'cod' ? cashMethod : undefined,
       address_id: isDelivery ? defaultAddress?.id : undefined,
+      branch_id: isDelivery ? undefined : branchId ?? undefined,
       delivery_type: deliveryType,
       delivery_price: isDelivery ? (deliveryPrice ?? undefined) : undefined,
+      is_web: true,
+      payment_method: paymentOption === 'cod' ? cashMethod : undefined,
+      payment_type: paymentOption === 'online' ? 1 : 4,
+      promocode: promo?.code,
       receiver_name: user.full_name,
       receiver_phone: user.phone_number
     };

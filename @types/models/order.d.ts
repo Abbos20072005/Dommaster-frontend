@@ -41,13 +41,14 @@ enum PaymentMethod {
 }
 
 interface OrderRequest {
-  is_web: boolean;
-  payment_type: PaymentMethod;
-  payment_method?: 'cash' | 'card';
-  promocode?: string;
   address_id?: number;
-  delivery_type: DeliveryType;
+  branch_id?: number;
   delivery_price?: string;
+  delivery_type: DeliveryType;
+  is_web: boolean;
+  payment_method?: 'cash' | 'card';
+  payment_type: PaymentMethod;
+  promocode?: string;
   receiver_name?: string;
   receiver_phone?: string;
 }

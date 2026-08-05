@@ -13,6 +13,7 @@ import {
 } from '@/components/ui/breadcrumb';
 
 import {
+  BranchCard,
   CartProductsCard,
   DeliveryCard,
   DeliveryTypeSelector,
@@ -57,6 +58,7 @@ const CartPage = async () => {
           <div className='flex-1 space-y-4'>
             <DeliveryTypeSelector />
             <DeliveryCard />
+            <BranchCard />
             <CartProductsCard />
             <PaymentMethodSelector />
           </div>

@@ -10,6 +10,7 @@ export * from './auth/verify';
 export * from './base/about';
 export * from './base/articles';
 export * from './base/banner';
+export * from './base/branches';
 export * from './base/chat';
 export * from './base/news';
 export * from './base/reviews';
