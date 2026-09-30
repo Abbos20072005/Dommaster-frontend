@@ -78,7 +78,7 @@ export const MessageList = () => {
               >
                 {message.image && (
                   <Image
-                    alt={message.image}
+                    alt={message.image || 'Buildex'}
                     className='mb-1 max-h-40 w-auto rounded-sm'
                     height={160}
                     src={message.image}

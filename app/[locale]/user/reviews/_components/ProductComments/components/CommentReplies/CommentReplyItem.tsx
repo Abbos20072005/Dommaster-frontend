@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { format } from 'date-fns';
+import { useFormatDate } from '@/hooks';
 import { EditIcon, Trash2Icon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -25,6 +25,7 @@ interface Props {
 
 export const CommentReplyItem = ({ reply, comment }: Props) => {
   const t = useTranslations();
+  const formatDate = useFormatDate();
   const { user } = useAuth();
   const [openReplyForm, setOpenReplyForm] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -104,7 +105,7 @@ export const CommentReplyItem = ({ reply, comment }: Props) => {
         </div>
         <div className='flex'>
           <span className='text-muted-foreground text-xs italic'>
-            {format(reply.created_at, 'dd MMMM yyyy')}
+            {formatDate(reply.created_at, 'dd MMMM yyyy')}
           </span>
         </div>
       </div>

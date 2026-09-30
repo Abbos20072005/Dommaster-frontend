@@ -1,4 +1,5 @@
 import { MessageSquareTextIcon, PhoneCallIcon, SearchIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
@@ -9,6 +10,8 @@ import { ChatDialog } from '@/modules/chat';
 import { MobileSearch } from '@/modules/search';
 
 export const MobileHeader = () => {
+  const t = useTranslations();
+
   return (
     <header className='bg-background sticky inset-x-0 -top-12 z-50 gap-3 md:hidden'>
       <div className='flex h-12 items-center justify-between px-4 pt-2'>
@@ -53,7 +56,7 @@ export const MobileHeader = () => {
             variant='outline'
           >
             <SearchIcon />
-            Саморез, электрика
+            {t('Search placeholder')}
           </Button>
         </MobileSearch>
       </div>

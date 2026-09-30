@@ -33,7 +33,7 @@ export const PopularCategoriesSection = () => {
           >
             <div className='relative z-1 text-xs [word-break:break-word]'>{item.name}</div>
             <Image
-              alt={item.name}
+              alt={item.name || 'Buildex'}
               className='absolute inset-0 size-full rounded-lg object-contain'
               height={80}
               src={item.image}
@@ -59,7 +59,7 @@ export const PopularCategoriesSection = () => {
                   {item.name}
                 </div>
                 <Image
-                  alt={item.name}
+                  alt={item.name || 'Buildex'}
                   className='absolute inset-0 size-full rounded-lg object-contain'
                   height={128}
                   src={item.image}

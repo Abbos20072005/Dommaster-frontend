@@ -81,7 +81,7 @@ export const MobileSearch = ({ children, ...props }: Props) => {
               autoComplete='off'
               onChange={(e) => setSearchInput(e.target.value)}
               onKeyDown={(e) => e.key === 'Enter' && onSearch(e)}
-              placeholder='Саморез, электрика'
+              placeholder={t('Search placeholder')}
             />
             {mounted && searchInput && (
               <button

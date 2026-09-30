@@ -126,7 +126,7 @@ export const HeaderBottom = () => {
                       onMouseEnter={() => handleCategoryHover(index)}
                     >
                       <Image
-                        alt={item.name}
+                        alt={item.name || 'Buildex'}
                         className='size-4'
                         height={16}
                         src={item.icon}
@@ -172,7 +172,7 @@ export const HeaderBottom = () => {
                   onMouseEnter={() => setTab(index)}
                 >
                   <Image
-                    alt={item.name}
+                    alt={item.name || 'Buildex'}
                     className='size-4'
                     height={16}
                     src={item.icon}

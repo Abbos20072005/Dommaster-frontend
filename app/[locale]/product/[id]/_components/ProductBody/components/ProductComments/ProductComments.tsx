@@ -1,6 +1,6 @@
 'use client';
 
-import { format } from 'date-fns';
+import { useFormatDate } from '@/hooks';
 import { EditIcon, StarIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -22,6 +22,7 @@ interface Props {
 
 export const ProductComments = ({ product }: Props) => {
   const t = useTranslations();
+  const formatDate = useFormatDate();
   const { state, functions } = useProductComments(product);
   const { user } = useAuth();
 
@@ -125,7 +126,7 @@ export const ProductComments = ({ product }: Props) => {
               </div>
               <div className='flex'>
                 <span className='text-muted-foreground text-xs italic'>
-                  {format(comment.created_at, 'dd MMMM yyyy')}
+                  {formatDate(comment.created_at, 'dd MMMM yyyy')}
                 </span>
               </div>
             </div>
@@ -134,7 +135,7 @@ export const ProductComments = ({ product }: Props) => {
                 {comment.images.map((image) => (
                   <Image
                     key={image.id}
-                    alt={product.name}
+                    alt={product.name || 'Buildex'}
                     className='size-20 rounded-md object-cover'
                     height={140}
                     src={image.image}

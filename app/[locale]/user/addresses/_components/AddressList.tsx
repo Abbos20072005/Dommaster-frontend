@@ -44,12 +44,14 @@ export const AddressList = () => {
   return (
     <div className='space-y-4'>
       <div className='grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-3'>
-        {addresses?.map((address) => <AddressItem key={address.id} address={address} />)}
+        {addresses?.map((address) => (
+          <AddressItem key={address.id} address={address} />
+        ))}
       </div>
       <AddressSelectDialog asChild>
         <Button variant='secondary'>
           <PlusIcon />
-          Add address
+          {t('Add address')}
         </Button>
       </AddressSelectDialog>
     </div>

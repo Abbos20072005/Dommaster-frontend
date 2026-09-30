@@ -27,7 +27,7 @@ export const NewsTab = async () => {
                 variant='outline'
               >
                 <Image
-                  alt={item.title}
+                  alt={item.title || 'Buildex'}
                   className='aspect-video w-full rounded-t-lg object-cover'
                   height={180}
                   src={item.image}

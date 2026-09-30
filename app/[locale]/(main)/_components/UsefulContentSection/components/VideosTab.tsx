@@ -42,7 +42,7 @@ export const VideosTab = async () => {
                 >
                   <div className='relative'>
                     <Image
-                      alt={item.name}
+                      alt={item.name || 'Buildex'}
                       className='aspect-video rounded-t-lg object-cover'
                       height={180}
                       src={`https://img.youtube.com/vi/${getYouTubeVideoId(item.url)}/hqdefault.jpg`}

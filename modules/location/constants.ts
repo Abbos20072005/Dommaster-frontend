@@ -5,6 +5,15 @@ export const LOCATION: YMapLocationRequest & YMapCenterLocation = {
   zoom: 8
 };
 
+// Yandex xarita/geokoder tili sayt tiliga mos
+export const YMAPS_LANG = {
+  ru: 'ru_RU',
+  uz: 'uz_UZ'
+} as const;
+
+export const getYmapsLang = (locale: string) =>
+  YMAPS_LANG[locale as keyof typeof YMAPS_LANG] ?? YMAPS_LANG.ru;
+
 export const GEOCODE_API_KEY: string = process.env.YANDEX_KEY || '';
 export const SUGGEST_API_KEY: string = process.env.SUGGEST_KEY || '';
 export const COMMON_LOCATION_PARAMS: YMapLocationRequest = {

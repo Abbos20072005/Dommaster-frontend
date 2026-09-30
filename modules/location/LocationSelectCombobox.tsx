@@ -1,7 +1,7 @@
 import type { SuggestResponseItem } from '@yandex/ymaps3-types';
 
 import { useQuery } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import React from 'react';
 
 import type { ComboboxOption } from '@/components/ui/combobox';
@@ -17,6 +17,7 @@ import {
   ComboboxTrigger
 } from '@/components/ui/combobox';
 import { useDebouncedValue } from '@/hooks/useDeboucedValue';
+import { getYmapsLang } from '@/modules/location/constants';
 import { getGeocode } from '@/modules/maps/api/geocode';
 import { getSuggest } from '@/modules/maps/api/suggest';
 
@@ -28,6 +29,7 @@ interface Props extends Omit<React.ComponentProps<typeof ComboboxTrigger>, 'valu
 
 export const LocationSelectCombobox = ({ value, placeholder, onValueChange, ...props }: Props) => {
   const t = useTranslations();
+  const locale = useLocale();
   const [searchQuery, setSearchQuery] = React.useState(value?.location_name || '');
   const debouncedSearch = useDebouncedValue(searchQuery, 300);
 
@@ -36,12 +38,13 @@ export const LocationSelectCombobox = ({ value, placeholder, onValueChange, ...p
   }, [value?.location_name]);
 
   const getSuggestQuery = useQuery({
-    queryKey: ['geo-suggest', debouncedSearch],
+    queryKey: ['geo-suggest', debouncedSearch, locale],
     enabled: !!debouncedSearch,
     queryFn: () =>
       getSuggest({
         params: {
-          text: debouncedSearch
+          text: debouncedSearch,
+          lang: locale
         }
       })
   });
@@ -53,7 +56,7 @@ export const LocationSelectCombobox = ({ value, placeholder, onValueChange, ...p
 
     try {
       const res = await getGeocode({
-        params: { geocode: option.value, results: 1 }
+        params: { geocode: option.value, results: 1, lang: getYmapsLang(locale) }
       });
       const [lng, lat] =
         res.data.response.GeoObjectCollection.featureMember[0].GeoObject.Point.pos.split(' ');

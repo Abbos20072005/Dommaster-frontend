@@ -1,6 +1,6 @@
 'use client';
 
-import { format } from 'date-fns';
+import { useFormatDate } from '@/hooks';
 import { EditIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -15,6 +15,7 @@ import { useProductQuestions } from './hooks';
 
 export const ProductQuestions = () => {
   const t = useTranslations();
+  const formatDate = useFormatDate();
   const { state, functions } = useProductQuestions();
   const { user } = useAuth();
 
@@ -53,7 +54,7 @@ export const ProductQuestions = () => {
             </div>
             <div className='flex'>
               <span className='text-muted-foreground text-xs italic'>
-                {format(question.created_at, 'dd MMMM yyyy')}
+                {formatDate(question.created_at, 'dd MMMM yyyy')}
               </span>
             </div>
           </div>

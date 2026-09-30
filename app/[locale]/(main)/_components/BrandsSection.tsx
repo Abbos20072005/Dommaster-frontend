@@ -34,7 +34,7 @@ export const BrandsSection = async () => {
                 className='block h-16 rounded-md'
               >
                 <Image
-                  alt={item.name}
+                  alt={item.name || 'Buildex'}
                   className='size-full min-w-26 object-contain p-1'
                   height={36}
                   src={item.image}
@@ -56,7 +56,7 @@ export const BrandsSection = async () => {
                   className='block h-22 rounded-md'
                 >
                   <Image
-                    alt={item.name}
+                    alt={item.name || 'Buildex'}
                     className='size-full object-contain py-2'
                     height={36}
                     src={item.image}

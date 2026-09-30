@@ -60,7 +60,7 @@ export const DiscountProductsSection = () => {
       <BaseLayout className='px-0'>
         <div className='relative px-2 pt-4'>
           <Image
-            alt={sales.name}
+            alt={sales.name || 'Buildex'}
             className='absolute inset-0 -z-1 size-full rounded-2xl object-cover'
             height={600}
             src={sales.bg_image}

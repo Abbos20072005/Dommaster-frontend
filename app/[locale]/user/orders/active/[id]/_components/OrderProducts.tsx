@@ -20,7 +20,7 @@ export const OrderProducts = ({ order }: Props) => {
           <div className='flex flex-1 gap-1 sm:gap-3'>
             <Link href={`/product/${product.id}`}>
               <Image
-                alt={product.name}
+                alt={product.name || 'Buildex'}
                 className='size-[80px] object-contain sm:size-[100px]'
                 height={100}
                 src={product.images[0]?.image ?? '/product/no-image.png'}

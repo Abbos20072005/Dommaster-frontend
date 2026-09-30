@@ -34,7 +34,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
         />
         <Link href={`/product/${product.id}`} className={cn({ 'opacity-50': notValidQuantity })}>
           <Image
-            alt={product.name}
+            alt={product.name || 'Buildex'}
             className='size-[80px] object-contain sm:size-[100px]'
             height={100}
             src={product.images[0]?.image ?? '/product/no-image.png'}

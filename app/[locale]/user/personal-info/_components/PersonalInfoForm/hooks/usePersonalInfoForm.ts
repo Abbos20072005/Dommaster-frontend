@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 
@@ -12,6 +13,7 @@ import type { PersonalInfoFormSchema } from '../constants';
 import { personalInfoFormSchema } from '../constants';
 
 export const usePersonalInfoForm = () => {
+  const t = useTranslations();
   const { user } = useAuthed();
   const form = useForm<PersonalInfoFormSchema>({
     resolver: zodResolver(personalInfoFormSchema),
@@ -27,7 +29,7 @@ export const usePersonalInfoForm = () => {
   const patchPersonalInfoMutation = useMutation({
     mutationFn: patchMe,
     onSuccess: ({ data }) => {
-      toast.success('Personal info updated successfully');
+      toast.success(t('Personal info updated successfully'));
       form.reset(data.result);
       queryClient.invalidateQueries();
     },

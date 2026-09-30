@@ -22,6 +22,7 @@ export const AddsBrandsSection = () => {
 
   if (!main.length) return null;
 
+  // Banner sarlavhasi backenddan bo'sh kelishi mumkin (masalan o'zbekcha to'ldirilmagan) — alt bo'sh qolmasin
   return main.map((item) => (
     <section key={`${item.data.id}${item.type}`}>
       <BaseLayout>
@@ -46,14 +47,14 @@ export const AddsBrandsSection = () => {
             target='_blank'
           >
             <Image
-              alt={item.data.title}
+              alt={item.data.title || 'Buildex'}
               className='size-full rounded-lg object-cover md:hidden md:rounded-xl'
               height={230}
               src={item.data.mobile_image}
               width={690}
             />
             <Image
-              alt={item.data.title}
+              alt={item.data.title || 'Buildex'}
               className='hidden size-full rounded-lg object-cover md:block md:rounded-xl'
               height={413}
               src={item.data.desktop_image}

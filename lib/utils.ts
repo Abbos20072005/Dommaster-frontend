@@ -48,6 +48,13 @@ export function handleFormServerErrors<T extends FieldValues>(
       toast.error(serverErrors);
     }
   } else {
-    toast.error('Occurred unexpected error, refresh the page and try again!');
+    // Bu funksiya React'dan tashqarida — xabar joriy tilga qarab tanlanadi
+    const isUz = typeof document !== 'undefined' && document.documentElement.lang === 'uz';
+    toast.error(
+      isUz
+        ? "Kutilmagan xatolik yuz berdi. Sahifani yangilab, qayta urinib ko'ring"
+        : 'Произошла непредвиденная ошибка. Обновите страницу и попробуйте снова'
+    );
+    // ESKI KOD: toast.error('Occurred unexpected error, refresh the page and try again!');
   }
 }

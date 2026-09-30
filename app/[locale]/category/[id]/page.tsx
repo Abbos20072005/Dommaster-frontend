@@ -66,7 +66,7 @@ const CategoryPage = async ({ params }: Props) => {
                 {subCategory.name}
               </p>
               <Image
-                alt={subCategory.name}
+                alt={subCategory.name || 'Buildex'}
                 className='mx-auto h-15 w-22 rounded-md object-contain md:mx-0 md:size-15'
                 height={60}
                 src={subCategory.image}

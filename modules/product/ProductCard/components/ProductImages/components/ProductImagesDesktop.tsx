@@ -20,7 +20,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
             <Image
               fill
               key={image.id}
-              alt={product.name}
+              alt={product.name || 'Buildex'}
               className='absolute inset-0 z-1 object-contain'
               hidden={tab !== i}
               src={image.image}

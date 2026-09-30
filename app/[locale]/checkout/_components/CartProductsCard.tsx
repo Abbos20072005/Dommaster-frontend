@@ -26,8 +26,8 @@ export const CartProductsCard = () => {
                 {product.in_cart_quantity}
               </Badge>
               <Image
-                alt={product.name}
-                className='bg-muted size-80px rounded-sm object-contain md:size-100px'
+                alt={product.name || 'Buildex'}
+                className='bg-muted size-80px md:size-100px rounded-sm object-contain'
                 height={100}
                 src={product.images[0]?.image ?? '/product/no-image.png'}
                 width={100}

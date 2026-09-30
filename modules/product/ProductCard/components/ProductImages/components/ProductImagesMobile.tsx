@@ -34,7 +34,7 @@ export const ProductImagesMobile = ({ product }: Props) => {
               <div className='relative aspect-[4/3]'>
                 <Image
                   fill
-                  alt={product.name}
+                  alt={product.name || 'Buildex'}
                   className='object-contain'
                   src={image.image}
                   loading={i === 0 ? 'eager' : 'lazy'}

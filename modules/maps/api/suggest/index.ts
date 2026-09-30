@@ -7,6 +7,7 @@ import { SUGGEST_API_KEY } from '@/modules/location';
 interface GetSuggestRequest {
   params: {
     text: string;
+    lang?: string;
   };
 }
 

@@ -17,21 +17,19 @@ export const ProductVariantGroups = ({ variantGroups }: Props) => {
 
         return (
           <div key={group.id} className='flex flex-col gap-3'>
-            <span className='text-sm text-foreground'>
+            <span className='text-foreground text-sm'>
               {group.name}
-              {currentItem && (
-                <span>: {currentItem.display_value}</span>
-              )}
+              {currentItem && <span>: {currentItem.display_value}</span>}
             </span>
             <div className='flex flex-wrap gap-2'>
               {group.items.map((item) => {
                 const isSelected = item.is_current;
-                
+
                 return (
                   <Link
                     key={item.id}
                     className={cn(
-                      'flex items-center justify-center overflow-hidden rounded-xl border transition-colors bg-transparent',
+                      'flex items-center justify-center overflow-hidden rounded-xl border bg-transparent transition-colors',
                       group.display_type === 'image' ? 'h-14 w-14 p-1' : 'h-8 px-4',
                       isSelected
                         ? 'border-secondary text-secondary'
@@ -43,7 +41,7 @@ export const ProductVariantGroups = ({ variantGroups }: Props) => {
                       <div className='relative h-full w-full'>
                         <Image
                           fill
-                          alt={item.display_value}
+                          alt={item.display_value || 'Buildex'}
                           className='object-cover'
                           src={item.image}
                         />

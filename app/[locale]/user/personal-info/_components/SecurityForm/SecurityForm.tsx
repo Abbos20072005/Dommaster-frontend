@@ -1,5 +1,7 @@
 'use client';
 
+import { useTranslations } from 'next-intl';
+
 import { Button } from '@/components/ui/button';
 import {
   Form,
@@ -14,6 +16,7 @@ import { PasswordInput } from '@/components/ui/password-input';
 import { useSecurityForm } from './hooks';
 
 export const SecurityForm = () => {
+  const t = useTranslations();
   const { form, state, functions } = useSecurityForm();
 
   return (
@@ -22,7 +25,7 @@ export const SecurityForm = () => {
         <FormField
           render={({ field }) => (
             <FormItem className='space-y-1'>
-              <FormLabel>Password</FormLabel>
+              <FormLabel>{t('Password')}</FormLabel>
               <FormControl>
                 <PasswordInput placeholder='********' {...field} />
               </FormControl>
@@ -35,7 +38,7 @@ export const SecurityForm = () => {
         <FormField
           render={({ field }) => (
             <FormItem className='space-y-1'>
-              <FormLabel>Confirm password</FormLabel>
+              <FormLabel>{t('Confirm password')}</FormLabel>
               <FormControl>
                 <PasswordInput placeholder='********' {...field} />
               </FormControl>
@@ -46,7 +49,7 @@ export const SecurityForm = () => {
           control={form.control}
         />
         <Button type='submit' isLoading={state.isPending}>
-          Save
+          {t('Save')}
         </Button>
       </form>
     </Form>

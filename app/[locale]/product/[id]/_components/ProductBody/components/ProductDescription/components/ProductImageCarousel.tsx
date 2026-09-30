@@ -69,7 +69,7 @@ export const ProductImageCarousel = ({
             <CarouselItem key={image.id}>
               <div className='mx-auto aspect-square max-w-[450px]'>
                 <ImageZoomer
-                  alt={product.name}
+                  alt={product.name || 'Buildex'}
                   className='size-full rounded-md object-contain'
                   height={385}
                   src={image.image}
@@ -102,7 +102,7 @@ export const ProductImageCarousel = ({
                 onKeyDown={handleKeyDown}
               >
                 <Image
-                  alt={product.name}
+                  alt={product.name || 'Buildex'}
                   className='size-full rounded-md object-contain'
                   height={60}
                   src={image.image}

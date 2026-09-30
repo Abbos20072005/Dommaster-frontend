@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { format } from 'date-fns';
+import { useFormatDate } from '@/hooks';
 import { ArrowLeftIcon, DownloadIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
@@ -21,6 +21,7 @@ import { OrderProducts } from './_components/OrderProducts';
 
 const OrderPage = () => {
   const t = useTranslations();
+  const formatDate = useFormatDate();
   const { id } = useParams<{ id: string }>();
   const { user } = useAuth();
   const getOrderIdQuery = useQuery({
@@ -48,7 +49,7 @@ const OrderPage = () => {
                 {t('Order')} #{order.id}
               </h1>
               <CardDescription className='text-xs'>
-                {format(order.created_at, 'dd MMM')}
+                {formatDate(order.created_at, 'dd MMM')}
               </CardDescription>
             </div>
           </div>
@@ -67,7 +68,7 @@ const OrderPage = () => {
                   <h1 className='text-2xl font-bold'>
                     {t('Order')} #{order.id}
                   </h1>
-                  <CardDescription>{format(order.created_at, 'dd MMM')}</CardDescription>
+                  <CardDescription>{formatDate(order.created_at, 'dd MMM')}</CardDescription>
                 </div>
                 <div className='md:mt-4'>
                   <div className='text-sm font-bold'>{t('Order address')}:</div>

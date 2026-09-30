@@ -1,6 +1,6 @@
 'use client';
 
-import { format } from 'date-fns';
+import { useFormatDate } from '@/hooks';
 import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -32,6 +32,7 @@ interface Props {
 
 export const OrderItem = ({ order }: Props) => {
   const t = useTranslations();
+  const formatDate = useFormatDate();
   const pathname = usePathname();
   const url = `${pathname}/${order.id}`;
 
@@ -44,7 +45,7 @@ export const OrderItem = ({ order }: Props) => {
               {t('Order')} #{order.id}
             </CardTitle>
             <CardDescription>
-              {format(order.created_at, 'dd MMM')} - {order.order_location?.name}
+              {formatDate(order.created_at, 'dd MMM')} - {order.order_location?.name}
             </CardDescription>
             <CardDescription className='text-muted-foreground/70 text-xs'>
               {getPaymentLabel(t, order.payment_type, order.payment_method)}
@@ -67,7 +68,7 @@ export const OrderItem = ({ order }: Props) => {
           {order.order_items.map((item) => (
             <div key={item.id} className='flex shrink-0 items-center justify-between'>
               <Image
-                alt={item.image}
+                alt={item.image || 'Buildex'}
                 className='bg-muted size-[60px] rounded-sm object-contain sm:size-[80px]'
                 height={80}
                 src={item.image}

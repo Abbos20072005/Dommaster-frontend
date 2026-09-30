@@ -37,7 +37,7 @@ const CategoryPage = async () => {
                 {item.name}
               </div>
               <Image
-                alt={item.name}
+                alt={item.name || 'Buildex'}
                 className='absolute inset-0 size-full rounded-lg object-contain'
                 height={80}
                 src={item.image}

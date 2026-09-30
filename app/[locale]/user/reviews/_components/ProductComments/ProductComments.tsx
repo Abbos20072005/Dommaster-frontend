@@ -1,6 +1,6 @@
 'use client';
 
-import { format } from 'date-fns';
+import { useFormatDate } from '@/hooks';
 import { EditIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -16,6 +16,7 @@ import { useProductComments } from './hooks';
 
 export const ProductComments = () => {
   const t = useTranslations();
+  const formatDate = useFormatDate();
   const { state, functions } = useProductComments();
 
   if (state.isLoading) {
@@ -56,7 +57,7 @@ export const ProductComments = () => {
             </div>
             <div className='flex'>
               <span className='text-muted-foreground text-xs italic'>
-                {format(comment.created_at, 'dd MMMM yyyy')}
+                {formatDate(comment.created_at, 'dd MMMM yyyy')}
               </span>
             </div>
           </div>
@@ -65,7 +66,7 @@ export const ProductComments = () => {
               {comment.images.map((image) => (
                 <Image
                   key={image.id}
-                  alt={comment.comment}
+                  alt={comment.comment || 'Buildex'}
                   className='size-20 rounded-md object-cover'
                   height={140}
                   src={image.image}

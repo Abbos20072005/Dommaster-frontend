@@ -185,7 +185,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                 onClick={() => onClose()}
               >
                 <Image
-                  alt={item.name}
+                  alt={item.name || 'Buildex'}
                   className='size-10 rounded-sm object-contain'
                   height={40}
                   src={item.image ?? '/product/no-image.png'}
@@ -209,7 +209,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                 onClick={() => onClose()}
               >
                 <Image
-                  alt={item.name}
+                  alt={item.name || 'Buildex'}
                   className='h-10 w-auto rounded-sm object-contain'
                   height={40}
                   src={item.image ?? '/product/no-image.png'}

@@ -3,7 +3,7 @@
 import type { BehaviorMapEventHandler, LngLat, YMapLocationRequest } from '@yandex/ymaps3-types';
 
 import { useMutation } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 import { toast } from 'sonner';
@@ -21,7 +21,11 @@ import {
 
 import type { MapLocation } from '@/modules/location/index';
 
-import { COMMON_LOCATION_PARAMS, LocationSelectCombobox } from '@/modules/location/index';
+import {
+  COMMON_LOCATION_PARAMS,
+  getYmapsLang,
+  LocationSelectCombobox
+} from '@/modules/location/index';
 import { getGeocode } from '@/modules/maps/api/geocode';
 import { MAP } from '@/utils/constants';
 
@@ -32,6 +36,7 @@ interface Props {
 
 export const LocationSelectMap = ({ value, onValueChange }: Props) => {
   const t = useTranslations();
+  const ymapsLang = getYmapsLang(useLocale());
 
   const [mapPosition, setMapPosition] = React.useState<YMapLocationRequest>({
     center: [value.longitude, value.latitude] as LngLat,
@@ -39,7 +44,8 @@ export const LocationSelectMap = ({ value, onValueChange }: Props) => {
   });
 
   const postAddressQuery = useMutation({
-    mutationFn: (pos: LngLat) => getGeocode({ params: { geocode: pos.join(), results: 1 } }),
+    mutationFn: (pos: LngLat) =>
+      getGeocode({ params: { geocode: pos.join(), results: 1, lang: ymapsLang } }),
     onSuccess: ({ data }) => {
       const [lng, lat] =
         data.response.GeoObjectCollection.metaDataProperty.GeocoderResponseMetaData.Point.pos.split(
@@ -82,7 +88,7 @@ export const LocationSelectMap = ({ value, onValueChange }: Props) => {
           placeholder={t('Search')}
         />
       </div>
-      <YMapComponentsProvider apiKey={process.env.YANDEX_KEY || ''} lang='uz_UZ'>
+      <YMapComponentsProvider apiKey={process.env.YANDEX_KEY || ''} lang={ymapsLang}>
         <YMap location={mapPosition}>
           <YMapDefaultSchemeLayer />
           <YMapDefaultFeaturesLayer />
@@ -102,7 +108,7 @@ export const LocationSelectMap = ({ value, onValueChange }: Props) => {
 
           <YMapControls position='right'>
             <YMapGeolocationControl
-              onGeolocateError={() => toast.error(t('Unable to find your location.'))}
+              onGeolocateError={() => toast.error(t('Unable to find your location'))}
               onGeolocatePosition={onGeolocationChange}
               {...COMMON_LOCATION_PARAMS}
             />

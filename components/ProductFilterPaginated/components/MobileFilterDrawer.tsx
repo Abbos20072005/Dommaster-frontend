@@ -26,12 +26,12 @@ export const MobileFilterDrawer = ({ filters, hideCategories }: Props) => {
       <DrawerTrigger asChild>
         <Button className='lg:hidden' size='sm' variant='outline'>
           <FilterIcon />
-          Filter
+          {t('Filter')}
         </Button>
       </DrawerTrigger>
       <DrawerContent className='mx-auto !max-h-dvh w-full max-w-xl'>
         <DrawerHeader className='py-2'>
-          <DrawerTitle>Filters</DrawerTitle>
+          <DrawerTitle>{t('Filters')}</DrawerTitle>
         </DrawerHeader>
         <div className='overflow-y-auto px-4 py-2'>
           <Filter filters={filters} hideCategories={hideCategories} />
