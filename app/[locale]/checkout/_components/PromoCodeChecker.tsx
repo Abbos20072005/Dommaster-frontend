@@ -49,7 +49,6 @@ export const PromoCodeChecker = ({ value, onSuccess }: Props) => {
       <Button
         disabled={!promoCodeInput || value?.code === promoCodeInput}
         type='submit'
-        variant='secondary'
         isLoading={postPromoCodeCheckerMutation.isPending}
       >
         {t('Apply')}

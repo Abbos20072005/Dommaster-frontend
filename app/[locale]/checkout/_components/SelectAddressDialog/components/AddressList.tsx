@@ -58,7 +58,7 @@ export const AddressList = ({ onSave }: Props) => {
     return (
       <div className='flex h-full w-full flex-col items-center justify-center gap-4 py-20'>
         <AddressSelectDialog asChild>
-          <Button variant='secondary'>
+          <Button>
             <PlusIcon />
             {t('Add address')}
           </Button>

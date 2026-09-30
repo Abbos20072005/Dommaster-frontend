@@ -1,41 +1,59 @@
 import { create } from 'zustand';
 
-import { DELIVERY_TYPE } from '@/utils/constants';
+import type { CheckoutPaymentMethod } from '@/utils/constants/checkoutPaymentMethods';
 
-type PaymentOption = 'online' | 'cod';
-type CashMethod = 'cash' | 'card';
+import { DELIVERY_TYPE } from '@/utils/constants';
+import { DEFAULT_CHECKOUT_PAYMENT_METHOD } from '@/utils/constants/checkoutPaymentMethods';
+
+// --- ESKI KOD (online / cod + cash/card) ---
+// type PaymentOption = 'online' | 'cod';
+// type CashMethod = 'cash' | 'card';
 
 interface CheckoutStore {
   branchId: number | null;
-  paymentOption: PaymentOption;
-  cashMethod: CashMethod;
-  deliveryType: DeliveryType;
   deliveryPrice: string | null;
-  setBranchId: (branchId: number | null) => void;
-  setPaymentOption: (option: PaymentOption) => void;
-  setCashMethod: (method: CashMethod) => void;
-  setDeliveryType: (deliveryType: DeliveryType) => void;
-  setDeliveryPrice: (deliveryPrice: string | null) => void;
+  deliveryType: DeliveryType;
+  // Tanlangan to'lov usuli: uzum / click / payme / cash / atmos
+  paymentMethod: CheckoutPaymentMethod;
+  // Profilda ism bo'lmasa — checkout'da kiritiladigan qabul qiluvchi ismi
+  recipientName: string;
+  recipientNameError: boolean;
+  // --- ESKI KOD ---
+  // paymentOption: PaymentOption;
+  // cashMethod: CashMethod;
+  // setPaymentOption: (option: PaymentOption) => void;
+  // setCashMethod: (method: CashMethod) => void;
   reset: () => void;
+  setBranchId: (branchId: number | null) => void;
+  setDeliveryPrice: (deliveryPrice: string | null) => void;
+  setDeliveryType: (deliveryType: DeliveryType) => void;
+  setPaymentMethod: (paymentMethod: CheckoutPaymentMethod) => void;
+  setRecipientName: (recipientName: string) => void;
+  setRecipientNameError: (recipientNameError: boolean) => void;
 }
 
-export const useCheckoutStore = create<CheckoutStore>()((set) => ({
+const initialState = {
   branchId: null,
-  paymentOption: 'online',
-  cashMethod: 'cash',
-  deliveryType: DELIVERY_TYPE.Delivery,
+  deliveryType: DELIVERY_TYPE.Delivery as DeliveryType,
   deliveryPrice: null,
+  paymentMethod: DEFAULT_CHECKOUT_PAYMENT_METHOD,
+  recipientName: '',
+  recipientNameError: false
+  // --- ESKI KOD ---
+  // paymentOption: 'online',
+  // cashMethod: 'cash',
+};
+
+export const useCheckoutStore = create<CheckoutStore>()((set) => ({
+  ...initialState,
   setBranchId: (branchId) => set({ branchId }),
-  setPaymentOption: (paymentOption) => set({ paymentOption }),
-  setCashMethod: (cashMethod) => set({ cashMethod }),
   setDeliveryType: (deliveryType) => set({ deliveryType }),
   setDeliveryPrice: (deliveryPrice) => set({ deliveryPrice }),
-  reset: () =>
-    set({
-      branchId: null,
-      paymentOption: 'online',
-      cashMethod: 'cash',
-      deliveryType: DELIVERY_TYPE.Delivery,
-      deliveryPrice: null
-    })
+  setPaymentMethod: (paymentMethod) => set({ paymentMethod }),
+  setRecipientName: (recipientName) => set({ recipientName, recipientNameError: false }),
+  setRecipientNameError: (recipientNameError) => set({ recipientNameError }),
+  // --- ESKI KOD ---
+  // setPaymentOption: (paymentOption) => set({ paymentOption }),
+  // setCashMethod: (cashMethod) => set({ cashMethod }),
+  reset: () => set(initialState)
 }));

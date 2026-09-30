@@ -9,8 +9,12 @@ const cardVariants = cva('bg-card text-card-foreground rounded-xl', {
   variants: {
     variant: {
       default: 'shadow-sm',
-     outline: 'border',
-soft: 'bg-slate-100 border-0 shadow-none'
+      outline: 'border',
+      soft: 'bg-slate-100 border-0 shadow-none',
+      // Checkout: border'siz, oqdan biroz farqli fon
+      subtle: 'bg-slate-50 border-0 shadow-none',
+      // subtle ichidagi oq bloklar
+      plain: 'bg-background border-0 shadow-none'
     }
   },
   defaultVariants: {
@@ -71,4 +75,3 @@ const CardFooter = ({ className, ...props }: React.ComponentProps<'div'>) => {
 };
 
 export { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle };
-

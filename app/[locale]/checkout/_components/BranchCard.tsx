@@ -11,6 +11,7 @@ import { getBranches } from '@/utils/api/requests';
 import { DELIVERY_TYPE } from '@/utils/constants';
 import { useCheckoutStore } from '@/utils/stores';
 
+import { RecipientBlock } from './RecipientBlock';
 import { SelectBranchDialog } from './SelectBranchDialog';
 
 export const BranchCard = () => {
@@ -29,15 +30,15 @@ export const BranchCard = () => {
   const selectedBranch = branches?.find((branch) => branch.id === branchId);
 
   return (
-    <Card variant='outline'>
+    <Card variant='subtle'>
       <CardHeader>
         <CardTitle className='md:text-xl'>{t('Pickup point')}</CardTitle>
       </CardHeader>
       <CardContent className='space-y-3'>
-        <Card className='flex items-start' variant='outline'>
+        <Card className='flex items-start' variant='plain'>
           <div className='p-4 pr-0'>
             <div className='bg-muted rounded-md p-2'>
-              <StoreIcon className='text-secondary' />
+              <StoreIcon className='text-primary' />
             </div>
           </div>
           {getBranchesQuery.isFetching ? (
@@ -77,6 +78,8 @@ export const BranchCard = () => {
             </CardHeader>
           )}
         </Card>
+        {/* Получатель — olib ketishda ham kerak */}
+        <RecipientBlock />
       </CardContent>
     </Card>
   );

@@ -1,17 +1,8 @@
 'use client';
 
 import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
 import React from 'react';
-import {
-  YMap,
-  YMapComponentsProvider,
-  YMapControls,
-  YMapDefaultFeaturesLayer,
-  YMapDefaultSchemeLayer,
-  YMapFeature,
-  YMapGeolocationControl,
-  YMapZoomControl
-} from 'ymap3-components';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
@@ -22,12 +13,18 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { COMMON_LOCATION_PARAMS, getAllCoordinates, getBounds } from '@/modules/location';
-import { MAP } from '@/utils/constants';
+import { Skeleton } from '@/components/ui/skeleton';
+
+// `ymap3-components` serverda (SSR) "document is not defined" xatosini beradi —
+// xarita faqat brauzerda yuklanadi
+const DeliveryZoneMap = dynamic(
+  () => import('./_components/DeliveryZoneMap').then((module) => module.DeliveryZoneMap),
+  { ssr: false, loading: () => <Skeleton className='h-full w-full' /> }
+);
 
 const CourierDeliveryPage = () => {
   const t = useTranslations();
-  const mapRef = React.useRef<ymaps.Map>(undefined);
+  // ESKI KOD (ishlatilmagan edi): const mapRef = React.useRef<ymaps.Map>(undefined);
 
   return (
     <div>
@@ -45,33 +42,9 @@ const CourierDeliveryPage = () => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-xl font-bold md:text-3xl lg:text-4xl'>{t('Delivery in Tashkent')}</h1>
-        <div className='h-[500px]'>
-          <YMapComponentsProvider apiKey={process.env.YANDEX_KEY || ''} lang='uz_UZ'>
-            <YMap
-              className='h-full'
-              location={{ bounds: getBounds(getAllCoordinates(MAP.availablePolygon)) }}
-            >
-              <YMapDefaultSchemeLayer />
-              <YMapDefaultFeaturesLayer />
-
-              <YMapFeature
-                style={{
-                  fill: 'var(--secondary)',
-                  stroke: [{ color: 'var(--secondary)', width: 2 }],
-                  fillOpacity: 0.1
-                }}
-                geometry={{
-                  type: 'MultiPolygon',
-                  coordinates: MAP.availablePolygon
-                }}
-              />
-
-              <YMapControls position='right'>
-                <YMapGeolocationControl {...COMMON_LOCATION_PARAMS} />
-                <YMapZoomControl />
-              </YMapControls>
-            </YMap>
-          </YMapComponentsProvider>
+        <div className='h-500px'>
+          <DeliveryZoneMap />
+          {/* ESKI KOD: xarita shu yerda bevosita chizilardi — endi ./_components/DeliveryZoneMap.tsx'da */}
         </div>
         <p className='text-lg font-bold md:text-2xl'>{t('Delivery price')}: 100 000 UZS</p>
       </BaseLayout>

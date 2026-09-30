@@ -84,7 +84,7 @@ export const DeliveryTypeSelector = () => {
   }, [isDelivery, normalizedPrice, setDeliveryPrice]);
 
   return (
-    <Card variant='outline'>
+    <Card variant='subtle'>
       <CardHeader>
         <CardTitle className='md:text-xl'>{t('Delivery method')}</CardTitle>
       </CardHeader>
@@ -93,13 +93,13 @@ export const DeliveryTypeSelector = () => {
           {deliveryOptions.map(({ value, icon: Icon, titleKey, descKey }) => (
             <button
               key={value}
-              type='button'
               className={cn(
                 'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 p-6 text-center transition-colors',
                 deliveryType === value
                   ? 'border-primary/50 bg-primary/5'
-                  : 'border-muted hover:bg-accent/50'
+                  : 'bg-background hover:border-primary/20 border-transparent'
               )}
+              type='button'
               onClick={() => setDeliveryType(value)}
             >
               <Icon
@@ -117,7 +117,7 @@ export const DeliveryTypeSelector = () => {
         </div>
 
         {isDelivery && (
-          <div className='border-muted flex min-h-[64px] items-center rounded-xl border-2 px-4 py-3'>
+          <div className='bg-background flex min-h-64px items-center rounded-xl px-4 py-3'>
             {!defaultAddress ? (
               getAddressesQuery.isFetching ? (
                 <div className='w-full space-y-2'>

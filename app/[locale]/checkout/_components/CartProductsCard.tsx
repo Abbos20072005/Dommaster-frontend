@@ -13,7 +13,7 @@ export const CartProductsCard = () => {
   const { availableCartItems } = useCart();
 
   return (
-    <Card variant='outline'>
+    <Card variant='subtle'>
       <CardHeader>
         <CardTitle className='md:text-xl'>{t('Products on order')}</CardTitle>
       </CardHeader>

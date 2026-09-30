@@ -1,5 +1,258 @@
 'use client';
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useTranslations } from 'next-intl';
+import React from 'react';
+import { toast } from 'sonner';
+
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Separator } from '@/components/ui/separator';
+import { useRouter } from '@/i18n/navigation';
+import { formatPrice } from '@/lib/utils';
+import { useAuth } from '@/modules/auth';
+import { useCart } from '@/modules/cart';
+import {
+  getCustomerAddresses,
+  getCustomerCards,
+  patchMe,
+  postOrder,
+  postPaymentHold
+} from '@/utils/api/requests';
+import { DELIVERY_TYPE } from '@/utils/constants';
+import { getCheckoutPaymentMethod } from '@/utils/constants/checkoutPaymentMethods';
+import { useCheckoutStore } from '@/utils/stores';
+
+import {
+  CUSTOMER_CARDS_QUERY_KEY,
+  getSavedCards
+} from './PaymentMethodSelector/components/SavedCardsList';
+import { PromoCodeChecker } from './PromoCodeChecker';
+
+export const PriceCalculationCard = () => {
+  const t = useTranslations();
+  const { user } = useAuth();
+  const { cart, availableCartItems, isSuccess, refetch, isFetching } = useCart();
+  // ESKI KOD: const { paymentOption, cashMethod, deliveryType, deliveryPrice, branchId } = useCheckoutStore();
+  const {
+    paymentMethod,
+    recipientName,
+    deliveryType,
+    deliveryPrice,
+    branchId,
+    setRecipientNameError,
+    reset: resetCheckout
+  } = useCheckoutStore();
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
+  const [orderId, setOrderId] = React.useState<number>();
+
+  const getAddressesQuery = useQuery({
+    queryKey: ['customerAddresses'],
+    queryFn: () => getCustomerAddresses()
+  });
+
+  const addresses = getAddressesQuery.data?.data.result;
+  const defaultAddress = addresses?.find((item) => item.is_default);
+  const isDelivery = deliveryType === DELIVERY_TYPE.Delivery;
+  const isAddressSelected = isDelivery ? !!defaultAddress : !!branchId;
+  const isDeliveryPriceSelected = isDelivery ? !!deliveryPrice : true;
+  const deliveryTotal = isDelivery && deliveryPrice ? Number(deliveryPrice) : 0;
+  const totalPrice = (promo?.total_price ?? cart?.total_price ?? 0) + deliveryTotal;
+
+  const selectedPaymentMethod = getCheckoutPaymentMethod(paymentMethod);
+  const isAtmos = paymentMethod === 'atmos';
+
+  // Atmos: to'lov asosiy (default) saqlangan kartadan yechiladi — karta bo'lmasa buyurtma berilmaydi
+  const getCardsQuery = useQuery({
+    queryKey: CUSTOMER_CARDS_QUERY_KEY,
+    queryFn: () => getCustomerCards(),
+    enabled: isAtmos
+  });
+  const hasDefaultCard = getSavedCards(getCardsQuery.data?.data.result).some(
+    (card) => card.is_default
+  );
+
+  React.useEffect(() => {
+    if (isSuccess && !availableCartItems.length && !orderId) router.push('/cart');
+  }, [cart, user]);
+
+  const goToOrder = (id: number) => {
+    resetCheckout();
+    router.replace(`/user/orders/active/${id}`);
+  };
+
+  const paymentHoldMutation = useMutation({
+    mutationFn: postPaymentHold,
+    // Xato bo'lsa ham buyurtma yaratilgan — qayta "Tasdiqlash" bosib ikkinchi buyurtma
+    // yaratilmasligi uchun buyurtma sahifasiga o'tamiz (u yerdan qayta to'lash mumkin)
+    onSettled: (_data, _error, variables) => goToOrder(variables.data.order_id),
+    meta: {
+      invalidatesQuery: ['orders']
+    }
+    // ESKI KOD:
+    // onSuccess: (_, variables) => {
+    //   router.replace(`/user/orders/active/${variables.data.order_id}`);
+    // }
+  });
+
+  const postOrderMutation = useMutation({
+    mutationFn: postOrder,
+    onSuccess: async ({ data }) => {
+      setOrderId(data.order_id);
+      refetch();
+      if (isAtmos) {
+        paymentHoldMutation.mutate({ data: { order_id: data.order_id } });
+        return;
+      }
+      // Click / Payme / Uzum: backend to'lov havolasini qaytaradi — o'sha sahifaga o'tamiz
+      if (data.result) {
+        resetCheckout();
+        window.location.href = data.result;
+        return;
+      }
+      goToOrder(data.order_id);
+      // ESKI KOD:
+      // if (paymentOption === 'online') {
+      //   paymentHoldMutation.mutate({ data: { order_id: data.order_id } });
+      // } else {
+      //   router.replace(`/user/orders/active/${data.order_id}`);
+      // }
+    },
+    meta: {
+      invalidatesQuery: ['orders']
+    }
+  });
+
+  // Profilda ism bo'lmasa — checkout'da kiritilgan ism buyurtmadan oldin profilga saqlanadi
+  const patchNameMutation = useMutation({ mutationFn: patchMe });
+
+  const isLoading =
+    isFetching ||
+    patchNameMutation.isPending ||
+    postOrderMutation.isPending ||
+    paymentHoldMutation.isPending;
+
+  const onSubmit = async () => {
+    if (!user) return;
+
+    let receiverName = user.full_name?.trim();
+    if (!receiverName) {
+      const fullName = recipientName.trim();
+      if (fullName.length < 2) {
+        setRecipientNameError(true);
+        return;
+      }
+      try {
+        await patchNameMutation.mutateAsync({ data: { full_name: fullName } });
+        await queryClient.invalidateQueries({ queryKey: ['auth', 'me'] });
+        receiverName = fullName;
+      } catch {
+        toast.error(t('Failed to save your name'));
+        return;
+      }
+    }
+
+    const data: OrderRequest = {
+      address_id: isDelivery ? defaultAddress?.id : undefined,
+      branch_id: isDelivery ? undefined : (branchId ?? undefined),
+      delivery_type: deliveryType,
+      delivery_price: isDelivery ? (deliveryPrice ?? undefined) : undefined,
+      is_web: true,
+      payment_method: selectedPaymentMethod.paymentMethod,
+      payment_type: selectedPaymentMethod.paymentType,
+      // ESKI KOD:
+      // payment_method: paymentOption === 'cod' ? cashMethod : undefined,
+      // payment_type: paymentOption === 'online' ? 1 : 4,
+      promocode: promo?.code,
+      receiver_name: receiverName,
+      // ESKI KOD: receiver_name: user.full_name,
+      receiver_phone: user.phone_number
+    };
+
+    postOrderMutation.mutate({ data });
+  };
+
+  return (
+    <Card className='sticky top-20' variant='subtle'>
+      <CardHeader className='p-4'>
+        <CardTitle>{t('Your order')}</CardTitle>
+      </CardHeader>
+      <CardContent className='space-y-2 p-4 pt-0'>
+        {!!cart?.cart_items.length && (
+          <div className='align-center flex justify-between gap-1 text-sm'>
+            <p>
+              {t('Goods')} ({cart?.cart_items.length}):
+            </p>
+            <span>
+              {formatPrice(cart.products_total_price)} {t('sum')}
+            </span>
+          </div>
+        )}
+        {!!cart?.saved_price && (
+          <div className='align-center flex justify-between gap-1 text-sm'>
+            <p>{t('Your benefit')}</p>
+            <p className='text-primary'>
+              -{formatPrice(cart.saved_price)} {t('sum')}
+            </p>
+          </div>
+        )}
+        {!!promo && (
+          <div className='align-center flex justify-between gap-1 text-sm'>
+            <div className='flex items-center gap-1'>
+              <span className='font-bold uppercase'>{promo.code}</span>
+              <Badge>-{promo.discount_precent}%</Badge>
+            </div>
+            <p className='text-primary'>
+              -{formatPrice(promo.saved_price)} {t('sum')}
+            </p>
+          </div>
+        )}
+        {isDelivery && !!deliveryPrice && (
+          <div className='align-center flex justify-between gap-1 text-sm'>
+            <p>{t('Delivery price')}</p>
+            <span>
+              {formatPrice(deliveryPrice)} {t('sum')}
+            </span>
+          </div>
+        )}
+        <div className='align-center flex justify-between gap-1 text-xl font-bold'>
+          <p>{t('Total')}</p>
+          <p>
+            {formatPrice(totalPrice)} {t('sum')}
+          </p>
+        </div>
+        <Button
+          disabled={
+            !cart?.cart_items.length ||
+            isLoading ||
+            !isAddressSelected ||
+            !isDeliveryPriceSelected ||
+            (isAtmos && !hasDefaultCard)
+          }
+          className='mb-0 w-full'
+          isLoading={isLoading}
+          onClick={onSubmit}
+        >
+          {t('Confirm')}
+        </Button>
+        {isAtmos && getCardsQuery.isSuccess && !hasDefaultCard && (
+          <p className='text-muted-foreground text-center text-xs'>
+            {t('Add a card to pay online')}
+          </p>
+        )}
+        <Separator className='my-4' />
+        <PromoCodeChecker value={promo} onSuccess={setPromo} />
+      </CardContent>
+    </Card>
+  );
+};
+
+/* ============================ ESKI KOD ============================
+'use client';
+
 import { useMutation, useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -153,3 +406,4 @@ export const PriceCalculationCard = () => {
     </Card>
   );
 };
+============================================================== */

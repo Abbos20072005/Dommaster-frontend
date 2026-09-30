@@ -1,24 +1,26 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { TruckIcon, UserIcon } from 'lucide-react';
+// ESKI KOD: import { TruckIcon, UserIcon } from 'lucide-react';
+import { TruckIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
-import { formatPhoneNumber } from '@/lib/utils';
-import { useAuth } from '@/modules/auth';
+// ESKI KOD: import { formatPhoneNumber } from '@/lib/utils';
+// ESKI KOD: import { useAuth } from '@/modules/auth';
 import { getCustomerAddresses } from '@/utils/api/requests';
 import { DELIVERY_TYPE } from '@/utils/constants';
 import { useCheckoutStore } from '@/utils/stores';
 
+import { RecipientBlock } from './RecipientBlock';
 import { SelectAddressDialog } from './SelectAddressDialog';
 
 export const DeliveryCard = () => {
   const t = useTranslations();
-  const { user, isPending } = useAuth();
+  // ESKI KOD: const { user, isPending } = useAuth();
   const { deliveryType } = useCheckoutStore();
   const getAddressesQuery = useQuery({
     queryKey: ['customerAddresses'],
@@ -33,15 +35,15 @@ export const DeliveryCard = () => {
   const defaultAddress = addresses?.find((address) => address.is_default);
 
   return (
-    <Card variant='outline'>
+    <Card variant='subtle'>
       <CardHeader>
         <CardTitle className='md:text-xl'>{t('Delivery address')}</CardTitle>
       </CardHeader>
       <CardContent className='space-y-3'>
-        <Card className='flex items-start' variant='outline'>
+        <Card className='flex items-start' variant='plain'>
           <div className='p-4 pr-0'>
             <div className='bg-muted rounded-md p-2'>
-              <TruckIcon className='text-secondary' />
+              <TruckIcon className='text-primary' />
             </div>
           </div>
           {getAddressesQuery.isFetching ? (
@@ -71,6 +73,9 @@ export const DeliveryCard = () => {
             </CardHeader>
           )}
         </Card>
+        {/* Получатель: ism bo'lmasa — kiritish maydoni (buyurtmada profilga saqlanadi) */}
+        <RecipientBlock />
+        {/* ESKI KOD (Получатель — ism kiritib bo'lmasdi):
         <Card className='flex items-start gap-3 p-4' variant='outline'>
           <div className='bg-muted rounded-md p-2'>
             <UserIcon className='text-secondary' />
@@ -94,6 +99,7 @@ export const DeliveryCard = () => {
             )}
           </div>
         </Card>
+        */}
       </CardContent>
     </Card>
   );

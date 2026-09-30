@@ -23,8 +23,8 @@ export const BranchItem = ({ branch, ...props }: Props) => {
         </p>
         {branch.phone_number && (
           <a
-            className='text-secondary flex items-center gap-1.5 text-sm'
             href={`tel:${branch.phone_number}`}
+            className='text-primary flex items-center gap-1.5 text-sm'
           >
             <PhoneIcon className='size-4 shrink-0' />
             {branch.phone_number}
