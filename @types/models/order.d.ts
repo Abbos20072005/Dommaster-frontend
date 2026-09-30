@@ -13,6 +13,9 @@ interface OrderPreview {
   order_location: Address;
   status: OrderStatus;
   total_price: number;
+  payment_type: number;
+  payment_method?: string;
+  delivery_type: number;
   order_items: {
     id: number;
     image: string;
@@ -22,6 +25,7 @@ interface OrderPreview {
 interface Order extends Omit<OrderPreview, 'order_items'> {
   promocode: Promo | null;
   ofd_url: string | null;
+  delivery_price: string | number | null;
   order_items: {
     id: number;
     quantity: number;
@@ -37,15 +41,23 @@ enum PaymentMethod {
 }
 
 interface OrderRequest {
+  address_id?: number;
+  branch_id?: number;
+  delivery_price?: string;
+  delivery_type: DeliveryType;
   is_web: boolean;
+  payment_method?: 'cash' | 'card';
   payment_type: PaymentMethod;
   promocode?: string;
+  receiver_name?: string;
+  receiver_phone?: string;
 }
 
 interface OrderPayRequest {
   is_web: boolean;
   order_id: number;
   payment_type: PaymentMethod;
+  payment_method?: 'cash' | 'card';
 }
 
 type OrdersResponse = ApiResponse<Pagination<OrderPreview>>;

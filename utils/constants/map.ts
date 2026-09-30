@@ -1,5 +1,11 @@
 import type { LngLat } from '@yandex/ymaps3-types';
 
+export const STORE_LOCATION = {
+  id: 0,
+  fullname: 'Buildex',
+  coordinates: [69.2401, 41.2995] as [number, number]
+};
+
 export const MAP = {
   center: [69.2401, 41.2995] as LngLat,
   zoom: 11,

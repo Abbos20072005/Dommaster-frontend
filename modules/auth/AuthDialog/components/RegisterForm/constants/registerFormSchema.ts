@@ -14,7 +14,8 @@ export const registerFormSchema = z
       .string()
       .min(1, 'Fill the required field')
       .min(4, 'Password must be at least 4 characters long'),
-    confirm_password: z.string().min(1, 'Fill the required field')
+    confirm_password: z.string().min(1, 'Fill the required field'),
+    is_prorab: z.boolean().default(false)
   })
   .refine((data) => data.password === data.confirm_password, {
     message: 'Passwords do not match',

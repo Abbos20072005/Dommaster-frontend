@@ -1,3 +1,5 @@
+'use client';
+
 import { format } from 'date-fns';
 import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
@@ -15,10 +17,14 @@ import {
 } from '@/components/ui/card';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
-import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
+import {
+  getPaymentLabel,
+  orderStatusColorMap,
+  orderStatusMap
+} from '@/utils/constants/orderStatus';
 
 import { OrderCancelAction } from './OrderCancelAction';
-import { OrderPayDialog } from './OrderPayDialog';
+import { PayOrderDialog } from './PayOrderDialog';
 
 interface Props {
   order: OrderPreview;
@@ -39,6 +45,9 @@ export const OrderItem = ({ order }: Props) => {
             </CardTitle>
             <CardDescription>
               {format(order.created_at, 'dd MMM')} - {order.order_location?.name}
+            </CardDescription>
+            <CardDescription className='text-muted-foreground/70 text-xs'>
+              {getPaymentLabel(t, order.payment_type, order.payment_method)}
             </CardDescription>
           </div>
           <div className='flex flex-col-reverse items-end gap-1 sm:flex-row sm:items-center sm:gap-2'>
@@ -74,11 +83,11 @@ export const OrderItem = ({ order }: Props) => {
         </Button>
         {order.status === 0 && (
           <>
-            <OrderPayDialog asChild orderId={order.id}>
+            <PayOrderDialog orderId={order.id}>
               <Button size='sm' variant='primaryFlat'>
                 {t('Pay order')}
               </Button>
-            </OrderPayDialog>
+            </PayOrderDialog>
             <OrderCancelAction asChild orderId={order.id}>
               <Button size='sm' variant='destructiveFlat'>
                 <XIcon />

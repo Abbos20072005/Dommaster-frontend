@@ -1,58 +1,128 @@
 'use client';
 
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { CreditCardIcon, PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
-import { useQueryState } from 'nuqs';
 import React from 'react';
 
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Label } from '@/components/ui/label';
-import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
+import { Spinner } from '@/components/ui/spinner';
 import { cn } from '@/lib/utils';
-import { paymentMethods } from '@/utils/constants/paymentMethods';
+import { getCustomerCards, patchCustomerCard, postCardBindInit } from '@/utils/api/requests';
+
+const getLastFourDigits = (pan: string) => pan.slice(-4);
 
 export const PaymentTypeCard = () => {
   const t = useTranslations();
-  const [type, setType] = useQueryState('payment_method', { defaultValue: '1' });
+  const queryClient = useQueryClient();
+
+  const cardsQuery = useQuery({
+    queryKey: ['customerCards'],
+    queryFn: () => getCustomerCards()
+  });
+
+  const cards = cardsQuery.data?.data.result ?? [];
+
+  const bindCardMutation = useMutation({
+    mutationFn: postCardBindInit,
+    onSuccess: ({ data }) => {
+      window.open(data.url, '_blank', 'noopener,noreferrer');
+    }
+  });
+
+  const setDefaultMutation = useMutation({
+    mutationFn: patchCustomerCard,
+    onMutate: ({ id }) => {
+      queryClient.setQueryData<typeof cardsQuery.data>(['customerCards'], (old) => {
+        if (!old) return old;
+        const updated = old.data.result.map((card) => ({
+          ...card,
+          is_default: card.id === id
+        }));
+        return { ...old, data: { ...old.data, result: updated } };
+      });
+    }
+  });
+
+  const handleSelectCard = (card: CustomerCard) => {
+    if (card.is_default || setDefaultMutation.isPending) return;
+    setDefaultMutation.mutate({ id: card.id, data: { is_default: true } });
+  };
 
   return (
     <Card variant='outline'>
-      <CardHeader>
-        <CardTitle className='md:text-xl'>{t('Payment methods')}</CardTitle>
-      </CardHeader>
-      <CardContent className='flex gap-4'>
-        <RadioGroup
-          className='grid w-full grid-cols-[repeat(auto-fit,minmax(150px,1fr))] gap-2'
-          value={type}
-          onValueChange={setType}
+      <CardHeader className='flex-row items-center justify-between'>
+        <div className='flex items-center gap-2'>
+          <CreditCardIcon className='text-primary size-5' />
+          <CardTitle className='md:text-xl'>{t('Card Payment')}</CardTitle>
+        </div>
+        <Button
+          isLoading={bindCardMutation.isPending}
+          size='sm'
+          variant='outline'
+          onClick={() => bindCardMutation.mutate()}
         >
-          {paymentMethods.map((item) => (
-            <React.Fragment key={item.value}>
-              <RadioGroupItem
-                aria-label={item.label}
-                className='sr-only'
-                id={item.value}
-                value={item.value}
-              />
-              <Label
-                className={cn(
-                  'border-muted hover:bg-secondary/5 hover:text-accent-foreground flex h-20 flex-col items-center justify-between rounded-md border-2 bg-transparent p-2 transition-colors',
-                  { 'border-secondary/50': type === item.value }
-                )}
-                htmlFor={item.value}
-              >
-                <Image
-                  alt={item.label}
-                  className='size-full object-contain'
-                  height={150}
-                  src={item.image}
-                  width={50}
-                />
-              </Label>
-            </React.Fragment>
-          ))}
-        </RadioGroup>
+          <PlusIcon />
+          {t('Add card')}
+        </Button>
+      </CardHeader>
+      <CardContent>
+        {cardsQuery.isLoading ? (
+          <div className='flex justify-center py-6'>
+            <Spinner />
+          </div>
+        ) : cards.length === 0 ? (
+          <p className='text-muted-foreground py-6 text-center text-sm'>
+            {t('No cards added yet')}
+          </p>
+        ) : (
+          <div className='space-y-2'>
+            {cards.map((card) => {
+              const isDefault = card.is_default;
+              const isSettingDefault =
+                setDefaultMutation.isPending &&
+                setDefaultMutation.variables?.id === card.id;
+
+              return (
+                <div
+                  key={card.id}
+                  className={cn(
+                    'flex cursor-pointer items-center gap-3 rounded-lg border-2 p-3 transition-colors',
+                    isDefault ? 'border-primary/50 bg-primary/5' : 'border-muted hover:bg-accent/50'
+                  )}
+                  onClick={() => handleSelectCard(card)}
+                >
+                  <div
+                    className={cn(
+                      'flex size-4 shrink-0 items-center justify-center rounded-full border-2 transition-colors',
+                      isDefault ? 'border-primary' : 'border-muted-foreground/40'
+                    )}
+                  >
+                    {isDefault && (
+                      <div className='bg-primary size-2 rounded-full' />
+                    )}
+                    {isSettingDefault && (
+                      <Spinner className='size-3' />
+                    )}
+                  </div>
+                  <CreditCardIcon className='text-muted-foreground size-8 shrink-0' />
+                  <div className='flex-1 min-w-0'>
+                    <div className='text-sm font-medium'>
+                      {t('Card ending in {last4}', { last4: getLastFourDigits(card.pan) })}
+                    </div>
+                  </div>
+                  {isDefault && (
+                    <Badge variant='outline'>{t('Default')}</Badge>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        )}
       </CardContent>
     </Card>
   );
 };
+

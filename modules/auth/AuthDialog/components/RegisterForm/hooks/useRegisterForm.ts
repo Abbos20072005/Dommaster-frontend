@@ -16,7 +16,8 @@ export const useRegisterForm = (onSuccess?: (data: RegisterResponse) => void) =>
       phone_number: '+998',
       email: '',
       password: '',
-      confirm_password: ''
+      confirm_password: '',
+      is_prorab: false
     }
   });
 
@@ -29,8 +30,13 @@ export const useRegisterForm = (onSuccess?: (data: RegisterResponse) => void) =>
     }
   });
 
-  const onSubmit = ({ confirm_password, ...data }: RegisterFormSchema) => {
-    postRegisterMutation.mutate({ data });
+  const onSubmit = ({ confirm_password, is_prorab, ...data }: RegisterFormSchema) => {
+    postRegisterMutation.mutate({
+      data: {
+        ...data,
+        ...(is_prorab && { role: 'prorab' })
+      }
+    });
   };
 
   return {

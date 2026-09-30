@@ -11,8 +11,16 @@ export const cn = (...inputs: ClassValue[]) => twMerge(clsx(inputs));
 export const formatPhoneNumber = (phoneNumber: string) =>
   phoneNumber.replace(/(\d{3})(\d{2})(\d{3})(\d{2})(\d{2})/, '$1 ($2) $3 $4 $5');
 
-export const formatPrice = (price: number | string) =>
-  price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+export const formatPrice = (price: number | string) => {
+  const [integer, decimal] = price.toString().split('.');
+  const formattedInteger = integer.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  if (!decimal) return formattedInteger;
+  const trimmedDecimal = decimal.replace(/0+$/, '');
+  return trimmedDecimal ? `${formattedInteger}.${trimmedDecimal}` : formattedInteger;
+};
+
+export const limitDecimalPlaces = (value: number | string, maxDecimals = 4) =>
+  Number(value).toFixed(maxDecimals);
 
 export function handleFormServerErrors<T extends FieldValues>(
   error: unknown,

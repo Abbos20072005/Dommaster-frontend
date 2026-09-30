@@ -53,6 +53,13 @@ export const ProductCard = ({ product, className, hideCart, hideControl, ...prop
           )}
         </Link>
       </div>
+      {product.brand && (
+        <div className='mb-1 flex'>
+          <span className='bg-secondary/20 text-secondary rounded-md px-2 py-0.5 text-[10px] font-bold uppercase md:text-xs'>
+            {product.brand.name}
+          </span>
+        </div>
+      )}
       <div className='mb-2 flex-1'>
         <Link href={`/product/${product.id}`}>
           <span className='line-clamp-3 text-sm leading-5'>{product.name}</span>

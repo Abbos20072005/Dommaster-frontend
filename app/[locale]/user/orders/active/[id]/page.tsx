@@ -7,8 +7,8 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 import { OrderCancelAction } from '@/app/[locale]/user/orders/_components/OrderCancelAction';
-import { OrderPayDialog } from '@/app/[locale]/user/orders/_components/OrderPayDialog';
 import { OrderPriceBreakdown } from '@/app/[locale]/user/orders/_components/OrderPriceBreakdown';
+import { PayOrderDialog } from '@/app/[locale]/user/orders/_components/PayOrderDialog';
 import { OrderProducts } from '@/app/[locale]/user/orders/active/[id]/_components/OrderProducts';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -18,7 +18,7 @@ import { Link } from '@/i18n/navigation';
 import { cn, formatPhoneNumber } from '@/lib/utils';
 import { AuthWrapper, useAuth } from '@/modules/auth';
 import { getOrderById } from '@/utils/api/requests';
-import { orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
+import { getPaymentLabel, orderStatusColorMap, orderStatusMap } from '@/utils/constants/orderStatus';
 
 const OrderPage = () => {
   const t = useTranslations();
@@ -88,6 +88,12 @@ const OrderPage = () => {
                     </div>
                   </div>
                 )}
+                <div className='mt-4'>
+                  <div className='text-sm font-bold'>{t('Payment method')}:</div>
+                  <div className='text-muted-foreground text-sm'>
+                    {getPaymentLabel(t, order.payment_type, order.payment_method)}
+                  </div>
+                </div>
               </Card>
               <Card className='px-4 shadow-none md:shadow-sm'>
                 <OrderProducts order={order} />
@@ -114,11 +120,11 @@ const OrderPage = () => {
                 )}
                 {order.status === 0 && (
                   <>
-                    <OrderPayDialog asChild orderId={order.id}>
+                    <PayOrderDialog orderId={order.id}>
                       <Button className='w-full' size='sm' variant='primaryFlat'>
                         {t('Pay order')}
                       </Button>
-                    </OrderPayDialog>
+                    </PayOrderDialog>
                     <OrderCancelAction asChild orderId={order.id}>
                       <Button className='w-full' size='sm' variant='destructiveFlat'>
                         {t('Cancel order')}

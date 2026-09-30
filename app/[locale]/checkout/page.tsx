@@ -13,9 +13,11 @@ import {
 } from '@/components/ui/breadcrumb';
 
 import {
+  BranchCard,
   CartProductsCard,
   DeliveryCard,
-  PaymentTypeCard,
+  DeliveryTypeSelector,
+  PaymentMethodSelector,
   PriceCalculationCard
 } from './_components';
 
@@ -54,9 +56,11 @@ const CartPage = async () => {
         </h1>
         <div className='mx-auto flex flex-col gap-4 lg:flex-row'>
           <div className='flex-1 space-y-4'>
+            <DeliveryTypeSelector />
             <DeliveryCard />
+            <BranchCard />
             <CartProductsCard />
-            <PaymentTypeCard />
+            <PaymentMethodSelector />
           </div>
           <div className='lg:w-[360px]'>
             <PriceCalculationCard />
