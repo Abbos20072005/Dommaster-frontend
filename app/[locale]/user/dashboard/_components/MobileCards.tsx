@@ -87,7 +87,7 @@ export const MobileCards = () => {
           <div className='px-4 pt-4'>
             <p className='mb-3 font-semibold'>{t('Login to manage your account')}</p>
             <div className='grid grid-cols-2 gap-2 py-4'>
-              <AuthDialog asChild defaultStep='register'>
+              <AuthDialog asChild>
                 <Button>{t('Register')}</Button>
               </AuthDialog>
               <AuthDialog asChild>

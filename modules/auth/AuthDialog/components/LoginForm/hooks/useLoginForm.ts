@@ -1,51 +1,36 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import Cookies from 'js-cookie';
+import { useMutation } from '@tanstack/react-query';
 import { useForm } from 'react-hook-form';
 
-import { useRouter } from '@/i18n/navigation';
-import { postLogin } from '@/utils/api/requests';
-import { COOKIES } from '@/utils/constants';
+import { postSendOtp } from '@/utils/api/requests';
 
 import type { LoginFormSchema } from '../constants';
 
 import { loginFormSchema } from '../constants';
 
 interface Props {
-  withEmail: boolean;
-  onSuccess?: (data: LoginResponse) => void;
+  onSuccess?: (data: SendOtpResponse) => void;
 }
 
-export const useLoginForm = ({ onSuccess, withEmail }: Props) => {
+export const useLoginForm = ({ onSuccess }: Props) => {
   const form = useForm<LoginFormSchema>({
-    resolver: zodResolver(loginFormSchema(withEmail)),
+    resolver: zodResolver(loginFormSchema),
     defaultValues: {
       phone_number: '+998',
-      email: '',
-      password: ''
+      is_user: true
     }
   });
 
-  const queryClient = useQueryClient();
-  const router = useRouter();
-
-  const postLoginMutation = useMutation({
-    mutationFn: postLogin,
-    onSuccess: ({ data }) => {
-      Cookies.set(COOKIES.ACCESS_TOKEN, data.access_token);
-      Cookies.set(COOKIES.REFRESH_TOKEN, data.refresh_token);
-      onSuccess?.(data);
-      queryClient.invalidateQueries();
-      router.refresh();
-    }
+  const postSendOtpMutation = useMutation({
+    mutationFn: postSendOtp,
+    onSuccess: ({ data }) => onSuccess?.(data)
   });
 
   const onSubmit = (data: LoginFormSchema) => {
-    postLoginMutation.mutate({
+    postSendOtpMutation.mutate({
       data: {
-        phone_number: withEmail ? undefined : data.phone_number,
-        email: withEmail ? data.email : undefined,
-        password: data.password
+        phone_number: data.phone_number.replace('+', ''),
+        role: data.is_user ? 'user' : 'prorab'
       }
     });
   };
@@ -53,9 +38,7 @@ export const useLoginForm = ({ onSuccess, withEmail }: Props) => {
   return {
     form,
     state: {
-      pending: {
-        login: postLoginMutation.isPending
-      }
+      isPending: postSendOtpMutation.isPending
     },
     functions: {
       onSubmit

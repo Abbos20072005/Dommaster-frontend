@@ -3,12 +3,12 @@ import { z } from 'zod';
 const PHONE_NUMBER_REGEX = /^\+998\d{9}$/;
 
 export const personalInfoFormSchema = z.object({
-  full_name: z.string().min(1, 'Fill the required field'),
+  full_name: z.string(),
   phone_number: z
     .string()
     .min(1, 'Fill the required field')
     .regex(PHONE_NUMBER_REGEX, 'Invalid phone number'),
-  email: z.string().min(1, 'Fill the required field').email('Invalid email')
+  email: z.union([z.literal(''), z.string().email('Invalid email')])
 });
 
 export type PersonalInfoFormSchema = z.infer<typeof personalInfoFormSchema>;

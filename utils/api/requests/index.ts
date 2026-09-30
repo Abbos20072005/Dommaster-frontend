@@ -1,11 +1,11 @@
 export * from './auth/customer';
 export * from './auth/customer/addresses';
 export * from './auth/forgot-password';
-export * from './auth/login';
 export * from './auth/register';
 export * from './auth/resend-code';
 export * from './auth/reset-password';
 export * from './auth/reset-password-verify';
+export * from './auth/send-otp';
 export * from './auth/verify';
 export * from './base/about';
 export * from './base/articles';
@@ -30,3 +30,4 @@ export * from './questions/reply';
 export * from './sales';
 export * from './search';
 export * from './services';
+export * from './auth/telegram-otp';

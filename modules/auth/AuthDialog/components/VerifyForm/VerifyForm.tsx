@@ -1,5 +1,6 @@
 import type { HTMLAttributes } from 'react';
 
+import { SendIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -59,19 +60,40 @@ export const VerifyForm = ({
               control={form.control}
             />
             {state.showResetButton ? (
-              <Button
-                className='mx-auto w-fit'
-                size='sm'
-                type='button'
-                variant='ghost'
-                isLoading={state.isResendPending}
-                onClick={functions.onResendCode}
-              >
-                {t('Resend code')}
-              </Button>
+              <div className='flex flex-col items-center gap-1'>
+                <Button
+                  size='sm'
+                  type='button'
+                  variant='ghost'
+                  isLoading={state.isResendPending}
+                  onClick={functions.onResendCode}
+                >
+                  {t('Resend code')}
+                </Button>
+                <Button
+                  size='sm'
+                  type='button'
+                  variant='ghost'
+                  isLoading={state.isTelegramPending}
+                  onClick={functions.onTelegramCode}
+                >
+                  <SendIcon />
+                  {t('Get code via Telegram')}
+                </Button>
+              </div>
             ) : (
               <div className='text-muted-foreground h-8 text-center'>
                 {state.minutesLeftToNewReset}:{state.secondsLeftToNewReset}
+              </div>
+            )}
+            {state.telegramLink && (
+              <div className='bg-muted space-y-2 rounded-md p-3 text-center text-sm'>
+                <p>{t('Open the bot in Telegram, press Start and share your contact')}</p>
+                <Button asChild size='sm' type='button' variant='outline'>
+                  <a href={state.telegramLink} rel='noreferrer' target='_blank'>
+                    {t('Open Telegram')}
+                  </a>
+                </Button>
               </div>
             )}
             <div className='grid grid-cols-2 gap-3'>

@@ -106,6 +106,13 @@
   "Login or create an account to view your orders, track your purchase history, manage addresses, and more": "Войдите в систему или создайте учетную запись для просмотра ваших заказов, отслеживает историю покупок, управление адресами и многое другое",
   "Login or register": "Войти или зарегистрироваться",
   "Login to continue": "Войдите, чтобы продолжить",
+  "User": "Пользователь",
+  "Get code via Telegram": "Получить код через Telegram",
+  "Code sent to Telegram": "Код отправлен в Telegram",
+  "Open the bot in Telegram, press Start and share your contact": "Откройте бота в Telegram, нажмите Start и поделитесь контактом, чтобы получить код",
+  "Open Telegram": "Открыть Telegram",
+  "Continue": "Продолжить",
+  "Enter your phone number to receive an SMS code": "Введите номер телефона, чтобы получить SMS-код",
   "Login to manage your account": "Войдите для управления вашей учетной записью",
   "Logout": "Выход",
   "Materials for construction in Buildex": "Материалы для строительства в Buildex",
@@ -146,7 +153,7 @@
   "Pending": "В ожидании",
   "Personal info": "Личная информация",
   "Phone number": "Номер телефона",
-  "Pickup": "Подобрать",
+  "Pickup": "Самовывоз",
   "Please choose a payment method to pay for your order": "Пожалуйста, выберите способ оплаты, чтобы оплатить ваш заказ",
   "Please rate this product overall": "Пожалуйста, оцените этот продукт в целом",
   "Point your camera at the QR to download the app": "Поднесите камеру к QR-коду для загрузки приложения",
@@ -257,7 +264,9 @@
     "18": "Текущий пароль неверный",
     "19": "Промокод просрочен",
     "20": "OTP не найден. Запросите новый код",
-    "21": "Недостаточно товара на складе"
+    "21": "Недостаточно товара на складе",
+    "31": "Слишком много кодов Telegram. Попробуйте позже",
+    "32": "Telegram-бот недоступен. Запросите код через SMS"
   },
   "favorites": {
     "title": "Избранное",
@@ -298,5 +307,14 @@
   "g": "г",
   "pkg": "уп",
   "set": "наб",
-  "Password updated successfully": "Пароль успешно обновлен"
+  "Password updated successfully": "Пароль успешно обновлен",
+  "Order recipient": "Получатель заказа",
+  "Enter your name": "Введите ваше имя",
+  "Delivery method": "Способ доставки",
+  "By courier": "Доставка курьером",
+  "Name is required": "Введите ваше имя",
+  "Failed to save your name": "Не удалось сохранить имя",
+  "From the store warehouse": "Со склада магазина",
+  "Delivery": "Доставка",
+  "Pickup point": "Пункт самовывоза"
 }

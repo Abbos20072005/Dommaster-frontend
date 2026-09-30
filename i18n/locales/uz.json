@@ -106,6 +106,13 @@
   "Login or create an account to view your orders, track your purchase history, manage addresses, and more": "Buyurtmalaringizni ko'rish, xaridlar tarixingizni kuzatish, manzillarni boshqarish va boshqalar uchun hisobingizga kiring yoki akkaunt yarating",
   "Login or register": "Hisobingizga kiring yoki ro'yxatdan o'ting",
   "Login to continue": "Davom etish uchun hisobingizga kiring",
+  "User": "Foydalanuvchi",
+  "Get code via Telegram": "Kodni Telegram orqali olish",
+  "Code sent to Telegram": "Kod Telegramga yuborildi",
+  "Open the bot in Telegram, press Start and share your contact": "Telegramda botni oching, Start tugmasini bosing va kontaktingizni ulashing, shunda kod olasiz",
+  "Open Telegram": "Telegramni ochish",
+  "Continue": "Davom etish",
+  "Enter your phone number to receive an SMS code": "SMS kod olish uchun telefon raqamingizni kiriting",
   "Login to manage your account": "Akkauntingizni boshqarish uchun hisobingizga kiring",
   "Logout": "Chiqish",
   "Materials for construction in Buildex": "Buildexda qurilish materiallari",
@@ -257,7 +264,9 @@
     "18": "Joriy parol noto'g'ri",
     "19": "Promo kod muddati tugagan",
     "20": "OTP topilmadi. Yangi kod so'rang",
-    "21": "Omborida mahsulot yetarli emas"
+    "21": "Omborida mahsulot yetarli emas",
+    "31": "Telegram kodlari juda ko'p so'ralgan. Keyinroq urinib ko'ring",
+    "32": "Telegram bot mavjud emas. Kodni SMS orqali so'rang"
   },
   "favorites": {
     "title": "Sevimlilar",
@@ -298,5 +307,14 @@
   "g": "g",
   "pkg": "qad",
   "set": "to‘p",
-  "Password updated successfully": "Parol muvaffaqiyatli o'zgartirildi"
+  "Password updated successfully": "Parol muvaffaqiyatli o'zgartirildi",
+  "Order recipient": "Buyurtma oluvchisi",
+  "Enter your name": "Ismingizni yozing",
+  "Delivery method": "Yetkazib berish usuli",
+  "By courier": "Kuryer orqali",
+  "Name is required": "Ismingizni kiriting",
+  "Failed to save your name": "Ismni saqlab bo'lmadi",
+  "From the store warehouse": "Do'kon omboridan",
+  "Delivery": "Yetkazib berish",
+  "Pickup point": "Olib ketish punkti"
 }

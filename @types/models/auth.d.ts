@@ -60,3 +60,36 @@ interface ResetPasswordRequest {
   new_password: string;
   reset_token: string;
 }
+interface SendOtpRequest {
+  phone_number: string;
+}
+
+type SendOtpResponse = ApiResponse<{
+  is_new: boolean;
+  otp_key: string;
+  telegram_linked: boolean;
+}>;
+type UserRole = 'prorab' | 'user';
+
+interface SendOtpRequest {
+  phone_number: string;
+  role?: UserRole;
+}
+
+type SendOtpResponse = ApiResponse<{
+  is_new: boolean;
+  otp_key: string;
+  telegram_linked: boolean;
+}>;
+
+interface TelegramOtpRequest {
+  otp_key: string;
+}
+
+type TelegramOtpResponse = ApiResponse<{
+  deep_link: string | null;
+  expires_in: number | null;
+  link_token: string | null;
+  linked: boolean;
+  otp_key: string;
+}>;

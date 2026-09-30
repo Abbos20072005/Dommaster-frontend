@@ -1,12 +1,14 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
+import { useTranslations } from 'next-intl';
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
 import { useTimer } from '@/hooks';
 import { useRouter } from '@/i18n/navigation';
-import { postResendCode, postVerify } from '@/utils/api/requests';
+import { postResendCode, postTelegramOtp, postVerify } from '@/utils/api/requests';
 import { COOKIES } from '@/utils/constants';
 
 import type { VerifyFormSchema } from '../constants';
@@ -20,6 +22,7 @@ interface Props {
 }
 
 export const useVerifyForm = ({ otpKey, setOtpKey, onSuccess }: Props) => {
+  const t = useTranslations();
   const form = useForm<VerifyFormSchema>({
     resolver: zodResolver(verifyFormSchema),
     defaultValues: {
@@ -27,6 +30,7 @@ export const useVerifyForm = ({ otpKey, setOtpKey, onSuccess }: Props) => {
     }
   });
   const [showResetButton, setShowResetButton] = React.useState(false);
+  const [telegramLink, setTelegramLink] = React.useState<null | string>(null);
   const {
     start,
     reset,
@@ -34,7 +38,7 @@ export const useVerifyForm = ({ otpKey, setOtpKey, onSuccess }: Props) => {
     secondsLeft: secondsLeftToNewReset
   } = useTimer({
     autoStart: true,
-    initialTime: 60,
+    initialTime: 5,
     onTimerEnd: () => setShowResetButton(true)
   });
 
@@ -52,13 +56,37 @@ export const useVerifyForm = ({ otpKey, setOtpKey, onSuccess }: Props) => {
     }
   });
 
+  const restartTimer = () => {
+    reset();
+    start();
+    setShowResetButton(false);
+  };
+
   const postResendCodeMutation = useMutation({
     mutationFn: postResendCode,
     onSuccess: ({ data }) => {
       setOtpKey(data.result.otp_key);
-      reset();
-      start();
-      setShowResetButton(false);
+      restartTimer();
+    }
+  });
+
+  const postTelegramOtpMutation = useMutation({
+    mutationFn: postTelegramOtp,
+    onSuccess: ({ data }) => {
+      const { otp_key, linked, deep_link } = data.result;
+      setOtpKey(otp_key);
+      restartTimer();
+
+      if (linked) {
+        setTelegramLink(null);
+        toast.success(t('Code sent to Telegram'));
+        return;
+      }
+
+      if (deep_link) {
+        setTelegramLink(deep_link);
+        window.open(deep_link, '_blank', 'noopener,noreferrer');
+      }
     }
   });
 
@@ -75,18 +103,25 @@ export const useVerifyForm = ({ otpKey, setOtpKey, onSuccess }: Props) => {
     postResendCodeMutation.mutate({ data: { otp_key: otpKey } });
   };
 
+  const onTelegramCode = () => {
+    postTelegramOtpMutation.mutate({ data: { otp_key: otpKey } });
+  };
+
   return {
     form,
     state: {
       isPending: postVerifyMutation.isPending,
       isResendPending: postResendCodeMutation.isPending,
+      isTelegramPending: postTelegramOtpMutation.isPending,
       minutesLeftToNewReset,
       secondsLeftToNewReset,
-      showResetButton
+      showResetButton,
+      telegramLink
     },
     functions: {
       onSubmit,
-      onResendCode
+      onResendCode,
+      onTelegramCode
     }
   };
 };

@@ -34,7 +34,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
           )}
         </p>
         <div className='flex gap-2 pt-4'>
-          <AuthDialog asChild defaultStep='register'>
+          <AuthDialog asChild>
             <Button>{t('Register')}</Button>
           </AuthDialog>
           <AuthDialog asChild>
