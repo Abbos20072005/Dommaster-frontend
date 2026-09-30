@@ -13,12 +13,11 @@ import {
 } from '@/components/ui/breadcrumb';
 
 import {
-  BranchCard,
   CartProductsCard,
-  DeliveryCard,
   DeliveryTypeSelector,
   PaymentMethodSelector,
-  PriceCalculationCard
+  PriceCalculationCard,
+  RecipientBlock
 } from './_components';
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -56,9 +55,15 @@ const CartPage = async () => {
         </h1>
         <div className='mx-auto flex flex-col gap-4 lg:flex-row'>
           <div className='flex-1 space-y-4'>
+            {/* 1. Получатель — eng boshida, alohida karta */}
+            <RecipientBlock />
+            {/* 2. Способ доставки + адрес (yoki punkt самовывоза) + narx — bitta kartada */}
+            <DeliveryTypeSelector />
+            {/* ESKI KOD:
             <DeliveryTypeSelector />
             <DeliveryCard />
             <BranchCard />
+            */}
             <CartProductsCard />
             <PaymentMethodSelector />
           </div>

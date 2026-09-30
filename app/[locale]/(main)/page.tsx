@@ -6,7 +6,7 @@ import {
   AddsBrandsSection,
   BannerCarousel,
   BannerCarouselLoading,
-  BenefitsCards,
+  // BenefitsCards, // vaqtincha o'chirilgan
   BrandsSection,
   BrandsSectionLoading,
   DiscountProductsSection,
@@ -26,7 +26,9 @@ const Home = () => {
           <Suspense fallback={<PopularCategoriesSectionSkeleton />}>
             <PopularCategoriesSection />
           </Suspense>
+          {/* Vaqtincha o'chirilgan (afzalliklar kartalari):
           <BenefitsCards />
+          */}
           <Suspense fallback={<BannerCarouselLoading />}>
             <BannerCarousel />
           </Suspense>

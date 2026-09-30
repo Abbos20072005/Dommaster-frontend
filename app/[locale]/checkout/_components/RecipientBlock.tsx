@@ -4,7 +4,7 @@ import { UserIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { Card, CardTitle } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Skeleton } from '@/components/ui/skeleton';
@@ -12,7 +12,7 @@ import { cn, formatPhoneNumber } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCheckoutStore } from '@/utils/stores';
 
-// "Получатель" bloki: ism va telefon raqami forma maydonlarida.
+// "Получатель" — checkout'ning eng boshidagi alohida karta: ism va telefon raqami forma maydonlarida.
 // Ism profilda bo'lmasa — kiritiladi (buyurtmada profilga saqlanadi), bo'lsa — faqat ko'rsatiladi.
 // Telefon raqami doim to'ldirilgan va o'zgartirib bo'lmaydi.
 export const RecipientBlock = () => {
@@ -24,12 +24,14 @@ export const RecipientBlock = () => {
   const phone = user?.phone_number ? formatPhoneNumber(user.phone_number) : '';
 
   return (
-    <Card className='flex items-start gap-3 p-4' variant='plain'>
-      <div className='bg-muted rounded-md p-2'>
-        <UserIcon className='text-primary' />
-      </div>
-      <div className='min-w-0 flex-1 space-y-3'>
-        <CardTitle className='font-semibold'>{t('Recipient')}</CardTitle>
+    <Card variant='subtle'>
+      <CardHeader className='pb-3'>
+        <div className='flex items-center gap-2'>
+          <UserIcon className='text-primary size-5' />
+          <CardTitle className='md:text-xl'>{t('Recipient')}</CardTitle>
+        </div>
+      </CardHeader>
+      <CardContent>
         {user ? (
           <div className='grid gap-3 sm:grid-cols-2'>
             <div className='space-y-1.5'>
@@ -70,12 +72,12 @@ export const RecipientBlock = () => {
         ) : (
           isPending && (
             <div className='grid gap-3 sm:grid-cols-2'>
-              <Skeleton className='h-14 w-full' />
-              <Skeleton className='h-14 w-full' />
+              <Skeleton className='h-16 w-full' />
+              <Skeleton className='h-16 w-full' />
             </div>
           )
         )}
-      </div>
+      </CardContent>
     </Card>
   );
 };

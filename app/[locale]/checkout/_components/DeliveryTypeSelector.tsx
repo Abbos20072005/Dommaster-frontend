@@ -15,6 +15,9 @@ import { getCustomerAddresses, postDeliveryCheckPrice } from '@/utils/api/reques
 import { DELIVERY_TYPE, STORE_LOCATION } from '@/utils/constants';
 import { useCheckoutStore } from '@/utils/stores';
 
+import { BranchAddress } from './BranchCard';
+import { DeliveryAddress } from './DeliveryCard';
+
 const PRICE_REFRESH_INTERVAL = 30 * 1000;
 
 const deliveryOptions = [
@@ -38,6 +41,7 @@ const getErrorMessage = (error: unknown) => {
   }
 };
 
+// Yetkazib berish usuli + manzil (yoki olib ketish punkti) + narx — bitta ixcham kartada
 export const DeliveryTypeSelector = () => {
   const t = useTranslations();
   const { availableCartItems } = useCart();
@@ -85,74 +89,66 @@ export const DeliveryTypeSelector = () => {
 
   return (
     <Card variant='subtle'>
-      <CardHeader>
+      <CardHeader className='pb-3'>
         <CardTitle className='md:text-xl'>{t('Delivery method')}</CardTitle>
       </CardHeader>
-      <CardContent className='space-y-3'>
-        <div className='grid grid-cols-1 gap-3 sm:grid-cols-2'>
-          {deliveryOptions.map(({ value, icon: Icon, titleKey, descKey }) => (
-            <button
-              key={value}
-              className={cn(
-                'flex cursor-pointer flex-col items-center justify-center gap-2 rounded-xl border-2 p-6 text-center transition-colors',
-                deliveryType === value
-                  ? 'border-primary/50 bg-primary/5'
-                  : 'bg-background hover:border-primary/20 border-transparent'
-              )}
-              type='button'
-              onClick={() => setDeliveryType(value)}
-            >
-              <Icon
+      <CardContent className='space-y-2'>
+        {/* Ixcham almashtirgich: Yetkazib berish | Olib ketish */}
+        <div className='bg-background grid grid-cols-2 gap-1 rounded-xl p-1' role='radiogroup'>
+          {deliveryOptions.map(({ value, icon: Icon, titleKey, descKey }) => {
+            const isSelected = deliveryType === value;
+            return (
+              <button
+                key={value}
                 className={cn(
-                  'size-8',
-                  deliveryType === value ? 'text-primary' : 'text-muted-foreground'
+                  'flex cursor-pointer items-center justify-center gap-2 rounded-lg px-3 py-2 text-left transition-colors',
+                  isSelected
+                    ? 'bg-primary text-primary-foreground shadow-sm'
+                    : 'text-foreground hover:bg-muted'
                 )}
-              />
-              <div className='space-y-1'>
-                <div className='text-sm font-medium'>{t(titleKey)}</div>
-                <div className='text-muted-foreground text-xs'>{t(descKey)}</div>
-              </div>
-            </button>
-          ))}
+                aria-checked={isSelected}
+                title={t(descKey)}
+                type='button'
+                onClick={() => setDeliveryType(value)}
+                role='radio'
+              >
+                <Icon className='size-5 shrink-0' />
+                <span className='text-sm font-medium'>{t(titleKey)}</span>
+              </button>
+            );
+          })}
         </div>
 
-        {isDelivery && (
-          <div className='bg-background flex min-h-64px items-center rounded-xl px-4 py-3'>
-            {!defaultAddress ? (
-              getAddressesQuery.isFetching ? (
-                <div className='w-full space-y-2'>
-                  <Skeleton className='h-4 w-40' />
-                  <Skeleton className='h-4 w-56' />
-                </div>
-              ) : (
-                <p className='text-muted-foreground text-sm'>
-                  {t('Select delivery address to calculate the price')}
-                </p>
-              )
-            ) : checkPriceResult ? (
-              <div className='w-full space-y-1'>
-                <div className='flex items-center justify-between gap-2'>
+        {/* Manzil yoki olib ketish punkti */}
+        {isDelivery ? <DeliveryAddress /> : <BranchAddress />}
+
+        {/* Yetkazib berish narxi (manzil tanlangandan keyin) */}
+        {isDelivery && defaultAddress && (
+          <div className='bg-background flex items-center rounded-xl px-3 py-2.5'>
+            {checkPriceResult ? (
+              <div className='flex w-full items-center justify-between gap-2'>
+                <div className='min-w-0'>
                   <p className='text-sm'>{t('Delivery price')}</p>
-                  <div className='flex items-center gap-2'>
-                    <Button
-                      className='text-muted-foreground size-8'
-                      disabled={checkPriceQuery.isFetching}
-                      size='iconSm'
-                      variant='ghost'
-                      onClick={() => checkPriceQuery.refetch()}
-                    >
-                      <RotateCwIcon
-                        className={cn('size-4', checkPriceQuery.isFetching && 'animate-spin')}
-                      />
-                    </Button>
-                    <p className='text-lg font-bold'>
-                      {formatPrice(normalizedPrice ?? 0)} {checkPriceResult.currency_rules.sign}
-                    </p>
-                  </div>
+                  <p className='text-muted-foreground text-xs'>
+                    {t('Order will be delivered within 2 hours')}
+                  </p>
                 </div>
-                <p className='text-muted-foreground text-xs'>
-                  {t('Order will be delivered within 2 hours')}
-                </p>
+                <div className='flex shrink-0 items-center gap-1'>
+                  <Button
+                    className='text-muted-foreground size-8'
+                    disabled={checkPriceQuery.isFetching}
+                    size='iconSm'
+                    variant='ghost'
+                    onClick={() => checkPriceQuery.refetch()}
+                  >
+                    <RotateCwIcon
+                      className={cn('size-4', checkPriceQuery.isFetching && 'animate-spin')}
+                    />
+                  </Button>
+                  <p className='font-bold md:text-lg'>
+                    {formatPrice(normalizedPrice ?? 0)} {checkPriceResult.currency_rules.sign}
+                  </p>
+                </div>
               </div>
             ) : checkPriceQuery.isError ? (
               <div>
@@ -162,9 +158,9 @@ export const DeliveryTypeSelector = () => {
                 </p>
               </div>
             ) : (
-              <div className='w-full space-y-2'>
+              <div className='w-full space-y-1.5'>
                 <Skeleton className='h-4 w-32' />
-                <Skeleton className='h-4 w-48' />
+                <Skeleton className='h-3.5 w-48' />
               </div>
             )}
           </div>
