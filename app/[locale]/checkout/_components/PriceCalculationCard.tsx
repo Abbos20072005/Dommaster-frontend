@@ -34,7 +34,6 @@ export const PriceCalculationCard = () => {
   const t = useTranslations();
   const { user } = useAuth();
   const { cart, availableCartItems, isSuccess, refetch, isFetching } = useCart();
-  // ESKI KOD: const { paymentOption, cashMethod, deliveryType, deliveryPrice, branchId } = useCheckoutStore();
   const {
     paymentMethod,
     recipientName,
@@ -92,10 +91,6 @@ export const PriceCalculationCard = () => {
     meta: {
       invalidatesQuery: ['orders']
     }
-    // ESKI KOD:
-    // onSuccess: (_, variables) => {
-    //   router.replace(`/user/orders/active/${variables.data.order_id}`);
-    // }
   });
 
   const postOrderMutation = useMutation({
@@ -114,12 +109,6 @@ export const PriceCalculationCard = () => {
         return;
       }
       goToOrder(data.order_id);
-      // ESKI KOD:
-      // if (paymentOption === 'online') {
-      //   paymentHoldMutation.mutate({ data: { order_id: data.order_id } });
-      // } else {
-      //   router.replace(`/user/orders/active/${data.order_id}`);
-      // }
     },
     meta: {
       invalidatesQuery: ['orders']
@@ -163,12 +152,8 @@ export const PriceCalculationCard = () => {
       is_web: true,
       payment_method: selectedPaymentMethod.paymentMethod,
       payment_type: selectedPaymentMethod.paymentType,
-      // ESKI KOD:
-      // payment_method: paymentOption === 'cod' ? cashMethod : undefined,
-      // payment_type: paymentOption === 'online' ? 1 : 4,
       promocode: promo?.code,
       receiver_name: receiverName,
-      // ESKI KOD: receiver_name: user.full_name,
       receiver_phone: user.phone_number
     };
 

@@ -24,8 +24,6 @@ const DeliveryZoneMap = dynamic(
 
 const CourierDeliveryPage = () => {
   const t = useTranslations();
-  // ESKI KOD (ishlatilmagan edi): const mapRef = React.useRef<ymaps.Map>(undefined);
-
   return (
     <div>
       <MobileHeader />
@@ -44,7 +42,6 @@ const CourierDeliveryPage = () => {
         <h1 className='text-xl font-bold md:text-3xl lg:text-4xl'>{t('Delivery in Tashkent')}</h1>
         <div className='h-500px'>
           <DeliveryZoneMap />
-          {/* ESKI KOD: xarita shu yerda bevosita chizilardi — endi ./_components/DeliveryZoneMap.tsx'da */}
         </div>
         <p className='text-lg font-bold md:text-2xl'>{t('Delivery price')}: 100 000 UZS</p>
       </BaseLayout>

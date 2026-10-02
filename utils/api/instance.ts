@@ -38,9 +38,6 @@ const getCurrentLocale = async (config: InternalAxiosRequestConfig<any>) => {
     config.headers['Accept-Language'] = routing.defaultLocale;
   }
   return config;
-  // ESKI KOD:
-  // config.headers['Accept-Language'] = 'ru';
-  // return config;
 };
 
 const attachAuthToken = async (config: InternalAxiosRequestConfig<any>) => {
@@ -51,7 +48,6 @@ const attachAuthToken = async (config: InternalAxiosRequestConfig<any>) => {
       : isServerComponent()
         ? await getServerToken()
         : null;
-  // ESKI KOD: const token = typeof window === 'undefined' ? await getServerToken() : getClientToken();
 
   if (token) config.headers.Authorization = `Bearer ${token}`;
   return config;

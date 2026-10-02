@@ -120,7 +120,6 @@ const FormMessage = ({ className, ...props }: React.ComponentProps<'p'>) => {
   // Zod xabarlari tarjima kaliti; backend qaytargan xabar esa tayyor matn — kalit bo'lmasa o'zini ko'rsatamiz
   const message = String(error?.message ?? '');
   const body = error ? (message && t.has(message) ? t(message) : message) : props.children;
-  // ESKI KOD: const body = error ? t(String(error?.message)) : props.children;
 
   if (!body) {
     return null;

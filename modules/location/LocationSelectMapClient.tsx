@@ -94,7 +94,6 @@ export const LocationSelectMap = ({ value, onValueChange }: Props) => {
           <YMapDefaultFeaturesLayer />
 
           <YMapFeature
-            // ESKI KOD (sariq): fill: 'var(--secondary)', stroke: [{ color: 'var(--secondary)', width: 2 }]
             style={{
               fill: 'var(--primary)',
               stroke: [{ color: 'var(--primary)', width: 2 }],

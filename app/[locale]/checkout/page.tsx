@@ -59,11 +59,6 @@ const CartPage = async () => {
             <RecipientBlock />
             {/* 2. Способ доставки + адрес (yoki punkt самовывоза) + narx — bitta kartada */}
             <DeliveryTypeSelector />
-            {/* ESKI KOD:
-            <DeliveryTypeSelector />
-            <DeliveryCard />
-            <BranchCard />
-            */}
             <CartProductsCard />
             <PaymentMethodSelector />
           </div>

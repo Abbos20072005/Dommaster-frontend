@@ -55,6 +55,5 @@ export function handleFormServerErrors<T extends FieldValues>(
         ? "Kutilmagan xatolik yuz berdi. Sahifani yangilab, qayta urinib ko'ring"
         : 'Произошла непредвиденная ошибка. Обновите страницу и попробуйте снова'
     );
-    // ESKI KOD: toast.error('Occurred unexpected error, refresh the page and try again!');
   }
 }

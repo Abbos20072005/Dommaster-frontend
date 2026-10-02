@@ -45,18 +45,6 @@ export const LocaleSwitcher = ({ className }: Props) => {
     queryClient.invalidateQueries();
   };
 
-  /* ESKI KOD:
-  const onLocaleChange = (locale: Locale) => {
-    startTransition(() => {
-      Cookies.set('NEXT_LOCALE', locale, { expires: 365 });
-    });
-    setTimeout(() => {
-      queryClient.invalidateQueries();
-      router.replace({ pathname, params }, { locale });
-    }, 100);
-  };
-  */
-
   return (
     <DropdownMenu>
       <DropdownMenuTrigger

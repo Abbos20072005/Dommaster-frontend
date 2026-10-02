@@ -5,10 +5,6 @@ import type { CheckoutPaymentMethod } from '@/utils/constants/checkoutPaymentMet
 import { DELIVERY_TYPE } from '@/utils/constants';
 import { DEFAULT_CHECKOUT_PAYMENT_METHOD } from '@/utils/constants/checkoutPaymentMethods';
 
-// --- ESKI KOD (online / cod + cash/card) ---
-// type PaymentOption = 'online' | 'cod';
-// type CashMethod = 'cash' | 'card';
-
 interface CheckoutStore {
   branchId: number | null;
   deliveryPrice: string | null;
@@ -18,11 +14,6 @@ interface CheckoutStore {
   // Profilda ism bo'lmasa — checkout'da kiritiladigan qabul qiluvchi ismi
   recipientName: string;
   recipientNameError: boolean;
-  // --- ESKI KOD ---
-  // paymentOption: PaymentOption;
-  // cashMethod: CashMethod;
-  // setPaymentOption: (option: PaymentOption) => void;
-  // setCashMethod: (method: CashMethod) => void;
   reset: () => void;
   setBranchId: (branchId: number | null) => void;
   setDeliveryPrice: (deliveryPrice: string | null) => void;
@@ -39,9 +30,6 @@ const initialState = {
   paymentMethod: DEFAULT_CHECKOUT_PAYMENT_METHOD,
   recipientName: '',
   recipientNameError: false
-  // --- ESKI KOD ---
-  // paymentOption: 'online',
-  // cashMethod: 'cash',
 };
 
 export const useCheckoutStore = create<CheckoutStore>()((set) => ({
@@ -52,8 +40,5 @@ export const useCheckoutStore = create<CheckoutStore>()((set) => ({
   setPaymentMethod: (paymentMethod) => set({ paymentMethod }),
   setRecipientName: (recipientName) => set({ recipientName, recipientNameError: false }),
   setRecipientNameError: (recipientNameError) => set({ recipientNameError }),
-  // --- ESKI KOD ---
-  // setPaymentOption: (paymentOption) => set({ paymentOption }),
-  // setCashMethod: (cashMethod) => set({ cashMethod }),
   reset: () => set(initialState)
 }));
