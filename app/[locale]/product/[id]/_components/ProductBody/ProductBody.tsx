@@ -6,7 +6,7 @@ import { useParams } from 'next/navigation';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
-import { ProductCart } from '@/app/[locale]/product/[id]/_components';
+import { ProductCart } from '@/app/[locale]/product/[id]/_components/ProductCart';
 import {
   Accordion,
   AccordionContent,

@@ -8,7 +8,7 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
-import { ProductCard } from '@/modules/product';
+import { ProductCard } from '../ProductCard/ProductCard';
 
 type Props = React.ComponentProps<'div'> & {
   view?: 'carousel' | 'grid';

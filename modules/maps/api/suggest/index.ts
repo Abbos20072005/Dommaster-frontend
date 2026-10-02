@@ -2,7 +2,7 @@ import type { SuggestResponse } from '@yandex/ymaps3-types';
 
 import axios from 'axios';
 
-import { SUGGEST_API_KEY } from '@/modules/location';
+import { SUGGEST_API_KEY } from '@/modules/location/constants';
 
 interface GetSuggestRequest {
   params: {

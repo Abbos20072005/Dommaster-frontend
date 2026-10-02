@@ -6,14 +6,11 @@ import type { FilterDefaultValues } from '@/modules/filter/useFilter';
 
 import { useMounted } from '@/hooks';
 import { cn } from '@/lib/utils';
-import {
-  FilterCategories,
-  FilterCheckbox,
-  FilterRadio,
-  FilterSkeleton,
-  FilterSlider
-} from '@/modules/filter';
-
+import { FilterCategories } from '../FilterCategories';
+import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
+import { FilterRadio } from '../FilterRadio/FilterRadio';
+import { FilterSkeleton } from '../FilterSkeleton';
+import { FilterSlider } from '../FilterSlider/FilterSlider';
 import { FilterClearButton } from './components/FilterClearButton';
 
 interface Props extends React.ComponentProps<'div'> {

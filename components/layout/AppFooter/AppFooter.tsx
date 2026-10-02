@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { BaseLayout } from '@/components/layout';
+import { BaseLayout } from '@/components/layout/BaseLayout';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
 

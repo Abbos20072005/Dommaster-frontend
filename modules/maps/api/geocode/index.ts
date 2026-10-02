@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { GEOCODE_API_KEY } from '@/modules/location';
+import { GEOCODE_API_KEY } from '@/modules/location/constants';
 // Geocode response type (simplified from Yandex Geocoder API v1)
 interface GeocodeResponse {
   response: {

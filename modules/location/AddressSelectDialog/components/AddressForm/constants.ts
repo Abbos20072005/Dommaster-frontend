@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { isPointInPolygon } from '@/modules/location';
+import { isPointInPolygon } from '@/modules/location/helpers';
 import { MAP } from '@/utils/constants';
 
 export const addressSchema = z.object({

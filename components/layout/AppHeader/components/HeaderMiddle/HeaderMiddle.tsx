@@ -4,7 +4,7 @@ import { HandPlatterIcon, HeartIcon, ShoppingCartIcon, UserCircleIcon } from 'lu
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-import { BaseLayout } from '@/components/layout';
+import { BaseLayout } from '@/components/layout/BaseLayout';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { AuthDialog, useAuth } from '@/modules/auth';

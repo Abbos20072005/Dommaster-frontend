@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import type { FilterDefaultValues } from '@/modules/filter/useFilter';
 
 import { Button } from '@/components/ui/button';
-import { useFilter } from '@/modules/filter';
+import { useFilter } from '@/modules/filter/useFilter';
 
 interface Props {
   defaultValues?: FilterDefaultValues;

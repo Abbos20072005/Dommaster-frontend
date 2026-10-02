@@ -7,7 +7,7 @@ import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
-import { BaseLayout } from '@/components/layout';
+import { BaseLayout } from '@/components/layout/BaseLayout';
 import { Button } from '@/components/ui/button';
 import {
   Carousel,
