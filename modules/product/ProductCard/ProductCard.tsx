@@ -26,36 +26,21 @@ export const ProductCard = ({ product, className, hideCart, hideControl, ...prop
       )}
       {...props}
     >
-      <div className='relative'>
+      <div className='relative p-2 pb-0 md:p-3 md:pb-0'>
         <Link href={`/product/${product.id}`} aria-label={name}>
           <ProductImages product={{ ...product, name }} />
           <span className='sr-only'>{name}</span>
         </Link>
         {!hideControl && (
-          <div className='absolute top-2 right-2 z-3'>
+          <div className='absolute top-4 right-4 z-3 md:top-5 md:right-5'>
             <ProductControl product={product} />
           </div>
         )}
       </div>
       <div className='flex flex-1 flex-col gap-2 p-2 md:p-3'>
-        <div>
-          <div className='text-base font-bold md:text-lg'>
-            {formatPrice(product.discount_price ?? product.price)}
-          </div>
-          {product.discount_price && (
-            <div className='text-muted-foreground text-sm line-through'>
-              {formatPrice(product.price)}
-            </div>
-          )}
-        </div>
-        <div className='flex-1'>
-          <Link href={`/product/${product.id}`}>
-            <span className='line-clamp-2 text-sm leading-5'>{name}</span>
-          </Link>
-        </div>
         <Link
           href={{ pathname: `/product/${product.id}`, query: { tab: 'reviews' } }}
-          className='flex items-center gap-1 text-sm'
+          className='flex h-5 items-center gap-1 text-sm'
         >
           <StarIcon className='text-secondary fill-secondary size-4' />
           <span>{(product.rating ?? 0).toFixed(1)}</span>
@@ -65,7 +50,24 @@ export const ProductCard = ({ product, className, hideCart, hideControl, ...prop
             </span>
           )}
         </Link>
-        {!hideCart && <ProductCart product={product} />}
+        <Link className='block h-10' href={`/product/${product.id}`}>
+          <span className='line-clamp-2 text-sm leading-5'>{name}</span>
+        </Link>
+        <div className='mt-auto h-12'>
+          <div className='text-base leading-6 font-bold md:text-lg'>
+            {formatPrice(product.discount_price ?? product.price)} {t('sum')}
+          </div>
+          {product.discount_price && (
+            <div className='text-muted-foreground text-sm leading-5 line-through'>
+              {formatPrice(product.price)} {t('sum')}
+            </div>
+          )}
+        </div>
+        {!hideCart && (
+          <div className='h-10'>
+            <ProductCart product={product} />
+          </div>
+        )}
       </div>
     </div>
   );

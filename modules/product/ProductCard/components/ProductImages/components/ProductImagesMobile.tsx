@@ -26,21 +26,20 @@ export const ProductImagesMobile = ({ product }: Props) => {
   }, [api]);
 
   return (
-    <div className='relative md:hidden'>
+    <div className='relative overflow-hidden rounded-lg bg-white md:hidden'>
       <Carousel setApi={setApi}>
-        <CarouselContent>
+        <CarouselContent className='ml-0'>
           {product.images.map((image, i) => (
-            <CarouselItem key={image.id}>
-              <div className='relative aspect-square bg-white'>
-                <Image
-                  fill
-                  alt={product.name || 'Buildex'}
-                  className='object-contain'
-                  src={image.image}
-                  loading={i === 0 ? 'eager' : 'lazy'}
-                  priority={i === 0}
-                />
-              </div>
+            <CarouselItem key={image.id} className='relative aspect-[4/5] pl-0'>
+              <Image
+                fill
+                alt={product.name || 'Buildex'}
+                className='object-contain'
+                loading={i === 0 ? 'eager' : 'lazy'}
+                priority={i === 0}
+                sizes='50vw'
+                src={image.image}
+              />
             </CarouselItem>
           ))}
         </CarouselContent>

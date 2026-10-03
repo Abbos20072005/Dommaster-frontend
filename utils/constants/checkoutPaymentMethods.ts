@@ -19,16 +19,17 @@ interface CheckoutPaymentMethodConfig {
 // Atmos: `payment_method` branch'idagi kabi 1 yuboriladi, keyin `payment/hold/create/` chaqiriladi.
 // TODO: Atmos uchun alohida payment_type bo'lsa — backenddan tasdiqlab, shu yerda o'zgartiring.
 export const CHECKOUT_PAYMENT_METHODS: CheckoutPaymentMethodConfig[] = [
-  { value: 'uzum', label: 'Uzum', image: '/payments/uzum.png', paymentType: 3 },
-  { value: 'click', label: 'Click', image: '/payments/click.png', paymentType: 1 },
-  { value: 'payme', label: 'Payme', image: '/payments/payme.png', paymentType: 2 },
-  {
-    value: 'cash',
-    labelKey: 'Cash',
-    image: '/payments/cash.png',
-    paymentType: 4,
-    paymentMethod: 'cash'
-  },
+  // Vaqtincha o'chirilgan (faqat Atmos ishlaydi):
+  // { value: 'uzum', label: 'Uzum', image: '/payments/uzum.png', paymentType: 3 },
+  // { value: 'click', label: 'Click', image: '/payments/click.png', paymentType: 1 },
+  // { value: 'payme', label: 'Payme', image: '/payments/payme.png', paymentType: 2 },
+  // {
+  //   value: 'cash',
+  //   labelKey: 'Cash',
+  //   image: '/payments/cash.png',
+  //   paymentType: 4,
+  //   paymentMethod: 'cash'
+  // },
   {
     value: 'atmos',
     labelKey: 'Pay online by card',
@@ -37,7 +38,7 @@ export const CHECKOUT_PAYMENT_METHODS: CheckoutPaymentMethodConfig[] = [
   }
 ];
 
-export const DEFAULT_CHECKOUT_PAYMENT_METHOD: CheckoutPaymentMethod = 'cash';
+export const DEFAULT_CHECKOUT_PAYMENT_METHOD: CheckoutPaymentMethod = 'atmos';
 
 export const getCheckoutPaymentMethod = (value: CheckoutPaymentMethod) =>
   CHECKOUT_PAYMENT_METHODS.find((method) => method.value === value)!;

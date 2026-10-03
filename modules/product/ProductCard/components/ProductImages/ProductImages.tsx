@@ -8,7 +8,7 @@ interface Props {
 
 export const ProductImages = ({ product }: Props) => {
   return (
-    <div>
+    <div className='relative'>
       <ProductImagesDesktop product={product} />
       <ProductImagesMobile product={product} />
     </div>

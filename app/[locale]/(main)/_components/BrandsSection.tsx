@@ -31,11 +31,11 @@ export const BrandsSection = async () => {
               <Link
                 href={`/brand/${item.id}?brand=${item.id}`}
                 key={item.id}
-                className='block h-16 rounded-md'
+                className='flex h-16 w-28 shrink-0 items-center justify-center rounded-md'
               >
                 <Image
                   alt={item.name || 'Buildex'}
-                  className='size-full min-w-26 object-contain p-1'
+                  className='h-12 w-24 object-contain'
                   height={36}
                   src={item.image}
                   width={88}
@@ -53,11 +53,11 @@ export const BrandsSection = async () => {
                 <Link
                   href={`/brand/${item.id}?brand=${item.id}`}
                   key={item.id}
-                  className='block h-22 rounded-md'
+                  className='flex h-22 items-center justify-center rounded-md'
                 >
                   <Image
                     alt={item.name || 'Buildex'}
-                    className='size-full object-contain py-2'
+                    className='h-16 w-36 object-contain'
                     height={36}
                     src={item.image}
                     width={88}
