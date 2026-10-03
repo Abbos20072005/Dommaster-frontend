@@ -16,8 +16,7 @@ export const useLoginForm = ({ onSuccess }: Props) => {
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      phone_number: '+998',
-      is_user: true
+      phone_number: '+998'
     }
   });
 
@@ -30,7 +29,7 @@ export const useLoginForm = ({ onSuccess }: Props) => {
     postSendOtpMutation.mutate({
       data: {
         phone_number: data.phone_number.replace('+', ''),
-        role: data.is_user ? 'user' : 'prorab'
+        role: 'user'
       }
     });
   };

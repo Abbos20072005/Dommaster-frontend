@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckIcon } from 'lucide-react';
+import { CheckIcon, ShoppingCartIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
@@ -18,11 +18,11 @@ export const ProductCart = ({ product }: Props) => {
   if (state.cartCount === 0)
     return (
       <Button
-        className='w-full'
+        className='w-full rounded-xl'
         disabled={product.quantity === 0}
-        size='sm'
         onClick={functions.onAddToCart}
       >
+        <ShoppingCartIcon />
         {product.quantity === 0 ? t('Out of stock') : t('To cart')}
       </Button>
     );

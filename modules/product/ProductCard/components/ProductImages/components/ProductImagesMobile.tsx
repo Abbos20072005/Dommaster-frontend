@@ -26,12 +26,12 @@ export const ProductImagesMobile = ({ product }: Props) => {
   }, [api]);
 
   return (
-    <div className='md:hidden'>
+    <div className='relative md:hidden'>
       <Carousel setApi={setApi}>
         <CarouselContent>
           {product.images.map((image, i) => (
             <CarouselItem key={image.id}>
-              <div className='relative aspect-[4/3]'>
+              <div className='relative aspect-square bg-white'>
                 <Image
                   fill
                   alt={product.name || 'Buildex'}
@@ -46,7 +46,7 @@ export const ProductImagesMobile = ({ product }: Props) => {
         </CarouselContent>
       </Carousel>
       {product.images.length > 1 && (
-        <div className='mr-1 flex h-1 justify-center gap-1'>
+        <div className='absolute inset-x-0 bottom-2 flex justify-center gap-1'>
           {product.images.map((image, i) => (
             <span
               key={image.id}

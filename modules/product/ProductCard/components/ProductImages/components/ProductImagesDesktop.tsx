@@ -13,8 +13,8 @@ export const ProductImagesDesktop = ({ product }: Props) => {
   const [tab, setTab] = React.useState(0);
 
   return (
-    <div className='hidden md:block'>
-      <div className='relative aspect-[4/3]'>
+    <div className='relative hidden md:block'>
+      <div className='relative aspect-square bg-white'>
         {product.images.length > 0 &&
           product.images.map((image, i) => (
             <Image
@@ -38,7 +38,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
       </div>
 
       {product.images.length > 1 && (
-        <div className='mr-1 flex h-1 justify-center gap-1'>
+        <div className='absolute inset-x-0 bottom-2 z-2 flex justify-center gap-1'>
           {product.images.map((image, i) => (
             <span
               key={image.id}

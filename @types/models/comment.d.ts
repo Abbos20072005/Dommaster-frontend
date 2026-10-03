@@ -6,7 +6,7 @@ interface ProductCommentImage {
 interface ProductComment {
   comment: string;
   created_at: string;
-  customer: User;
+  customer: User | null;
   id: number;
   images: ProductCommentImage[];
   product_rating: number;
@@ -24,7 +24,7 @@ type ProductCommentResponse = ApiResponse<ProductComment>;
 
 interface ProductCommentReply {
   created_at: string;
-  customer: User;
+  customer: User | null;
   id: number;
   is_admin: boolean;
   reply_comment: string;

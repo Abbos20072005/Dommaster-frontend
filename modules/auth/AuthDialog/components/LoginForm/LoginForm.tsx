@@ -2,7 +2,6 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   Form,
@@ -43,21 +42,6 @@ export const LoginForm = ({ onSuccess }: Props) => {
               </FormItem>
             )}
             name='phone_number'
-            control={form.control}
-          />
-          <FormField
-            render={({ field }) => (
-              <FormItem className='flex flex-row items-center justify-start gap-2'>
-                <FormControl>
-                  <Checkbox
-                    checked={field.value}
-                    onCheckedChange={(checked) => field.onChange(checked === true)}
-                  />
-                </FormControl>
-                <FormLabel className='cursor-pointer'>{t('User')}</FormLabel>
-              </FormItem>
-            )}
-            name='is_user'
             control={form.control}
           />
           <Button isLoading={state.isPending}>{t('Continue')}</Button>

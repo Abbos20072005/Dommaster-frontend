@@ -110,13 +110,13 @@ export const ProductComments = ({ product }: Props) => {
           <article key={comment.id} className='space-y-3 pb-3 md:pb-5'>
             <div>
               <div className='mb-1 flex items-center gap-2'>
-                <span className='font-bold'>{comment.customer.full_name}</span>
+                <span className='font-bold'>{comment.customer?.full_name ?? t('User')}</span>
                 <Ratings
                   className='gap-1'
                   rating={comment.product_rating}
                   classNameIcon='text-secondary size-3.5'
                 />
-                {user?.id === comment.customer.id && (
+                {!!user && user.id === comment.customer?.id && (
                   <ProductCommentDialog asChild defaultValues={comment}>
                     <Button size='iconSm' variant='ghost'>
                       <EditIcon />

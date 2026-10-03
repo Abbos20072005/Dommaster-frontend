@@ -38,7 +38,7 @@ export const DiscountProductsSection = () => {
               </div>
               <Skeleton className='hidden h-11 w-25 md:block' />
             </div>
-            <ProductListSkeleton hideCart hideControl />
+            <ProductListSkeleton />
             <div className='pb-4'>
               <Skeleton className='h-8 w-full md:hidden' />
             </div>
@@ -80,7 +80,7 @@ export const DiscountProductsSection = () => {
               <Link href={`/sale/${sales.id}`}>{t('View all')}</Link>
             </Button>
           </div>
-          <ProductList hideCart className='py-2' hideControl products={sales.products} />
+          <ProductList className='py-2' products={sales.products} />
           <Button className='mb-4 w-full md:hidden' size='sm' variant='outline'>
             <Link href={`/sale/${sales.id}`}>{t('View all')}</Link>
           </Button>

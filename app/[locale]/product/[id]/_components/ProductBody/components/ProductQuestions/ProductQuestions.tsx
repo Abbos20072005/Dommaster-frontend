@@ -70,8 +70,8 @@ export const ProductQuestions = ({ product }: Props) => {
           <article key={question.id} className='space-y-3'>
             <div>
               <div className='mb-1 flex items-center gap-2'>
-                <span className='font-bold'>{question.customer.full_name}</span>
-                {user?.id === question.customer.id && (
+                <span className='font-bold'>{question.customer?.full_name ?? t('User')}</span>
+                {!!user && user.id === question.customer?.id && (
                   <ProductQuestionDialog asChild defaultValues={question}>
                     <Button size='iconSm' variant='ghost'>
                       <EditIcon />

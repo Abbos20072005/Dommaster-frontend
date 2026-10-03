@@ -6,8 +6,7 @@ export const loginFormSchema = z.object({
   phone_number: z
     .string()
     .min(1, 'Fill the required field')
-    .regex(PHONE_NUMBER_REGEX, 'Invalid phone number'),
-  is_user: z.boolean()
+    .regex(PHONE_NUMBER_REGEX, 'Invalid phone number')
 });
 
 export type LoginFormSchema = z.infer<typeof loginFormSchema>;

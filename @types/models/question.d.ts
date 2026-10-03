@@ -1,13 +1,13 @@
 interface ProductQuestion {
   created_at: string;
-  customer: User;
+  customer: User | null;
   id: number;
   question: string;
   reply_count: number;
   replies: {
     question: string;
     created_at: string;
-    customer: User;
+    customer: User | null;
     id: number;
   }[];
 }
@@ -22,7 +22,7 @@ type ProductQuestionResponse = ApiResponse<ProductQuestion>;
 interface ProductQuestionReply {
   answer: string;
   created_at: string;
-  customer: User;
+  customer: User | null;
   id: number;
   is_admin: boolean;
 }

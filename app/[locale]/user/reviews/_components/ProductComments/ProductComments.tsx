@@ -43,7 +43,7 @@ export const ProductComments = () => {
         <article key={comment.id} className='space-y-3'>
           <div>
             <div className='mb-1 flex items-center gap-2'>
-              <span className='font-bold'>{comment.customer.full_name}</span>
+              <span className='font-bold'>{comment.customer?.full_name ?? t('User')}</span>
               <Ratings
                 className='gap-1'
                 rating={comment.product_rating}

@@ -66,10 +66,10 @@ export const QuestionReplyItem = ({ reply, question }: Props) => {
             {reply.is_admin ? (
               <span className='text-secondary'>Buildex.uz</span>
             ) : (
-              reply.customer.full_name
+              reply.customer?.full_name ?? t('User')
             )}
           </span>
-          {!reply.is_admin && user?.id === reply.customer.id && (
+          {!reply.is_admin && !!user && user.id === reply.customer?.id && (
             <div className='flex gap-1'>
               <Button size='iconSm' variant='ghost' onClick={() => setOpenReplyForm(true)}>
                 <EditIcon />
