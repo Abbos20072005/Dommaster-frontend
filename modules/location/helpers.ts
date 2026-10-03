@@ -49,17 +49,17 @@ export function getBounds(coordinates: LngLat[]): LngLatBounds {
   ] as LngLatBounds;
 }
 
-export const getAllCoordinates = (coordinates: any): [number, number][] => {
+export const getAllCoordinates = (coordinates: unknown): [number, number][] => {
   const result: [number, number][] = [];
 
-  const recurse = (coords: any) => {
+  const recurse = (coords: unknown) => {
     if (Array.isArray(coords)) {
       if (coords.length === 2 && typeof coords[0] === 'number' && typeof coords[1] === 'number') {
         // Base case: LngLat [lng, lat]
         result.push([coords[0], coords[1]]);
       } else {
         // Recurse deeper for arrays (handles LngLat[], LngLat[][], LngLat[][][])
-        coords.forEach((item: any) => recurse(item));
+        coords.forEach((item: unknown) => recurse(item));
       }
     }
   };

@@ -48,8 +48,13 @@ export const useVerifyForm = ({ otpKey, setOtpKey, onSuccess }: Props) => {
   const postVerifyMutation = useMutation({
     mutationFn: postVerify,
     onSuccess: ({ data }) => {
-      Cookies.set(COOKIES.ACCESS_TOKEN, data.result.access_token);
-      Cookies.set(COOKIES.REFRESH_TOKEN, data.result.refresh_token);
+      const cookieOptions = {
+        path: '/',
+        sameSite: 'lax',
+        secure: window.location.protocol === 'https:'
+      } as const;
+      Cookies.set(COOKIES.ACCESS_TOKEN, data.result.access_token, cookieOptions);
+      Cookies.set(COOKIES.REFRESH_TOKEN, data.result.refresh_token, cookieOptions);
       onSuccess?.(data);
       queryClient.invalidateQueries();
       router.refresh();

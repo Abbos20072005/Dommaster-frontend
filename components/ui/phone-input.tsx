@@ -13,7 +13,7 @@ type Props = Omit<React.ComponentProps<typeof Input>, 'onChange' | 'value'> &
 const PhoneInput = ({ className, onChange, ...props }: Props) => {
   return (
     <>
-      {/* @ts-ignore */}
+      {/* @ts-expect-error react-phone-number-input props are not assignable to the merged Props */}
       <RPNInput.default
         limitMaxLength
         className={cn('flex', className)}

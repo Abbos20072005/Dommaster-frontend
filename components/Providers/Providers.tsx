@@ -27,40 +27,41 @@ declare module '@tanstack/react-query' {
 export const Providers = ({ children }: React.PropsWithChildren) => {
   const t = useTranslations();
   const [queryClient] = useState(
-    new QueryClient({
-      defaultOptions: {
-        queries: {
-          retry: false,
-          refetchOnWindowFocus: false,
-          staleTime: 10 * 60 * 1000 // 10 minutes
-        }
-      },
-      queryCache: new QueryCache({
-        onError: (error: any) => {
-          if (error instanceof AxiosError && error.status === 401) {
-            Cookies.remove(COOKIES.ACCESS_TOKEN);
-            Cookies.remove(COOKIES.REFRESH_TOKEN);
-          }
-        }
-      }),
-      mutationCache: new MutationCache({
-        onSuccess: (_data, _variables, _context, mutation) => {
-          if (mutation.meta?.invalidatesQuery) {
-            queryClient.invalidateQueries({
-              queryKey: mutation.meta.invalidatesQuery
-            });
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: {
+            retry: false,
+            refetchOnWindowFocus: false,
+            staleTime: 10 * 60 * 1000 // 10 minutes
           }
         },
-        onError: (error: any) => {
-          const errorCode = error?.response?.data?.error_code;
-          if (errorCode) {
-            toast.error(t(`errorMessages.${errorCode}`));
-          } else {
-            toast.error(t('errorMessages.default'));
+        queryCache: new QueryCache({
+          onError: (error) => {
+            if (error instanceof AxiosError && error.status === 401) {
+              Cookies.remove(COOKIES.ACCESS_TOKEN);
+              Cookies.remove(COOKIES.REFRESH_TOKEN);
+            }
           }
-        }
+        }),
+        mutationCache: new MutationCache({
+          onSuccess: (_data, _variables, _context, mutation) => {
+            if (mutation.meta?.invalidatesQuery) {
+              queryClient.invalidateQueries({
+                queryKey: mutation.meta.invalidatesQuery
+              });
+            }
+          },
+          onError: (error) => {
+            const errorCode = error instanceof AxiosError ? error.response?.data?.error_code : null;
+            if (errorCode) {
+              toast.error(t(`errorMessages.${errorCode}`));
+            } else {
+              toast.error(t('errorMessages.default'));
+            }
+          }
+        })
       })
-    })
   );
 
   return (

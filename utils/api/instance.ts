@@ -62,7 +62,7 @@ publicApi.interceptors.request.use(getCurrentLocale);
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response.status === 404) {
+    if (error.response?.status === 404) {
       notFound();
     }
 
