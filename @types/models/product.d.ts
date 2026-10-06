@@ -60,7 +60,9 @@ interface Product {
 
 interface ProductRequest {
   brand?: number;
+  category?: number;
   item_category?: number;
+  sub_category?: number;
   page?: number;
   page_size?: number;
   price_from?: number;

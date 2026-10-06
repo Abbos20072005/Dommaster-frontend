@@ -11,20 +11,24 @@ import {
   SelectValue
 } from '@/components/ui/select';
 
+import { resolveSortBy, SORT_OPTIONS } from '../constants';
+
 export const ProductsSortBySelect = () => {
   const t = useTranslations();
-  const [sortBy, setSortBy] = useQueryState('sort_by', { defaultValue: 'oldest' });
+  const [q] = useQueryState('q');
+  const [sortBy, setSortBy] = useQueryState('sort_by');
 
   return (
-    <Select value={sortBy} onValueChange={setSortBy}>
+    <Select value={resolveSortBy(sortBy, q)} onValueChange={setSortBy}>
       <SelectTrigger className='h-8 w-[180px]'>
         <SelectValue placeholder={t('Sort by')} />
       </SelectTrigger>
       <SelectContent>
-        <SelectItem value='oldest'>{t('Older')}</SelectItem>
-        <SelectItem value='newest'>{t('Newer')}</SelectItem>
-        <SelectItem value='price'>{t('Cheaper')}</SelectItem>
-        <SelectItem value='rating'>{t('High rating')}</SelectItem>
+        {SORT_OPTIONS.map((option) => (
+          <SelectItem key={option.value} value={option.value}>
+            {t(option.label)}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );

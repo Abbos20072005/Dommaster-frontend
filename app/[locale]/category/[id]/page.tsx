@@ -1,11 +1,11 @@
 import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
-import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import React from 'react';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
+import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,8 +14,10 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { Link } from '@/i18n/navigation';
-import { getCategoryById } from '@/utils/api/requests';
+import { getBrands, getCategoryById } from '@/utils/api/requests';
+
+import { CategoryChips } from '../_components/CategoryChips';
+import { getCatalogFilters } from '../_lib/catalogFilters';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -34,7 +36,10 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const CategoryPage = async ({ params }: Props) => {
   const { id } = await params;
   const t = await getTranslations();
-  const categoryResponse = await getCategoryById({ id });
+  const [categoryResponse, brandsResponse] = await Promise.all([
+    getCategoryById({ id }),
+    getBrands()
+  ]);
   const category = categoryResponse.data.result;
 
   if (!category) return notFound();
@@ -42,7 +47,7 @@ const CategoryPage = async ({ params }: Props) => {
   return (
     <div>
       <MobileHeader />
-      <BaseLayout className='mt-2 space-y-4 md:mt-4 md:space-y-8'>
+      <BaseLayout className='mt-2 space-y-4 md:mt-4 md:space-y-6'>
         <Breadcrumb className='mb-2 md:mb-4'>
           <BreadcrumbList>
             <BreadcrumbItem>
@@ -55,26 +60,16 @@ const CategoryPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{category.name}</h1>
-        <div className='grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2 md:grid-cols-[repeat(auto-fill,minmax(200px,1fr))] md:gap-4'>
-          {category.sub_categories.map((subCategory) => (
-            <Link
-              href={`/category/${id}/${subCategory.id}`}
-              key={subCategory.id}
-              className='bg-muted relative flex flex-col justify-between gap-6 rounded-md p-3 md:flex-row md:gap-3'
-            >
-              <p className='text-xs font-medium [word-break:break-word] md:text-sm'>
-                {subCategory.name}
-              </p>
-              <Image
-                alt={subCategory.name || 'Buildex'}
-                className='mx-auto h-15 w-22 rounded-md object-contain md:mx-0 md:size-15'
-                height={60}
-                src={subCategory.image}
-                width={60}
-              />
-            </Link>
-          ))}
-        </div>
+        <CategoryChips
+          hrefOf={(subId) => `/category/${id}/${subId}`}
+          items={category.sub_categories}
+        />
+        {/* all products of the category, with the price and brand filters */}
+        <ProductFilterPaginated
+          filters={getCatalogFilters(t, brandsResponse.data.result ?? [])}
+          queries={{ category: +id }}
+          hideCategories
+        />
       </BaseLayout>
     </div>
   );

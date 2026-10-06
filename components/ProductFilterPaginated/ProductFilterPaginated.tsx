@@ -12,9 +12,10 @@ import { Button } from '@/components/ui/button';
 import { Pagination } from '@/components/ui/pagination';
 import { Filter, useFilter } from '@/modules/filter';
 import { ProductList, ProductListSkeleton } from '@/modules/product';
-import { getProducts } from '@/utils/api/requests';
+import { searchProducts } from '@/modules/search';
 
-import { MobileFilterDrawer, ProductsSortBySelect } from './components';
+import { MobileFilterDrawer, ProductsSortBySelect, SearchNotFound } from './components';
+import { resolveSortBy } from './constants';
 
 interface Props {
   filterDefaultValues?: FilterDefaultValues;
@@ -32,7 +33,8 @@ export const ProductFilterPaginated = ({
   const t = useTranslations();
   const { filter, setFilter, isCleared } = useFilter();
   const [q] = useQueryState('q');
-  const [sort_by] = useQueryState('sort_by');
+  const [chosenSortBy] = useQueryState('sort_by');
+  const sort_by = resolveSortBy(chosenSortBy, q);
 
   const getProductsQuery = useQuery({
     queryKey: [
@@ -46,19 +48,18 @@ export const ProductFilterPaginated = ({
     ],
     staleTime: 0,
     queryFn: () =>
-      getProducts({
-        data: {
-          q: q ?? undefined,
-          sort_by: sort_by ?? undefined,
-          item_category: filter.item_category ?? undefined,
-          brand: filter.brand ?? undefined,
-          sale_id: filter.sale_id ?? undefined,
-          page: filter.page,
-          page_size: filter.page_size,
-          price_from: filter.price_from,
-          price_to: filter.price_to,
-          ...queries
-        }
+      // the text query goes through the smart search (Latin letters, synonyms)
+      searchProducts({
+        q: q ?? undefined,
+        sort_by,
+        item_category: filter.item_category ?? undefined,
+        brand: filter.brand ?? undefined,
+        sale_id: filter.sale_id ?? undefined,
+        page: filter.page,
+        page_size: filter.page_size,
+        price_from: filter.price_from,
+        price_to: filter.price_to,
+        ...queries
       })
   });
 
@@ -82,6 +83,12 @@ export const ProductFilterPaginated = ({
           <ProductListSkeleton view='grid' />
         ) : products.length ? (
           <ProductList view='grid' products={products} />
+        ) : q ? (
+          <SearchNotFound
+            filtersApplied={!isCleared}
+            query={q}
+            onResetFilters={() => setFilter(null)}
+          />
         ) : (
           <div className='flex h-[50vh] flex-col items-center justify-center gap-3'>
             <Image alt='not-found' height={150} src='/product/not-found.png' width={150} />
