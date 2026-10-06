@@ -1,10 +1,11 @@
 'use client';
 
 import { useFormatDate } from '@/hooks';
-import { EditIcon } from 'lucide-react';
+import { CircleHelpIcon, EditIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { EmptyState } from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { useAuth } from '@/modules/auth';
@@ -29,11 +30,11 @@ export const ProductQuestions = () => {
 
   if (state.questions?.length === 0) {
     return (
-      <div>
-        <p className='text-muted-foreground mb-6 text-sm'>
-          {t('There are no questions from you on the site yet')}
-        </p>
-      </div>
+      <EmptyState
+        action={{ href: '/catalog', label: t('Go to catalog') }}
+        icon={<CircleHelpIcon />}
+        title={t('There are no questions from you on the site yet')}
+      />
     );
   }
 

@@ -1,10 +1,12 @@
 'use client';
 
 import { useInfiniteQuery } from '@tanstack/react-query';
+import { HistoryIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { OrderList } from '@/app/[locale]/user/orders/_components';
+import { EmptyState } from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { getOrdersHistory } from '@/utils/api/requests';
@@ -34,12 +36,14 @@ export const OrdersHistory = () => {
   }
 
   if (orders?.length === 0 || !orders) {
+    // the history holds only completed orders — active ones are in "My orders"
     return (
-      <div>
-        <p className='text-muted-foreground text-sm'>
-          {t('There are no orders from you on the site yet')}
-        </p>
-      </div>
+      <EmptyState
+        action={{ href: '/user/orders/active', label: t('My orders') }}
+        description={t('Active orders are in the My orders section')}
+        icon={<HistoryIcon />}
+        title={t('No completed orders yet')}
+      />
     );
   }
 

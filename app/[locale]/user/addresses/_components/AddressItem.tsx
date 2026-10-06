@@ -41,13 +41,13 @@ export const AddressItem = ({ address }: Props) => {
       <CardHeader className='flex-row items-center p-4 pb-2'>
         <CardTitle className='flex-1 md:text-xl'>{address.name}</CardTitle>
         <AddressSelectDialog asChild defaultValues={address}>
-          <Button size='iconSm' variant='outline'>
+          <Button aria-label={t('Edit')} size='iconSm' variant='outline'>
             <EditIcon />
           </Button>
         </AddressSelectDialog>
         <AlertDialog onOpenChange={setOpenDelete} open={openDelete}>
           <AlertDialogTrigger asChild>
-            <Button size='iconSm' variant='outline'>
+            <Button aria-label={t('Delete')} size='iconSm' variant='outline'>
               <TrashIcon />
             </Button>
           </AlertDialogTrigger>

@@ -1,9 +1,10 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { PlusIcon } from 'lucide-react';
+import { MapPinIcon, PlusIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
+import { EmptyState } from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { AddressSelectDialog } from '@/modules/location';
@@ -30,14 +31,18 @@ export const AddressList = () => {
 
   if (addresses?.length === 0) {
     return (
-      <div className='flex h-full w-full flex-col items-center justify-center gap-4 py-20'>
+      <EmptyState
+        description={t('Add a delivery address to place orders faster')}
+        icon={<MapPinIcon />}
+        title={t('No saved addresses')}
+      >
         <AddressSelectDialog asChild>
-          <Button variant='secondary'>
+          <Button className='mt-1' variant='secondary'>
             <PlusIcon />
             {t('Add address')}
           </Button>
         </AddressSelectDialog>
-      </div>
+      </EmptyState>
     );
   }
 

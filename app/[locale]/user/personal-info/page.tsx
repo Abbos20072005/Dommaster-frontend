@@ -1,9 +1,18 @@
+import type { Metadata } from 'next';
+
 import { useTranslations } from 'next-intl';
+import { getTranslations } from 'next-intl/server';
 
 import { Card } from '@/components/ui/card';
 import { AuthWrapper } from '@/modules/auth';
 
 import { LogoutButton, PersonalInfoForm } from './_components';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('Personal info') };
+}
 
 const PersonalInfoPage = () => {
   const t = useTranslations();

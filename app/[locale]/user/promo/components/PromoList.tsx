@@ -1,9 +1,11 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
+import { TicketPercentIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { PromoCard } from '@/app/[locale]/user/promo/components/PromoCard';
+import { EmptyState } from '@/components/EmptyState';
 import { Spinner } from '@/components/ui/spinner';
 import { getPromos } from '@/utils/api/requests';
 
@@ -26,9 +28,11 @@ export const PromoList = () => {
 
   if (!promos?.length) {
     return (
-      <div className='flex items-center justify-center py-20'>
-        <p className='text-muted-foreground text-sm'>{t('There are no promos yet')}</p>
-      </div>
+      <EmptyState
+        action={{ href: '/catalog', label: t('Go to catalog') }}
+        icon={<TicketPercentIcon />}
+        title={t('There are no promos yet')}
+      />
     );
   }
 

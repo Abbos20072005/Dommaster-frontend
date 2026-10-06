@@ -1,11 +1,12 @@
 'use client';
 
 import { useFormatDate } from '@/hooks';
-import { EditIcon } from 'lucide-react';
+import { EditIcon, MessageSquareIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
+import { EmptyState } from '@/components/EmptyState';
 import { Button } from '@/components/ui/button';
 import { Ratings } from '@/components/ui/rating';
 import { Spinner } from '@/components/ui/spinner';
@@ -29,11 +30,11 @@ export const ProductComments = () => {
 
   if (state.comments?.length === 0) {
     return (
-      <div>
-        <p className='text-muted-foreground text-sm'>
-          {t('There are no reviews from you on the site yet')}
-        </p>
-      </div>
+      <EmptyState
+        action={{ href: '/user/orders/history', label: t('Purchase history') }}
+        icon={<MessageSquareIcon />}
+        title={t('There are no reviews from you on the site yet')}
+      />
     );
   }
 
