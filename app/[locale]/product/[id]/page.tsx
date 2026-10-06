@@ -6,7 +6,12 @@ import React from 'react';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { getProductById } from '@/utils/api/requests';
 
-import { ProductBody, ProductHeader, RecentlyViewedProducts } from './_components';
+import {
+  ProductBody,
+  ProductHeader,
+  RecentlyViewedProducts,
+  SameCategoryProducts
+} from './_components';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -37,6 +42,7 @@ const ProductPage = () => {
       <BaseLayout className='mt-2 md:mt-4'>
         <ProductHeader />
         <ProductBody />
+        <SameCategoryProducts />
         <RecentlyViewedProducts />
       </BaseLayout>
     </>

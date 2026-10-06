@@ -17,7 +17,7 @@ import { Card } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useScrollTo } from '@/hooks';
-import { getProductById } from '@/utils/api/requests';
+import { getAuthorizedProductById } from '@/utils/api/requests';
 
 import {
   ProductCharacteristics,
@@ -40,7 +40,7 @@ export const ProductBody = () => {
   const getProductByIdQuery = useQuery({
     queryKey: ['product', id],
     staleTime: 0,
-    queryFn: () => getProductById({ id })
+    queryFn: () => getAuthorizedProductById({ id })
   });
 
   if (getProductByIdQuery.isLoading)

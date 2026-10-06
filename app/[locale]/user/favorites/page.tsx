@@ -6,7 +6,7 @@ import { Suspense } from 'react';
 
 import { MobileHeader } from '@/components/layout';
 import { Card } from '@/components/ui/card';
-import { ProductListSkeleton } from '@/modules/product';
+import { ProductListSkeleton, RecentlyViewedProducts } from '@/modules/product';
 
 import { FavoriteProductList } from './_components';
 
@@ -28,6 +28,7 @@ const FavoritesPage = () => {
           <FavoriteProductList />
         </Suspense>
       </Card>
+      <RecentlyViewedProducts className='pt-4' />
     </div>
   );
 };

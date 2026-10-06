@@ -6,3 +6,4 @@ export { ProductList } from './ProductList/ProductList';
 export { ProductListSkeleton } from './ProductListSkeleton';
 export { ProductQuestionDialog } from './ProductQuestionDialog/ProductQuestionDialog';
 export { ProductQuestionReplyForm } from './ProductQuestionReplyForm/ProductQuestionReplyForm';
+export { RecentlyViewedProducts } from './RecentlyViewedProducts/RecentlyViewedProducts';

@@ -1,4 +1,6 @@
-import { useTranslations } from 'next-intl';
+import type { Metadata } from 'next';
+
+import { getTranslations } from 'next-intl/server';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
@@ -11,10 +13,16 @@ import {
 } from '@/components/ui/breadcrumb';
 import { RecentlyViewedProducts } from '@/modules/product';
 
-import { NewsList } from './_components/NewsList';
+import { VideosList } from './_components/VideosList';
 
-const NewsPage = () => {
-  const t = useTranslations();
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('Videos') };
+}
+
+const VideosPage = async () => {
+  const t = await getTranslations();
 
   return (
     <div>
@@ -27,16 +35,16 @@ const NewsPage = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>{t('News')}</BreadcrumbPage>
+              <BreadcrumbPage>{t('Videos')}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl'>{t('News')}</h1>
-        <NewsList />
+        <h1 className='text-xl font-bold md:text-3xl'>{t('Videos')}</h1>
+        <VideosList />
         <RecentlyViewedProducts />
       </BaseLayout>
     </div>
   );
 };
 
-export default NewsPage;
+export default VideosPage;

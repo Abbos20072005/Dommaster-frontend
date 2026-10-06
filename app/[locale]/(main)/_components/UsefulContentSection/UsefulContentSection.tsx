@@ -52,10 +52,10 @@ export const UsefulContentSection = async () => {
             </TabsContent>
             <TabsContent className='hidden flex-none sm:block' value='videos'>
               <Button asChild size='sm' variant='muted'>
-                <a href='https://www.youtube.com/buildex' rel='noreferrer' target='_blank'>
+                <Link href='/videos'>
                   {t('View all')}
                   <ArrowRightIcon />
-                </a>
+                </Link>
               </Button>
             </TabsContent>
           </div>
@@ -80,9 +80,7 @@ export const UsefulContentSection = async () => {
           <TabsContent value='videos'>
             <VideosTab />
             <Button asChild className='mt-2 w-full sm:hidden' size='sm' variant='muted'>
-              <a href='https://www.youtube.com/buildex' rel='noreferrer' target='_blank'>
-                {t('View all')}
-              </a>
+              <Link href='/videos'>{t('View all')}</Link>
             </Button>
           </TabsContent>
         </Tabs>

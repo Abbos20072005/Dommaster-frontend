@@ -9,6 +9,7 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { RecentlyViewedProducts } from '@/modules/product';
 import { getNewsById } from '@/utils/api/requests';
 
 interface Props {
@@ -42,6 +43,10 @@ const NewsPage = async ({ params }: Props) => {
           className='prose prose-sm md:prose-base max-w-max'
           dangerouslySetInnerHTML={{ __html: news.description }}
         />
+      </BaseLayout>
+      {/* a separate, full-width block: the article column above is narrow */}
+      <BaseLayout className='mt-8'>
+        <RecentlyViewedProducts />
       </BaseLayout>
     </div>
   );

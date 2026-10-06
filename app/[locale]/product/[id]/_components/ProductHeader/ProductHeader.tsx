@@ -13,7 +13,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { Skeleton } from '@/components/ui/skeleton';
-import { getProductById } from '@/utils/api/requests';
+import { getAuthorizedProductById } from '@/utils/api/requests';
 
 export const ProductHeader = () => {
   const t = useTranslations();
@@ -22,7 +22,7 @@ export const ProductHeader = () => {
   const getProductByIdQuery = useQuery({
     queryKey: ['product', id],
     staleTime: 0,
-    queryFn: () => getProductById({ id })
+    queryFn: () => getAuthorizedProductById({ id })
   });
 
   if (getProductByIdQuery.isLoading)
