@@ -3,7 +3,6 @@
 import { useFormatDate } from '@/hooks';
 import { EditIcon, StarIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
@@ -14,6 +13,7 @@ import { AuthDialog, useAuth } from '@/modules/auth';
 import { ProductCommentDialog } from '@/modules/product';
 
 import { CommentReplies } from './components/CommentReplies/CommentReplies';
+import { ReviewImageStrip } from './components/ReviewImageStrip';
 import { useProductComments } from './hooks';
 
 interface Props {
@@ -25,6 +25,11 @@ export const ProductComments = ({ product }: Props) => {
   const formatDate = useFormatDate();
   const { state, functions } = useProductComments(product);
   const { user } = useAuth();
+
+  // photos of every loaded review, shown together above the list
+  const allImages = (state.comments ?? []).flatMap((comment) =>
+    comment.images.map((image) => ({ id: image.id, src: image.image }))
+  );
 
   if (state.isLoading) {
     return (
@@ -105,6 +110,12 @@ export const ProductComments = ({ product }: Props) => {
           </div>
         )}
       </div>
+      <ReviewImageStrip
+        alt={product.name || 'Buildex'}
+        className='mb-4 md:mb-6'
+        images={allImages}
+        size='sm'
+      />
       <div className='space-y-3 divide-y text-sm md:space-y-5'>
         {state.comments?.map((comment) => (
           <article key={comment.id} className='space-y-3 pb-3 md:pb-5'>
@@ -130,20 +141,10 @@ export const ProductComments = ({ product }: Props) => {
                 </span>
               </div>
             </div>
-            {comment.images.length > 0 && (
-              <div className='flex gap-2'>
-                {comment.images.map((image) => (
-                  <Image
-                    key={image.id}
-                    alt={product.name || 'Buildex'}
-                    className='size-20 rounded-md object-cover'
-                    height={140}
-                    src={image.image}
-                    width={160}
-                  />
-                ))}
-              </div>
-            )}
+            <ReviewImageStrip
+              alt={product.name || 'Buildex'}
+              images={comment.images.map((image) => ({ id: image.id, src: image.image }))}
+            />
             <p className='text-sm'>{comment.comment}</p>
             <CommentReplies comment={comment} />
           </article>
