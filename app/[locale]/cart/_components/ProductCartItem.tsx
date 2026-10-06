@@ -78,13 +78,8 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
             value={state.cartCount}
             onChange={functions.onCartCountChange}
           />
-          <p
-            className={cn(
-              'text-muted-foreground text-xs',
-              state.cartCount === 1 && 'invisible opacity-0'
-            )}
-          >
-            {formatPrice(product.discount_price ?? product.price)} {t('sum')}/{t('unit')}
+          <p className='text-muted-foreground text-xs'>
+            {formatPrice(product.discount_price ?? product.price)} {t('sum')} / {t(product.unit)}
           </p>
         </div>
         <Button

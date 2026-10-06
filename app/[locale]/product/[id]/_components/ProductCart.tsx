@@ -1,6 +1,6 @@
 'use client';
 
-import { CheckCheckIcon, ShoppingCartIcon } from 'lucide-react';
+import { ShoppingCartIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -11,6 +11,7 @@ import { Separator } from '@/components/ui/separator';
 import { Link } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { CartCounter, useProductCart } from '@/modules/cart';
+import { PriceUnit, StockStatus } from '@/modules/product';
 
 interface Props {
   product: Product;
@@ -41,6 +42,7 @@ export const ProductCart = ({ product }: Props) => {
         )}
         <div className='text-lg font-bold sm:text-2xl'>
           {formatPrice(product.discount_price ?? product.price)} {t('sum')}
+          <PriceUnit className='text-base' unit={product.unit} />
         </div>
       </CardContent>
       <CardFooter className='flex-col items-start gap-4 p-0'>
@@ -69,19 +71,8 @@ export const ProductCart = ({ product }: Props) => {
             </Button>
           </div>
         )}
-        {product.quantity > 0 && (
-          <div className='flex items-center gap-4'>
-            <div className='text-secondary bg-secondary/10 flex size-8 items-center justify-center rounded-md'>
-              <CheckCheckIcon className='size-5' />
-            </div>
-            <span className='text-sm'>
-              {t('{count} {unit} available for purchase', {
-                count: product.quantity,
-                unit: t(product.unit)
-              })}
-            </span>
-          </div>
-        )}
+        <StockStatus quantity={product.quantity} />
+
       </CardFooter>
     </Card>
   );

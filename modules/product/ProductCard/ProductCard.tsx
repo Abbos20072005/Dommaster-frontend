@@ -5,6 +5,7 @@ import React from 'react';
 
 import { cn, formatPrice } from '@/lib/utils';
 
+import { PriceUnit } from '../PriceUnit/PriceUnit';
 import { ProductCart, ProductControl, ProductImages } from './components';
 
 type Props = React.ComponentProps<'div'> & {
@@ -56,6 +57,7 @@ export const ProductCard = ({ product, className, hideCart, hideControl, ...prop
         <div className='mt-auto h-12'>
           <div className='text-base leading-6 font-bold md:text-lg'>
             {formatPrice(product.discount_price ?? product.price)} {t('sum')}
+            <PriceUnit unit={product.unit} />
           </div>
           {product.discount_price && (
             <div className='text-muted-foreground text-sm leading-5 line-through'>
