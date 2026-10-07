@@ -23,7 +23,7 @@ const UserLayout = async ({ children }: { children: React.ReactNode }) => {
     <BaseLayout className='px-0 md:mt-4'>
       <div className='gap-6 md:flex'>
         <SideNav />
-        <main className='flex-1'>{children}</main>
+        <main className='min-w-0 flex-1'>{children}</main>
       </div>
     </BaseLayout>
   );

@@ -41,7 +41,7 @@ export const SideNav = () => {
   const { user } = useAuth();
 
   return (
-    <aside className='hidden w-52 md:block lg:w-62 xl:w-78'>
+    <aside className='hidden w-52 shrink-0 md:block lg:w-62 xl:w-78'>
       <Card className='space-y-4 p-3 lg:p-5'>
         <NavigationLink
           href='/user/dashboard'
