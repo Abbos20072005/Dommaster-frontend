@@ -1,3 +1,5 @@
+import type { Metadata } from 'next';
+
 import { getTranslations } from 'next-intl/server';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
@@ -10,6 +12,12 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { getAbout } from '@/utils/api/requests';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('About company'), description: t('metadata.pages.about') };
+}
 
 const ArticlesPage = async () => {
   const t = await getTranslations();

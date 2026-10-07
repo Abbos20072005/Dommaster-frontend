@@ -4,6 +4,7 @@ import React from 'react';
 import { BaseLayout } from '@/components/layout/BaseLayout';
 import { Separator } from '@/components/ui/separator';
 import { cn } from '@/lib/utils';
+import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
 
 import { Links, MobileAppLinks, Socials } from './components';
 
@@ -24,13 +25,8 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
           <div>
             <div className='mb-5'>
               <div className='mb-3 text-sm font-medium'>{t('Have a question? Call us')}</div>
-              <a
-                href='tel:+998772400909'
-                className='text-2xl font-semibold'
-                rel='noreferrer'
-                target='_blank'
-              >
-                +998 77 240 09 09
+              <a href={CONTACT_PHONE_HREF} className='text-2xl font-semibold'>
+                {CONTACT_PHONE}
               </a>
             </div>
             <div>

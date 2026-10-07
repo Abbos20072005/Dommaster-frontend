@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 const cardVariants = cva('bg-card text-card-foreground rounded-xl', {
   variants: {
     variant: {
-      default: 'shadow-sm',
+      default: 'border',
       outline: 'border',
       soft: 'bg-slate-100 border-0 shadow-none',
       // Checkout: border'siz, oqdan biroz farqli fon

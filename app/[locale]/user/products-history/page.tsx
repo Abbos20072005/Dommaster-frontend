@@ -22,7 +22,7 @@ const ProductsHistoryPage = async () => {
         <h1 className='flex-1 text-center font-bold md:hidden'>{t('Viewed products')}</h1>
       </div>
       <AuthWrapper>
-        <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
+        <Card className='px-4 border-0 md:p-5 md:border'>
           <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('Viewed products')}</h1>
           <ViewedProducts />
         </Card>

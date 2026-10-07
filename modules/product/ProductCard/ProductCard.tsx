@@ -22,7 +22,7 @@ export const ProductCard = ({ product, className, hideCart, hideControl, ...prop
   return (
     <div
       className={cn(
-        'bg-background flex flex-col overflow-hidden rounded-xl border transition-shadow hover:shadow-md',
+        'bg-background flex flex-col overflow-hidden rounded-xl border',
         className
       )}
       {...props}

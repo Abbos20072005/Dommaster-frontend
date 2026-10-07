@@ -1,139 +1,165 @@
 'use client';
 
+import { ImageIcon, SearchIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import * as React from 'react';
 
-import type { CarouselApi } from '@/components/ui/carousel';
-
 import { ImageLightbox } from '@/components/ImageLightbox';
-
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
+import { ProductControl } from '@/modules/product/ProductCard/components/ProductControl/ProductControl';
+
+import { ShareButton } from '../../ShareButton';
 
 interface ProductImageCarouselProps extends React.HTMLAttributes<HTMLDivElement> {
   product: Product;
 }
+
+const HIDE_SCROLLBAR = '[scrollbar-width:none] [&::-webkit-scrollbar]:hidden';
 
 export const ProductImageCarousel = ({
   product,
   className,
   ...props
 }: ProductImageCarouselProps) => {
-  const [emblaApi, setEmplaApi] = React.useState<CarouselApi>();
+  const t = useTranslations();
+  const scrollerRef = React.useRef<HTMLDivElement>(null);
+  const [index, setIndex] = React.useState(0);
+  const [lightboxIndex, setLightboxIndex] = React.useState<number | null>(null);
 
-  const [selectedIndex, setSelectedIndex] = React.useState(0);
-  const [modalIndex, setModalIndex] = React.useState<number | null>(null);
+  const images = product.images;
+  const name = product.name || 'Buildex';
 
-  const scrollPrev = React.useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = React.useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
+  const onScroll = () => {
+    const scroller = scrollerRef.current;
+    if (!scroller || !scroller.clientWidth) return;
+    setIndex(Math.round(scroller.scrollLeft / scroller.clientWidth));
+  };
 
-  const scrollTo = React.useCallback(
-    (index: number) => emblaApi && emblaApi.scrollTo(index),
-    [emblaApi]
-  );
+  const goTo = (next: number) => {
+    setIndex(next);
+    const scroller = scrollerRef.current;
+    scroller?.scrollTo({ left: next * scroller.clientWidth, behavior: 'smooth' });
+  };
 
-  const handleKeyDown = React.useCallback(
-    (event: React.KeyboardEvent<HTMLButtonElement>) => {
-      if (event.key === 'ArrowLeft') {
-        scrollPrev();
-      } else if (event.key === 'ArrowRight') {
-        scrollNext();
-      }
-    },
-    [scrollNext, scrollPrev]
-  );
-
-  const onSelect = React.useCallback((emblaApi: CarouselApi) => {
-    if (!emblaApi) return;
-
-    setSelectedIndex(emblaApi.selectedScrollSnap());
-  }, []);
-
-  React.useEffect(() => {
-    if (!emblaApi) return;
-
-    onSelect(emblaApi);
-    emblaApi.on('reInit', onSelect);
-    emblaApi.on('select', onSelect);
-  }, [emblaApi, onSelect]);
+  if (!images.length) {
+    return (
+      <div
+        className={cn(
+          'text-muted-foreground relative flex aspect-square items-center justify-center rounded-xl border',
+          className
+        )}
+        {...props}
+      >
+        <ImageIcon className='size-14 opacity-40' />
+      </div>
+    );
+  }
 
   return (
-    <div className={cn('space-y-2', className)} {...props}>
-      <Carousel setApi={setEmplaApi}>
-        <CarouselContent>
-          {product.images.map((image, index) => (
-            <CarouselItem key={image.id}>
+    <div
+      className={cn(
+        'grid gap-3',
+        images.length > 1 && 'md:grid-cols-[64px_minmax(0,1fr)]',
+        className
+      )}
+      {...props}
+    >
+      {images.length > 1 && (
+        <div className='hidden content-start gap-2 md:grid'>
+          {images.map((image, i) => (
+            <button
+              key={image.id}
+              className={cn(
+                'relative size-16 overflow-hidden rounded-lg border bg-white p-1 transition-colors',
+                i === index ? 'border-primary' : 'hover:border-foreground/30'
+              )}
+              aria-label={`${name} ${i + 1}`}
+              type='button'
+              onClick={() => goTo(i)}
+            >
+              <Image
+                fill
+                alt={name}
+                className='object-contain p-1'
+                sizes='64px'
+                src={image.image}
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className='min-w-0 space-y-2'>
+        <div className='relative overflow-hidden bg-white md:rounded-xl md:border'>
+          <div
+            ref={scrollerRef}
+            className={cn('flex snap-x snap-mandatory overflow-x-auto', HIDE_SCROLLBAR)}
+            onScroll={onScroll}
+          >
+            {images.map((image, i) => (
               <button
-                className='relative mx-auto block aspect-square w-full max-w-[450px] cursor-zoom-in'
+                key={image.id}
+                className='relative aspect-square w-full shrink-0 cursor-zoom-in snap-start'
+                aria-label={t('Zoom in')}
                 type='button'
-                onClick={() => setModalIndex(index)}
+                onClick={() => setLightboxIndex(i)}
               >
                 <Image
                   fill
-                  alt={product.name || 'Buildex'}
-                  className='rounded-md object-contain'
+                  alt={name}
+                  className='object-contain'
+                  priority={i === 0}
+                  sizes='(min-width: 768px) 520px, 100vw'
                   src={image.image}
-                  priority={index === 0}
                 />
               </button>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-      </Carousel>
-      <Carousel
-        className='hidden md:block'
-        opts={{
-          align: 'start',
-          containScroll: 'keepSnaps',
-          dragFree: true
-        }}
-      >
-        <CarouselContent className='-ml-0'>
-          {product.images.map((image, i) => (
-            <CarouselItem key={image.id} className='min-w-0 basis-[62px] pl-0'>
-              <button
+            ))}
+          </div>
+
+          {!!product.discount && (
+            <span className='bg-secondary text-foreground absolute top-3 left-3 rounded-md px-2 py-0.5 text-xs font-bold'>
+              −{product.discount}%
+            </span>
+          )}
+
+          <span className='text-muted-foreground bg-background/90 pointer-events-none absolute top-3 right-3 hidden items-center gap-1 rounded-md px-2 py-0.5 text-xs md:flex'>
+            <SearchIcon className='size-3.5' />
+            {t('Zoom in')}
+          </span>
+
+          <div className='absolute top-2 right-3 grid gap-2 md:hidden'>
+            <ProductControl className='size-11 border shadow-none' product={product} />
+            <ShareButton className='size-11 border shadow-none' title={name} />
+          </div>
+
+          {images.length > 1 && (
+            <span className='bg-background/90 pointer-events-none absolute bottom-3 left-1/2 hidden -translate-x-1/2 rounded-full border px-2.5 py-0.5 text-xs font-medium tabular-nums md:block'>
+              {index + 1} / {images.length}
+            </span>
+          )}
+        </div>
+
+        {images.length > 1 && (
+          <div className='flex justify-center gap-1.5 md:hidden'>
+            {images.map((image, i) => (
+              <span
+                key={image.id}
                 className={cn(
-                  'focus-visible:ring-foreground aspect-square size-15 border-0 border-b p-1 hover:bg-transparent',
-                  i === selectedIndex && 'border-primary'
+                  'size-1.5 rounded-full',
+                  i === index ? 'bg-primary' : 'bg-muted-foreground/40'
                 )}
-                onClick={() => scrollTo(i)}
-                onKeyDown={handleKeyDown}
-              >
-                <Image
-                  alt={product.name || 'Buildex'}
-                  className='size-full rounded-md object-contain'
-                  height={60}
-                  src={image.image}
-                  width={60}
-                />
-              </button>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious className='-left-3 size-8' />
-        <CarouselNext className='-right-3 size-8' />
-      </Carousel>
-      <div className='mr-1 flex h-1 justify-center gap-1 md:hidden'>
-        {product.images.map((image, i) => (
-          <span
-            key={image.id}
-            className={cn('bg-muted-foreground/50 block size-1.5 shrink-0 rounded-full', {
-              'bg-primary': selectedIndex === i
-            })}
-          />
-        ))}
+              />
+            ))}
+          </div>
+        )}
       </div>
+
       <ImageLightbox
-        alt={product.name || 'Buildex'}
-        images={product.images.map((image) => ({ id: image.id, src: image.image }))}
-        index={modalIndex}
-        onClose={() => setModalIndex(null)}
+        alt={name}
+        images={images.map((image) => ({ id: image.id, src: image.image }))}
+        index={lightboxIndex}
+        onClose={() => setLightboxIndex(null)}
       />
     </div>
   );

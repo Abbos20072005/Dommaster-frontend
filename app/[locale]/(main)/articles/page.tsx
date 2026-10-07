@@ -1,3 +1,6 @@
+import type { Metadata } from 'next';
+
+import { getTranslations } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
@@ -11,6 +14,12 @@ import {
 } from '@/components/ui/breadcrumb';
 
 import { ArticlesList } from './_components/ArticlesList';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('Articles'), description: t('metadata.pages.articles') };
+}
 
 const ArticlesPage = () => {
   const t = useTranslations();

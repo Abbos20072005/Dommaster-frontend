@@ -1,7 +1,9 @@
+import { ArrowRightIcon } from 'lucide-react';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
+import { Button } from '@/components/ui/button';
 import {
   Carousel,
   CarouselContent,
@@ -22,7 +24,15 @@ export const BrandsSection = async () => {
   return (
     <section>
       <BaseLayout>
-        <h2 className='mb-4 text-lg font-bold md:text-2xl'>{t('Only original products')}</h2>
+        <div className='mb-4 flex items-center justify-between gap-3'>
+          <h2 className='text-lg font-bold md:text-2xl'>{t('Only original products')}</h2>
+          <Button asChild size='sm' variant='muted'>
+            <Link href='/brands'>
+              {t('View all')}
+              <ArrowRightIcon />
+            </Link>
+          </Button>
+        </div>
 
         {/* Mobile */}
         <div className='overflow-x-auto md:hidden'>

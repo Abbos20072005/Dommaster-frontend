@@ -20,6 +20,21 @@
   "Be the first to ask a question about this product": "Bu mahsulot haqida birinchi bo'lib savol bering",
   "Be the first to review this product": "Bu mahsulot haqida birinchi bo'lib fikr bildiring",
   "Bestsellers": "Eng ko'p sotilganlar",
+  "Share": "Ulashish",
+  "Link copied": "Havola nusxalandi",
+  "In favorites": "Sevimlilarda",
+  "To favorites": "Sevimlilarga",
+  "From the warehouse": "Ombordan",
+  "Pay online by card or on pickup": "Karta orqali onlayn yoki olib ketishda omborda",
+  "Terms": "Shartlar",
+  "Return policy": "Qaytarish shartlari",
+  "Key characteristics": "Asosiy xususiyatlar",
+  "All characteristics": "Barcha xususiyatlar",
+  "Zoom in": "Kattalashtirish",
+  "Copied": "Nusxalandi",
+  "Copy": "Nusxalash",
+  "Payment": "To'lov",
+  "Delivery across Tashkent": "Toshkent bo'ylab, narxi buyurtmada hisoblanadi",
   "Branch not selected": "Filial tanlanmagan",
   "Branches": "Filiallar",
   "Brand": "Brend",
@@ -325,6 +340,15 @@
       "template": "Toshkentda xarid qiling, eng yaxshi narxlar Buildex internet-do'konida"
     },
     "description": "Buildex.uz – biznes uchun 100 mingdan ortiq original tovarlar: asboblar, uskunalar, elektr, sanitariya-tesisat, mahkamlagichlar. Moslashuvchan narxlar va 1 kundan boshlab yetkazib berish. 365 kunlik qaytarish siyosati. Yuridik shaxslar uchun kechiktirilgan to'lov",
+    "pages": {
+      "about": "Buildex.uz haqida: kompaniya, qurilish materiallari va asboblarni Toshkentda yetkazib berish bilan sotish.",
+      "news": "Buildex.uz yangiliklari: yangi mahsulotlar, aksiyalar va kompaniya e'lonlari.",
+      "brands": "Buildex.uz hamkor brendlari: faqat original qurilish materiallari va asboblar ishlab chiqaruvchilari.",
+      "articles": "Qurilish va ta'mirlash bo'yicha foydali maqolalar va maslahatlar - Buildex.uz.",
+      "reviews": "Buildex.uz mahsulotlari va asboblarining sharhlari hamda ko'rib chiqishlari.",
+      "delivery": "Toshkent shahri bo'ylab qurilish materiallarini yetkazib berish: shartlar, narxlar va muddatlar.",
+      "payments": "Buildex.uz'da to'lov usullari: onlayn karta orqali yoki olib ketishda to'lash."
+    },
     "product": {
       "description": "Buildex onlayn do'konida {name} - tavsif, texnik xususiyatlar, jihozlar, fotolar ({images}), sharhlar ({reviews}), savollar ({questions})."
     },

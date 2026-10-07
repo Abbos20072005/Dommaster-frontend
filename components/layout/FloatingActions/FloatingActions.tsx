@@ -6,12 +6,13 @@ import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { ChatDialog } from '@/modules/chat';
+import { SOCIAL_LINKS } from '@/utils/constants';
 
 export const FloatingActions = () => {
   return (
     <div className='fixed right-12 bottom-12 z-50 hidden items-center gap-2 md:flex md:flex-col'>
       <Button asChild className='rounded-full' size='icon' variant='outline'>
-        <a href='https://t.me/buildexuz' rel='noreferrer' target='_blank'>
+        <a href={SOCIAL_LINKS.telegram} rel='noreferrer' target='_blank'>
           <Image alt='telegram' height={40} src='/logos/telegram.png' width={40} />
         </a>
       </Button>

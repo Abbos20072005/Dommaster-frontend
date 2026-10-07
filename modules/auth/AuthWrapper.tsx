@@ -26,7 +26,7 @@ export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
 
   if (!user) {
     return (
-      <Card className='p-4 shadow-none md:p-5 md:shadow-sm'>
+      <Card className='p-4 border-0 md:p-5 md:border'>
         <p className='mb-3 text-lg font-bold md:text-2xl'>{t('Login or register')}</p>
         <p className='max-w-lg text-sm'>
           {t(

@@ -1,5 +1,9 @@
+import type { Metadata } from 'next';
+
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';
+
+import { htmlToText } from '@/lib/seo';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
@@ -13,6 +17,14 @@ import { getReviewById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
+}
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params;
+  const response = await getReviewById({ id });
+  const { title, description } = response.data.result;
+
+  return { title, description: htmlToText(description) || undefined };
 }
 
 const ReviewPage = async ({ params }: Props) => {

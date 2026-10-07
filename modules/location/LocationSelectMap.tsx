@@ -10,6 +10,6 @@ export const LocationSelectMap = dynamic(
   () => import('./LocationSelectMapClient').then((module) => module.LocationSelectMap),
   {
     ssr: false,
-    loading: () => <Skeleton className='min-h-300px w-full flex-1 rounded-none' />
+    loading: () => <Skeleton className='min-h-[300px] w-full flex-1 rounded-none' />
   }
 );

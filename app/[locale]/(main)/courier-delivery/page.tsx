@@ -40,7 +40,7 @@ const CourierDeliveryPage = () => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-xl font-bold md:text-3xl lg:text-4xl'>{t('Delivery in Tashkent')}</h1>
-        <div className='h-500px'>
+        <div className='h-[360px] md:h-[500px]'>
           <DeliveryZoneMap />
         </div>
         <p className='text-lg font-bold md:text-2xl'>{t('Delivery price')}: 100 000 UZS</p>

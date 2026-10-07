@@ -65,7 +65,7 @@ export const QuestionReplyItem = ({ reply, question }: Props) => {
             {reply.is_admin ? (
               <span className='text-secondary'>Buildex.uz</span>
             ) : (
-              reply.customer?.full_name ?? t('User')
+              (reply.customer?.full_name ?? t('User'))
             )}
           </span>
           {!reply.is_admin && !!user && user.id === reply.customer?.id && (

@@ -25,7 +25,7 @@ interface Props {
 
 export const CommentReplyItem = ({ reply, comment }: Props) => {
   const t = useTranslations();
-const formatDate = useFormatDate();
+  const formatDate = useFormatDate();
   const { user } = useAuth();
   const [openReplyForm, setOpenReplyForm] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -66,7 +66,7 @@ const formatDate = useFormatDate();
             {reply.is_admin ? (
               <span className='text-secondary'>Buildex.uz</span>
             ) : (
-              reply.customer?.full_name ?? t('User')
+              (reply.customer?.full_name ?? t('User'))
             )}
           </span>
           {!reply.is_admin && !!user && user.id === reply.customer?.id && (

@@ -1,3 +1,6 @@
+import type { Metadata } from 'next';
+
+import { getTranslations } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -9,6 +12,12 @@ import {
   BreadcrumbList,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('Payment methods'), description: t('metadata.pages.payments') };
+}
 
 const CourierDeliveryPage = () => {
   const t = useTranslations();

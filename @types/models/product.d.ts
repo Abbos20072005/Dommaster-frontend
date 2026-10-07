@@ -70,7 +70,22 @@ interface ProductRequest {
   q?: string;
   sale_id?: number;
   sort_by?: string;
+  /** attribute filters: `{ key: ['value'] }` for checkbox, `{ key_from: 1, key_to: 5 }` for range */
+  filters?: Record<string, string[] | number>;
 }
+
+/** Item category attribute filter (BLD-104): size, material, packaging etc. */
+interface AttributeFilter {
+  key: string;
+  label: string;
+  type: 'checkbox' | 'range' | (string & {});
+  unit?: string;
+  min?: number;
+  max?: number;
+  values?: { value: string; count: number }[];
+}
+
+type AttributeFiltersResponse = ApiResponse<AttributeFilter[]>;
 
 type ProductsResponse = ApiResponse<Pagination<Product> & { totalElements: number }>;
 type ProductResponse = ApiResponse<Product>;

@@ -1,3 +1,6 @@
+import type { Metadata } from 'next';
+
+import { getTranslations } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
@@ -12,6 +15,12 @@ import {
 import { RecentlyViewedProducts } from '@/modules/product';
 
 import { NewsList } from './_components/NewsList';
+
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations();
+
+  return { title: t('News'), description: t('metadata.pages.news') };
+}
 
 const NewsPage = () => {
   const t = useTranslations();

@@ -55,7 +55,7 @@ const OrderPage = () => {
           </div>
           <div className='flex flex-col items-start divide-y md:gap-4 md:divide-y-0 lg:flex-row'>
             <div className='flex w-full flex-1 flex-col divide-y md:gap-4 md:divide-y-0'>
-              <Card className='rounded-none p-4 shadow-none md:rounded-md md:p-5 md:shadow-sm'>
+              <Card className='rounded-none p-4 border-0 md:rounded-md md:p-5 md:border'>
                 <div className='-ml-3 hidden gap-2 md:flex'>
                   <Button asChild size='sm' variant='ghost'>
                     <Link href='/user/orders/history'>
@@ -89,11 +89,11 @@ const OrderPage = () => {
                   </div>
                 )}
               </Card>
-              <Card className='px-4 shadow-none md:shadow-sm'>
+              <Card className='px-4 border-0 md:border'>
                 <OrderProducts order={order} />
               </Card>
             </div>
-            <Card className='w-full shadow-none md:shadow-sm lg:w-68 lg:min-w-68'>
+            <Card className='w-full border-0 md:border lg:w-68 lg:min-w-68'>
               <CardHeader className='flex-row items-center justify-between'>
                 <CardTitle>{t('Order status')}</CardTitle>
                 <Badge className={cn(orderStatusColorMap[order.status])} variant='outline'>

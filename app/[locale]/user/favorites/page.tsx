@@ -22,7 +22,7 @@ const FavoritesPage = () => {
   return (
     <div className='space-y-2'>
       <MobileHeader />
-      <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
+      <Card className='px-4 border-0 md:p-5 md:border'>
         <h1 className='mb-4 text-lg font-bold md:text-2xl'>{t('Favorites')}</h1>
         <Suspense fallback={<ProductListSkeleton view='grid' count={3} />}>
           <FavoriteProductList />

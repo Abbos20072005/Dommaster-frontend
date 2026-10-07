@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Link } from '@/i18n/navigation';
+import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
 
 import { LocaleSwitcher } from './components';
 
@@ -92,11 +93,10 @@ export const HeaderTop = () => {
       <div className='flex items-center gap-4'>
         <LocaleSwitcher />
         <Link
-          href='tel:+998772400909'
+          href={CONTACT_PHONE_HREF}
           className='hover:text-secondary text-foreground/70 text-sm font-bold transition-colors'
-          target='_blank'
         >
-          +998 77 240 09 09
+          {CONTACT_PHONE}
         </Link>
       </div>
     </BaseLayout>

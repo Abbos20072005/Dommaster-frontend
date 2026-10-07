@@ -8,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { ChatDialog } from '@/modules/chat';
 import { MobileSearch } from '@/modules/search';
+import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
 
 export const MobileHeader = () => {
   const t = useTranslations();
@@ -42,7 +43,7 @@ export const MobileHeader = () => {
             </Button>
           </ChatDialog>
           <Button asChild size='iconSm' variant='muted'>
-            <Link href='tel:+998772400909' className='p-1.5' target='_blank'>
+            <Link href={CONTACT_PHONE_HREF} aria-label={CONTACT_PHONE} className='p-1.5'>
               <PhoneCallIcon className='size-4' />
             </Link>
           </Button>

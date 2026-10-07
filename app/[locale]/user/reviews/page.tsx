@@ -23,7 +23,7 @@ const OrdersPage = () => {
       <div className='mb-4 flex h-12 items-center border-b md:hidden'>
         <h1 className='flex-1 text-center font-bold md:hidden'>{t('My reviews and questions')}</h1>
       </div>
-      <Card className='px-4 shadow-none md:p-5 md:shadow-sm'>
+      <Card className='px-4 border-0 md:p-5 md:border'>
         <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('My reviews and questions')}</h1>
         <Tabs defaultValue='reviews'>
           <TabsList>

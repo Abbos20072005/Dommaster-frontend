@@ -9,5 +9,11 @@ export const getCategoryById = ({ id, config }: RequestConfig & { id: number | s
 export const getSubCategoryById = ({ id, config }: RequestConfig & { id: number | string }) =>
   publicApi.get<SubCategoryResponse>(`/sub/categories/${id}`, config);
 
-export const getItemCategoryById = ({ id, config }: RequestConfig & { id: number | string }) =>
+export const getItemCategoryFilters = ({
+  id,
+  config
+}: RequestConfig & { id: number | string }) =>
+  publicApi.get<AttributeFiltersResponse>(`/item-category/${id}/filters/`, config);
+
+export const getItemCategoryById =({ id, config }: RequestConfig & { id: number | string }) =>
   publicApi.get<ItemCategoryResponse>(`/item/categories/${id}`, config);

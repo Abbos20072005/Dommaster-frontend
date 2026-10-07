@@ -34,7 +34,6 @@ export const ProductHeader = () => {
           <Skeleton className='h-5 w-40' />
           <Skeleton className='h-5 w-40' />
         </div>
-        <Skeleton className='my-4 h-8 w-3/4 md:mb-6' />
       </>
     );
 
@@ -43,7 +42,7 @@ export const ProductHeader = () => {
   if (!product) return null;
 
   return (
-    <div>
+    <div className='mb-4 md:mb-5'>
       <Breadcrumb>
         <BreadcrumbList>
           <BreadcrumbItem>
@@ -73,10 +72,6 @@ export const ProductHeader = () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-
-      <h1 className='my-4 text-lg leading-6 font-bold md:mb-6 md:text-2xl md:leading-8'>
-        {product?.name}
-      </h1>
     </div>
   );
 };

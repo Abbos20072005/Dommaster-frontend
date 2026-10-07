@@ -14,7 +14,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const PersonalInfoPage = () => {
   return (
-    <Card className='shadow-none md:p-5 md:shadow-sm'>
+    <Card className='border-0 md:p-5 md:border'>
       <MobileCards />
       <DesktopCards />
     </Card>

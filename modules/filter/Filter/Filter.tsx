@@ -6,6 +6,7 @@ import type { FilterDefaultValues } from '@/modules/filter/useFilter';
 
 import { useMounted } from '@/hooks';
 import { cn } from '@/lib/utils';
+import { FilterAttributes } from '../FilterAttributes/FilterAttributes';
 import { FilterCategories } from '../FilterCategories';
 import { FilterCheckbox } from '../FilterCheckbox/FilterCheckbox';
 import { FilterRadio } from '../FilterRadio/FilterRadio';
@@ -14,12 +15,20 @@ import { FilterSlider } from '../FilterSlider/FilterSlider';
 import { FilterClearButton } from './components/FilterClearButton';
 
 interface Props extends React.ComponentProps<'div'> {
+  attributeFilters?: AttributeFilter[];
   defaultValues?: FilterDefaultValues;
   filters: Filter[];
   hideCategories?: boolean;
 }
 
-export const Filter = ({ className, filters, hideCategories, defaultValues, ...props }: Props) => {
+export const Filter = ({
+  className,
+  attributeFilters,
+  filters,
+  hideCategories,
+  defaultValues,
+  ...props
+}: Props) => {
   const mounted = useMounted();
 
   if (!mounted) return <FilterSkeleton />;
@@ -36,6 +45,7 @@ export const Filter = ({ className, filters, hideCategories, defaultValues, ...p
             {filter.type === 'SLIDER' && <FilterSlider filter={filter} />}
           </React.Fragment>
         ))}
+        {!!attributeFilters?.length && <FilterAttributes filters={attributeFilters} />}
       </div>
     </div>
   );

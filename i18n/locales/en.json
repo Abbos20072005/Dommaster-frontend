@@ -20,6 +20,21 @@
   "Be the first to ask a question about this product": "Be the first to ask a question about this product",
   "Be the first to review this product": "Be the first to review this product",
   "Bestsellers": "Bestsellers",
+  "Share": "Share",
+  "Link copied": "Link copied",
+  "In favorites": "In favorites",
+  "To favorites": "To favorites",
+  "From the warehouse": "From the warehouse",
+  "Pay online by card or on pickup": "Online by card or on pickup at the warehouse",
+  "Terms": "Terms",
+  "Return policy": "Return policy",
+  "Key characteristics": "Key characteristics",
+  "All characteristics": "All characteristics",
+  "Zoom in": "Zoom in",
+  "Copied": "Copied",
+  "Copy": "Copy",
+  "Payment": "Payment",
+  "Delivery across Tashkent": "Across Tashkent, the price is calculated at checkout",
   "Branch not selected": "Branch not selected",
   "Branches": "Branches",
   "Brand": "Brand",
@@ -325,6 +340,15 @@
       "template": "buy in Tashkent, best prices in the Buildex online store"
     },
     "description": "Buildex.uz – more than 100 thousand original goods for business: tools, equipment, electrical, plumbing, fasteners. Flexible prices and delivery from 1 day. 365 days for return. Deferred payment for legal entities",
+    "pages": {
+      "about": "About Buildex.uz: the company, building materials and tools with delivery in Tashkent.",
+      "news": "Buildex.uz news: new products, promotions and company announcements.",
+      "brands": "Buildex.uz partner brands: only original building materials and tools from manufacturers.",
+      "articles": "Useful articles and tips on construction and renovation - Buildex.uz.",
+      "reviews": "Reviews of Buildex.uz products and tools.",
+      "delivery": "Delivery of building materials across Tashkent: terms, prices and timing.",
+      "payments": "Payment methods at Buildex.uz: online by card or on pickup."
+    },
     "product": {
       "description": "{name} at a price of {price} sum in the online store Buildex - description, specifications, equipment, photos ({images}), reviews ({reviews}), questions ({questions})."
     },

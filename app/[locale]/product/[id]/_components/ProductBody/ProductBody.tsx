@@ -1,41 +1,27 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
-import { ProductCart } from '@/app/[locale]/product/[id]/_components/ProductCart';
-import {
-  Accordion,
-  AccordionContent,
-  AccordionItem,
-  AccordionTrigger
-} from '@/components/ui/accordion';
-import { Card } from '@/components/ui/card';
+import { ProductCart, ProductMobileBar } from '@/app/[locale]/product/[id]/_components/ProductCart';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { useScrollTo } from '@/hooks';
 import { getAuthorizedProductById } from '@/utils/api/requests';
 
-import {
-  ProductCharacteristics,
-  ProductComments,
-  ProductDescription,
-  ProductQuestions
-} from './components';
+import type { ProductSectionId } from './components/ProductSections';
+
+import { ProductImageCarousel } from './components/ProductDescription/components';
+import { ProductInfo } from './components/ProductInfo';
+import { ProductSections, sectionElementId } from './components/ProductSections';
+
+const SECTION_IDS: ProductSectionId[] = ['description', 'characteristics', 'reviews', 'questions'];
 
 export const ProductBody = () => {
-  const t = useTranslations();
+  // `?tab=reviews` kabi eski havolalar ham ishlaydi: shu bo'limga o'tiladi
   const [tab, setTab] = useQueryState('tab', { defaultValue: 'description' });
-  const scrollTo = useScrollTo(60);
-
-  React.useEffect(() => {
-    scrollTo(tab);
-  }, []);
-
   const { id } = useParams<{ id: string }>();
+  const scrolledRef = React.useRef(false);
 
   const getProductByIdQuery = useQuery({
     queryKey: ['product', id],
@@ -43,133 +29,71 @@ export const ProductBody = () => {
     queryFn: () => getAuthorizedProductById({ id })
   });
 
+  const product = getProductByIdQuery.data?.data.result;
+
+  const scrollToSection = React.useCallback((section: string) => {
+    // desktopda yorliq paneli, mobilda akkordeon — qaysi biri ko'rinib turgan bo'lsa shunga o'tamiz
+    const id = sectionElementId(section as ProductSectionId);
+    const element = [id, `${id}-mobile`]
+      .map((elementId) => document.getElementById(elementId))
+      .find((candidate) => candidate && candidate.getClientRects().length > 0);
+    if (!element) return;
+    window.scrollTo({
+      top: element.getBoundingClientRect().top + window.scrollY - 130,
+      behavior: 'smooth'
+    });
+  }, []);
+
+  const onNavigate = (section: ProductSectionId) => {
+    setTab(section);
+    // akkordeon ochilib bo'lgach (mobil) o'tamiz
+    setTimeout(() => scrollToSection(section), 80);
+  };
+
+  React.useEffect(() => {
+    if (!product || scrolledRef.current) return;
+    scrolledRef.current = true;
+    if (tab !== 'description' && SECTION_IDS.includes(tab as ProductSectionId)) {
+      setTimeout(() => scrollToSection(tab), 300);
+    }
+  }, [product, tab, scrollToSection]);
+
   if (getProductByIdQuery.isLoading)
     return (
-      <div className='flex flex-col gap-4 lg:flex-row'>
-        <div className='flex-1 space-y-4'>
-          <Card className='hidden h-11.5 items-center px-6 md:flex' variant='outline'>
-            <Skeleton className='h-5 w-32' />
-          </Card>
-          <Card className='md:border-border border-transparent p-0 md:p-8' variant='outline'>
-            <div className='grid gap-6 md:grid-cols-[3fr_2fr]'>
-              <div className='space-y-2'>
-                <Skeleton className='aspect-square' />
-                <div className='flex gap-1'>
-                  <Skeleton className='h-[61.5px] w-15' />
-                  <Skeleton className='h-[61.5px] w-15' />
-                  <Skeleton className='h-[61.5px] w-15' />
-                </div>
-              </div>
-            </div>
-          </Card>
+      <div className='grid gap-8 lg:grid-cols-[minmax(0,1fr)_344px]'>
+        <div className='grid gap-6 md:grid-cols-[minmax(0,520px)_minmax(0,1fr)]'>
+          <Skeleton className='aspect-square w-full' />
+          <div className='space-y-3'>
+            <Skeleton className='h-8 w-5/6' />
+            <Skeleton className='h-5 w-1/2' />
+            <Skeleton className='h-5 w-2/5' />
+            <Skeleton className='h-40 w-full' />
+          </div>
         </div>
-        <div className='lg:w-[360px]'>
-          <Skeleton className='h-50' />
-        </div>
+        <Skeleton className='hidden h-96 lg:block' />
       </div>
     );
-
-  const product = getProductByIdQuery.data?.data.result;
 
   if (!product) return null;
 
   return (
-    <div className='flex flex-col gap-4 lg:flex-row'>
-      {/* Desktop */}
-      <Tabs
-        className='hidden flex-1 md:flex'
-        defaultValue='description'
-        value={tab}
-        onValueChange={setTab}
-      >
-        <TabsList className='hidden w-full border md:flex' variant='underline'>
-          <TabsTrigger size='lg' value='description' variant='underline'>
-            {t('Description')}
-          </TabsTrigger>
-
-          <TabsTrigger
-            disabled={!product.characteristics.length}
-            size='lg'
-            value='characteristics'
-            variant='underline'
-          >
-            {t('Characteristics')}
-          </TabsTrigger>
-          <TabsTrigger size='lg' value='reviews' variant='underline'>
-            {t('Reviews')}
-            {!!product.comments_quantity && `: ${product.comments_quantity}`}
-          </TabsTrigger>
-          <TabsTrigger size='lg' value='questions' variant='underline'>
-            {t('Questions')}
-            {!!product.questions_quantity && `: ${product.questions_quantity}`}
-          </TabsTrigger>
-        </TabsList>
-        <Card className='p-8' variant='outline'>
-          <TabsContent value='description'>
-            <ProductDescription product={product} />
-          </TabsContent>
-
-          <TabsContent value='characteristics'>
-            <ProductCharacteristics characteristics={product.characteristics} />
-          </TabsContent>
-          <TabsContent value='reviews'>
-            <ProductComments product={product} />
-          </TabsContent>
-          <TabsContent value='questions'>
-            <ProductQuestions product={product} />
-          </TabsContent>
-        </Card>
-      </Tabs>
-
-      {/* Mobile */}
-      <div className='md:hidden'>
-        <ProductDescription product={product} />
-        <Accordion
-          className='md:hidden'
-          type='single'
-          value={tab}
-          collapsible
-          onValueChange={setTab}
-        >
-
-          <AccordionItem disabled={!product.description} value='description-mobile'>
-            <AccordionTrigger>{t('Description')}</AccordionTrigger>
-            <AccordionContent>
-              <div
-                className='prose prose-sm max-w-max'
-                dangerouslySetInnerHTML={{ __html: product.description ?? '' }}
-              />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem disabled={!product.characteristics.length} value='characteristics'>
-            <AccordionTrigger>{t('Characteristics')}</AccordionTrigger>
-            <AccordionContent>
-              <ProductCharacteristics characteristics={product.characteristics} />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem id='reviews' value='reviews'>
-            <AccordionTrigger>
-              {t('Reviews')}
-              {!!product.comments_quantity && `: ${product.comments_quantity}`}
-            </AccordionTrigger>
-            <AccordionContent>
-              <ProductComments product={product} />
-            </AccordionContent>
-          </AccordionItem>
-          <AccordionItem value='questions'>
-            <AccordionTrigger>
-              {t('Questions')}
-              {!!product.questions_quantity && `: ${product.questions_quantity}`}
-            </AccordionTrigger>
-            <AccordionContent>
-              <ProductQuestions product={product} />
-            </AccordionContent>
-          </AccordionItem>
-        </Accordion>
-      </div>
-      <div className='lg:w-[360px]'>
+    <>
+      <div className='grid items-start gap-8 pb-28 lg:grid-cols-[minmax(0,1fr)_344px] lg:pb-0'>
+        <div className='min-w-0 space-y-8 md:space-y-10'>
+          {/* planshet: 2 teng ustun; kichik laptop (o'ng panel bilan): ustma-ust; keng ekran: galereya + ma'lumot */}
+          <div className='grid gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-1 xl:grid-cols-[minmax(0,520px)_minmax(0,1fr)] xl:gap-8'>
+            <ProductImageCarousel className='lg:max-w-[560px] xl:max-w-none' product={product} />
+            <ProductInfo product={product} onNavigate={onNavigate} />
+          </div>
+          <ProductSections
+            openSection={tab}
+            product={product}
+            onOpenSectionChange={(section) => setTab(section || null)}
+          />
+        </div>
         <ProductCart product={product} />
       </div>
-    </div>
+      <ProductMobileBar product={product} />
+    </>
   );
 };

@@ -16,9 +16,12 @@ import { useFavoritesStore } from '@/utils/stores';
 
 interface Props {
   product: Product;
+  className?: string;
+  /** matnli (kengroq) tugma — mahsulot sahifasi uchun */
+  withLabel?: boolean;
 }
 
-export const ProductControl = ({ product }: Props) => {
+export const ProductControl = ({ product, className, withLabel }: Props) => {
   const t = useTranslations();
   const router = useRouter();
   const mounted = useMounted();
@@ -54,20 +57,26 @@ export const ProductControl = ({ product }: Props) => {
   const button = (
     <button
       className={cn(
-        'bg-background/90 text-muted-foreground flex size-8 items-center justify-center rounded-full shadow-sm hover:text-red-500',
-        { 'text-red-500': isFav }
+        withLabel
+          ? 'bg-background text-foreground hover:bg-muted flex h-10 w-full items-center justify-center gap-2 rounded-lg border text-sm font-medium transition-colors'
+          : 'bg-background/90 text-muted-foreground flex size-8 items-center justify-center rounded-full shadow-sm hover:text-red-500',
+        { 'text-red-500': isFav && !withLabel },
+        className
       )}
       aria-label={t('Favorites')}
       disabled={postFavoriteMutation.isPending}
       type='button'
       onClick={needsAuth ? undefined : onToggleFavorite}
     >
-      <HeartIcon className={cn('size-4', { 'fill-red-500': isFav })} />
+      <HeartIcon className={cn('size-4', { 'fill-red-500 text-red-500': isFav })} />
+      {withLabel && (
+        <span className='whitespace-nowrap'>{isFav ? t('In favorites') : t('To favorites')}</span>
+      )}
     </button>
   );
 
   return (
-    <div className='flex gap-1'>
+    <div className={cn('flex gap-1', { 'w-full': withLabel })}>
       {needsAuth ? <AuthDialog asChild>{button}</AuthDialog> : button}
     </div>
   );

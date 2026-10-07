@@ -1,6 +1,11 @@
 'use client';
 
+import { useSearchParams } from 'next/navigation';
 import { parseAsInteger, useQueryStates } from 'nuqs';
+
+import { usePathname, useRouter } from '@/i18n/navigation';
+
+import { isAttributeParam } from './attributes';
 
 export interface FilterDefaultValues {
   brand?: number | null;
@@ -13,6 +18,10 @@ export interface FilterDefaultValues {
 }
 
 export const useFilter = (defaultValues?: FilterDefaultValues) => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const values: Required<FilterDefaultValues> = {
     page: 1,
     page_size: 20,
@@ -37,16 +46,27 @@ export const useFilter = (defaultValues?: FilterDefaultValues) => {
     { shallow: false }
   );
 
-  const isCleared = Object.entries(filter).every(
-    ([key, value]) => value === values[key as keyof typeof filter]
-  );
+  const hasAttributes = [...searchParams.keys()].some(isAttributeParam);
+
+  const isCleared =
+    !hasAttributes &&
+    Object.entries(filter).every(([key, value]) => value === values[key as keyof typeof filter]);
 
   const setFilterItem = <K extends keyof typeof filter>(key: K, value: (typeof filter)[K]) => {
     setFilter({ ...filter, [key]: value });
   };
 
+  // Hamma filtr (narx, brend va atributlar) bitta URL almashtirishda tozalanadi
   const onReset = () => {
-    setFilter(values);
+    const params = new URLSearchParams(searchParams.toString());
+    [...params.keys()].filter(isAttributeParam).forEach((key) => params.delete(key));
+    (Object.keys(filter) as (keyof typeof filter)[]).forEach((key) => params.delete(key));
+    (['item_category', 'brand', 'sale_id'] as const).forEach((key) => {
+      if (values[key] != null) params.set(key, String(values[key]));
+    });
+
+    const query = params.toString();
+    router.replace(query ? `${pathname}?${query}` : pathname);
   };
 
   return {
