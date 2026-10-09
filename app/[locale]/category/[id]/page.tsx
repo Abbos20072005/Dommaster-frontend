@@ -66,6 +66,9 @@ const CategoryPage = async ({ params }: Props) => {
         />
         {/* all products of the category, with the price and brand filters */}
         <ProductFilterPaginated
+          attributeCategoryIds={category.sub_categories.flatMap((sub) =>
+            (sub.product_item_categories ?? []).map((item) => item.id)
+          )}
           filters={getCatalogFilters(t, brandsResponse.data.result ?? [])}
           queries={{ category: +id }}
           hideCategories

@@ -9,8 +9,8 @@ import { Button } from '@/components/ui/button';
 import { Progress } from '@/components/ui/progress';
 import { Ratings } from '@/components/ui/rating';
 import { Spinner } from '@/components/ui/spinner';
-import { AuthDialog, useAuth } from '@/modules/auth';
-import { ProductCommentDialog } from '@/modules/product';
+import { useAuth } from '@/modules/auth';
+import { ProductCommentDialog, useCanReviewProduct } from '@/modules/product';
 
 import { CommentReplies } from './components/CommentReplies/CommentReplies';
 import { ReviewImageStrip } from './components/ReviewImageStrip';
@@ -25,6 +25,7 @@ export const ProductComments = ({ product }: Props) => {
   const formatDate = useFormatDate();
   const { state, functions } = useProductComments(product);
   const { user } = useAuth();
+  const canReview = useCanReviewProduct(product);
 
   // photos of every loaded review, shown together above the list
   const allImages = (state.comments ?? []).flatMap((comment) =>
@@ -44,16 +45,12 @@ export const ProductComments = ({ product }: Props) => {
       <div className='flex flex-col items-center'>
         <p className='mb-3 hidden text-3xl font-bold md:block'>{t('Customer reviews')}</p>
         <p className='text-muted-foreground mb-6 text-sm'>
-          {t('Be the first to review this product')}
+          {canReview ? t('Be the first to review this product') : t('No reviews yet')}
         </p>
-        {user ? (
+        {canReview && (
           <ProductCommentDialog asChild>
             <Button>{t('Write a review')}</Button>
           </ProductCommentDialog>
-        ) : (
-          <AuthDialog asChild>
-            <Button>{t('Write a review')}</Button>
-          </AuthDialog>
         )}
       </div>
     );
@@ -82,17 +79,11 @@ export const ProductComments = ({ product }: Props) => {
               )}
             </div>
           </div>
-          {!product.is_commented && (
+          {canReview && (
             <div className='mb-4 md:mb-8'>
-              {user ? (
-                <ProductCommentDialog asChild>
-                  <Button>{t('Write a review')}</Button>
-                </ProductCommentDialog>
-              ) : (
-                <AuthDialog asChild>
-                  <Button>{t('Write a review')}</Button>
-                </AuthDialog>
-              )}
+              <ProductCommentDialog asChild>
+                <Button>{t('Write a review')}</Button>
+              </ProductCommentDialog>
             </div>
           )}
         </div>

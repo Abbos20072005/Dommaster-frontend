@@ -74,6 +74,7 @@ const SubCategoryPage = async ({ params }: Props) => {
         />
         {/* all products of the sub-category, with the price and brand filters */}
         <ProductFilterPaginated
+          attributeCategoryIds={subCategory.product_item_categories.map((item) => item.id)}
           filters={getCatalogFilters(t, brands)}
           queries={{ sub_category: +subId }}
           hideCategories

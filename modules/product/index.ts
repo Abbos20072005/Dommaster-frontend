@@ -8,5 +8,6 @@ export { ProductListSkeleton } from './ProductListSkeleton';
 export { ProductQuestionDialog } from './ProductQuestionDialog/ProductQuestionDialog';
 export { ProductQuestionReplyForm } from './ProductQuestionReplyForm/ProductQuestionReplyForm';
 export { RecentlyViewedProducts } from './RecentlyViewedProducts/RecentlyViewedProducts';
+export { useCanReviewProduct } from './useCanReviewProduct';
 export { getStockStatus, LOW_STOCK_THRESHOLD } from './StockStatus/getStockStatus';
 export { StockStatus } from './StockStatus/StockStatus';

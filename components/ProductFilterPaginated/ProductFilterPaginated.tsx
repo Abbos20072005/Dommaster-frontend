@@ -19,13 +19,46 @@ import { MobileFilterDrawer, ProductsSortBySelect, SearchNotFound } from './comp
 import { resolveSortBy } from './constants';
 
 interface Props {
+  /** item categories whose attribute filters are shown (category / sub-category pages) */
+  attributeCategoryIds?: number[];
   filterDefaultValues?: FilterDefaultValues;
   filters: Filter[];
   hideCategories?: boolean;
   queries?: Partial<ProductRequest>;
 }
 
+const MAX_MERGED_FILTERS = 5;
+
+/** Same attribute of several item categories becomes one filter (values summed, range widened). */
+const mergeAttributeFilters = (lists: AttributeFilter[][]): AttributeFilter[] => {
+  const byKey = new Map<string, AttributeFilter>();
+
+  for (const filter of lists.flat()) {
+    const existing = byKey.get(filter.key);
+    if (!existing) {
+      byKey.set(filter.key, { ...filter, values: filter.values?.map((v) => ({ ...v })) });
+      continue;
+    }
+    if (filter.min !== undefined) existing.min = Math.min(existing.min ?? filter.min, filter.min);
+    if (filter.max !== undefined) existing.max = Math.max(existing.max ?? filter.max, filter.max);
+    for (const item of filter.values ?? []) {
+      const found = existing.values?.find((v) => v.value === item.value);
+      if (found) found.count += item.count;
+      else existing.values = [...(existing.values ?? []), { ...item }];
+    }
+  }
+
+  // a whole category has many attributes: keep the ones that cover the most products
+  const coverage = (filter: AttributeFilter) =>
+    (filter.values ?? []).reduce((sum, item) => sum + item.count, 0);
+
+  return [...byKey.values()]
+    .sort((a, b) => coverage(b) - coverage(a))
+    .slice(0, lists.length > 1 ? MAX_MERGED_FILTERS : undefined);
+};
+
 export const ProductFilterPaginated = ({
+  attributeCategoryIds,
   filterDefaultValues,
   filters,
   hideCategories,
@@ -68,14 +101,23 @@ export const ProductFilterPaginated = ({
   });
 
   // Kategoriya bo'yicha sozlangan atribut filtrlari (o'lcham, material, qadoq...)
-  const itemCategoryId = queries?.item_category;
+  const itemCategoryIds = React.useMemo(
+    () =>
+      attributeCategoryIds ?? (queries?.item_category ? [queries.item_category] : []),
+    [attributeCategoryIds, queries?.item_category]
+  );
   const getAttributeFiltersQuery = useQuery({
-    queryKey: ['itemCategoryFilters', itemCategoryId],
-    enabled: !!itemCategoryId,
+    queryKey: ['itemCategoryFilters', itemCategoryIds],
+    enabled: !!itemCategoryIds.length,
     staleTime: 5 * 60 * 1000,
-    queryFn: () => getItemCategoryFilters({ id: itemCategoryId! })
+    queryFn: async () =>
+      mergeAttributeFilters(
+        (await Promise.all(itemCategoryIds.map((id) => getItemCategoryFilters({ id })))).map(
+          (response) => response.data.result ?? []
+        )
+      )
   });
-  const attributeFilters = getAttributeFiltersQuery.data?.data.result;
+  const attributeFilters = getAttributeFiltersQuery.data;
 
   const products = getProductsQuery.data?.data.result.content || [];
 

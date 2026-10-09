@@ -21,7 +21,7 @@ const COUNT_MAX = 6;
 // Narx alohida slider bilan ishlaydi; qiymati yo'q filtr ko'rsatilmaydi
 const isVisible = (filter: AttributeFilter) => {
   if (filter.key === 'price') return false;
-  if (filter.type === 'checkbox') return !!filter.values?.length;
+  if (filter.type === 'checkbox') return (filter.values?.length ?? 0) > 1;
   if (filter.type === 'range') {
     return filter.min != null && filter.max != null && filter.min !== filter.max;
   }

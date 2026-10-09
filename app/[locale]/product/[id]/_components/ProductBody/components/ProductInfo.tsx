@@ -90,7 +90,7 @@ export const ProductInfo = ({ product, onNavigate }: Props) => {
               </span>
             </>
           ) : (
-            <span className='text-primary'>{t('Write a review')}</span>
+            <span className='text-muted-foreground'>{t('No reviews yet')}</span>
           )}
         </button>
         <button
