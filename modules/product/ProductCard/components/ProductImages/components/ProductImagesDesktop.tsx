@@ -13,7 +13,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
   const [tab, setTab] = React.useState(0);
 
   return (
-    <div className='relative hidden aspect-[4/5] overflow-hidden rounded-lg bg-white md:block'>
+    <div className='relative hidden aspect-square overflow-hidden rounded-lg bg-white md:block'>
       {product.images.map((image, i) => (
         <Image
           fill

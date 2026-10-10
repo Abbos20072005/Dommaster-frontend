@@ -52,7 +52,7 @@ export const ProductList = ({
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
-                  className='max-w-[170px] min-w-[170px]'
+                  className='max-w-[170px] min-w-[170px] border-0'
                   hideCart={hideCart}
                   hideControl={hideControl}
                   product={product}
@@ -65,10 +65,10 @@ export const ProductList = ({
               {products.map((product) => (
                 <CarouselItem
                   key={product.id}
-                  className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5'
+                  className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/7'
                 >
                   <ProductCard
-                    className='h-full'
+                    className='h-full border-0'
                     hideCart={hideCart}
                     hideControl={hideControl}
                     product={product}

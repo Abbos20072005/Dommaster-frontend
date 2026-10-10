@@ -30,7 +30,7 @@ export const ProductImagesMobile = ({ product }: Props) => {
       <Carousel setApi={setApi}>
         <CarouselContent className='ml-0'>
           {product.images.map((image, i) => (
-            <CarouselItem key={image.id} className='relative aspect-[4/5] pl-0'>
+            <CarouselItem key={image.id} className='relative aspect-square pl-0'>
               <Image
                 fill
                 alt={product.name || 'Buildex'}

@@ -44,7 +44,7 @@ export const ProductListSkeleton = ({
             {Array.from({ length: count }).map((_, index) => (
               <CarouselItem
                 key={index}
-                className='basis-[186px] sm:basis-1/2 md:basis-1/3 lg:basis-1/4 xl:basis-1/5'
+                className='basis-[186px] sm:basis-1/2 md:basis-1/3 lg:basis-1/7'
               >
                 <ProductCardSkeleton hideCart={hideCart} />
               </CarouselItem>
