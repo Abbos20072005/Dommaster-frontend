@@ -4,7 +4,7 @@ import { getBanners } from '@/utils/api/requests';
 
 export const BannerCarouselLoading = async () => {
   const bannersResponse = await getBanners({
-    config: { params: { placement: 'site_home', platform: 'site' } }
+    config: { params: { placement: 'home_top', platform: 'site' } }
   });
   const banners = bannersResponse.data.result;
 

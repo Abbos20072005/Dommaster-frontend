@@ -5,7 +5,8 @@ interface About {
 
 type AboutResponse = ApiResponse<About>;
 
-type BannerPlacement = 'app_home' | 'catalog' | 'home_bottom' | 'site_home';
+/** `home_top` is one list for the site and the app (the platform tells them apart). */
+type BannerPlacement = 'catalog' | 'home_bottom' | 'home_top';
 
 /** Where a banner leads; an unknown (newer) type is shown as a banner that is not clickable. */
 type BannerLinkType = 'badge' | 'brand' | 'category' | 'page' | 'product' | 'url' | (string & {});
@@ -87,6 +88,7 @@ interface Video {
 type VideosResponse = ApiResponse<Video[]>;
 type VideoResponse = ApiResponse<Video>;
 
-type Main = { type: 'addsbrands'; data: AddsBrand } | { type: 'banner'; data: Banner };
+/** `banners` — the bottom banners that follow a block: a list, shared out between the blocks. */
+type Main = { type: 'addsbrands'; data: AddsBrand } | { type: 'banners'; data: Banner[] };
 
 type MainResponse = ApiResponse<Main[]>;

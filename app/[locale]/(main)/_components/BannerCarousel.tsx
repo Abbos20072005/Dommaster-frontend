@@ -1,13 +1,5 @@
-import { AutoPlayCarousel } from '@/components/AutoPlayCarousel';
-import { BannerView } from '@/components/BannerView/BannerView';
+import { BannerSlider } from '@/components/BannerSlider/BannerSlider';
 import { BaseLayout } from '@/components/layout';
-import {
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious
-} from '@/components/ui/carousel';
-import { cn } from '@/lib/utils';
 import { getBanners } from '@/utils/api/requests';
 
 interface Props {
@@ -17,35 +9,16 @@ interface Props {
   bare?: boolean;
 }
 
-export const BannerCarousel = async ({ placement = 'site_home', bare }: Props) => {
+export const BannerCarousel = async ({ placement = 'home_top', bare }: Props) => {
   const bannersResponse = await getBanners({ config: { params: { placement, platform: 'site' } } });
   const banners = bannersResponse.data.result;
 
   // no banner — no place for it either
   if (!banners.length) return null;
 
-  const carousel = (
-    <AutoPlayCarousel delay={4000} opts={{ loop: banners.length > 1 }}>
-      <CarouselContent
-        className={cn('-ml-2 md:-ml-4', { 'justify-center': banners.length === 1 })}
-        noOverflowHiddenOnMobile
-      >
-        {banners.map((banner, index) => (
-          <CarouselItem key={`${banner.id}-${index}`} className='basis-full pl-2 md:pl-4'>
-            <BannerView banner={banner} priority={placement === 'site_home' && index === 0} />
-          </CarouselItem>
-        ))}
-      </CarouselContent>
-      {banners.length > 1 && (
-        <>
-          <CarouselPrevious className='hidden size-12 md:flex' />
-          <CarouselNext className='hidden size-12 md:flex' />
-        </>
-      )}
-    </AutoPlayCarousel>
-  );
+  const slider = <BannerSlider banners={banners} priority={placement === 'home_top'} />;
 
-  if (bare) return <div className='overflow-hidden'>{carousel}</div>;
+  if (bare) return <div className='overflow-hidden'>{slider}</div>;
 
-  return <BaseLayout className='overflow-hidden'>{carousel}</BaseLayout>;
+  return <BaseLayout className='overflow-hidden'>{slider}</BaseLayout>;
 };
