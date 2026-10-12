@@ -5,8 +5,7 @@ import { useTranslations } from 'next-intl';
 import { useParams } from 'next/navigation';
 import React from 'react';
 
-import { ViewAllButton } from '@/components/ViewAllButton';
-import { ProductList, ProductListSkeleton } from '@/modules/product';
+import { ProductListSkeleton, ProductSection } from '@/modules/product';
 import { getAuthorizedProductById, getProducts } from '@/utils/api/requests';
 
 /** how many products the carousel shows */
@@ -26,10 +25,10 @@ export const SameCategoryProducts = () => {
   // breadcrumbs are [category, sub-category, item category]
   const breadcrumbs = getProductByIdQuery.data?.data.result.breadcrumbs;
   const itemCategoryId = breadcrumbs?.[2]?.id;
-  const categoryHref =
-    breadcrumbs?.length && breadcrumbs.length >= 3
-      ? `/category/${breadcrumbs[0].id}/${breadcrumbs[1].id}/${breadcrumbs[2].id}`
-      : null;
+  // the page of the category: all of its products
+  const categoryHref = breadcrumbs?.[2]
+    ? `/category/${breadcrumbs[0].id}/${breadcrumbs[1].id}/${breadcrumbs[2].id}`
+    : '/catalog';
 
   const getProductsQuery = useQuery({
     queryKey: ['products', 'sameCategory', itemCategoryId],
@@ -53,11 +52,13 @@ export const SameCategoryProducts = () => {
 
   return (
     <section className='mt-8'>
-      <div className='flex items-center justify-between gap-3'>
-        <h2 className='text-lg font-bold md:text-2xl'>{t('More products from this category')}</h2>
-        {categoryHref && <ViewAllButton href={categoryHref} />}
-      </div>
-      <ProductList products={products} />
+      <ProductSection
+        href={categoryHref}
+        products={products}
+        title={
+          <h2 className='text-lg font-bold md:text-2xl'>{t('More products from this category')}</h2>
+        }
+      />
     </section>
   );
 };

@@ -4,8 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 
 import { BaseLayout } from '@/components/layout';
-import { ViewAllButton } from '@/components/ViewAllButton';
-import { ProductList, ProductListSkeleton } from '@/modules/product';
+import { ProductListSkeleton, ProductSection } from '@/modules/product';
 import { getMostSoldProducts } from '@/utils/api/requests';
 
 export const MostSoldProductsSection = () => {
@@ -35,11 +34,11 @@ export const MostSoldProductsSection = () => {
   return (
     <section>
       <BaseLayout>
-        <div className='flex items-center justify-between gap-3'>
-          <h2 className='text-lg font-bold md:text-2xl'>{t('Bestsellers')}</h2>
-          <ViewAllButton href='/search?sort_by=rating' />
-        </div>
-        <ProductList products={products} />
+        <ProductSection
+          href='/bestsellers'
+          products={products}
+          title={<h2 className='text-lg font-bold md:text-2xl'>{t('Bestsellers')}</h2>}
+        />
       </BaseLayout>
     </section>
   );

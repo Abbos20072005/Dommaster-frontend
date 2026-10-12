@@ -94,21 +94,26 @@ export const ProductImageCarousel = ({
         <div className='relative overflow-hidden bg-white md:rounded-xl'>
           <div
             ref={scrollerRef}
-            className={cn('flex snap-x snap-mandatory overflow-x-auto', HIDE_SCROLLBAR)}
+            className={cn(
+              'flex snap-x snap-mandatory items-center overflow-x-auto',
+              HIDE_SCROLLBAR
+            )}
             onScroll={onScroll}
           >
             {images.map((image, i) => (
               <button
                 key={image.id}
-                className='relative aspect-square w-full shrink-0 cursor-zoom-in snap-start'
+                className='relative w-full shrink-0 cursor-zoom-in snap-start'
                 aria-label={t('Zoom in')}
                 type='button'
                 onClick={() => setLightboxIndex(i)}
               >
                 <Image
-                  fill
                   alt={name}
-                  className='object-cover'
+                  // the photo is shown whole, with its own proportions
+                  className='h-auto w-full'
+                  height={0}
+                  width={0}
                   priority={i === 0}
                   sizes='(min-width: 768px) 520px, 100vw'
                   src={image.image}

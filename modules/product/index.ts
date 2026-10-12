@@ -5,6 +5,7 @@ export { ProductCommentDialog } from './ProductCommentDialog/ProductCommentDialo
 export { ProductCommentReplyForm } from './ProductCommentReplyForm/ProductCommentReplyForm';
 export { ProductList } from './ProductList/ProductList';
 export { ProductListSkeleton } from './ProductListSkeleton';
+export { ProductSection } from './ProductSection/ProductSection';
 export { ProductQuestionDialog } from './ProductQuestionDialog/ProductQuestionDialog';
 export { ProductQuestionReplyForm } from './ProductQuestionReplyForm/ProductQuestionReplyForm';
 export { RecentlyViewedProducts } from './RecentlyViewedProducts/RecentlyViewedProducts';

@@ -4,8 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
-import { ViewAllButton } from '@/components/ViewAllButton';
-import { ProductList } from '@/modules/product';
+import { ProductSection } from '@/modules/product';
 import { getMain } from '@/utils/api/requests';
 
 import { AddsBrandsSectionLoading } from './AddsBrandsSectionLoading';
@@ -28,13 +27,11 @@ export const AddsBrandsSection = () => {
     <section key={`${item.data.id}${item.type}`}>
       <BaseLayout>
         {item.type === 'addsbrands' ? (
-          <>
-            <div className='flex items-center justify-between gap-3'>
-              <h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2>
-              <ViewAllButton href={`/brand/${item.data.id}`} />
-            </div>
-            <ProductList products={item.data.products} />
-          </>
+          <ProductSection
+            href={`/collection/${item.data.id}`}
+            products={item.data.products}
+            title={<h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2>}
+          />
         ) : item.type === 'banner' ? (
           <a
             href={item.data.link}

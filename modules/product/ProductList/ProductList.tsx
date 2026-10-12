@@ -33,7 +33,9 @@ export const ProductList = ({
       {view === 'grid' && (
         <div
           className={cn(
-            'grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-x-3 gap-y-6 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] md:gap-x-4',
+            // 2 columns on a phone, 3 on a tablet, 5 on a laptop and wider. With fewer (wider) columns the
+// 288px high photo is cropped, so 5 is used from `lg`
+'grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:gap-x-4 lg:grid-cols-5',
             className
           )}
           {...props}

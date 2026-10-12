@@ -10,8 +10,7 @@ import type { Locale } from '@/i18n/routing';
 
 import { BaseLayout } from '@/components/layout';
 import { Skeleton } from '@/components/ui/skeleton';
-import { ViewAllButton } from '@/components/ViewAllButton';
-import { ProductList, ProductListSkeleton } from '@/modules/product';
+import { ProductListSkeleton, ProductSection } from '@/modules/product';
 import { getSaleMain } from '@/utils/api/requests';
 
 export const DiscountProductsSection = () => {
@@ -65,21 +64,27 @@ export const DiscountProductsSection = () => {
             src={sales.bg_image}
             width={1200}
           />
-          <div className='flex items-center justify-between gap-4 px-4'>
-            <div>
-              <p className='text-primary-foreground mb-1 text-sm'>
-                {format(sales.discount_from, 'dd MMMM', { locale: localeMap[locale as Locale] })} –{' '}
-                {format(sales.discount_to, 'dd MMMM', { locale: localeMap[locale as Locale] })}
-              </p>
-              <h2 className='text-primary-foreground text-lg font-bold md:text-2xl'>
-                {sales.name}
-              </h2>
-            </div>
-            <ViewAllButton href={`/sale/${sales.id}`} />
-          </div>
-          <div className='px-4 pb-4'>
-            <ProductList onDark className='py-2' products={sales.products} />
-          </div>
+          <ProductSection
+            onDark
+            headerClassName='px-4'
+            href={`/sale/${sales.id}`}
+            listClassName='px-4 pb-4'
+            products={sales.products}
+            title={
+              <div>
+                <p className='text-primary-foreground mb-1 text-sm'>
+                  {format(sales.discount_from, 'dd MMMM', {
+                    locale: localeMap[locale as Locale]
+                  })}{' '}
+                  –{' '}
+                  {format(sales.discount_to, 'dd MMMM', { locale: localeMap[locale as Locale] })}
+                </p>
+                <h2 className='text-primary-foreground text-lg font-bold md:text-2xl'>
+                  {sales.name}
+                </h2>
+              </div>
+            }
+          />
         </div>
       </BaseLayout>
     </section>
