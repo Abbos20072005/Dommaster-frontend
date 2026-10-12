@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
-import React from 'react';
+import React, { Suspense } from 'react';
 
+import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { Link } from '@/i18n/navigation';
 import { getCategories } from '@/utils/api/requests';
@@ -26,6 +27,9 @@ const CategoryPage = async () => {
       <MobileHeader />
       <BaseLayout className='mt-2 space-y-4 md:mt-4 md:space-y-8'>
         <h1 className='text-lg font-bold md:text-2xl lg:text-3xl'>{t('Catalog')}</h1>
+        <Suspense>
+          <BannerCarousel bare placement='catalog' />
+        </Suspense>
         <div className='grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2 md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] md:gap-4'>
           {categories.map((item) => (
             <Link

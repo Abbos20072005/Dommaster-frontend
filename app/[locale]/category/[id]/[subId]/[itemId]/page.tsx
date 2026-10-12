@@ -2,8 +2,9 @@ import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import React from 'react';
+import React, { Suspense } from 'react';
 
+import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
 import {
@@ -100,6 +101,9 @@ const ItemCategoryPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{itemCategory.name}</h1>
+        <Suspense>
+          <BannerCarousel bare placement='catalog' />
+        </Suspense>
         <ProductFilterPaginated
           filters={filters}
           queries={{ item_category: +itemId }}

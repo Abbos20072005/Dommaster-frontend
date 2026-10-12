@@ -1,8 +1,8 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import Image from 'next/image';
 
+import { BannerView } from '@/components/BannerView/BannerView';
 import { BaseLayout } from '@/components/layout';
 import { ProductSection } from '@/modules/product';
 import { getMain } from '@/utils/api/requests';
@@ -33,27 +33,7 @@ export const AddsBrandsSection = () => {
             title={<h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2>}
           />
         ) : item.type === 'banner' ? (
-          <a
-            href={item.data.link}
-            className='block aspect-[3/1] md:aspect-[6/1]'
-            rel='noreferrer noopenner'
-            target='_blank'
-          >
-            <Image
-              alt={item.data.title || 'Buildex'}
-              className='size-full rounded-lg object-cover md:hidden md:rounded-xl'
-              height={230}
-              src={item.data.mobile_image}
-              width={690}
-            />
-            <Image
-              alt={item.data.title || 'Buildex'}
-              className='hidden size-full rounded-lg object-cover md:block md:rounded-xl'
-              height={413}
-              src={item.data.desktop_image}
-              width={1240}
-            />
-          </a>
+          <BannerView banner={item.data} />
         ) : null}
       </BaseLayout>
     </section>

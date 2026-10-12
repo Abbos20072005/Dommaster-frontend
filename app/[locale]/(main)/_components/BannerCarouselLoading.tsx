@@ -3,7 +3,9 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { getBanners } from '@/utils/api/requests';
 
 export const BannerCarouselLoading = async () => {
-  const bannersResponse = await getBanners();
+  const bannersResponse = await getBanners({
+    config: { params: { placement: 'site_home', platform: 'site' } }
+  });
   const banners = bannersResponse.data.result;
 
   if (!banners.length) return null;

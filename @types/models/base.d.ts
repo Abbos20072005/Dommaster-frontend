@@ -5,12 +5,27 @@ interface About {
 
 type AboutResponse = ApiResponse<About>;
 
+type BannerPlacement = 'app_home' | 'catalog' | 'home_bottom' | 'site_home';
+
+/** Where a banner leads; an unknown (newer) type is shown as a banner that is not clickable. */
+type BannerLinkType = 'badge' | 'brand' | 'category' | 'page' | 'product' | 'url' | (string & {});
+
 interface Banner {
+  /** what the banner opens: `model` is `productcategory`, `productsubcategory`, `productitemcategory`, `product`, `brand` or `productbadge` */
+  content_type_info?: { id: number; model: string } | null;
+  /** wide picture (16:5), always there */
   desktop_image: string;
   id: number;
+  /** external address, for `link_type: 'url'` */
   link: string;
-  mobile_image: string;
-  short_description: string | null;
+  link_type?: BannerLinkType;
+  /** square picture (1:1); null — use `desktop_image` */
+  mobile_image: string | null;
+  /** inner path (`/pro`), for `link_type: 'page'` */
+  page?: string;
+  placement?: BannerPlacement;
+  short_description?: string | null;
+  /** internal name: for `alt`, not for the text on the banner */
   title: string;
 }
 
