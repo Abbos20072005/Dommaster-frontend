@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Image from 'next/image';
 
 import { BaseLayout } from '@/components/layout';
+import { ViewAllButton } from '@/components/ViewAllButton';
 import { ProductList } from '@/modules/product';
 import { getMain } from '@/utils/api/requests';
 
@@ -30,12 +31,7 @@ export const AddsBrandsSection = () => {
           <>
             <div className='flex items-center justify-between gap-3'>
               <h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2>
-              {/*<Button asChild size='sm' variant='muted'>*/}
-              {/*  <Link href={`/brand/${item.data.id}`} scroll>*/}
-              {/*    {t('View all')}*/}
-              {/*    <ArrowRightIcon />*/}
-              {/*  </Link>*/}
-              {/*</Button>*/}
+              <ViewAllButton href={`/brand/${item.data.id}`} />
             </div>
             <ProductList products={item.data.products} />
           </>

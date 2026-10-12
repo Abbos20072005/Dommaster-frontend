@@ -15,12 +15,15 @@ type Props = React.ComponentProps<'div'> & {
   products: Product[];
   hideCart?: boolean;
   hideControl?: boolean;
+  /** the list lies on a dark background: light text */
+  onDark?: boolean;
 };
 
 export const ProductList = ({
   view = 'carousel',
   hideControl,
   hideCart,
+  onDark,
   products,
   className,
   ...props
@@ -30,7 +33,7 @@ export const ProductList = ({
       {view === 'grid' && (
         <div
           className={cn(
-            'grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] md:gap-4',
+            'grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-x-3 gap-y-6 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] md:gap-x-4',
             className
           )}
           {...props}
@@ -40,6 +43,7 @@ export const ProductList = ({
               key={product.id}
               hideCart={hideCart}
               hideControl={hideControl}
+              onDark={onDark}
               product={product}
             />
           ))}
@@ -48,13 +52,14 @@ export const ProductList = ({
       {view === 'carousel' && (
         <>
           <div className={cn('relative overflow-y-auto py-4 md:hidden', className)} {...props}>
-            <div className='flex gap-2'>
+            <div className='flex gap-3'>
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
-                  className='max-w-[170px] min-w-[170px] border-0'
+                  className='max-w-[170px] min-w-[170px]'
                   hideCart={hideCart}
                   hideControl={hideControl}
+                  onDark={onDark}
                   product={product}
                 />
               ))}
@@ -65,12 +70,13 @@ export const ProductList = ({
               {products.map((product) => (
                 <CarouselItem
                   key={product.id}
-                  className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/7'
+                  className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/6'
                 >
                   <ProductCard
-                    className='h-full border-0'
+                    className='h-full'
                     hideCart={hideCart}
                     hideControl={hideControl}
+                    onDark={onDark}
                     product={product}
                   />
                 </CarouselItem>

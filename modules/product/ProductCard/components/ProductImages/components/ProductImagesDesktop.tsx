@@ -13,13 +13,13 @@ export const ProductImagesDesktop = ({ product }: Props) => {
   const [tab, setTab] = React.useState(0);
 
   return (
-    <div className='relative hidden aspect-square overflow-hidden rounded-lg bg-white md:block'>
+    <div className='relative hidden h-[288px] overflow-hidden rounded-xl bg-white group-data-[on-dark]/card:rounded-none md:block'>
       {product.images.map((image, i) => (
         <Image
           fill
           key={image.id}
           alt={product.name || 'Buildex'}
-          className={cn('object-contain', { hidden: tab !== i })}
+          className={cn('object-cover', { hidden: tab !== i })}
           priority={i === 0}
           sizes='(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, 33vw'
           src={image.image}

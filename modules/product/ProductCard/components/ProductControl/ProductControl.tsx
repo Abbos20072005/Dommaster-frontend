@@ -59,7 +59,7 @@ export const ProductControl = ({ product, className, withLabel }: Props) => {
       className={cn(
         withLabel
           ? 'bg-background text-foreground hover:bg-muted flex h-10 w-full items-center justify-center gap-2 rounded-lg border text-sm font-medium transition-colors'
-          : 'bg-background/90 text-muted-foreground flex size-8 items-center justify-center rounded-full shadow-sm hover:text-red-500',
+          : 'bg-background/90 text-foreground/60 flex size-8 items-center justify-center rounded-full shadow-sm hover:text-red-500',
         { 'text-red-500': isFav && !withLabel },
         className
       )}

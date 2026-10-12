@@ -9,9 +9,8 @@ import Image from 'next/image';
 import type { Locale } from '@/i18n/routing';
 
 import { BaseLayout } from '@/components/layout';
-import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
-import { Link } from '@/i18n/navigation';
+import { ViewAllButton } from '@/components/ViewAllButton';
 import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { getSaleMain } from '@/utils/api/requests';
 
@@ -76,14 +75,11 @@ export const DiscountProductsSection = () => {
                 {sales.name}
               </h2>
             </div>
-            <Button className='hidden md:block' variant='outline'>
-              <Link href={`/sale/${sales.id}`}>{t('View all')}</Link>
-            </Button>
+            <ViewAllButton href={`/sale/${sales.id}`} />
           </div>
-          <ProductList className='py-2' products={sales.products} />
-          <Button className='mb-4 w-full md:hidden' size='sm' variant='outline'>
-            <Link href={`/sale/${sales.id}`}>{t('View all')}</Link>
-          </Button>
+          <div className='px-4 pb-4'>
+            <ProductList onDark className='py-2' products={sales.products} />
+          </div>
         </div>
       </BaseLayout>
     </section>

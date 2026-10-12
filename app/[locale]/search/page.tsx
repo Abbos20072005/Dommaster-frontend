@@ -61,7 +61,7 @@ const SearchPage = async ({ searchParams }: Props) => {
       <MobileHeader />
       <BaseLayout className='mt-2 md:mt-4'>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>
-          {t('Search results for: {search}', { search: q })}
+          {q ? t('Search results for: {search}', { search: q }) : t('Catalog')}
         </h1>
         <ProductFilterPaginated filters={filters} />
       </BaseLayout>

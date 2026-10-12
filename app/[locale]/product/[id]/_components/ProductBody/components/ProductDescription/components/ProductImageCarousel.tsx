@@ -71,8 +71,8 @@ export const ProductImageCarousel = ({
             <button
               key={image.id}
               className={cn(
-                'relative size-16 overflow-hidden rounded-lg border bg-white p-1 transition-colors',
-                i === index ? 'border-primary' : 'hover:border-foreground/30'
+                'relative size-16 overflow-hidden rounded-lg bg-white opacity-70 transition',
+                i === index ? 'ring-primary opacity-100 ring-2' : 'hover:opacity-100'
               )}
               aria-label={`${name} ${i + 1}`}
               type='button'
@@ -81,7 +81,7 @@ export const ProductImageCarousel = ({
               <Image
                 fill
                 alt={name}
-                className='object-contain p-1'
+                className='object-cover'
                 sizes='64px'
                 src={image.image}
               />
@@ -91,7 +91,7 @@ export const ProductImageCarousel = ({
       )}
 
       <div className='min-w-0 space-y-2'>
-        <div className='relative overflow-hidden bg-white md:rounded-xl md:border'>
+        <div className='relative overflow-hidden bg-white md:rounded-xl'>
           <div
             ref={scrollerRef}
             className={cn('flex snap-x snap-mandatory overflow-x-auto', HIDE_SCROLLBAR)}
@@ -108,7 +108,7 @@ export const ProductImageCarousel = ({
                 <Image
                   fill
                   alt={name}
-                  className='object-contain'
+                  className='object-cover'
                   priority={i === 0}
                   sizes='(min-width: 768px) 520px, 100vw'
                   src={image.image}
