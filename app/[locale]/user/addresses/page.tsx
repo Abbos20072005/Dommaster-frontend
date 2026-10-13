@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
 
-import { Card } from '@/components/ui/card';
 import { AuthWrapper } from '@/modules/auth';
 
 import { AddressList } from './_components';
@@ -21,10 +20,12 @@ const AddressesPage = async () => {
       <div className='mb-4 flex h-12 items-center border-b md:hidden'>
         <h1 className='flex-1 text-center font-bold md:hidden'>{t('My addresses')}</h1>
       </div>
-      <Card className='px-4 border-0 md:p-5 md:border'>
-        <h1 className='mb-3 hidden text-2xl font-bold md:block'>{t('My addresses')}</h1>
+      <div className='grid gap-5 px-4 md:px-0'>
+        <h1 className='hidden text-[32px] leading-[38px] font-bold tracking-tight md:block'>
+          {t('My addresses')}
+        </h1>
         <AddressList />
-      </Card>
+      </div>
     </AuthWrapper>
   );
 };

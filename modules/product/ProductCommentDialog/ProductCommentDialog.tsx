@@ -29,9 +29,11 @@ import { CommentForm } from './components';
 interface Props extends React.ComponentProps<typeof DialogTrigger> {
   children: React.ReactNode;
   defaultValues?: ProductComment;
+  /** the product to review when the dialog is not on the product page */
+  productId?: number;
 }
 
-export const ProductCommentDialog = ({ children, defaultValues, ...props }: Props) => {
+export const ProductCommentDialog = ({ children, defaultValues, productId, ...props }: Props) => {
   const t = useTranslations();
   const [open, setOpen] = React.useState(false);
   const [openDelete, setOpenDelete] = React.useState(false);
@@ -88,7 +90,11 @@ export const ProductCommentDialog = ({ children, defaultValues, ...props }: Prop
             </AlertDialog>
           )}
         </DialogHeader>
-        <CommentForm defaultValues={defaultValues} onSuccess={() => setOpen(false)} />
+        <CommentForm
+          defaultValues={defaultValues}
+          productId={productId}
+          onSuccess={() => setOpen(false)}
+        />
       </DialogContent>
     </Dialog>
   );

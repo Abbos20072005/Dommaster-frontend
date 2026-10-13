@@ -6,9 +6,9 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { OrderList } from '@/app/[locale]/user/orders/_components';
-import { EmptyState } from '@/components/EmptyState';
+import { OrdersEmpty } from '@/app/[locale]/user/orders/_components/OrdersEmpty';
 import { Button } from '@/components/ui/button';
-import { Spinner } from '@/components/ui/spinner';
+import { Skeleton } from '@/components/ui/skeleton';
 import { getOrdersActive } from '@/utils/api/requests';
 
 export const OrdersActive = () => {
@@ -29,18 +29,33 @@ export const OrdersActive = () => {
 
   if (getOrdersActiveQuery.isLoading) {
     return (
-      <div className='flex justify-center py-20'>
-        <Spinner />
+      <div className='grid gap-4' aria-busy='true'>
+        {[0, 1, 2].map((index) => (
+          <Skeleton key={index} className='h-52 w-full rounded-xl' />
+        ))}
+      </div>
+    );
+  }
+
+  if (getOrdersActiveQuery.isError) {
+    return (
+      <div className='grid gap-3 py-10 text-center' role='alert'>
+        <p className='text-xl font-bold'>{t('Could not load orders')}</p>
+        <p className='text-muted-foreground text-sm'>{t('Network error, orders unchanged')}</p>
+        <div>
+          <Button onClick={() => getOrdersActiveQuery.refetch()}>{t('Try again')}</Button>
+        </div>
       </div>
     );
   }
 
   if (orders?.length === 0 || !orders) {
     return (
-      <EmptyState
+      <OrdersEmpty
         action={{ href: '/catalog', label: t('Go to catalog') }}
-        description={t('Choose products in the catalog and place an order')}
+        description={t('Active orders description')}
         icon={<PackageIcon />}
+        secondary={{ href: '/user/orders/history', label: t('Open history') }}
         title={t('No active orders')}
       />
     );

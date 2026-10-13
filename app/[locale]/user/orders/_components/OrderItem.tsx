@@ -1,103 +1,190 @@
 'use client';
 
-import { useFormatDate } from '@/hooks';
-import { XIcon } from 'lucide-react';
+import {
+  BoxIcon,
+  CheckIcon,
+  ClockIcon,
+  CreditCardIcon,
+  MapPinIcon,
+  TruckIcon,
+  WalletIcon,
+  XIcon
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle
-} from '@/components/ui/card';
+import { useFormatDate } from '@/hooks';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
-import {
-  getPaymentLabel,
-  orderStatusColorMap,
-  orderStatusMap
-} from '@/utils/constants/orderStatus';
+import { getPaymentLabel, orderStatusMap } from '@/utils/constants/orderStatus';
 
 import { OrderCancelAction } from './OrderCancelAction';
 import { PayOrderDialog } from './PayOrderDialog';
+import { useRepeatOrder } from './useRepeatOrder';
 
 interface Props {
   order: OrderPreview;
 }
+
+const STATUS_STYLE: Record<OrderStatus, string> = {
+  0: 'bg-muted text-foreground/70',
+  1: 'bg-[#FFF7DB] text-[#7A5600]',
+  2: 'bg-primary/10 text-primary',
+  3: 'bg-[#E6F6EC] text-[#12703C]',
+  4: 'bg-[#FDECEC] text-[#B42318]'
+};
+
+const STATUS_ICON: Record<OrderStatus, React.ComponentType<{ className?: string }>> = {
+  0: ClockIcon,
+  1: BoxIcon,
+  2: TruckIcon,
+  3: CheckIcon,
+  4: XIcon
+};
 
 export const OrderItem = ({ order }: Props) => {
   const t = useTranslations();
   const formatDate = useFormatDate();
   const pathname = usePathname();
   const url = `${pathname}/${order.id}`;
+  const isDone = order.status === 3 || order.status === 4;
+  const isOnline = order.payment_type !== 4;
+  const StatusIcon = STATUS_ICON[order.status];
+  const extra = order.order_items.length - 4;
+
+  const repeatMutation = useRepeatOrder(order.id);
 
   return (
-    <Card variant='outline'>
-      <Link href={url}>
-        <CardHeader className='flex flex-row items-start justify-between space-y-0 border-b p-4'>
-          <div className='space-y-1'>
-            <CardTitle className='text-base sm:leading-none md:text-lg'>
-              {t('Order')} #{order.id}
-            </CardTitle>
-            <CardDescription>
-              {formatDate(order.created_at, 'dd MMM')} - {order.order_location?.name}
-            </CardDescription>
-            <CardDescription className='text-muted-foreground/70 text-xs'>
+    <article className='border-border grid gap-4 rounded-xl border bg-white px-6 py-5'>
+      <div className='flex items-center justify-between gap-4'>
+        <div className='flex items-baseline gap-3'>
+          <Link
+            href={url}
+            className='hover:text-primary text-[17px] leading-6 font-bold transition-colors'
+          >
+            {t('Order')} №{order.id}
+          </Link>
+          <span className='text-muted-foreground text-sm'>
+            {formatDate(order.created_at, 'dd MMMM yyyy')}
+          </span>
+        </div>
+        <span
+          className={cn(
+            'inline-flex h-7 items-center gap-1.5 rounded-lg px-2.5 text-[13px] font-bold',
+            STATUS_STYLE[order.status]
+          )}
+        >
+          <StatusIcon className='size-4' />
+          {t(orderStatusMap[order.status])}
+        </span>
+      </div>
+
+      <div className='grid grid-cols-[minmax(0,1fr)_auto] items-end gap-8'>
+        <div className='grid min-w-0 gap-3.5'>
+          <div className='flex items-center gap-2'>
+            {order.order_items.slice(0, 4).map((item) => (
+              <span
+                key={item.id}
+                className='border-border relative size-14 shrink-0 overflow-hidden rounded-lg border bg-white'
+              >
+                <Image
+                  fill
+                  alt='Buildex'
+                  className='object-contain p-1'
+                  sizes='56px'
+                  src={item.image}
+                />
+              </span>
+            ))}
+            {extra > 0 && (
+              <span className='bg-[#EDF0F5] flex size-14 shrink-0 items-center justify-center rounded-lg text-sm font-bold text-[#333C49]'>
+                +{extra}
+              </span>
+            )}
+            <span className='ml-2 text-sm whitespace-nowrap text-[#4A5563]'>
+              {t('{count} products', { count: order.order_items.length })}
+            </span>
+          </div>
+          <div className='grid gap-1.5 text-sm leading-5 text-[#333C49]'>
+            {order.order_location?.name && (
+              <span className='flex min-w-0 items-center gap-2'>
+                <MapPinIcon className='size-4 shrink-0 text-[#6B7685]' />
+                <span className='truncate' title={order.order_location.name}>
+                  {order.order_location.name}
+                </span>
+              </span>
+            )}
+            <span className='flex flex-wrap items-center gap-2'>
+              {isOnline ? (
+                <CreditCardIcon className='size-4 text-[#6B7685]' />
+              ) : (
+                <WalletIcon className='size-4 text-[#6B7685]' />
+              )}
               {getPaymentLabel(t, order.payment_type, order.payment_method)}
-            </CardDescription>
-          </div>
-          <div className='flex flex-col-reverse items-end gap-1 sm:flex-row sm:items-center sm:gap-2'>
-            <span className='text-sm'>
-              <Badge className={cn(orderStatusColorMap[order.status])} variant='outline'>
-                {t(orderStatusMap[order.status])}
-              </Badge>
+              {isOnline && (
+                <>
+                  <span className='text-[#CBD2DB]'>·</span>
+                  <span
+                    className={cn(
+                      'inline-flex items-center gap-1 font-semibold',
+                      order.status === 0 ? 'text-[#7A5600]' : 'text-[#12703C]'
+                    )}
+                  >
+                    {order.status === 0 ? (
+                      <ClockIcon className='size-3.5' />
+                    ) : (
+                      <CheckIcon className='size-3.5' strokeWidth={2.4} />
+                    )}
+                    {order.status === 0 ? t('Awaiting payment') : t('Paid')}
+                  </span>
+                </>
+              )}
             </span>
-            <span className='font-bold'>
-              {formatPrice(order.total_price)} {t('sum')}
-            </span>
           </div>
-        </CardHeader>
-      </Link>
-      <Link href={url}>
-        <CardContent className='flex gap-2 overflow-x-auto p-4'>
-          {order.order_items.map((item) => (
-            <div key={item.id} className='flex shrink-0 items-center justify-between'>
-              <Image
-                alt={item.image || 'Buildex'}
-                className='bg-muted size-[60px] rounded-sm object-contain sm:size-[80px]'
-                height={80}
-                src={item.image}
-                width={80}
-              />
-            </div>
-          ))}
-        </CardContent>
-      </Link>
-      <CardFooter className='flex flex-wrap gap-2 px-4 pb-4'>
-        <Button asChild size='sm' variant='muted'>
-          <Link href={url}>{t('Order details')}</Link>
-        </Button>
+        </div>
+        <div className='grid justify-items-end text-right'>
+          <span className='text-muted-foreground text-[13px] leading-[18px]'>{t('Total')}</span>
+          <span className='text-2xl leading-[30px] font-bold whitespace-nowrap tabular-nums'>
+            {formatPrice(order.total_price)} <span className='text-base'>{t('sum')}</span>
+          </span>
+        </div>
+      </div>
+
+      <div className='border-border flex items-center justify-end gap-2 border-t pt-4'>
         {order.status === 0 && (
           <>
-            <PayOrderDialog orderId={order.id}>
-              <Button size='sm' variant='primaryFlat'>
-                {t('Pay order')}
-              </Button>
-            </PayOrderDialog>
             <OrderCancelAction asChild orderId={order.id}>
               <Button size='sm' variant='destructiveFlat'>
                 <XIcon />
                 {t('Cancel')}
               </Button>
             </OrderCancelAction>
+            <PayOrderDialog orderId={order.id}>
+              <Button size='sm' variant='primaryFlat'>
+                {t('Pay order')}
+              </Button>
+            </PayOrderDialog>
           </>
         )}
-      </CardFooter>
-    </Card>
+        {!isDone && order.status !== 0 && (
+          <Button asChild size='sm' variant='outline'>
+            <Link href='/about'>{t('Help')}</Link>
+          </Button>
+        )}
+        <Button asChild size='sm' variant={isDone ? 'outline' : 'default'}>
+          <Link href={url}>{t('Details')}</Link>
+        </Button>
+        {isDone && (
+          <Button
+            isLoading={repeatMutation.isPending}
+            size='sm'
+            onClick={() => repeatMutation.mutate()}
+          >
+            {t('Repeat order')}
+          </Button>
+        )}
+      </div>
+    </article>
   );
 };

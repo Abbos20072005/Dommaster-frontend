@@ -1,0 +1,1 @@
+export { PersonalInfoView } from './PersonalInfoView';

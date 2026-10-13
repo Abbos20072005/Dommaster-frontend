@@ -32,11 +32,12 @@ import { useCommentForm } from './hooks';
 interface Props {
   defaultValues?: ProductComment;
   onSuccess?: (data: ProductCommentResponse) => void;
+  productId?: number;
 }
 
-export const CommentForm = ({ onSuccess, defaultValues }: Props) => {
+export const CommentForm = ({ onSuccess, defaultValues, productId }: Props) => {
   const t = useTranslations();
-  const { form, state, functions } = useCommentForm({ onSuccess, defaultValues });
+  const { form, state, functions } = useCommentForm({ onSuccess, defaultValues, productId });
 
   return (
     <Form {...form}>

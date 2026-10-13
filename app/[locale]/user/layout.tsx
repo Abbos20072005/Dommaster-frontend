@@ -20,8 +20,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const UserLayout = async ({ children }: { children: React.ReactNode }) => {
   return (
-    <BaseLayout className='px-0 md:mt-4'>
-      <div className='gap-6 md:flex'>
+    <BaseLayout className='px-0 md:mt-5'>
+      <div className='items-start gap-8 md:flex'>
         <SideNav />
         <main className='min-w-0 flex-1'>{children}</main>
       </div>

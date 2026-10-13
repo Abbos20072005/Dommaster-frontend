@@ -12,11 +12,14 @@ import { commentFormSchema } from '../constants';
 interface Props {
   defaultValues?: ProductComment;
   onSuccess?: (data: ProductCommentResponse) => void;
+  /** the product to review when the form is not on the product page (the cabinet) */
+  productId?: number;
 }
 
-export const useCommentForm = ({ onSuccess, defaultValues }: Props) => {
+export const useCommentForm = ({ onSuccess, defaultValues, productId }: Props) => {
   const isEdit = !!defaultValues;
-  const { id } = useParams<{ id: string }>();
+  const params = useParams<{ id: string }>();
+  const id = productId ?? params.id;
   const form = useForm<CommentFormSchema>({
     resolver: zodResolver(commentFormSchema),
     defaultValues: {
@@ -32,6 +35,7 @@ export const useCommentForm = ({ onSuccess, defaultValues }: Props) => {
     onSuccess: ({ data }) => {
       queryClient.invalidateQueries({ queryKey: ['productComments'] });
       queryClient.invalidateQueries({ queryKey: ['myComments'] });
+      queryClient.invalidateQueries({ queryKey: ['pendingReviews'] });
       onSuccess?.(data);
     }
   });

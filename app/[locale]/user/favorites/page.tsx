@@ -5,7 +5,6 @@ import { getTranslations } from 'next-intl/server';
 import { Suspense } from 'react';
 
 import { MobileHeader } from '@/components/layout';
-import { Card } from '@/components/ui/card';
 import { ProductListSkeleton, RecentlyViewedProducts } from '@/modules/product';
 
 import { FavoriteProductList } from './_components';
@@ -22,12 +21,14 @@ const FavoritesPage = () => {
   return (
     <div className='space-y-2'>
       <MobileHeader />
-      <Card className='px-4 border-0 md:p-5 md:border'>
-        <h1 className='mb-4 text-lg font-bold md:text-2xl'>{t('Favorites')}</h1>
+      <div className='grid gap-5 px-4 md:px-0'>
+        <h1 className='text-lg font-bold md:text-[32px] md:leading-[38px] md:tracking-tight'>
+          {t('Favorites')}
+        </h1>
         <Suspense fallback={<ProductListSkeleton view='grid' count={3} />}>
           <FavoriteProductList />
         </Suspense>
-      </Card>
+      </div>
       <RecentlyViewedProducts className='pt-4' />
     </div>
   );
