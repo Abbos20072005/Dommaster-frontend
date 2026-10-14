@@ -288,6 +288,29 @@ export const OrderDetails = ({ scope }: Props) => {
                     {order.order_location.location_name}
                   </span>
                 )}
+                {/* the details are the order's own (copied at the time of the order), not the address's */}
+                {[
+                  order.apartment,
+                  order.entrance && `${t('Entrance')} ${order.entrance}`,
+                  order.floor && `${t('Floor')} ${order.floor}`,
+                  order.intercom && `${t('Intercom')} ${order.intercom}`
+                ].some(Boolean) && (
+                  <span className='text-muted-foreground block'>
+                    {[
+                      order.apartment,
+                      order.entrance && `${t('Entrance')} ${order.entrance}`,
+                      order.floor && `${t('Floor')} ${order.floor}`,
+                      order.intercom && `${t('Intercom')} ${order.intercom}`
+                    ]
+                      .filter(Boolean)
+                      .join(' · ')}
+                  </span>
+                )}
+                {order.courier_comment && (
+                  <span className='text-muted-foreground block italic'>
+                    {order.courier_comment}
+                  </span>
+                )}
               </dd>
               {user && (
                 <>

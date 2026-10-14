@@ -21,6 +21,11 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
     defaultValues: {
       name: defaultValues?.name || '',
       is_default: defaultValues?.is_default ?? false,
+      apartment: defaultValues?.apartment ?? '',
+      intercom: defaultValues?.intercom ?? '',
+      entrance: defaultValues?.entrance ?? '',
+      floor: defaultValues?.floor ?? '',
+      courier_comment: defaultValues?.courier_comment ?? '',
       address: defaultValues
         ? {
             location_name: defaultValues.location_name,
@@ -47,7 +52,16 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
   });
 
   const postUserMutation = useMutation({
-    mutationFn: postCustomerAddress,
+    // `POST` does not take `is_default`: the new default address is marked with `PATCH` afterwards
+    mutationFn: async ({ data }: { data: AddressRequest }) => {
+      const { is_default, ...rest } = data;
+      const response = await postCustomerAddress({ data: rest });
+      if (!is_default) return response;
+      return patchCustomerAddress({
+        id: response.data.result.id,
+        data: { is_default: true }
+      });
+    },
     onSuccess: ({ data }) => {
       onSuccess?.(data.result);
     },
@@ -60,6 +74,11 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
     const data: AddressRequest = {
       name: values.name,
       is_default: values.is_default,
+      apartment: values.apartment.trim(),
+      intercom: values.intercom.trim(),
+      entrance: values.entrance.trim(),
+      floor: values.floor.trim(),
+      courier_comment: values.courier_comment.trim(),
       location_name: values.address.location_name,
       latitude: values.address.latitude,
       longitude: values.address.longitude

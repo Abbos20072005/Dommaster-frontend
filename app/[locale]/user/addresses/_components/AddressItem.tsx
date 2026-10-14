@@ -34,6 +34,12 @@ export const AddressItem = ({ address, nextDefaultName }: Props) => {
     }
   });
 
+  const details = [
+    address.entrance && `${t('Entrance')} ${address.entrance}`,
+    address.floor && `${t('Floor')} ${address.floor}`,
+    address.intercom && `${t('Intercom')} ${address.intercom}`
+  ].filter(Boolean);
+
   const onDeleteAddress = () => {
     deleteAddressMutation.mutate({ id: address.id });
     setOpenDelete(false);
@@ -54,7 +60,20 @@ export const AddressItem = ({ address, nextDefaultName }: Props) => {
               </span>
             )}
           </div>
-          <p className='text-sm leading-5 text-[#4A5563]'>{address.location_name}</p>
+          <p className='text-sm leading-5 text-[#4A5563]'>
+            {address.location_name}
+            {address.apartment ? `, ${address.apartment}` : ''}
+          </p>
+          {details.length > 0 && (
+            <p className='text-muted-foreground text-[13px] leading-[18px]'>
+              {details.join(' · ')}
+            </p>
+          )}
+          {address.courier_comment && (
+            <p className='text-[13px] leading-[18px] text-[#4A5563] italic'>
+              {address.courier_comment}
+            </p>
+          )}
         </div>
       </div>
 

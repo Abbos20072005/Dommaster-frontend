@@ -16,6 +16,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { LocationSelectMap } from '@/modules/location/LocationSelectMap';
 
 import { useAddressForm } from './hooks';
@@ -112,19 +113,62 @@ export const AddressForm = ({ defaultValues, onSuccess }: Props) => {
               name='address'
               control={form.control}
             />
+            <div className='grid grid-cols-2 gap-x-3 gap-y-4'>
+              {(
+                [
+                  ['apartment', 'Apartment / office'],
+                  ['intercom', 'Intercom'],
+                  ['entrance', 'Entrance'],
+                  ['floor', 'Floor']
+                ] as const
+              ).map(([name, label]) => (
+                <FormField
+                  key={name}
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className='font-bold'>{t(label)}</FormLabel>
+                      <FormControl>
+                        <Input className='h-11' {...field} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                  name={name}
+                  control={form.control}
+                />
+              ))}
+            </div>
             <FormField
               render={({ field }) => (
-                <FormItem className='flex items-center gap-2 space-y-0'>
+                <FormItem>
+                  <FormLabel className='font-bold'>{t('Courier comment')}</FormLabel>
                   <FormControl>
+                    <Textarea
+                      maxLength={500}
+                      placeholder={t('Courier comment placeholder')}
+                      rows={3}
+                      {...field}
+                    />
+                  </FormControl>
+                  <FormDescription>{t('Courier comment hint')}</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+              name='courier_comment'
+              control={form.control}
+            />
+            <FormField
+              render={({ field }) => (
+                <FormItem>
+                  <label className='flex w-fit cursor-pointer items-center gap-2.5 text-sm leading-5'>
                     <Checkbox
                       checked={field.value}
+                      className='size-[18px] shrink-0'
                       disabled={defaultValues?.is_default}
                       onCheckedChange={(checked) => field.onChange(checked === true)}
                     />
-                  </FormControl>
-                  <FormLabel className='cursor-pointer text-sm font-normal'>
-                    {t('Make default')}
-                  </FormLabel>
+                    <span>{t('Make default')}</span>
+                  </label>
                 </FormItem>
               )}
               name='is_default'

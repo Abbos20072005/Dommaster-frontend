@@ -570,5 +570,12 @@
   "or write in": "yoki yozing:",
   "Error code": "Xato kodi",
   "Session expired": "Sessiya tugadi — qayta kiring",
-  "Session expired text": "Xavfsizlik uchun seansni tugatdik. Kirgandan so‘ng shu sahifaga qaytasiz."
+  "Session expired text": "Xavfsizlik uchun seansni tugatdik. Kirgandan so‘ng shu sahifaga qaytasiz.",
+  "Apartment / office": "Xonadon / ofis",
+  "Intercom": "Domofon",
+  "Entrance": "Podyezd",
+  "Floor": "Qavat",
+  "Courier comment": "Kuryer uchun izoh",
+  "Courier comment placeholder": "Masalan, yuk tushirish yon tomondan, yuk liftisi bor",
+  "Courier comment hint": "Og‘ir va yirik mahsulotlar uchun muhim: mashina kirishi, lift, tushirish vaqti"
 }

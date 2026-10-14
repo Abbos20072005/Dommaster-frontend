@@ -6,6 +6,11 @@ import { MAP } from '@/utils/constants';
 export const addressSchema = z.object({
   name: z.string().min(1, 'Fill the required field'),
   is_default: z.boolean(),
+  apartment: z.string().max(50),
+  intercom: z.string().max(50),
+  entrance: z.string().max(20),
+  floor: z.string().max(20),
+  courier_comment: z.string().max(500),
   address: z
     .object(
       {

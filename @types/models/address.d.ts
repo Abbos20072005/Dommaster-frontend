@@ -1,4 +1,13 @@
-interface Address {
+/** the delivery details of an address: empty values come as "" */
+interface AddressDetails {
+  apartment?: string;
+  courier_comment?: string;
+  entrance?: string;
+  floor?: string;
+  intercom?: string;
+}
+
+interface Address extends AddressDetails {
   id: number;
   is_default: boolean;
   latitude: number;
@@ -7,7 +16,8 @@ interface Address {
   name: string;
 }
 
-interface AddressRequest {
+interface AddressRequest extends AddressDetails {
+  /** `POST` does not accept it: a new default address is saved with `PATCH` afterwards */
   is_default?: boolean;
   latitude?: number;
   location_name?: string;

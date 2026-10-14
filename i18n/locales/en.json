@@ -544,5 +544,12 @@
   "or write in": "or write in",
   "Error code": "Error code",
   "Session expired": "The session expired — log in again",
-  "Session expired text": "For security we ended the session. After logging in you return to this page."
+  "Session expired text": "For security we ended the session. After logging in you return to this page.",
+  "Apartment / office": "Apartment / office",
+  "Intercom": "Intercom",
+  "Entrance": "Entrance",
+  "Floor": "Floor",
+  "Courier comment": "Comment for the courier",
+  "Courier comment placeholder": "For example, unloading from the side, there is a freight lift",
+  "Courier comment hint": "Important for heavy and bulky goods: car access, lift, unloading time"
 }

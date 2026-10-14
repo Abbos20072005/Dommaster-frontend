@@ -6,7 +6,16 @@ const enum OrderStatus {
   Canceled = 4
 }
 
-interface OrderPreview {
+/** copied from the address when the order is created: later changes of the address do not touch it */
+interface OrderAddressDetails {
+  apartment?: string;
+  courier_comment?: string;
+  entrance?: string;
+  floor?: string;
+  intercom?: string;
+}
+
+interface OrderPreview extends OrderAddressDetails {
   created_at: string;
   customer: User;
   id: number;
@@ -43,6 +52,8 @@ enum PaymentMethod {
 interface OrderRequest {
   address_id?: number;
   branch_id?: number;
+  /** where the order was placed: analytics ("Channels") relies on it */
+  channel?: 'site' | 'ios' | 'android';
   delivery_price?: string;
   delivery_type: DeliveryType;
   is_web: boolean;
