@@ -12,10 +12,11 @@ import { ProductListSkeleton } from '../ProductListSkeleton';
 
 interface Props {
   className?: string;
+  itemClassName?: string;
 }
 
 /** "Recently viewed products" carousel — shown to signed-in customers, hidden when empty. */
-export const RecentlyViewedProducts = ({ className }: Props) => {
+export const RecentlyViewedProducts = ({ className, itemClassName }: Props) => {
   const t = useTranslations();
   const { user } = useAuth();
   const getViewedProductsQuery = useQuery({
@@ -40,7 +41,7 @@ export const RecentlyViewedProducts = ({ className }: Props) => {
   return (
     <section className={className}>
       <h2 className='text-lg font-bold md:text-2xl'>{t('Recently viewed products')}</h2>
-      <ProductList products={viewedProducts} />
+      <ProductList itemClassName={itemClassName} products={viewedProducts} />
     </section>
   );
 };

@@ -2,7 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query';
 import {
-  ClockIcon,
   EyeIcon,
   HeartIcon,
   LogOutIcon,
@@ -26,6 +25,8 @@ interface NavItem {
   label: string;
   icon: React.ComponentType<{ className?: string }>;
   badge?: number;
+  /** the path prefix that keeps the item highlighted (defaults to href) */
+  match?: string;
   /** a pale badge (a count), not the blue one (something that waits for the customer) */
   badgeMuted?: boolean;
 }
@@ -47,7 +48,7 @@ const initialsOf = (name?: string) =>
 const maskPhone = (phone?: string) => {
   const digits = (phone ?? '').replace(/\D/g, '');
   if (digits.length < 12) return phone ?? '';
-  return `+${digits.slice(0, 3)} ${digits.slice(3, 5)} *** ** ${digits.slice(-2)}`;
+  return `+${digits.slice(0, 3)} ${digits.slice(3, 5)} ${digits.slice(5, 8)} ${digits.slice(8, 10)} ${digits.slice(10, 12)}`;
 };
 
 export const SideNav = () => {
@@ -77,9 +78,9 @@ export const SideNav = () => {
           href: '/user/orders/active',
           label: 'My orders',
           icon: PackageIcon,
-          badge: activeOrders || undefined
-        },
-        { href: '/user/orders/history', label: 'Purchase history', icon: ClockIcon }
+          badge: activeOrders || undefined,
+          match: '/user/orders'
+        }
       ]
     },
     {
@@ -135,12 +136,10 @@ export const SideNav = () => {
 
         {groups.map((group) =>
           group.authorized && !user ? null : (
-            <div key={group.title} className='grid gap-0.5 py-3'>
-              <span className='text-muted-foreground px-2 pb-1.5 text-xs font-bold tracking-wide uppercase'>
-                {t(group.title)}
-              </span>
+            <div key={group.title} className='grid gap-0.5 pt-3'>
               {group.items.map((item) => {
-                const isActive = pathname === item.href || pathname.startsWith(`${item.href}/`);
+                const base = item.match ?? item.href;
+                const isActive = pathname === base || pathname.startsWith(`${base}/`);
                 const Icon = item.icon;
 
                 return (
@@ -174,7 +173,7 @@ export const SideNav = () => {
         )}
 
         {user && (
-          <div className='border-border border-t pt-2'>
+          <div className='pt-0.5'>
             <button
               className='text-muted-foreground hover:bg-muted hover:text-foreground flex h-10 w-full items-center gap-3 rounded-lg px-2 text-sm transition-colors'
               type='button'

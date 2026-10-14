@@ -508,5 +508,10 @@
   "Logout question": "Log out of the account?",
   "Logout text": "You will need to log in again with your phone number on this device. The cart and the orders are kept.",
   "Stay": "Stay",
-  "Log out": "Log out"
+  "Log out": "Log out",
+  "Delete account": "Delete account",
+  "Delete account hint": "The profile, addresses, cart and saved cards will be deleted. This cannot be undone.",
+  "Delete account question": "Delete the account?",
+  "Delete account text": "The order history, addresses and cards will be deleted. This cannot be undone.",
+  "Account deleted": "The account is deleted"
 }

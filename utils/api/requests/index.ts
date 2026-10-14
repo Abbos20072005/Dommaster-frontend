@@ -27,6 +27,7 @@ export * from './favorites';
 export * from './main';
 export * from './orders';
 export * from './products';
+export * from './account';
 export * from './promos';
 export * from './questions';
 export * from './questions/reply';

@@ -29,7 +29,7 @@ const FavoritesPage = () => {
           <FavoriteProductList />
         </Suspense>
       </div>
-      <RecentlyViewedProducts className='pt-4' />
+      <RecentlyViewedProducts className='pt-4' itemClassName='lg:basis-1/5' />
     </div>
   );
 };

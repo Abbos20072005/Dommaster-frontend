@@ -534,5 +534,10 @@
   "Logout question": "Akkauntdan chiqasizmi?",
   "Logout text": "Bu qurilmada telefon raqami orqali qayta kirish kerak bo‘ladi. Savat va buyurtmalar saqlanadi.",
   "Stay": "Qolish",
-  "Log out": "Chiqish"
+  "Log out": "Chiqish",
+  "Delete account": "Akkauntni o‘chirish",
+  "Delete account hint": "Profil, manzillar, savat va saqlangan kartalar o‘chadi. Qaytarib bo‘lmaydi.",
+  "Delete account question": "Akkaunt o‘chirilsinmi?",
+  "Delete account text": "Buyurtmalar tarixi, manzillar va kartalar o‘chadi. Qaytarib bo‘lmaydi.",
+  "Account deleted": "Akkaunt o‘chirildi"
 }

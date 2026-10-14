@@ -1,10 +1,11 @@
 'use client';
 
-import { useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { AlertCircleIcon, LockIcon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import React from 'react';
+import { toast } from 'sonner';
 
 import type { Locale } from '@/i18n/routing';
 
@@ -32,6 +33,7 @@ import { useRouter } from '@/i18n/navigation';
 import { LOCALE_LABELS, routing } from '@/i18n/routing';
 import { cn, formatPhoneNumber } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
+import { deleteAccount, getDeleteButton } from '@/utils/api/requests';
 import { COOKIES } from '@/utils/constants';
 
 import { usePersonalInfoForm } from '../PersonalInfoForm/hooks';
@@ -101,6 +103,24 @@ export const PersonalInfoView = () => {
     reset();
     router.push('/');
   };
+
+  // the admin switches the button on and off
+  const canDelete = !!useQuery({
+    queryKey: ['deleteButton'],
+    queryFn: getDeleteButton,
+    staleTime: 0
+  }).data?.data.result.is_deleted;
+
+  // success is the 204 status; a 400 means the account is already gone: the same exit
+  const deleteAccountMutation = useMutation({
+    mutationFn: deleteAccount,
+    onSettled: (_data, error) => {
+      const status = (error as { response?: { status?: number } } | null)?.response?.status;
+      if (error && status !== 400) return;
+      toast.success(t('Account deleted'));
+      onLogout();
+    }
+  });
 
   const applyPhone = () => {
     form.setValue('phone_number', newPhone, { shouldDirty: true, shouldValidate: true });
@@ -245,42 +265,44 @@ export const PersonalInfoView = () => {
         )}
       </form>
 
-      <div className='mt-4 grid gap-3'>
-        <span className='text-muted-foreground text-xs font-bold tracking-wide uppercase'>
-          {t('Account management')}
-        </span>
-        <div className='border-border flex flex-col gap-4 rounded-xl border bg-white p-5 md:flex-row md:items-center md:justify-between md:gap-6 md:px-6'>
+      {canDelete && (
+        <div className='border-border mt-4 flex flex-col gap-4 rounded-xl border bg-white p-5 md:flex-row md:items-center md:justify-between md:gap-6 md:px-6'>
           <span className='grid gap-0.5'>
-            <span className='text-[15px] leading-[22px] font-bold'>{t('Log out of account')}</span>
+            <span className='text-[15px] leading-[22px] font-bold'>{t('Delete account')}</span>
             <span className='text-muted-foreground text-[13px] leading-[18px]'>
-              {t('Log out hint')}
+              {t('Delete account hint')}
             </span>
           </span>
           <AlertDialog>
             <AlertDialogTrigger asChild>
-              <Button className='h-11 w-full px-5 md:w-auto' type='button' variant='muted'>
-                {t('Log out of account')}
+              <Button className='h-11 w-full px-5 md:w-auto' type='button' variant='ghostDestructive'>
+                {t('Delete account')}
               </Button>
             </AlertDialogTrigger>
             <AlertDialogContent>
               <AlertDialogHeader>
                 <AlertDialogTitle className='text-xl leading-[26px] font-bold'>
-                  {t('Logout question')}
+                  {t('Delete account question')}
                 </AlertDialogTitle>
                 <AlertDialogDescription className='text-sm leading-5 text-[#4A5563]'>
-                  {t('Logout text')}
+                  {t('Delete account text')}
                 </AlertDialogDescription>
               </AlertDialogHeader>
               <AlertDialogFooter>
-                <AlertDialogCancel className='h-11 px-5'>{t('Stay')}</AlertDialogCancel>
-                <Button className='h-11 px-5' variant='destructive' onClick={onLogout}>
-                  {t('Log out')}
+                <AlertDialogCancel className='h-11 px-5'>{t('Cancel')}</AlertDialogCancel>
+                <Button
+                  className='h-11 px-5'
+                  variant='destructive'
+                  isLoading={deleteAccountMutation.isPending}
+                  onClick={() => deleteAccountMutation.mutate()}
+                >
+                  {t('Delete')}
                 </Button>
               </AlertDialogFooter>
             </AlertDialogContent>
           </AlertDialog>
         </div>
-      </div>
+      )}
 
       <Dialog open={phoneOpen} onOpenChange={setPhoneOpen}>
         <DialogContent className='sm:max-w-[460px]'>

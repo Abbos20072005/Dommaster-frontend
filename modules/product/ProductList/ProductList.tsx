@@ -17,6 +17,8 @@ type Props = React.ComponentProps<'div'> & {
   hideControl?: boolean;
   /** the list lies on a dark background: light text */
   onDark?: boolean;
+  /** overrides the carousel item width, e.g. `lg:basis-1/5` next to a side menu */
+  itemClassName?: string;
 };
 
 export const ProductList = ({
@@ -26,6 +28,7 @@ export const ProductList = ({
   onDark,
   products,
   className,
+  itemClassName,
   ...props
 }: Props) => {
   return (
@@ -72,7 +75,10 @@ export const ProductList = ({
               {products.map((product) => (
                 <CarouselItem
                   key={product.id}
-                  className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/6'
+                  className={cn(
+                    'basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/6',
+                    itemClassName
+                  )}
                 >
                   <ProductCard
                     className='h-full'
