@@ -5,6 +5,7 @@ import { MAP } from '@/utils/constants';
 
 export const addressSchema = z.object({
   name: z.string().min(1, 'Fill the required field'),
+  is_default: z.boolean(),
   address: z
     .object(
       {

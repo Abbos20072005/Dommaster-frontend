@@ -6,6 +6,7 @@ import React from 'react';
 import { BaseLayout } from '@/components/layout';
 
 import { SideNav } from './_components';
+import { SessionExpiredDialog } from './_components/SessionExpiredDialog';
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
 
@@ -28,6 +29,7 @@ const UserLayout = async ({ children }: { children: React.ReactNode }) => {
           {children}
         </main>
       </div>
+      <SessionExpiredDialog />
     </BaseLayout>
   );
 };

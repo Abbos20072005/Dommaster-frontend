@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { MapPinIcon, PencilIcon, TrashIcon } from 'lucide-react';
+
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -7,6 +8,7 @@ import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -18,9 +20,11 @@ import { deleteCustomerAddress } from '@/utils/api/requests';
 
 interface Props {
   address: Address;
+  /** the address that becomes the default when this default one is deleted */
+  nextDefaultName?: string;
 }
 
-export const AddressItem = ({ address }: Props) => {
+export const AddressItem = ({ address, nextDefaultName }: Props) => {
   const t = useTranslations();
   const [openDelete, setOpenDelete] = React.useState(false);
   const deleteAddressMutation = useMutation({
@@ -74,15 +78,20 @@ export const AddressItem = ({ address }: Props) => {
           </AlertDialogTrigger>
           <AlertDialogContent>
             <AlertDialogHeader>
-              <div className='bg-destructive/15 rounded-xl p-2'>
-                <TrashIcon className='text-destructive size-8' />
-              </div>
-              <AlertDialogTitle>{t('Delete address')}</AlertDialogTitle>
+              <AlertDialogTitle className='text-xl leading-[26px] font-bold'>
+                {t('Delete address question', { name: address.name })}
+              </AlertDialogTitle>
+              <AlertDialogDescription className='text-sm leading-5 text-[#4A5563]'>
+                {address.location_name}.{' '}
+                {address.is_default && nextDefaultName
+                  ? t('Next default address', { name: nextDefaultName })
+                  : ''}
+              </AlertDialogDescription>
             </AlertDialogHeader>
             <AlertDialogFooter>
-              <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
+              <AlertDialogCancel className='h-11 px-5'>{t('Cancel')}</AlertDialogCancel>
               <Button
-                size='sm'
+                className='h-11 px-5'
                 variant='destructive'
                 isLoading={deleteAddressMutation.isPending}
                 onClick={onDeleteAddress}

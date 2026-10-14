@@ -23,6 +23,7 @@ export const useViewedProducts = () => {
   return {
     state: {
       products: getViewedProductsQuery.data?.pages.flatMap((page) => page.data.result.content),
+      total: getViewedProductsQuery.data?.pages[0]?.data.result.totalElements,
       hasNextPage: getViewedProductsQuery.hasNextPage,
       isFetchingNextPage: getViewedProductsQuery.isFetchingNextPage,
       isLoading: getViewedProductsQuery.isLoading

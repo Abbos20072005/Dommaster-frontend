@@ -20,6 +20,7 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
     resolver: zodResolver(addressSchema),
     defaultValues: {
       name: defaultValues?.name || '',
+      is_default: defaultValues?.is_default ?? false,
       address: defaultValues
         ? {
             location_name: defaultValues.location_name,
@@ -58,6 +59,7 @@ export const useAddressForm = ({ defaultValues, onSuccess }: Props) => {
   const onSubmit = (values: AddressSchema) => {
     const data: AddressRequest = {
       name: values.name,
+      is_default: values.is_default,
       location_name: values.address.location_name,
       latitude: values.address.latitude,
       longitude: values.address.longitude

@@ -21,7 +21,8 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useFormatDate, useMounted } from '@/hooks';
-import { Link, useRouter } from '@/i18n/navigation';
+import { LogoutConfirm } from '@/app/[locale]/user/_components/LogoutConfirm';
+import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
 import { AuthDialog, useAuth } from '@/modules/auth';
 import { getOrdersActive, getOrdersHistory } from '@/utils/api/requests';
@@ -95,8 +96,7 @@ const Group = ({ title, rows }: { title: string; rows: Row[] }) => (
 export const MobileCards = () => {
   const t = useTranslations();
   const formatDate = useFormatDate();
-  const router = useRouter();
-  const { user, isPending, reset } = useAuth();
+  const { user, isPending } = useAuth();
   const { favorites } = useFavoritesStore();
   const mounted = useMounted();
 
@@ -325,16 +325,14 @@ export const MobileCards = () => {
           <Group rows={profile} title={t('Profile')} />
           <Group rows={goods} title={t('Products')} />
 
-          <button
-            className='mx-auto mt-6 block h-11 rounded-lg px-6 text-[15px] text-[#6B7685] active:bg-[#E1E5EB]'
-            type='button'
-            onClick={() => {
-              reset();
-              router.push('/');
-            }}
-          >
-            {t('Logout')}
-          </button>
+          <LogoutConfirm>
+            <button
+              className='mx-auto mt-6 block h-11 rounded-lg px-6 text-[15px] text-[#6B7685] active:bg-[#E1E5EB]'
+              type='button'
+            >
+              {t('Logout')}
+            </button>
+          </LogoutConfirm>
         </>
       )}
     </div>

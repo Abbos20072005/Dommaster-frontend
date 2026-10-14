@@ -1,31 +1,37 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   CheckIcon,
   ChevronRightIcon,
+  ClockIcon,
   HeartIcon,
   MapPinIcon,
   MessageSquareIcon,
   PackageIcon,
+  PhoneIcon,
+  SendIcon,
   TicketIcon
 } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
+import { toast } from 'sonner';
 
+import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useFormatDate } from '@/hooks';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
-import { ProductList } from '@/modules/product';
 import {
   getCategories,
   getOrderById,
   getOrdersActive,
-  getOrdersHistory
+  getOrdersHistory,
+  postCart
 } from '@/utils/api/requests';
+import { CONTACT_PHONE, CONTACT_PHONE_HREF, SOCIAL_LINKS } from '@/utils/constants';
 import { orderStatusMap } from '@/utils/constants/orderStatus';
 import { useFavoritesStore } from '@/utils/stores';
 
@@ -73,6 +79,7 @@ export const DesktopCards = () => {
   const formatDate = useFormatDate();
   const { user } = useAuth();
   const { favorites } = useFavoritesStore();
+  const queryClient = useQueryClient();
 
   const activeQuery = useQuery({
     queryKey: ['dashboard', 'active'],
@@ -92,7 +99,9 @@ export const DesktopCards = () => {
   const activeOrder = activeQuery.data?.data.result.content[0];
   const activeCount = activeQuery.data?.data.result.totalElements ?? 0;
   const historyOrders = historyQuery.data?.data.result.content ?? [];
-  const lastDelivered = historyOrders.find((order) => order.status === 3);
+  // the latest delivered order, else any previous one (even a canceled one still lists what was chosen)
+  const lastDelivered =
+    historyOrders.find((order) => order.status === 3) ?? historyOrders[0] ?? activeOrder;
   // the card of the page: the active order, else the last finished one
   const order = activeOrder ?? historyOrders[0];
 
@@ -104,6 +113,15 @@ export const DesktopCards = () => {
   });
   const boughtProducts =
     boughtQuery.data?.data.result.order_items.map((item) => item.product).filter(Boolean) ?? [];
+
+  const addToCartMutation = useMutation({
+    mutationFn: (product: number) => postCart({ data: { product, quantity: 1 } }),
+    onSuccess: () => {
+      toast.success(t('Added to cart'));
+      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: ['cart'] });
+    }
+  });
 
   const isLoading = !!user && (activeQuery.isLoading || historyQuery.isLoading);
   const firstName = user?.full_name?.split(/\s+/)[0];
@@ -320,9 +338,97 @@ export const DesktopCards = () => {
       {boughtProducts.length > 0 && (
         <section className='grid gap-4'>
           <h2 className='text-xl leading-[26px] font-bold'>{t('Buy again')}</h2>
-          <ProductList products={boughtProducts} />
+          <div className='grid grid-cols-4 gap-4'>
+            {boughtProducts.slice(0, 4).map((product) => (
+              <div
+                key={product.id}
+                className='border-border grid content-start gap-2 rounded-xl border bg-white p-3'
+              >
+                <Link
+                  href={`/product/${product.id}`}
+                  className='bg-muted relative block aspect-square overflow-hidden rounded-lg'
+                >
+                  {product.images[0]?.image && (
+                    <Image
+                      fill
+                      alt={product.name}
+                      className='object-contain p-2'
+                      sizes='240px'
+                      src={product.images[0].image}
+                    />
+                  )}
+                </Link>
+                {lastDelivered && (
+                  <span className='text-muted-foreground text-xs'>
+                    {t('Bought on {date}', {
+                      date: formatDate(lastDelivered.created_at, 'd MMMM')
+                    })}
+                  </span>
+                )}
+                <Link
+                  href={`/product/${product.id}`}
+                  className='line-clamp-2 min-h-10 text-sm leading-5'
+                >
+                  {product.name}
+                </Link>
+                <span className='text-[17px] leading-6 font-bold whitespace-nowrap tabular-nums'>
+                  {formatPrice(product.discount_price ?? product.price)}{' '}
+                  <span className='text-sm'>{t('sum')}</span>
+                </span>
+                <Button
+                  className='h-10 w-full'
+                  disabled={product.quantity <= 0}
+                  isLoading={addToCartMutation.isPending && addToCartMutation.variables === product.id}
+                  onClick={() => addToCartMutation.mutate(product.id)}
+                >
+                  {t('To cart')}
+                </Button>
+              </div>
+            ))}
+          </div>
         </section>
       )}
+
+      <section className='border-border grid grid-cols-[1.2fr_1fr_1fr_1fr] items-center gap-6 rounded-xl border bg-white p-6'>
+        <div className='grid gap-1'>
+          <span className='text-[17px] leading-6 font-bold'>{t('Need help')}</span>
+          <span className='text-muted-foreground text-[13px] leading-[18px]'>
+            {t('Need help text')}
+          </span>
+        </div>
+        <a className='flex items-center gap-3' href={CONTACT_PHONE_HREF}>
+          <span className='bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-full'>
+            <PhoneIcon className='size-5' />
+          </span>
+          <span className='grid'>
+            <span className='text-muted-foreground text-xs'>{t('Call centre')}</span>
+            <span className='text-sm font-bold whitespace-nowrap'>{CONTACT_PHONE}</span>
+          </span>
+        </a>
+        <a
+          className='flex items-center gap-3'
+          href={SOCIAL_LINKS.telegram}
+          rel='noreferrer'
+          target='_blank'
+        >
+          <span className='bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-full'>
+            <SendIcon className='size-5' />
+          </span>
+          <span className='grid'>
+            <span className='text-muted-foreground text-xs'>Telegram</span>
+            <span className='text-sm font-bold'>@buildexuz</span>
+          </span>
+        </a>
+        <div className='flex items-center gap-3'>
+          <span className='bg-primary/10 text-primary flex size-10 shrink-0 items-center justify-center rounded-full'>
+            <ClockIcon className='size-5' />
+          </span>
+          <span className='grid'>
+            <span className='text-muted-foreground text-xs'>{t('Working hours')}</span>
+            <span className='text-sm font-bold'>07:00 – 22:00</span>
+          </span>
+        </div>
+      </section>
     </div>
   );
 };

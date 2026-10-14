@@ -5,6 +5,7 @@ import { ClockIcon, FilterIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { BlockError } from '@/app/[locale]/user/_components/BlockError';
 import { OrderList } from '@/app/[locale]/user/orders/_components';
 import { OrdersEmpty } from '@/app/[locale]/user/orders/_components/OrdersEmpty';
 import { Button } from '@/components/ui/button';
@@ -59,13 +60,10 @@ export const OrdersHistory = () => {
 
   if (getOrdersHistoryQuery.isError) {
     return (
-      <div className='grid gap-3 py-10 text-center' role='alert'>
-        <p className='text-xl font-bold'>{t('Could not load orders')}</p>
-        <p className='text-muted-foreground text-sm'>{t('Network error, orders unchanged')}</p>
-        <div>
-          <Button onClick={() => getOrdersHistoryQuery.refetch()}>{t('Try again')}</Button>
-        </div>
-      </div>
+      <BlockError
+        isRetrying={getOrdersHistoryQuery.isRefetching}
+        onRetry={() => getOrdersHistoryQuery.refetch()}
+      />
     );
   }
 

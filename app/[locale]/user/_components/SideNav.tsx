@@ -14,11 +14,13 @@ import {
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { Link, usePathname, useRouter } from '@/i18n/navigation';
+import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { getOrdersActive } from '@/utils/api/requests';
 import { useFavoritesStore } from '@/utils/stores';
+
+import { LogoutConfirm } from './LogoutConfirm';
 
 interface NavItem {
   href: string;
@@ -54,8 +56,7 @@ const maskPhone = (phone?: string) => {
 export const SideNav = () => {
   const t = useTranslations();
   const pathname = usePathname();
-  const router = useRouter();
-  const { user, reset } = useAuth();
+  const { user } = useAuth();
   const { favorites } = useFavoritesStore();
 
   const activeOrdersQuery = useQuery({
@@ -108,11 +109,6 @@ export const SideNav = () => {
       ]
     }
   ];
-
-  const onLogout = () => {
-    reset();
-    router.push('/');
-  };
 
   return (
     <aside className='hidden w-70 shrink-0 md:block'>
@@ -174,14 +170,15 @@ export const SideNav = () => {
 
         {user && (
           <div className='pt-0.5'>
-            <button
-              className='text-muted-foreground hover:bg-muted hover:text-foreground flex h-10 w-full items-center gap-3 rounded-lg px-2 text-sm transition-colors'
-              type='button'
-              onClick={onLogout}
-            >
-              <LogOutIcon className='size-5' />
-              {t('Logout')}
-            </button>
+            <LogoutConfirm>
+              <button
+                className='text-muted-foreground hover:bg-muted hover:text-foreground flex h-10 w-full items-center gap-3 rounded-lg px-2 text-sm transition-colors'
+                type='button'
+              >
+                <LogOutIcon className='size-5' />
+                {t('Logout')}
+              </button>
+            </LogoutConfirm>
           </div>
         )}
       </nav>

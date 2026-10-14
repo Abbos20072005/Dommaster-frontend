@@ -30,6 +30,10 @@ export const ViewedProducts = () => {
 
   return (
     <div className='space-y-4'>
+      <span className='text-muted-foreground block text-sm'>
+        {t('{count} products', { count: state.total ?? state.products.length })} ·{' '}
+        {t('By view date')}
+      </span>
       <ProductList view='grid' products={state.products} />
 
       {state.hasNextPage && (

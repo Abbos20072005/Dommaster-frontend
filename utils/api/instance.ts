@@ -9,6 +9,7 @@ import { routing } from '@/i18n/routing';
 import { COOKIES } from '@/utils/constants';
 
 import { setAuthTokens } from './authTokens';
+import { useSessionStore } from './sessionStore';
 import { getClientLocale } from './getClientLocale';
 import { getClientToken } from './getClientToken';
 import { getServerLocale } from './getServerLocale';
@@ -108,6 +109,8 @@ api.interceptors.response.use(
         original.headers.Authorization = `Bearer ${accessToken}`;
         return api(original);
       }
+      // the session is over: the cabinet asks to log in again and repeats the request after that
+      if (original.headers?.Authorization) useSessionStore.getState().setExpired(true);
     }
 
     return Promise.reject(error);

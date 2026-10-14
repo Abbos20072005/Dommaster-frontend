@@ -22,9 +22,14 @@ export const AddressSelectDialog = ({ defaultValues, ...props }: Props) => {
   return (
     <Dialog onOpenChange={setOpen} open={open}>
       <DialogTrigger {...props} />
-      <DialogContent className='block h-dvh px-0 pb-0 sm:h-auto sm:max-w-5xl sm:rounded-xl sm:px-5 sm:pb-5'>
-        <DialogHeader>
-          <DialogTitle>{t('Select address')}</DialogTitle>
+      <DialogContent
+        className='block h-dvh overflow-y-auto p-0 sm:h-auto sm:max-h-[92dvh] sm:rounded-xl'
+        style={{ maxWidth: 'min(56rem, 100%)' }}
+      >
+        <DialogHeader className='px-4 pt-5 sm:px-6'>
+          <DialogTitle className='text-xl leading-[26px] font-bold'>
+            {defaultValues ? t('Edit address') : t('New address')}
+          </DialogTitle>
         </DialogHeader>
         <div className='space-y-2 pt-4'>
           <AddressForm defaultValues={defaultValues} onSuccess={() => setOpen(false)} />

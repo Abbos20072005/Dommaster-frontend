@@ -65,7 +65,11 @@ export const AddressList = () => {
       </div>
       <div className='grid items-start gap-4 md:grid-cols-2'>
         {addresses.map((address) => (
-          <AddressItem key={address.id} address={address} />
+          <AddressItem
+            key={address.id}
+            address={address}
+            nextDefaultName={addresses.find((item) => item.id !== address.id)?.name}
+          />
         ))}
       </div>
     </div>
