@@ -140,8 +140,8 @@ export const DesktopCards = () => {
                   {t('Order')} №{order.id}
                 </span>
                 <span className='text-muted-foreground text-[13px]'>
-                  {formatDate(order.created_at, 'dd MMMM')} · {order.order_items.length}{' '}
-                  {t('products')}
+                  {formatDate(order.created_at, 'dd MMMM')} ·{' '}
+                  {t('{count} products', { count: order.order_items.length })}
                 </span>
               </div>
               <div className='grid justify-items-end gap-1.5'>

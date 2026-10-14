@@ -38,6 +38,8 @@ import {
 } from '@/utils/constants/contacts';
 import { getPaymentLabel, orderStatusMap } from '@/utils/constants/orderStatus';
 
+import { MobilePageHeader } from '@/app/[locale]/user/_components/MobilePageHeader';
+
 import { OrderCancelAction } from './OrderCancelAction';
 import { PayOrderDialog } from './PayOrderDialog';
 import { useRepeatOrder } from './useRepeatOrder';
@@ -149,7 +151,12 @@ export const OrderDetails = ({ scope }: Props) => {
 
   return (
     <AuthWrapper>
-      <nav className='text-muted-foreground mb-5 flex items-center gap-2 text-[13px] leading-[18px]'>
+      <MobilePageHeader
+        backHref={backHref}
+        subtitle={formatDate(order.created_at, 'dd MMMM yyyy')}
+        title={`${t('Order')} №${order.id}`}
+      />
+      <nav className='text-muted-foreground mb-5 hidden items-center gap-2 text-[13px] leading-[18px] md:flex'>
         <Link className='hover:text-foreground' href='/'>
           {t('Home')}
         </Link>
@@ -167,18 +174,18 @@ export const OrderDetails = ({ scope }: Props) => {
         </span>
       </nav>
 
-      <div className='grid items-start gap-8 lg:grid-cols-[minmax(0,1fr)_376px]'>
+      <div className='grid items-start gap-5 px-4 md:px-0 lg:grid-cols-[minmax(0,1fr)_376px] lg:gap-8'>
         <div className='grid min-w-0 gap-5'>
           <div className='grid gap-3'>
             <Link
-              className='text-primary inline-flex items-center gap-1 justify-self-start text-sm font-bold'
+              className='text-primary hidden items-center gap-1 justify-self-start text-sm font-bold md:inline-flex'
               href={backHref}
             >
               <ArrowLeftIcon className='size-[18px]' />
               {t('Back to orders')}
             </Link>
             <div className='flex flex-wrap items-center gap-4'>
-              <h1 className='text-[32px] leading-[38px] font-bold tracking-tight'>
+              <h1 className='hidden text-[32px] leading-[38px] font-bold tracking-tight md:block'>
                 {t('Order')} №{order.id}
               </h1>
               <span

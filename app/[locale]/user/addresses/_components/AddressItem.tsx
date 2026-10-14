@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { EditIcon, TrashIcon } from 'lucide-react';
+import { MapPinIcon, PencilIcon, TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -13,7 +13,6 @@ import {
   AlertDialogTrigger
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { AddressSelectDialog } from '@/modules/location';
 import { deleteCustomerAddress } from '@/utils/api/requests';
 
@@ -37,18 +36,40 @@ export const AddressItem = ({ address }: Props) => {
   };
 
   return (
-    <Card key={address.id} variant='outline'>
-      <CardHeader className='flex-row items-center p-4 pb-2'>
-        <CardTitle className='flex-1 md:text-xl'>{address.name}</CardTitle>
+    <article className='border-border grid content-start gap-4 rounded-xl border bg-white p-5 pb-3'>
+      <div className='flex items-start gap-3.5'>
+        <span className='bg-primary/10 text-primary flex size-11 shrink-0 items-center justify-center rounded-full'>
+          <MapPinIcon className='size-5' />
+        </span>
+        <div className='grid min-w-0 flex-1 gap-1'>
+          <div className='flex flex-wrap items-center gap-2'>
+            <span className='text-[17px] leading-6 font-bold'>{address.name}</span>
+            {address.is_default && (
+              <span className='inline-flex h-[22px] items-center rounded-full bg-[#E8F5EE] px-2.5 text-xs font-bold text-[#0E7C3E]'>
+                {t('Default address')}
+              </span>
+            )}
+          </div>
+          <p className='text-sm leading-5 text-[#4A5563]'>{address.location_name}</p>
+        </div>
+      </div>
+
+      <div className='-ml-3 flex gap-1'>
         <AddressSelectDialog asChild defaultValues={address}>
-          <Button aria-label={t('Edit')} size='iconSm' variant='outline'>
-            <EditIcon />
+          <Button className='text-primary hover:bg-primary/5' size='sm' variant='ghost'>
+            <PencilIcon />
+            {t('Edit')}
           </Button>
         </AddressSelectDialog>
         <AlertDialog onOpenChange={setOpenDelete} open={openDelete}>
           <AlertDialogTrigger asChild>
-            <Button aria-label={t('Delete')} size='iconSm' variant='outline'>
+            <Button
+              className='text-[#4A5563] hover:bg-[#FDECEC] hover:text-[#C0211D]'
+              size='sm'
+              variant='ghost'
+            >
               <TrashIcon />
+              {t('Delete')}
             </Button>
           </AlertDialogTrigger>
           <AlertDialogContent>
@@ -71,10 +92,7 @@ export const AddressItem = ({ address }: Props) => {
             </AlertDialogFooter>
           </AlertDialogContent>
         </AlertDialog>
-      </CardHeader>
-      <CardContent className='p-4 pt-0'>
-        <p className='text-muted-foreground text-sm'>{address.location_name}</p>
-      </CardContent>
-    </Card>
+      </div>
+    </article>
   );
 };

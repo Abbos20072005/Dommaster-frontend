@@ -502,5 +502,7 @@
   "No promo codes text": "Промокоды приходят в SMS и письмах BUILDEX. Код можно ввести в корзине.",
   "No active promos": "Нет активных промокодов",
   "Nothing here yet": "Здесь пока ничего нет",
-  "Used promos here": "Сюда попадут использованные и истёкшие промокоды."
+  "Used promos here": "Сюда попадут использованные и истёкшие промокоды.",
+  "{count} addresses": "{count, plural, one {# адрес} few {# адреса} many {# адресов} other {# адресов}}",
+  "Default address": "Основной"
 }

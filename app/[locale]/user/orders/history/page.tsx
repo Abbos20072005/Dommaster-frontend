@@ -4,6 +4,8 @@ import { getTranslations } from 'next-intl/server';
 
 import { AuthWrapper } from '@/modules/auth';
 
+import { MobilePageHeader } from '@/app/[locale]/user/_components/MobilePageHeader';
+
 import { OrdersTabs } from '../_components/OrdersTabs';
 import { OrdersHistory } from './_components/OrdersHistory';
 
@@ -18,10 +20,8 @@ const OrdersPage = async () => {
 
   return (
     <AuthWrapper>
-      <div className='mb-4 flex h-12 items-center border-b md:hidden'>
-        <h1 className='flex-1 text-center font-bold md:hidden'>{t('Purchase history')}</h1>
-      </div>
-      <div className='grid gap-5 px-4 md:px-0'>
+      <MobilePageHeader title={t('Purchase history')} />
+      <div className='grid grid-cols-[minmax(0,1fr)] gap-5 px-4 md:px-0'>
         <h1 className='hidden text-[32px] leading-[38px] font-bold tracking-tight md:block'>
           {t('My orders')}
         </h1>

@@ -167,13 +167,15 @@ export const PersonalInfoView = () => {
           </Section>
 
           <Section hint={t('Phone is used to log in')} title={t('Phone')}>
-            <div className='flex items-center gap-4'>
-              <div className='border-border bg-muted flex h-11 flex-1 items-center gap-2.5 rounded-lg border px-3.5'>
-                <LockIcon className='size-[18px] text-[#6B7685]' />
-                <span className='text-[15px] tabular-nums'>{formatPhoneNumber(phone)}</span>
+            <div className='flex items-center gap-2 md:gap-4'>
+              <div className='border-border bg-muted flex h-11 min-w-0 flex-1 items-center gap-2 rounded-lg border px-3 md:gap-2.5 md:px-3.5'>
+                <LockIcon className='size-[18px] shrink-0 text-[#6B7685]' />
+                <span className='truncate text-sm whitespace-nowrap tabular-nums md:text-[15px]'>
+                  {formatPhoneNumber(phone)}
+                </span>
               </div>
               <button
-                className='text-primary hover:bg-primary/5 h-11 rounded-lg px-3 text-sm font-bold'
+                className='text-primary hover:bg-primary/5 h-11 shrink-0 rounded-lg px-2 text-sm font-bold md:px-3'
                 type='button'
                 onClick={() => {
                   setNewPhone('');
@@ -213,9 +215,9 @@ export const PersonalInfoView = () => {
         </div>
 
         {isDirty && (
-          <div className='sticky bottom-4 z-5 flex items-center justify-between gap-4 rounded-xl border border-[#CBD2DB] bg-white py-3 pr-3 pl-5 shadow-lg'>
+          <div className='sticky bottom-20 z-5 grid gap-3 rounded-xl border border-[#CBD2DB] bg-white p-3 shadow-lg md:bottom-4 md:flex md:items-center md:justify-between md:gap-4 md:py-3 md:pr-3 md:pl-5'>
             <span className='text-sm font-semibold'>{t('You have unsaved changes')}</span>
-            <div className='flex gap-2'>
+            <div className='grid grid-cols-2 gap-2 md:flex'>
               <Button
                 className='h-11 px-5'
                 disabled={state.isPending}
@@ -237,14 +239,19 @@ export const PersonalInfoView = () => {
         <span className='text-muted-foreground text-xs font-bold tracking-wide uppercase'>
           {t('Account management')}
         </span>
-        <div className='border-border flex items-center justify-between gap-6 rounded-xl border bg-white px-6 py-5'>
+        <div className='border-border flex flex-col gap-4 rounded-xl border bg-white p-5 md:flex-row md:items-center md:justify-between md:gap-6 md:px-6'>
           <span className='grid gap-0.5'>
             <span className='text-[15px] leading-[22px] font-bold'>{t('Log out of account')}</span>
             <span className='text-muted-foreground text-[13px] leading-[18px]'>
               {t('Log out hint')}
             </span>
           </span>
-          <Button className='h-11 px-5' type='button' variant='muted' onClick={onLogout}>
+          <Button
+            className='h-11 w-full px-5 md:w-auto'
+            type='button'
+            variant='muted'
+            onClick={onLogout}
+          >
             {t('Log out of account')}
           </Button>
         </div>

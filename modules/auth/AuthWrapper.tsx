@@ -7,6 +7,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
+import { useMounted } from '@/hooks';
 import { useAuth } from '@/modules/auth';
 import { COOKIES } from '@/utils/constants';
 
@@ -15,8 +16,11 @@ import { AuthDialog } from './AuthDialog';
 export const AuthWrapper = ({ children }: { children: React.ReactNode }) => {
   const t = useTranslations();
   const { user, isPending } = useAuth();
+  // The token cookie is read in the browser only: the server and the first client render must
+  // show the same thing (a spinner), or React reports a hydration mismatch.
+  const mounted = useMounted();
 
-  if (!!Cookies.get(COOKIES.ACCESS_TOKEN) && isPending) {
+  if (!mounted || (!!Cookies.get(COOKIES.ACCESS_TOKEN) && isPending)) {
     return (
       <div className='flex items-center justify-center py-20'>
         <Spinner />

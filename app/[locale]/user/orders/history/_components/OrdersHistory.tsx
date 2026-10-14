@@ -90,7 +90,7 @@ export const OrdersHistory = () => {
 
   return (
     <div className='grid gap-5'>
-      <div className='flex items-center gap-2'>
+      <div className='flex flex-wrap items-center gap-2'>
         {chips.map((chip) => (
           <button
             aria-pressed={status === chip.value}
@@ -107,7 +107,7 @@ export const OrdersHistory = () => {
             {chip.label}
           </button>
         ))}
-        <label className='ml-4 inline-flex items-center gap-2'>
+        <label className='inline-flex items-center gap-2 md:ml-4'>
           <span className='text-muted-foreground text-[13px]'>{t('Period')}</span>
           <select
             className='focus:border-primary h-9 cursor-pointer rounded-lg border border-[#CBD2DB] bg-white px-3 text-sm outline-none'
@@ -119,7 +119,7 @@ export const OrdersHistory = () => {
             <option value='all'>{t('All time')}</option>
           </select>
         </label>
-        <span className='text-muted-foreground ml-auto text-[13px]'>{t('Newest first')}</span>
+        <span className='text-muted-foreground ml-auto hidden text-[13px] md:inline'>{t('Newest first')}</span>
       </div>
 
       {orders.length === 0 ? (

@@ -502,5 +502,7 @@
   "No promo codes text": "Promokodlar BUILDEX SMS va xatlarida keladi. Kodni savatda kiritishingiz mumkin.",
   "No active promos": "Faol promokodlar yo‘q",
   "Nothing here yet": "Bu yerda hozircha hech narsa yo‘q",
-  "Used promos here": "Bu yerga ishlatilgan va muddati o‘tgan promokodlar tushadi."
+  "Used promos here": "Bu yerga ishlatilgan va muddati o‘tgan promokodlar tushadi.",
+  "{count} addresses": "{count, plural, one {# ta manzil} other {# ta manzil}}",
+  "Default address": "Asosiy"
 }

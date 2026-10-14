@@ -56,7 +56,59 @@ export const OrderItem = ({ order }: Props) => {
   const repeatMutation = useRepeatOrder(order.id);
 
   return (
-    <article className='border-border grid gap-4 rounded-xl border bg-white px-6 py-5'>
+    <>
+      {/* phone: a compact tappable card; the whole card opens the order */}
+      <Link
+        href={url}
+        className='grid gap-3 rounded-2xl bg-white p-4 md:hidden'
+      >
+        <div className='flex items-start justify-between gap-3'>
+          <span className='grid'>
+            <span className='text-base leading-[22px] font-bold'>
+              {t('Order')} №{order.id}
+            </span>
+            <span className='text-[13px] leading-[18px] text-[#6B7685]'>
+              {formatDate(order.created_at, 'dd MMMM')} ·{' '}
+              {t('{count} products', { count: order.order_items.length })}
+            </span>
+          </span>
+          <span
+            className={cn(
+              'inline-flex h-[26px] shrink-0 items-center gap-1.5 rounded-full px-2.5 text-xs font-bold whitespace-nowrap',
+              STATUS_STYLE[order.status]
+            )}
+          >
+            {t(orderStatusMap[order.status])}
+          </span>
+        </div>
+        <div className='flex items-center gap-2'>
+          {order.order_items.slice(0, 3).map((item) => (
+            <span
+              key={item.id}
+              className='relative size-11 shrink-0 overflow-hidden rounded-lg border border-[#E1E5EB] bg-white'
+            >
+              <Image
+                fill
+                alt='Buildex'
+                className='object-contain p-1'
+                sizes='44px'
+                src={item.image}
+              />
+            </span>
+          ))}
+          {order.order_items.length > 3 && (
+            <span className='flex size-11 shrink-0 items-center justify-center rounded-lg bg-[#EDF0F5] text-[13px] font-bold text-[#333C49]'>
+              +{order.order_items.length - 3}
+            </span>
+          )}
+          <span className='ml-auto text-[17px] leading-6 font-bold whitespace-nowrap tabular-nums'>
+            {formatPrice(order.total_price)} <span className='text-[13px]'>{t('sum')}</span>
+          </span>
+          <span className='text-[#9AA4B2]'>›</span>
+        </div>
+      </Link>
+
+    <article className='border-border hidden gap-4 rounded-xl border bg-white px-6 py-5 md:grid'>
       <div className='flex items-center justify-between gap-4'>
         <div className='flex items-baseline gap-3'>
           <Link
@@ -186,5 +238,6 @@ export const OrderItem = ({ order }: Props) => {
         )}
       </div>
     </article>
+    </>
   );
 };

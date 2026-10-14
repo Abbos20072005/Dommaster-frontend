@@ -27,7 +27,7 @@ export const OrdersTabs = () => {
 
   return (
     <div
-      className='border-border inline-flex gap-1 rounded-[10px] border bg-[#EDF0F5] p-1'
+      className='border-border flex gap-1 rounded-[10px] border bg-[#EDF0F5] p-1 md:inline-flex'
       role='tablist'
     >
       {tabs.map((tab) => {
@@ -39,7 +39,7 @@ export const OrdersTabs = () => {
             key={tab.href}
             role='tab'
             className={cn(
-              'inline-flex h-9 items-center rounded-lg px-4 text-sm font-semibold transition-colors',
+              'inline-flex h-9 flex-1 items-center justify-center rounded-lg px-4 text-sm font-semibold transition-colors md:flex-none',
               isActive
                 ? 'text-foreground bg-white shadow-sm'
                 : 'text-[#4A5563] hover:text-foreground'

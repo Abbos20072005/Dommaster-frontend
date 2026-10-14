@@ -476,5 +476,7 @@
   "No promo codes text": "Promo codes come in BUILDEX SMS and e-mails. You can enter the code in the cart.",
   "No active promos": "No active promo codes",
   "Nothing here yet": "Nothing here yet",
-  "Used promos here": "Used and expired promo codes will appear here."
+  "Used promos here": "Used and expired promo codes will appear here.",
+  "{count} addresses": "{count, plural, one {# address} other {# addresses}}",
+  "Default address": "Default"
 }

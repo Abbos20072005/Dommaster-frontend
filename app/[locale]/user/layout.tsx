@@ -23,7 +23,10 @@ const UserLayout = async ({ children }: { children: React.ReactNode }) => {
     <BaseLayout className='px-0 md:mt-5'>
       <div className='items-start gap-8 md:flex'>
         <SideNav />
-        <main className='min-w-0 flex-1'>{children}</main>
+        {/* on a phone the page lies on a light grey background and the blocks are white */}
+        <main className='bg-muted min-h-[70vh] min-w-0 flex-1 pb-6 md:min-h-0 md:bg-transparent md:pb-0'>
+          {children}
+        </main>
       </div>
     </BaseLayout>
   );
