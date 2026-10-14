@@ -15,81 +15,92 @@ interface PromoCardProps {
   promo: Promo;
   /** past promo codes: a struck-out discount and no "Apply" button */
   expired?: boolean;
+  /** just saved from the field above */
+  isNew?: boolean;
 }
 
 const localeMap = { en: undefined, uz, ru };
 
 /** A promo code: the discount, what it needs, the code with "Copy" and "Apply in cart". */
-export const PromoCard = ({ promo, expired }: PromoCardProps) => {
+export const PromoCard = ({ promo, expired, isNew }: PromoCardProps) => {
   const t = useTranslations();
   const locale = useLocale() as Locale;
   const [copied, setCopied] = useState(false);
 
   const endDate = parseISO(promo.expires_at);
-  const daysLeft = differenceInCalendarDays(endDate, new Date());
-  const soon = !expired && daysLeft <= 3;
+  const daysLeft = Math.max(differenceInCalendarDays(endDate, new Date()), 0);
+  const soon = !expired && daysLeft < 7;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(promo.code);
     setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+    setTimeout(() => setCopied(false), 1600);
   };
 
   return (
-    <article className='border-border grid content-start gap-4 rounded-xl border bg-white p-5'>
+    <article
+      className={cn(
+        'border-border grid content-start gap-4 rounded-2xl border bg-white p-4 md:rounded-xl md:p-5',
+        isNew && 'border-primary ring-primary/20 ring-2'
+      )}
+    >
       <div className='flex items-start justify-between gap-3'>
         <span
           className={cn(
-            'text-[30px] leading-9 font-bold tracking-tight tabular-nums',
+            'text-[26px] leading-8 font-bold tracking-tight tabular-nums md:text-[30px] md:leading-9',
             expired && 'text-[#9AA4B2] line-through decoration-2'
           )}
         >
           −{promo.discount_precent}%
         </span>
-        {expired ? (
-          <span className='inline-flex h-[26px] items-center rounded-full bg-[#EDF0F5] px-2.5 text-xs font-bold whitespace-nowrap text-[#4A5563]'>
-            {t('Promo expired')}
-          </span>
-        ) : (
-          soon && (
+        <span className='flex flex-wrap justify-end gap-1.5'>
+          {isNew && !expired && (
+            <span className='bg-primary/10 inline-flex h-[26px] items-center rounded-full px-2.5 text-xs font-bold whitespace-nowrap text-[#0039A3]'>
+              {t('New promo')}
+            </span>
+          )}
+          {expired && (
+            <span className='inline-flex h-[26px] items-center rounded-full bg-[#EDF0F5] px-2.5 text-xs font-bold whitespace-nowrap text-[#4A5563]'>
+              {t('Promo expired')}
+            </span>
+          )}
+          {soon && (
             <span className='inline-flex h-[26px] items-center gap-1.5 rounded-full bg-[#FFF7E5] px-2.5 text-xs font-bold whitespace-nowrap text-[#8A6200]'>
               <ClockIcon className='size-3.5' />
-              {t('Expires in {count} d', { count: Math.max(daysLeft, 0) })}
+              {t('Promo days left', { count: daysLeft })}
             </span>
-          )
-        )}
+          )}
+        </span>
       </div>
 
       <div className='grid gap-1.5 text-sm leading-5'>
-        <div className='grid grid-cols-[140px_minmax(0,1fr)] gap-3'>
+        <div className='grid grid-cols-[128px_minmax(0,1fr)] gap-3 md:grid-cols-[140px_minmax(0,1fr)]'>
           <span className='text-muted-foreground'>{t('Promo discount')}</span>
           <span>{promo.name}</span>
         </div>
-        <div className='grid grid-cols-[140px_minmax(0,1fr)] gap-3'>
-          <span className='text-muted-foreground'>{t('Promo valid until')}</span>
-          <span>{format(endDate, 'd MMMM yyyy', { locale: localeMap[locale] })}</span>
+        <div className='grid grid-cols-[128px_minmax(0,1fr)] gap-3 md:grid-cols-[140px_minmax(0,1fr)]'>
+          <span className='text-muted-foreground'>{t('Promo valid until short')}</span>
+          <span>
+            {t('Promo until', {
+              date: format(endDate, 'd MMMM yyyy', { locale: localeMap[locale] })
+            })}
+          </span>
         </div>
       </div>
 
-      <div className='flex gap-2'>
-        <div
-          className={cn(
-            'flex h-11 min-w-0 flex-1 items-center justify-between gap-2 rounded-lg border-[1.5px] border-dashed bg-muted pr-1 pl-3.5',
-            expired ? 'border-[#CBD2DB]' : 'border-[#9AA4B2]'
-          )}
-        >
-          <span
-            className={cn(
-              'truncate font-mono text-base font-bold tracking-[0.06em]',
-              expired && 'text-[#6B7685]'
-            )}
-          >
-            {promo.code}
-          </span>
-          {!expired &&
-            (copied ? (
+      {expired ? (
+        <span className='font-mono text-[15px] leading-5 font-bold tracking-[0.06em] text-[#6B7685]'>
+          {promo.code}
+        </span>
+      ) : (
+        <div className='grid gap-2 md:flex'>
+          <div className='bg-muted flex h-12 min-w-0 flex-1 items-center justify-between gap-2 rounded-lg border-[1.5px] border-dashed border-[#9AA4B2] pr-1 pl-3.5 md:h-11'>
+            <span className='truncate font-mono text-base leading-5 font-bold tracking-[0.06em]'>
+              {promo.code}
+            </span>
+            {copied ? (
               <span
-                className='inline-flex h-9 items-center gap-1.5 px-2.5 text-[13px] font-bold text-[#0E7C3E]'
+                className='inline-flex h-10 shrink-0 items-center gap-1.5 px-2.5 text-[13px] font-bold text-[#0E7C3E]'
                 role='status'
               >
                 <CheckIcon className='size-[18px]' strokeWidth={2.4} />
@@ -98,24 +109,23 @@ export const PromoCard = ({ promo, expired }: PromoCardProps) => {
             ) : (
               <button
                 aria-label={t('Copy')}
-                className='text-primary hover:bg-primary/5 inline-flex h-9 items-center gap-1.5 rounded-md px-2.5 text-[13px] font-bold'
+                className='text-primary hover:bg-primary/5 inline-flex h-10 shrink-0 items-center gap-1.5 rounded-md px-2.5 text-[13px] font-bold'
                 type='button'
                 onClick={copyToClipboard}
               >
                 <CopyIcon className='size-[18px]' />
                 {t('Copy')}
               </button>
-            ))}
-        </div>
-        {!expired && (
+            )}
+          </div>
           <Link
             href='/cart'
-            className='bg-primary hover:bg-primary/90 inline-flex h-11 shrink-0 items-center rounded-lg px-4 text-sm font-bold text-white'
+            className='bg-primary hover:bg-primary/90 inline-flex h-12 shrink-0 items-center justify-center rounded-lg px-[18px] text-[15px] font-bold text-white md:h-11 md:text-sm'
           >
             {t('Apply in cart')}
           </Link>
-        )}
-      </div>
+        </div>
+      )}
     </article>
   );
 };

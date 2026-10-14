@@ -8,6 +8,16 @@ import React from 'react';
 
 import type { Locale } from '@/i18n/routing';
 
+import {
+  AlertDialog,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger
+} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -246,14 +256,29 @@ export const PersonalInfoView = () => {
               {t('Log out hint')}
             </span>
           </span>
-          <Button
-            className='h-11 w-full px-5 md:w-auto'
-            type='button'
-            variant='muted'
-            onClick={onLogout}
-          >
-            {t('Log out of account')}
-          </Button>
+          <AlertDialog>
+            <AlertDialogTrigger asChild>
+              <Button className='h-11 w-full px-5 md:w-auto' type='button' variant='muted'>
+                {t('Log out of account')}
+              </Button>
+            </AlertDialogTrigger>
+            <AlertDialogContent>
+              <AlertDialogHeader>
+                <AlertDialogTitle className='text-xl leading-[26px] font-bold'>
+                  {t('Logout question')}
+                </AlertDialogTitle>
+                <AlertDialogDescription className='text-sm leading-5 text-[#4A5563]'>
+                  {t('Logout text')}
+                </AlertDialogDescription>
+              </AlertDialogHeader>
+              <AlertDialogFooter>
+                <AlertDialogCancel className='h-11 px-5'>{t('Stay')}</AlertDialogCancel>
+                <Button className='h-11 px-5' variant='destructive' onClick={onLogout}>
+                  {t('Log out')}
+                </Button>
+              </AlertDialogFooter>
+            </AlertDialogContent>
+          </AlertDialog>
         </div>
       </div>
 

@@ -1,6 +1,5 @@
 'use client';
 import { useMutation } from '@tanstack/react-query';
-import { XIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 import { toast } from 'sonner';
@@ -9,6 +8,7 @@ import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -23,9 +23,10 @@ interface Props extends React.ComponentProps<typeof AlertDialogTrigger> {
   orderId: number;
 }
 
+/** "Cancel order": a confirmation that says what happens to the goods and the money. */
 export const OrderCancelAction = ({ orderId, children, ...props }: Props) => {
   const t = useTranslations();
-  const [_, setOpenDelete] = React.useState(false);
+  const [open, setOpen] = React.useState(false);
   const pathname = usePathname();
 
   const router = useRouter();
@@ -35,7 +36,7 @@ export const OrderCancelAction = ({ orderId, children, ...props }: Props) => {
     onSuccess: () => {
       toast.success(t('Order canceled'));
       if (pathname !== '/user/orders/active') router.push('/user/orders/active');
-      setOpenDelete(false);
+      setOpen(false);
     },
     meta: {
       invalidatesQuery: ['orders']
@@ -47,24 +48,26 @@ export const OrderCancelAction = ({ orderId, children, ...props }: Props) => {
   };
 
   return (
-    <AlertDialog onOpenChange={setOpenDelete}>
+    <AlertDialog open={open} onOpenChange={setOpen}>
       <AlertDialogTrigger {...props}>{children}</AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>
-          <div className='bg-destructive/15 rounded-xl p-2'>
-            <XIcon className='text-destructive size-8' />
-          </div>
-          <AlertDialogTitle>{t('Cancel order')}</AlertDialogTitle>
+          <AlertDialogTitle className='text-xl leading-[26px] font-bold'>
+            {t('Cancel order question', { id: orderId })}
+          </AlertDialogTitle>
+          <AlertDialogDescription className='text-sm leading-5 text-[#4A5563]'>
+            {t('Cancel order text')}
+          </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
+          <AlertDialogCancel className='h-11 px-5'>{t('Keep order')}</AlertDialogCancel>
           <Button
-            size='sm'
+            className='h-11 px-5'
             variant='destructive'
             isLoading={postOrderCancelMutation.isPending}
             onClick={onCancelOrder}
           >
-            {t('Delete')}
+            {t('Cancel order')}
           </Button>
         </AlertDialogFooter>
       </AlertDialogContent>

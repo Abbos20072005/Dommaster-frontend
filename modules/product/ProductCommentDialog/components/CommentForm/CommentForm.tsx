@@ -45,14 +45,21 @@ export const CommentForm = ({ onSuccess, defaultValues, productId }: Props) => {
         <FormField
           render={({ field }) => (
             <FormItem className='space-y-1'>
-              <FormLabel>{t('Please rate this product overall')}</FormLabel>
-              <FormControl>
-                <Ratings
-                  rating={field.value}
-                  classNameIcon='text-secondary'
-                  onChange={field.onChange}
-                />
-              </FormControl>
+              <FormLabel className='font-bold'>{t('Please rate this product overall')}</FormLabel>
+              <div className='flex items-center gap-3'>
+                <FormControl>
+                  <Ratings
+                    rating={field.value}
+                    classNameIcon='text-secondary'
+                    onChange={field.onChange}
+                  />
+                </FormControl>
+                {!!field.value && (
+                  <span className='text-[15px] leading-[22px] font-bold'>
+                    {t(`Rating word ${field.value}`)}
+                  </span>
+                )}
+              </div>
               <FormMessage />
             </FormItem>
           )}
@@ -62,9 +69,19 @@ export const CommentForm = ({ onSuccess, defaultValues, productId }: Props) => {
         <FormField
           render={({ field }) => (
             <FormItem className='space-y-1'>
-              <FormLabel>{t('Comment')}</FormLabel>
+              <div className='flex items-center justify-between'>
+                <FormLabel className='font-bold'>{t('Comment')}</FormLabel>
+                <span className='text-muted-foreground text-[13px] tabular-nums'>
+                  {field.value?.length ?? 0} / 2000
+                </span>
+              </div>
               <FormControl>
-                <Textarea placeholder={t('Write your comment')} {...field} />
+                <Textarea
+                  maxLength={2000}
+                  placeholder={t('Write your comment')}
+                  rows={5}
+                  {...field}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -121,11 +138,15 @@ export const CommentForm = ({ onSuccess, defaultValues, productId }: Props) => {
             control={form.control}
           />
         )}
-        <div className='flex justify-end gap-2'>
+        <div className='flex justify-end gap-3 pt-2'>
           <DialogClose asChild>
-            <Button variant='outline'>{t('Cancel')}</Button>
+            <Button className='h-11 px-5' type='button' variant='muted'>
+              {t('Cancel')}
+            </Button>
           </DialogClose>
-          <Button isLoading={state.isPending}>{t('Save')}</Button>
+          <Button className='h-11 px-6' isLoading={state.isPending}>
+            {t('Send')}
+          </Button>
         </div>
       </form>
     </Form>

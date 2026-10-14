@@ -1,7 +1,6 @@
 'use client';
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { TrashIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -9,6 +8,7 @@ import {
   AlertDialog,
   AlertDialogCancel,
   AlertDialogContent,
+  AlertDialogDescription,
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
@@ -60,7 +60,9 @@ export const ProductCommentDialog = ({ children, defaultValues, productId, ...pr
       <DialogTrigger {...props}>{children}</DialogTrigger>
       <DialogContent hideCloseButton>
         <DialogHeader className='flex-row items-center justify-between'>
-          <DialogTitle>{t('Write a review')}</DialogTitle>
+          <DialogTitle className='text-xl leading-[26px] font-bold'>
+            {t('Write a review')}
+          </DialogTitle>
           {defaultValues && (
             <AlertDialog onOpenChange={setOpenDelete} open={openDelete}>
               <AlertDialogTrigger asChild>
@@ -70,15 +72,17 @@ export const ProductCommentDialog = ({ children, defaultValues, productId, ...pr
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <div className='bg-destructive/15 rounded-xl p-2'>
-                    <TrashIcon className='text-destructive size-8' />
-                  </div>
-                  <AlertDialogTitle>{t('Delete comment')}</AlertDialogTitle>
+                  <AlertDialogTitle className='text-xl leading-[26px] font-bold'>
+                    {t('Delete review question')}
+                  </AlertDialogTitle>
+                  <AlertDialogDescription className='text-sm leading-5 text-[#4A5563]'>
+                    {t('Delete review text')}
+                  </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel>{t('Cancel')}</AlertDialogCancel>
+                  <AlertDialogCancel className='h-11 px-5'>{t('Cancel')}</AlertDialogCancel>
                   <Button
-                    size='sm'
+                    className='h-11 px-5'
                     variant='destructive'
                     isLoading={deleteCommentMutation.isPending}
                     onClick={onDelete}
