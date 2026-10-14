@@ -12,12 +12,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     lastModified: new Date(),
     changeFrequency: 'daily' as const,
     priority: 0.7,
-    alternates: {
-      languages: {
-        uz: `${BASE_URL}/uz/category/${category.id}`,
-        en: `${BASE_URL}/en/category/${category.id}`,
-        ru: `${BASE_URL}/ru/category/${category.id}`
-      }
-    }
   }));
 }

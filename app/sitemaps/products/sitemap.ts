@@ -27,13 +27,6 @@ export default async function sitemap({ id }: { id: number }): Promise<MetadataR
     lastModified: new Date(),
     changeFrequency: 'daily',
     priority: 0.7,
-    alternates: {
-      languages: {
-        uz: `${BASE_URL}/uz/product/${product.id}`,
-        en: `${BASE_URL}/en/product/${product.id}`,
-        ru: `${BASE_URL}/ru/product/${product.id}`
-      }
-    },
     images: product.images.map((image) => image.image)
   }));
 }

@@ -90,11 +90,10 @@ export async function generateMetadata(): Promise<Metadata> {
   };
 }
 
+// zoom by pinch stays enabled (accessibility): no maximumScale / userScalable limits
 export const viewport: Viewport = {
-  initialScale: 1,
-  maximumScale: 1,
-  minimumScale: 1,
-  userScalable: false
+  width: 'device-width',
+  initialScale: 1
 };
 
 const RootLayout = async ({ children, params }: Readonly<Props>) => {
