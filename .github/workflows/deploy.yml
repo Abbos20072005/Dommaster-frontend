@@ -1,0 +1,82 @@
+# buildex.uz (Dommaster-frontend) — main ga push -> dommaster serverga yoyish.
+# Repoda: .github/workflows/deploy.yml
+#
+# Runner: dommaster serverda `dommaster-frontend` (label `dommaster`), User=dommaster.
+# Qo'lda qilinadigan ish bilan bir xil, faqat avtomatik:
+#   git pull -> (lock o'zgargan bo'lsa) npm install -> next build -> pm2 restart
+# Build joyida (~/Dommaster-frontend) bo'ladi — .env shu yerda, git'da yo'q.
+# Build paytida (~1-2 daqiqa) sayt qisqa vaqt xato berishi mumkin.
+#
+# Xato bo'lsa (build yiqilsa yoki sayt yangi BUILD_ID ni bermasa) avtomatik
+# orqaga qaytadi: oldingi commit + .next.prev nusxasi + pm2 restart.
+name: Deploy
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-buildex-frontend
+  cancel-in-progress: false
+
+env:
+  APP_DIR: /home/dommaster/Dommaster-frontend
+  PM2_APP: buildex-frontend
+  SITE_URL: https://buildex.uz/
+
+jobs:
+  deploy:
+    runs-on: [self-hosted, dommaster]
+    timeout-minutes: 30
+    steps:
+      - name: Yoyish
+        run: |
+          set -euo pipefail
+          cd "$APP_DIR"
+
+          # Serverda qo'lda o'zgartirilgan tracked fayl bo'lsa — to'xtaymiz, ustidan yozmaymiz.
+          if [ -n "$(git status --porcelain --untracked-files=no)" ]; then
+            echo "::error::serverda commit qilinmagan o'zgarishlar bor"; git status --short; exit 1
+          fi
+          [ "$(git branch --show-current)" = main ] || { echo "::error::serverdagi branch main emas"; exit 1; }
+
+          PREV=$(git rev-parse HEAD)
+          git fetch --prune origin main
+          git merge --ff-only "$GITHUB_SHA"
+          echo "$PREV -> $(git rev-parse --short HEAD)"
+
+          rollback() {
+            echo "::error::xato — $PREV ga qaytarilmoqda"
+            git reset -q --hard "$PREV"
+            if [ -d .next.prev ]; then rm -rf .next && mv .next.prev .next; fi
+            pm2 restart "$PM2_APP"
+            exit 1
+          }
+          trap rollback ERR
+
+          if ! git diff --quiet "$PREV" HEAD -- package.json package-lock.json; then
+            echo "== paketlar o'zgargan -> npm install"
+            npm install --no-audit --no-fund
+            git checkout -- package-lock.json
+          fi
+
+          rm -rf .next.prev
+          cp -a .next .next.prev
+          npm run build
+          BUILD_ID=$(cat .next/BUILD_ID)
+
+          # --update-env YO'Q: aks holda runner'ning GITHUB_*/RUNNER_* o'zgaruvchilari ilovaga o'tadi.
+          pm2 restart "$PM2_APP"
+
+          # HTTP 200 yetarli emas — sahifa aynan yangi build'dan kelayotganini tekshiramiz.
+          for i in $(seq 1 30); do
+            if curl -fsS -m 10 "$SITE_URL" 2>/dev/null | grep -q "$BUILD_ID"; then
+              trap - ERR
+              echo "OK: $SITE_URL -> BUILD_ID $BUILD_ID ($(git rev-parse --short HEAD))"
+              exit 0
+            fi
+            sleep 2
+          done
+          echo "::error::$SITE_URL 60 soniyada yangi BUILD_ID ($BUILD_ID) ni bermadi"
+          rollback
