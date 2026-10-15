@@ -3,6 +3,7 @@ import type { Metadata, Viewport } from 'next';
 import { hasLocale, NextIntlClientProvider } from 'next-intl';
 import { getTranslations } from 'next-intl/server';
 import { Inter, Roboto_Mono } from 'next/font/google';
+import { headers } from 'next/headers';
 import { notFound } from 'next/navigation';
 import NextTopLoader from 'nextjs-toploader';
 import React from 'react';
@@ -15,6 +16,7 @@ import { Analytics } from '@/components/Analytics';
 import { TelegramWebAppInit } from '@/components/TelegramWebAppInit';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
+import { getCanonicalMetadata } from '@/lib/canonical';
 import { cn } from '@/lib/utils';
 import { BASE_URL } from '@/utils/constants';
 
@@ -37,8 +39,12 @@ interface Props {
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
+  // set by the proxy: the canonical address of every page is built from the request
+  const requestHeaders = await headers();
 
   return {
+    ...getCanonicalMetadata(requestHeaders.get('x-pathname'), requestHeaders.get('x-search')),
+    metadataBase: new URL(BASE_URL),
     title: {
       default: t('metadata.title.default'),
       template: `%s - ${t('metadata.title.template')}`

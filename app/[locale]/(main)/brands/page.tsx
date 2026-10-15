@@ -47,7 +47,7 @@ const BrandsPage = async () => {
             <Link
               key={brand.id}
               className='hover:border-primary/50 flex flex-col items-center justify-center gap-2 rounded-xl border p-4 transition-colors'
-              href={`/brand/${brand.id}?brand=${brand.id}`}
+              href={`/brand/${brand.id}`}
             >
               <Image
                 alt={brand.name || 'Buildex'}

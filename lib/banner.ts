@@ -25,7 +25,7 @@ export const getBannerLink = (banner: Banner): BannerLinkTarget | null => {
     case 'product':
       return info ? { href: `/product/${info.id}`, external: false } : null;
     case 'brand':
-      return info ? { href: `/brand/${info.id}?brand=${info.id}`, external: false } : null;
+      return info ? { href: `/brand/${info.id}`, external: false } : null;
     case 'category': {
       if (!info) return null;
       if (info.model === 'productcategory') return { href: `/category/${info.id}`, external: false };

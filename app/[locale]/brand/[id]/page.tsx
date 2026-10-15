@@ -13,11 +13,33 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
-import { getBrandById } from '@/utils/api/requests';
+import { Link } from '@/i18n/navigation';
+import { getBrandById, getProducts } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
 }
+
+/** The item categories of the brand's products (up to 100 of them are looked at). */
+const getBrandCategories = async (brandId: number) => {
+  try {
+    const { data } = await getProducts({ data: { brand: brandId, page_size: 100 } });
+    const byHref = new Map<string, { name: string; href: string; count: number }>();
+
+    for (const product of data.result.content ?? []) {
+      const [category, subCategory, itemCategory] = product.breadcrumbs ?? [];
+      if (!category || !subCategory || !itemCategory?.name) continue;
+      const href = `/category/${category.id}/${subCategory.id}/${itemCategory.id}`;
+      const existing = byHref.get(href);
+      if (existing) existing.count += 1;
+      else byHref.set(href, { name: itemCategory.name, href, count: 1 });
+    }
+
+    return [...byHref.values()].sort((a, b) => b.count - a.count).slice(0, 12);
+  } catch {
+    return [];
+  }
+};
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
@@ -33,6 +55,8 @@ const SearchPage = async ({ params }: Props) => {
   const brandResponse = await getBrandById({ id });
   const brand = brandResponse.data.result;
   const initialProducts = await getInitialProducts({ brand: brand.id });
+  // the categories of the brand: those of its products (the API has no such list)
+  const categories = await getBrandCategories(brand.id);
   // const salesResponse = await getSales();
   // const sales = salesResponse.data.result;
 
@@ -72,6 +96,24 @@ const SearchPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>{brand.name}</h1>
+        {brand.description && (
+          <p className='text-muted-foreground mb-4 max-w-3xl text-sm leading-6 md:text-base'>
+            {brand.description}
+          </p>
+        )}
+        {categories.length > 0 && (
+          <nav aria-label={t('Categories')} className='mb-4 flex flex-wrap gap-2'>
+            {categories.map((category) => (
+              <Link
+                href={category.href}
+                key={category.href}
+                className='border-border hover:bg-muted rounded-full border bg-white px-3.5 py-1.5 text-sm'
+              >
+                {category.name}
+              </Link>
+            ))}
+          </nav>
+        )}
         <ProductFilterPaginated
           filterDefaultValues={{ brand: brand.id }}
           filters={filters}

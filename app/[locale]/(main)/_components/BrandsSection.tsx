@@ -14,10 +14,14 @@ import {
 import { Link } from '@/i18n/navigation';
 import { getBrands } from '@/utils/api/requests';
 
+/** how many brands the home page shows (the API has no "top" flag yet: the first ones) */
+const TOP_BRANDS = 20;
+
 export const BrandsSection = async () => {
   const t = await getTranslations();
   const brandsResponse = await getBrands();
-  const brands = brandsResponse.data.result;
+  // the home page links to the top brands only; the rest are on "All brands"
+  const brands = (brandsResponse.data.result ?? []).slice(0, TOP_BRANDS);
 
   if (!brands.length) return null;
 
@@ -39,7 +43,7 @@ export const BrandsSection = async () => {
           <div className='flex h-16 gap-4'>
             {brands.map((item) => (
               <Link
-                href={`/brand/${item.id}?brand=${item.id}`}
+                href={`/brand/${item.id}`}
                 key={item.id}
                 className='flex h-16 w-28 shrink-0 items-center justify-center rounded-md'
               >
@@ -61,7 +65,7 @@ export const BrandsSection = async () => {
             {brands.map((item) => (
               <CarouselItem key={item.id} className='basis-50 space-y-4'>
                 <Link
-                  href={`/brand/${item.id}?brand=${item.id}`}
+                  href={`/brand/${item.id}`}
                   key={item.id}
                   className='flex h-22 items-center justify-center rounded-md'
                 >
