@@ -1,8 +1,10 @@
 import type { Metadata } from 'next';
 
+import { isAxiosError } from 'axios';
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
+import { notFound } from 'next/navigation';
 
 import { htmlToText } from '@/lib/seo';
 
@@ -21,10 +23,19 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
+/** A removed (or unknown) news item is a 404 page, not a 500 server error. */
+const getNews = async (id: string) => {
+  try {
+    return (await getNewsById({ id })).data.result;
+  } catch (error) {
+    if (isAxiosError(error) && error.response && error.response.status < 500) notFound();
+    throw error;
+  }
+};
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const response = await getNewsById({ id });
-  const { title, description } = response.data.result;
+  const { title, description } = await getNews(id);
 
   return { title, description: htmlToText(description) || undefined };
 }
@@ -32,8 +43,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const NewsPage = async ({ params }: Props) => {
   const t = await getTranslations();
   const { id } = await params;
-  const newsResponse = await getNewsById({ id });
-  const news = newsResponse.data.result;
+  const news = await getNews(id);
 
   // the detail endpoint has no `image` yet — take the banner from the list item
   let image: string | null = news.image || null;

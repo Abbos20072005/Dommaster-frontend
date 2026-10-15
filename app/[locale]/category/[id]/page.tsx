@@ -5,8 +5,11 @@ import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 
 import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
+import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
+import { breadcrumbJsonLd } from '@/lib/jsonLd';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
+import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -42,11 +45,20 @@ const CategoryPage = async ({ params }: Props) => {
     getBrands()
   ]);
   const category = categoryResponse.data.result;
+  // the first page of products is in the HTML: the crawler sees the products and their links
+  const initialProducts = await getInitialProducts({ category: +id });
 
-  if (!category) return notFound();
+  // a category without a name must not be shown with an empty title and H1
+  if (!category?.name) return notFound();
 
   return (
     <div>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: t('Catalog'), path: '/catalog' },
+          { name: category.name }
+        ])}
+      />
       <MobileHeader />
       <BaseLayout className='mt-2 space-y-4 md:mt-4 md:space-y-6'>
         <Breadcrumb className='mb-2 md:mb-4'>
@@ -74,6 +86,7 @@ const CategoryPage = async ({ params }: Props) => {
             (sub.product_item_categories ?? []).map((item) => item.id)
           )}
           filters={getCatalogFilters(t, brandsResponse.data.result ?? [])}
+          initialProducts={initialProducts}
           queries={{ category: +id }}
           hideCategories
         />

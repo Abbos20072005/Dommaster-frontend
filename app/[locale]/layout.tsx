@@ -11,6 +11,7 @@ import type { Locale } from '@/i18n/routing';
 
 import { AppFooter, AppHeader, BottomNav, FloatingActions } from '@/components/layout';
 import { Providers } from '@/components/Providers';
+import { Analytics } from '@/components/Analytics';
 import { TelegramWebAppInit } from '@/components/TelegramWebAppInit';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
@@ -114,6 +115,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
           <Providers>
             <NextTopLoader height={5} color='var(--secondary)' showSpinner={false} />
             <TelegramWebAppInit />
+            <Analytics />
             <AppHeader />
             <main className='flex-1'>{children}</main>
             <AppFooter />

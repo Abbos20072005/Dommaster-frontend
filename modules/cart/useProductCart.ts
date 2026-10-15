@@ -1,6 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 
 import { usePathname } from '@/i18n/navigation';
+import { trackAddToCart } from '@/lib/analytics';
 import { patchCart, postCart } from '@/utils/api/requests';
 import { useCartStore } from '@/utils/stores';
 
@@ -29,7 +30,10 @@ export const useProductCart = (product: Product) => {
     setCartItemQuantity(product.id, 1);
     postCartMutation.mutate(
       { data: { product: product.id, quantity: 1 } },
-      { onError: () => setCartItemQuantity(product.id, previousQuantity) }
+      {
+        onSuccess: () => trackAddToCart(product),
+        onError: () => setCartItemQuantity(product.id, previousQuantity)
+      }
     );
   };
 

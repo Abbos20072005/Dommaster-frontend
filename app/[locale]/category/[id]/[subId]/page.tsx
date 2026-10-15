@@ -7,6 +7,7 @@ import React, { Suspense } from 'react';
 import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
+import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -41,6 +42,8 @@ const SubCategoryPage = async ({ params }: Props) => {
   const subCategory = subCategoryResponse.data.result;
 
   if (!subCategory) return notFound();
+
+  const initialProducts = await getInitialProducts({ sub_category: +subId });
 
   // only the brands that have products in this sub-category
   const brands = await getBrandsOfItemCategories(
@@ -80,6 +83,7 @@ const SubCategoryPage = async ({ params }: Props) => {
         <ProductFilterPaginated
           attributeCategoryIds={subCategory.product_item_categories.map((item) => item.id)}
           filters={getCatalogFilters(t, brands)}
+          initialProducts={initialProducts}
           queries={{ sub_category: +subId }}
           hideCategories
         />

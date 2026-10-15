@@ -1,3 +1,5 @@
+'use client';
+
 import React from 'react';
 
 import {
@@ -7,6 +9,8 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel';
+import { usePathname } from '@/i18n/navigation';
+import { trackViewItemList } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
 import { ProductCard } from '../ProductCard/ProductCard';
 
@@ -31,6 +35,15 @@ export const ProductList = ({
   itemClassName,
   ...props
 }: Props) => {
+  const pathname = usePathname();
+
+  // `view_item_list`: a product grid (a category, favorites, search) was shown
+  const productIds = products.map((product) => product.id).join(',');
+  React.useEffect(() => {
+    if (view === 'grid' && products.length) trackViewItemList(pathname, products);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [view, productIds, pathname]);
+
   return (
     <>
       {view === 'grid' && (

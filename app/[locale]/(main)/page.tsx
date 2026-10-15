@@ -1,6 +1,8 @@
 import { Suspense } from 'react';
 
+import { JsonLd } from '@/components/JsonLd';
 import { MobileHeader } from '@/components/layout';
+import { siteJsonLd } from '@/lib/jsonLd';
 
 import {
   AddsBrandsSection,
@@ -18,6 +20,7 @@ import {
 const Home = () => {
   return (
     <>
+      <JsonLd data={siteJsonLd()} />
       <MobileHeader />
       <div className='mt-2 space-y-6 md:mt-4 lg:space-y-8 xl:space-y-10'>
         <div className='space-y-4 md:space-y-6'>

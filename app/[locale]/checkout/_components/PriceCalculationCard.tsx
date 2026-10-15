@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { useRouter } from '@/i18n/navigation';
+import { trackBeginCheckout } from '@/lib/analytics';
 import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
@@ -77,6 +78,14 @@ export const PriceCalculationCard = () => {
   React.useEffect(() => {
     if (isSuccess && !availableCartItems.length && !orderId) router.push('/cart');
   }, [cart, user]);
+
+  // `begin_checkout`: once, when the checkout opens with the cart items
+  const checkoutTracked = React.useRef(false);
+  React.useEffect(() => {
+    if (checkoutTracked.current || !cart || !availableCartItems.length) return;
+    checkoutTracked.current = true;
+    trackBeginCheckout(availableCartItems, cart.total_price);
+  }, [cart, availableCartItems]);
 
   const goToOrder = (id: number) => {
     resetCheckout();

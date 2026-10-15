@@ -4,6 +4,7 @@ import { getTranslations } from 'next-intl/server';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
+import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -31,6 +32,7 @@ const SearchPage = async ({ params }: Props) => {
   const { id } = await params;
   const brandResponse = await getBrandById({ id });
   const brand = brandResponse.data.result;
+  const initialProducts = await getInitialProducts({ brand: brand.id });
   // const salesResponse = await getSales();
   // const sales = salesResponse.data.result;
 
@@ -73,6 +75,7 @@ const SearchPage = async ({ params }: Props) => {
         <ProductFilterPaginated
           filterDefaultValues={{ brand: brand.id }}
           filters={filters}
+          initialProducts={initialProducts}
           queries={{ brand: brand.id }}
         />
       </BaseLayout>

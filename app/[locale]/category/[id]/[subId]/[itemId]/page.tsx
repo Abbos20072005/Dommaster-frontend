@@ -7,6 +7,7 @@ import React, { Suspense } from 'react';
 import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
+import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -43,6 +44,8 @@ const ItemCategoryPage = async ({ params }: Props) => {
   // const sales = salesResponse.data.result;
 
   if (!itemCategory) return notFound();
+
+  const initialProducts = await getInitialProducts({ item_category: +itemId });
 
   const filters: Filter[] = [
     {
@@ -106,6 +109,7 @@ const ItemCategoryPage = async ({ params }: Props) => {
         </Suspense>
         <ProductFilterPaginated
           filters={filters}
+          initialProducts={initialProducts}
           queries={{ item_category: +itemId }}
           hideCategories
         />

@@ -29,6 +29,7 @@ import { useFormatDate } from '@/hooks';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPhoneNumber, formatPrice } from '@/lib/utils';
 import { AuthWrapper, useAuth } from '@/modules/auth';
+import { trackPurchase } from '@/lib/analytics';
 import { getOrderById } from '@/utils/api/requests';
 import { DELIVERY_TYPE } from '@/utils/constants';
 import {
@@ -95,6 +96,21 @@ export const OrderDetails = ({ scope }: Props) => {
   });
   const order = orderQuery.data?.data.result;
   const repeat = useRepeatOrder(+id);
+
+  // `purchase`: once per confirmed order (status > Pending: paid or cash on delivery), the order
+  // is remembered in this browser so that a reload does not count it twice
+  React.useEffect(() => {
+    if (!order || order.status === 0 || order.status === 4) return;
+    if (Date.now() - new Date(order.created_at).getTime() > 2 * 24 * 60 * 60 * 1000) return;
+    const key = `purchase_tracked_${order.id}`;
+    try {
+      if (localStorage.getItem(key)) return;
+      localStorage.setItem(key, '1');
+    } catch {
+      // no storage: the event may repeat, which is better than losing the purchase
+    }
+    trackPurchase(order);
+  }, [order]);
 
   const backHref = `/user/orders/${scope}`;
 

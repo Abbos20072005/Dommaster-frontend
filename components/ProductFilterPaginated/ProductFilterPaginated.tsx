@@ -1,5 +1,7 @@
 'use client';
 
+import type { AxiosResponse } from 'axios';
+
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
@@ -10,6 +12,7 @@ import type { FilterDefaultValues } from '@/modules/filter/useFilter';
 
 import { Button } from '@/components/ui/button';
 import { Pagination } from '@/components/ui/pagination';
+import { usePathname } from '@/i18n/navigation';
 import { Filter, useAttributeFilters, useFilter } from '@/modules/filter';
 import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { searchProducts } from '@/modules/search';
@@ -25,6 +28,11 @@ interface Props {
   filters: Filter[];
   hideCategories?: boolean;
   queries?: Partial<ProductRequest>;
+  /**
+   * The first page of the list, fetched on the server: the crawler gets the products and their
+   * links in the HTML. It is used only while no filter, sorting or search is chosen.
+   */
+  initialProducts?: ProductsResponse;
 }
 
 const MAX_MERGED_FILTERS = 5;
@@ -62,16 +70,23 @@ export const ProductFilterPaginated = ({
   filterDefaultValues,
   filters,
   hideCategories,
-  queries
+  queries,
+  initialProducts
 }: Props) => {
   const t = useTranslations();
+  const pathname = usePathname();
   const { filter, isCleared, onReset } = useFilter();
   const { filters: attributeValues } = useAttributeFilters();
   const [q] = useQueryState('q');
   const [chosenSortBy] = useQueryState('sort_by');
   const sort_by = resolveSortBy(chosenSortBy, q);
+  // the server's first page is the answer only for the untouched list (page 1, default sorting)
+  const useInitial = !!initialProducts && isCleared && !q && !chosenSortBy;
 
   const getProductsQuery = useQuery({
+    initialData: useInitial
+      ? ({ data: initialProducts } as AxiosResponse<ProductsResponse>)
+      : undefined,
     queryKey: [
       'products',
       {
@@ -82,7 +97,8 @@ export const ProductFilterPaginated = ({
         filters: attributeValues
       }
     ],
-    staleTime: 0,
+    // a fresh server page is not refetched at once (no skeleton flash after hydration)
+    staleTime: useInitial ? 60_000 : 0,
     queryFn: () =>
       // the text query goes through the smart search (Latin letters, synonyms)
       searchProducts({
@@ -120,6 +136,9 @@ export const ProductFilterPaginated = ({
   const attributeFilters = getAttributeFiltersQuery.data;
 
   const products = getProductsQuery.data?.data.result.content || [];
+  const totalElements = getProductsQuery.data?.data.result.totalElements ?? 0;
+  // plain links to the pages of the list: the crawler follows them (the buttons are not links)
+  const pagesCount = Math.min(Math.ceil(totalElements / (filter.page_size || 20)), 50);
 
   return (
     <div className='gap-8 lg:flex'>
@@ -163,6 +182,15 @@ export const ProductFilterPaginated = ({
           </div>
         )}
         <Pagination totalCount={getProductsQuery.data?.data.result.totalElements} />
+        {pagesCount > 1 && (
+          <nav aria-label='pages' className='sr-only'>
+            {Array.from({ length: pagesCount }, (_, index) => index + 1).map((page) => (
+              <a href={`${pathname}?page=${page}`} key={page}>
+                {page}
+              </a>
+            ))}
+          </nav>
+        )}
       </div>
     </div>
   );
