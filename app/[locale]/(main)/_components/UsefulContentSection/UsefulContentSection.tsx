@@ -28,7 +28,7 @@ export const UsefulContentSection = async () => {
             </TabsList>
             <TabsContent className='hidden flex-none sm:block' value='news'>
               <Button asChild size='sm' variant='muted'>
-                <Link href='/news'>
+                <Link href='/blogs'>
                   {t('View all')}
                   <ArrowRightIcon />
                 </Link>
@@ -62,7 +62,7 @@ export const UsefulContentSection = async () => {
           <TabsContent value='news'>
             <NewsTab />
             <Button asChild className='mt-2 w-full sm:hidden' size='sm' variant='muted'>
-              <Link href='/news'>{t('View all')}</Link>
+              <Link href='/blogs'>{t('View all')}</Link>
             </Button>
           </TabsContent>
           <TabsContent value='articles'>

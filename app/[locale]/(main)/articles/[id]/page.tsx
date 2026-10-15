@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { format } from 'date-fns';
 import { getTranslations } from 'next-intl/server';
 
+import { withMainPhone } from '@/lib/phone';
 import { htmlToText } from '@/lib/seo';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
@@ -52,7 +53,7 @@ const ArticlePage = async ({ params }: Props) => {
         <p className='text-muted-foreground text-sm'>{format(article.created_at, 'dd.MM.yyyy')}</p>
         <div
           className='prose prose-sm md:prose-base max-w-max'
-          dangerouslySetInnerHTML={{ __html: article.description }}
+          dangerouslySetInnerHTML={{ __html: withMainPhone(article.description) }}
         />
       </BaseLayout>
     </div>

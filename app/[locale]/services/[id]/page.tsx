@@ -10,6 +10,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { withMainPhone } from '@/lib/phone';
 import { getServiceById } from '@/utils/api/requests';
 
 interface Props {
@@ -50,7 +51,7 @@ const ServicePage = async ({ params }: Props) => {
       <h1 className='mb-6 text-xl font-bold md:text-3xl lg:text-4xl'>{service.name}</h1>
       <div
         className='prose prose-sm md:prose-base max-w-max'
-        dangerouslySetInnerHTML={{ __html: service.description }}
+        dangerouslySetInnerHTML={{ __html: withMainPhone(service.description) }}
       />
     </>
   );

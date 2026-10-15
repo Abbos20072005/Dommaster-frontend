@@ -24,6 +24,13 @@ const nextConfig: NextConfig = {
   // Metadata (title, description, canonical) is resolved before the HTML is sent for every
   // user agent: with streaming it ended up at the end of the page, where Yandex and Bing miss it.
   htmlLimitedBots: /.*/,
+  // the news section is "Articles" at /blogs: the old addresses lead to the new ones with one 301
+  async redirects() {
+    return [
+      { source: '/news', destination: '/blogs', permanent: true },
+      { source: '/news/:id', destination: '/blogs/:id', permanent: true }
+    ];
+  },
   env: {
     YANDEX_KEY: process.env.YANDEX_KEY,
     SUGGEST_KEY: process.env.SUGGEST_KEY,

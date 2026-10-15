@@ -8,7 +8,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const news = data.result.content || [];
 
   return news.map((news) => ({
-    url: `${BASE_URL}/news/${news.id}`,
+    url: `${BASE_URL}/blogs/${news.id}`,
     lastModified: new Date(),
     changeFrequency: 'daily',
     priority: 0.6,

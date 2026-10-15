@@ -6,6 +6,7 @@ import { getTranslations } from 'next-intl/server';
 import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
+import { withMainPhone } from '@/lib/phone';
 import { htmlToText } from '@/lib/seo';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
@@ -68,7 +69,7 @@ const NewsPage = async ({ params }: Props) => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href='/news'>{t('News')}</BreadcrumbLink>
+              <BreadcrumbLink href='/blogs'>{t('News')}</BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
@@ -86,7 +87,7 @@ const NewsPage = async ({ params }: Props) => {
         )}
         <div
           className='prose prose-sm md:prose-base max-w-max'
-          dangerouslySetInnerHTML={{ __html: news.description }}
+          dangerouslySetInnerHTML={{ __html: withMainPhone(news.description) }}
         />
       </BaseLayout>
       {/* a separate, full-width block: the article column above is narrow */}

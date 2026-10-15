@@ -17,7 +17,8 @@ export const NewsList = () => {
     queryKey: ['news'],
     queryFn: ({ pageParam }) =>
       getNewsList({
-        config: { params: { page: pageParam, page_size: 10 } }
+        // the API has no ordering (the oldest come first): a big page is sorted here, newest first
+        config: { params: { page: pageParam, page_size: 100 } }
       }),
     getNextPageParam: (lastPage, allPages) => {
       return !lastPage.data.result.last ? allPages.length + 1 : undefined;
@@ -29,7 +30,9 @@ export const NewsList = () => {
     getNewsQuery.fetchNextPage();
   };
 
-  const news = getNewsQuery.data?.pages.flatMap((page) => page.data.result.content);
+  const news = getNewsQuery.data?.pages
+    .flatMap((page) => page.data.result.content)
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
 
   if (getNewsQuery.isLoading) {
     return (
@@ -53,7 +56,7 @@ export const NewsList = () => {
     <div className='space-y-4'>
       <div className='grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-4'>
         {news?.map((item) => (
-          <Link href={`/news/${item.id}`} key={item.id}>
+          <Link href={`/blogs/${item.id}`} key={item.id}>
             <Card
               className='hover:bg-muted flex h-full flex-col transition-colors'
               variant='outline'

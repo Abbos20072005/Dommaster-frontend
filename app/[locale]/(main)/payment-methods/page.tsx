@@ -33,7 +33,7 @@ const CourierDeliveryPage = () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href='/news'>{t('Payment methods')}</BreadcrumbLink>
+              <BreadcrumbLink href='/blogs'>{t('Payment methods')}</BreadcrumbLink>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>

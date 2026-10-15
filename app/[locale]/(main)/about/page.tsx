@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
 
+import { withMainPhone } from '@/lib/phone';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
   Breadcrumb,
@@ -41,7 +42,7 @@ const ArticlesPage = async () => {
         </Breadcrumb>
         <div
           className='prose prose-sm md:prose-base max-w-max'
-          dangerouslySetInnerHTML={{ __html: about }}
+          dangerouslySetInnerHTML={{ __html: withMainPhone(about) }}
         />
       </BaseLayout>
     </div>

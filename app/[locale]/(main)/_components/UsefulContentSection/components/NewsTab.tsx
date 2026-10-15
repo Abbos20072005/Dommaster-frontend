@@ -13,15 +13,18 @@ import { Link } from '@/i18n/navigation';
 import { getNewsList } from '@/utils/api/requests';
 
 export const NewsTab = async () => {
-  const newsResponse = await getNewsList();
-  const news = newsResponse.data.result.content;
+  // the API returns the oldest first and has no ordering: the newest article goes first here
+  const newsResponse = await getNewsList({ config: { params: { page_size: 100 } } });
+  const news = [...newsResponse.data.result.content]
+    .sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime())
+    .slice(0, 12);
 
   return (
     <Carousel>
       <CarouselContent>
         {news.map((item) => (
           <CarouselItem key={item.id} className='basis-[280px] md:basis-1/3 lg:basis-1/4'>
-            <Link href={`/news/${item.id}`}>
+            <Link href={`/blogs/${item.id}`}>
               <Card
                 className='hover:bg-muted flex h-full flex-col transition-colors'
                 variant='outline'
