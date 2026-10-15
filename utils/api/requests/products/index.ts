@@ -1,5 +1,7 @@
 import { api, publicApi } from '@/utils/api/instance';
 
+export * from './links';
+
 export const getProducts = ({ data, config }: RequestConfig<ProductRequest>) =>
   publicApi.post<ProductsResponse>('product/filter/', data, config);
 

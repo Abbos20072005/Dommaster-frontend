@@ -9,6 +9,7 @@ import { getProductById } from '@/utils/api/requests';
 import {
   ProductBody,
   ProductHeader,
+  ProductLinks,
   RecentlyViewedProducts,
   SameCategoryProducts
 } from './_components';
@@ -42,6 +43,7 @@ const ProductPage = () => {
       <BaseLayout className='mt-2 md:mt-4'>
         <ProductHeader />
         <ProductBody />
+        <ProductLinks />
         <SameCategoryProducts />
         <RecentlyViewedProducts />
       </BaseLayout>

@@ -13,7 +13,12 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 
-import { CartCalculation, ProductCartList, RecentlyViewedProducts } from './_components';
+import {
+  CartCalculation,
+  CartCrossSell,
+  ProductCartList,
+  RecentlyViewedProducts
+} from './_components';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -51,6 +56,7 @@ const CartPage = () => {
           </div>
         </div>
         <div className='px-2 md:px-0'>
+          <CartCrossSell />
           <RecentlyViewedProducts />
         </div>
       </BaseLayout>
