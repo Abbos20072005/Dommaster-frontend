@@ -27,6 +27,10 @@ const nextConfig: NextConfig = {
   // the news section is "Articles" at /blogs: the old addresses lead to the new ones with one 301
   async redirects() {
     return [
+      // the legal texts name these addresses (BLD-103, BLD-287)
+      { source: '/delivery', destination: '/courier-delivery', permanent: true },
+      { source: '/payment', destination: '/payment-methods', permanent: true },
+      { source: '/requisites', destination: '/contacts', permanent: true },
       { source: '/news', destination: '/blogs', permanent: true },
       { source: '/news/:id', destination: '/blogs/:id', permanent: true }
     ];

@@ -7,7 +7,8 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      disallow: '/user/*'
+      // the private pages, the site search and the duplicates made by sorting and tabs (BLD-102)
+      disallow: ['/cart', '/user/', '/checkout', '/search', '/*?sort=', '/*?sort_by=', '/*?tab=']
     },
     sitemap: `${BASE_URL}/sitemap.xml`
   };

@@ -181,7 +181,7 @@
   "Order details": "Order details",
   "Order in the new app and get bonuses": "Order in the new app and get bonuses",
   "Order status": "Order status",
-  "Order will be delivered within 2 hours": "We will deliver your order within 2 hours",
+  "Order will be delivered within 2 hours": "The delivery time is shown at checkout",
   "Orders": "Orders",
   "Out of stock": "Out of stock",
   "In stock": "In stock",
@@ -298,9 +298,9 @@
   "Your order has been created, please proceed to payment": "Your order has been created. Please proceed to payment.",
   "benefits": {
     "1": "A wide range of building materials is always in stock",
-    "2": "Delivery of building materials within two hours or at any convenient time",
-    "3": "Easy return of goods that are not needed within 360 days",
-    "4": "Multi-level quality management system according to ISO 9001"
+    "2": "Delivery of building materials in Tashkent",
+    "3": "Returns and exchanges according to the law and the offer",
+    "4": "Original goods only"
   },
   "buy in Tashkent, optimal prices in the internet store Buildex": "buy in Tashkent, optimal prices in the internet store Buildex",
   "code": "code",
@@ -555,5 +555,22 @@
   "Bought together": "Bought together",
   "Alternatives": "Alternatives",
   "Similar products": "Similar products",
-  "Don't forget": "Don't forget"
+  "Don't forget": "Don't forget",
+  "Login consent": "I have read the <oferta>Public offer</oferta> and the <privacy>Privacy policy</privacy> and agree to the processing of my phone number and to receiving a login code.",
+  "Never share the code": "Do not share the code with anyone",
+  "Information": "Information",
+  "Contacts": "Contacts",
+  "Returns": "Returns",
+  "Warranty": "Warranty",
+  "Public offer": "Public offer",
+  "Privacy policy": "Privacy policy",
+  "Checkout consent": "I have reviewed the order, the total, and the payment and delivery terms and agree to the <oferta>Public offer</oferta>.",
+  "Terms links": "Terms of <delivery>delivery</delivery>, <payment>payment</payment> and <returns>returns</returns>",
+  "Product delivery short": "Across Tashkent. The price and the time are calculated by the address and shown before the payment.",
+  "Product payment short": "Online by card (Atmos, Click, Payme, Uzum); companies — a bank transfer.",
+  "Product returns short": "A product of proper quality can be exchanged within 10 days; defective goods follow the law.",
+  "Delete account page intro": "Deleting the account removes the profile, saved addresses, the cart, favorites, viewed products and saved cards. This cannot be undone.",
+  "Delete account page kept": "The order history is kept as the accounting and the law require, not linked to the account. See sections 8 and 9 of the Privacy policy.",
+  "Delete account page support": "To delete the account, contact us: +998 77 240 09 09, buildexuz@gmail.com.",
+  "How to delete the account": "How to delete the account"
 }

@@ -2,53 +2,55 @@ import { useTranslations } from 'next-intl';
 
 import { Link } from '@/i18n/navigation';
 
+const linkClass =
+  'hover:text-secondary inline-block text-sm leading-[200%] whitespace-nowrap transition-colors';
+
+/** The columns of the footer: the company, the conditions of an order, the legal texts. */
+const COLUMNS = [
+  {
+    title: 'About us',
+    links: [
+      { href: '/about', label: 'About company' },
+      { href: '/contacts', label: 'Contacts' }
+    ]
+  },
+  {
+    title: 'Delivery and lifting',
+    links: [
+      { href: '/courier-delivery', label: 'Delivery by courier' },
+      { href: '/payment-methods', label: 'Payment methods' },
+      { href: '/returns', label: 'Returns' },
+      { href: '/returns#kafolat', label: 'Warranty' }
+    ]
+  },
+  {
+    title: 'Information',
+    links: [
+      { href: '/oferta', label: 'Public offer' },
+      { href: '/privacy', label: 'Privacy policy' }
+    ]
+  }
+];
+
 export const Links = () => {
   const t = useTranslations();
 
   return (
-    <div className='flex gap-6 md:gap-9 lg:gap-8 xl:gap-x-20'>
-      <div>
-        <p className='mb-3 text-lg font-semibold'>{t('About us')}</p>
-        <ul>
-          <li>
-            <Link
-              href='/about'
-              className='hover:text-secondary inline-block text-sm leading-[200%] transition-colors'
-            >
-              {t('About company')}
-            </Link>
-          </li>
-          {/*<li>*/}
-          {/*  <Link*/}
-          {/*    href='/requisites'*/}
-          {/*    className='hover:text-secondary inline-block text-sm leading-[200%] transition-colors'*/}
-          {/*  >*/}
-          {/*    {t('Requisites')}*/}
-          {/*  </Link>*/}
-          {/*</li>*/}
-        </ul>
-      </div>
-      <div>
-        <p className='mb-3 text-lg font-semibold'>{t('Delivery and lifting')}</p>
-        <ul>
-          <li>
-            <a
-              href='/courier-delivery'
-              className='hover:text-secondary inline-block text-sm leading-[200%] transition-colors'
-            >
-              {t('Delivery by courier')}
-            </a>
-          </li>
-          <li>
-            <Link
-              href='/payment-methods'
-              className='hover:text-secondary inline-block text-sm leading-[200%] transition-colors'
-            >
-              {t('Payment methods')}
-            </Link>
-          </li>
-        </ul>
-      </div>
+    <div className='flex flex-wrap gap-x-10 gap-y-6 md:gap-x-12 xl:gap-x-20'>
+      {COLUMNS.map((column) => (
+        <div key={column.title}>
+          <p className='mb-3 text-lg font-semibold whitespace-nowrap'>{t(column.title)}</p>
+          <ul>
+            {column.links.map((link) => (
+              <li key={link.href}>
+                <Link className={linkClass} href={link.href}>
+                  {t(link.label)}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
     </div>
   );
 };

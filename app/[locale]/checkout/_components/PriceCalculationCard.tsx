@@ -6,10 +6,12 @@ import React from 'react';
 import { toast } from 'sonner';
 
 import { Badge } from '@/components/ui/badge';
+import { TermsLinks } from '@/components/TermsLinks';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
-import { useRouter } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 import { trackBeginCheckout } from '@/lib/analytics';
 import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
@@ -48,6 +50,7 @@ export const PriceCalculationCard = () => {
   const router = useRouter();
   const [promo, setPromo] = React.useState<PromoCodeChecker & { code: string }>();
   const [orderId, setOrderId] = React.useState<number>();
+  const [agreed, setAgreed] = React.useState(false);
 
   const getAddressesQuery = useQuery({
     queryKey: ['customerAddresses'],
@@ -220,8 +223,32 @@ export const PriceCalculationCard = () => {
             {formatPrice(totalPrice)} {t('sum')}
           </p>
         </div>
+        <TermsLinks className='pt-1' />
+        {/* the order is not placed until the customer agrees (BLD-287); not checked in advance */}
+        <label className='flex cursor-pointer items-start gap-2.5 py-2 text-[13px] leading-5'>
+          <Checkbox
+            checked={agreed}
+            className='mt-0.5 size-[18px] shrink-0'
+            onCheckedChange={(checked) => setAgreed(checked === true)}
+          />
+          <span>
+            {t.rich('Checkout consent', {
+              oferta: (chunks) => (
+                <Link
+                  className='text-primary underline'
+                  href='/oferta'
+                  rel='noreferrer'
+                  target='_blank'
+                >
+                  {chunks}
+                </Link>
+              )
+            })}
+          </span>
+        </label>
         <Button
           disabled={
+            !agreed ||
             !cart?.cart_items.length ||
             isLoading ||
             !isAddressSelected ||

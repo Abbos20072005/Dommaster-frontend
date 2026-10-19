@@ -181,7 +181,7 @@
   "Order details": "Buyurtma tafsilotlari",
   "Order in the new app and get bonuses": "Yangi ilovada buyurtma qiling va bonuslar oling",
   "Order status": "Buyurtma holati",
-  "Order will be delivered within 2 hours": "Buyurtmangizni 2 soat ichida yetkazamiz",
+  "Order will be delivered within 2 hours": "Yetkazish muddati buyurtmani rasmiylashtirishda ko'rsatiladi",
   "Orders": "Buyurtmalar",
   "Out of stock": "Sotuvda yo'q",
   "In stock": "Mavjud",
@@ -298,9 +298,9 @@
   "Your order has been created, please proceed to payment": "Buyurtmangiz yaratildi. Iltimos, to'lovga o'ting.",
   "benefits": {
     "1": "Keng qurilish materiallari assortimenti doimo mavjud",
-    "2": "Qurilish materiallarini ikki soat ichida yoki istalgan vaqtda yetkazib berish",
-    "3": "Kerak bo'lmagan tovarlarni 360 kun ichida oson qaytarish",
-    "4": "ISO 9001 standartiga ko'ra ko'p bosqichli sifatni boshqarish tizimi"
+    "2": "Qurilish materiallarini Toshkent bo'ylab yetkazib berish",
+    "3": "Qaytarish va almashtirish qonun va ofertaga muvofiq",
+    "4": "Faqat original tovarlar"
   },
   "buy in Tashkent, optimal prices in the internet store Buildex": "Toshkentda Buildex internet do'konida optimal narxlarda sotib oling",
   "code": "kod",
@@ -581,5 +581,22 @@
   "Bought together": "Birga sotib olinadi",
   "Alternatives": "Analoglar",
   "Similar products": "O‘xshash mahsulotlar",
-  "Don't forget": "Unutmang"
+  "Don't forget": "Unutmang",
+  "Login consent": "Men <oferta>Ommaviy oferta</oferta> va <privacy>Maxfiylik siyosati</privacy> bilan tanishdim. Akkauntga kirish uchun telefon raqamimga ishlov berilishiga va kod yuborilishiga roziman.",
+  "Never share the code": "Kodni hech kimga bermang",
+  "Information": "Ma'lumot",
+  "Contacts": "Kontaktlar",
+  "Returns": "Qaytarish",
+  "Warranty": "Kafolat",
+  "Public offer": "Ommaviy oferta",
+  "Privacy policy": "Maxfiylik siyosati",
+  "Checkout consent": "Men buyurtma tarkibi, yakuniy summa, to'lov va yetkazib berish shartlarini ko'rib chiqdim va <oferta>Ommaviy oferta</oferta> shartlariga roziman.",
+  "Terms links": "<delivery>Yetkazib berish</delivery>, <payment>to'lov</payment> va <returns>qaytarish</returns> shartlari",
+  "Product delivery short": "Toshkent bo'ylab. Narx va muddat manzil bo'yicha hisoblanadi va to'lovdan oldin ko'rsatiladi.",
+  "Product payment short": "Karta bilan onlayn (Atmos, Click, Payme, Uzum); yuridik shaxslar — bank o'tkazmasi.",
+  "Product returns short": "Sifatli tovarni 10 kun ichida almashtirish mumkin; nuqsonli tovar bo'yicha qonun talablari amal qiladi.",
+  "Delete account page intro": "Akkauntni o'chirsangiz, profil, saqlangan manzillar, savat, sevimlilar, ko'rilgan tovarlar va saqlangan kartalar o'chiriladi. Bu amalni qaytarib bo'lmaydi.",
+  "Delete account page kept": "Buyurtmalar tarixi buxgalteriya va qonun talablari bo'yicha akkauntga bog'lanmagan holda saqlanadi. Batafsil — Maxfiylik siyosatining 8 va 9-bo'limlari.",
+  "Delete account page support": "Akkauntni o'chirish uchun biz bilan bog'laning: +998 77 240 09 09, buildexuz@gmail.com.",
+  "How to delete the account": "Akkauntni o'chirish tartibi"
 }

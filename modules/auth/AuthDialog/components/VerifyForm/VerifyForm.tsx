@@ -35,6 +35,7 @@ export const VerifyForm = ({
       <DialogHeader className='mb-6'>
         <DialogTitle className='text-2xl'>{t('Verify')}</DialogTitle>
         <DialogDescription>{t('We have send sms code to your phone number')}.</DialogDescription>
+        <p className='text-sm font-semibold text-[#B42318]'>{t('Never share the code')}</p>
       </DialogHeader>
       <div className={cn('grid gap-6', className)} {...props}>
         <Form {...form}>

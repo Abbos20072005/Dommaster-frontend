@@ -1,24 +1,13 @@
 'use client';
 
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQueryClient } from '@tanstack/react-query';
 import Cookies from 'js-cookie';
 import { AlertCircleIcon, LockIcon } from 'lucide-react';
 import { useLocale, useTranslations } from 'next-intl';
 import React from 'react';
-import { toast } from 'sonner';
 
 import type { Locale } from '@/i18n/routing';
 
-import {
-  AlertDialog,
-  AlertDialogCancel,
-  AlertDialogContent,
-  AlertDialogDescription,
-  AlertDialogFooter,
-  AlertDialogHeader,
-  AlertDialogTitle,
-  AlertDialogTrigger
-} from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
 import {
   Dialog,
@@ -29,11 +18,10 @@ import {
   DialogTitle
 } from '@/components/ui/dialog';
 import { PhoneInput } from '@/components/ui/phone-input';
-import { useRouter } from '@/i18n/navigation';
+import { Link, useRouter } from '@/i18n/navigation';
 import { LOCALE_LABELS, routing } from '@/i18n/routing';
 import { cn, formatPhoneNumber } from '@/lib/utils';
-import { useAuth } from '@/modules/auth';
-import { deleteAccount, getDeleteButton } from '@/utils/api/requests';
+import { DeleteAccountButton, useCanDeleteAccount } from '@/modules/auth';
 import { COOKIES } from '@/utils/constants';
 
 import { usePersonalInfoForm } from '../PersonalInfoForm/hooks';
@@ -72,7 +60,6 @@ export const PersonalInfoView = () => {
   const locale = useLocale() as Locale;
   const router = useRouter();
   const queryClient = useQueryClient();
-  const { reset } = useAuth();
   const { form, state, functions } = usePersonalInfoForm();
   const [phoneOpen, setPhoneOpen] = React.useState(false);
   const [newPhone, setNewPhone] = React.useState('');
@@ -99,28 +86,8 @@ export const PersonalInfoView = () => {
     queryClient.invalidateQueries();
   };
 
-  const onLogout = () => {
-    reset();
-    router.push('/');
-  };
-
   // the admin switches the button on and off
-  const canDelete = !!useQuery({
-    queryKey: ['deleteButton'],
-    queryFn: getDeleteButton,
-    staleTime: 0
-  }).data?.data.result.is_deleted;
-
-  // success is the 204 status; a 400 means the account is already gone: the same exit
-  const deleteAccountMutation = useMutation({
-    mutationFn: deleteAccount,
-    onSettled: (_data, error) => {
-      const status = (error as { response?: { status?: number } } | null)?.response?.status;
-      if (error && status !== 400) return;
-      toast.success(t('Account deleted'));
-      onLogout();
-    }
-  });
+  const canDelete = useCanDeleteAccount();
 
   const applyPhone = () => {
     form.setValue('phone_number', newPhone, { shouldDirty: true, shouldValidate: true });
@@ -273,36 +240,17 @@ export const PersonalInfoView = () => {
               {t('Delete account hint')}
             </span>
           </span>
-          <AlertDialog>
-            <AlertDialogTrigger asChild>
-              <Button className='h-11 w-full px-5 md:w-auto' type='button' variant='ghostDestructive'>
-                {t('Delete account')}
-              </Button>
-            </AlertDialogTrigger>
-            <AlertDialogContent>
-              <AlertDialogHeader>
-                <AlertDialogTitle className='text-xl leading-[26px] font-bold'>
-                  {t('Delete account question')}
-                </AlertDialogTitle>
-                <AlertDialogDescription className='text-sm leading-5 text-[#4A5563]'>
-                  {t('Delete account text')}
-                </AlertDialogDescription>
-              </AlertDialogHeader>
-              <AlertDialogFooter>
-                <AlertDialogCancel className='h-11 px-5'>{t('Cancel')}</AlertDialogCancel>
-                <Button
-                  className='h-11 px-5'
-                  variant='destructive'
-                  isLoading={deleteAccountMutation.isPending}
-                  onClick={() => deleteAccountMutation.mutate()}
-                >
-                  {t('Delete')}
-                </Button>
-              </AlertDialogFooter>
-            </AlertDialogContent>
-          </AlertDialog>
+          <DeleteAccountButton className='h-11 w-full px-5 md:w-auto' />
         </div>
       )}
+
+      {/* always there: the way to delete the account is a public page (BLD-287) */}
+      <Link
+        className='text-muted-foreground hover:text-foreground w-fit text-[13px] underline'
+        href='/account/delete'
+      >
+        {t('How to delete the account')}
+      </Link>
 
       <Dialog open={phoneOpen} onOpenChange={setPhoneOpen}>
         <DialogContent className='sm:max-w-[460px]'>

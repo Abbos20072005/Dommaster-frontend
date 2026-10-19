@@ -2,6 +2,7 @@
 
 import { useTranslations } from 'next-intl';
 
+import { TermsLinks } from '@/components/TermsLinks';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { useRouter } from '@/i18n/navigation';
@@ -45,6 +46,7 @@ export const CartCalculation = () => {
             {formatPrice(cart?.total_price ?? 0)} {t('sum')}
           </p>
         </div>
+        <TermsLinks className='pt-1' />
       </CardContent>
       <CardFooter className='p-4 pt-0'>
         {user ? (

@@ -2,6 +2,7 @@ import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { DialogDescription, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import {
   Form,
@@ -12,6 +13,7 @@ import {
   FormMessage
 } from '@/components/ui/form';
 import { PhoneInput } from '@/components/ui/phone-input';
+import { Link } from '@/i18n/navigation';
 
 import { useLoginForm } from './hooks';
 
@@ -44,14 +46,51 @@ export const LoginForm = ({ onSuccess }: Props) => {
             name='phone_number'
             control={form.control}
           />
-          <Button isLoading={state.isPending}>{t('Continue')}</Button>
+          <FormField
+            render={({ field }) => (
+              <FormItem>
+                <label className='flex cursor-pointer items-start gap-2.5 text-[13px] leading-5'>
+                  <Checkbox
+                    checked={field.value}
+                    className='mt-0.5 size-[18px] shrink-0'
+                    onCheckedChange={(checked) => field.onChange(checked === true)}
+                  />
+                  <span>
+                    {t.rich('Login consent', {
+                      oferta: (chunks) => (
+                        <Link
+                          className='text-primary underline'
+                          href='/oferta'
+                          rel='noreferrer'
+                          target='_blank'
+                        >
+                          {chunks}
+                        </Link>
+                      ),
+                      privacy: (chunks) => (
+                        <Link
+                          className='text-primary underline'
+                          href='/privacy'
+                          rel='noreferrer'
+                          target='_blank'
+                        >
+                          {chunks}
+                        </Link>
+                      )
+                    })}
+                  </span>
+                </label>
+              </FormItem>
+            )}
+            name='consent'
+            control={form.control}
+          />
+          {/* the code is not sent until the customer agrees */}
+          <Button disabled={!form.watch('consent')} isLoading={state.isPending}>
+            {t('Continue')}
+          </Button>
         </form>
       </Form>
-      <p className='text-muted-foreground text-center text-xs'>
-        {t(
-          'By continuing, you agree to the collection and processing of personal data and the user agreement'
-        )}
-      </p>
     </>
   );
 };

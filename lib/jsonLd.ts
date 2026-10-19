@@ -5,7 +5,9 @@ import { htmlToText } from './seo';
 /** the legal name and the address of the company (they must be the same everywhere) */
 const COMPANY = {
   name: 'Buildex',
-  legalName: 'BUILDEX RETAIL GROUP MChJ',
+  // the seller and the operator of the personal data: «ENERGOSNAB» MChJ (Buildex is the brand)
+  legalName: '«ENERGOSNAB» MChJ',
+  taxId: '308542198',
   logo: `${BASE_URL}/android-chrome-512x512.png`,
   street: "Arnasoy ko'chasi, 10A",
   city: 'Toshkent',
@@ -24,6 +26,7 @@ export const siteJsonLd = () => [
     '@id': `${BASE_URL}/#organization`,
     name: COMPANY.name,
     legalName: COMPANY.legalName,
+    taxID: COMPANY.taxId,
     url: BASE_URL,
     logo: COMPANY.logo,
     telephone: phone,

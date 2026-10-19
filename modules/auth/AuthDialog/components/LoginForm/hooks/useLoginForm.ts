@@ -16,7 +16,8 @@ export const useLoginForm = ({ onSuccess }: Props) => {
   const form = useForm<LoginFormSchema>({
     resolver: zodResolver(loginFormSchema),
     defaultValues: {
-      phone_number: '+998'
+      phone_number: '+998',
+      consent: false
     }
   });
 

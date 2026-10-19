@@ -21,7 +21,7 @@ export const MobileAppLinks = () => {
   const t = useTranslations();
   return (
     <div>
-      <div className='border-primary-foreground/60 flex justify-between gap-4 overflow-hidden rounded-3xl border p-4 sm:pb-0'>
+      <div className='border-primary-foreground/60 flex justify-between gap-4 overflow-hidden rounded-3xl border p-4'>
         <div>
           <p className='mb-4 max-w-[250px] font-semibold'>
             {t('Point your camera at the QR to download the app')}
