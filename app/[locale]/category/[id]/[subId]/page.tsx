@@ -16,6 +16,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { orNotFound } from '@/lib/orNotFound';
 import { getSubCategoryById } from '@/utils/api/requests';
 
 import { CategoryChips } from '../../_components/CategoryChips';
@@ -27,7 +28,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { subId } = await params;
-  const subCategoryResponse = await getSubCategoryById({ id: subId });
+  const subCategoryResponse = await orNotFound(getSubCategoryById({ id: subId }));
   const subCategory = subCategoryResponse.data.result;
 
   return {
@@ -38,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const SubCategoryPage = async ({ params }: Props) => {
   const t = await getTranslations();
   const { id, subId } = await params;
-  const subCategoryResponse = await getSubCategoryById({ id: subId });
+  const subCategoryResponse = await orNotFound(getSubCategoryById({ id: subId }));
   const subCategory = subCategoryResponse.data.result;
 
   if (!subCategory) return notFound();

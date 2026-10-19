@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
@@ -12,6 +13,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { orNotFound } from '@/lib/orNotFound';
 import { getBrands, getSaleById } from '@/utils/api/requests';
 
 interface Props {
@@ -21,7 +23,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const saleResponse = await getSaleById({ id });
+  const saleResponse = await orNotFound(getSaleById({ id }));
   const sale = saleResponse.data.result;
 
   return { title: sale?.name };
@@ -32,7 +34,7 @@ const SalePage = async ({ params, searchParams }: Props) => {
   const { id } = await params;
   const { item_category } = await searchParams;
 
-  const saleResponse = await getSaleById({ id });
+  const saleResponse = await orNotFound(getSaleById({ id }));
   const sale = saleResponse.data.result;
 
   const brandsResponse = await getBrands({
@@ -60,7 +62,7 @@ const SalePage = async ({ params, searchParams }: Props) => {
     }
   ];
 
-  if (!sale || !brands) return null;
+  if (!sale?.id) notFound();
 
   return (
     <div>

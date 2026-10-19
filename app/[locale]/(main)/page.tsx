@@ -1,3 +1,4 @@
+import { useTranslations } from 'next-intl';
 import { Suspense } from 'react';
 
 import { JsonLd } from '@/components/JsonLd';
@@ -18,9 +19,13 @@ import {
 } from './_components';
 
 const Home = () => {
+  const t = useTranslations();
+
   return (
     <>
       <JsonLd data={siteJsonLd()} />
+      {/* the only H1 of the home page: the page has no visible title of its own */}
+      <h1 className='sr-only'>{t('Home h1')}</h1>
       <MobileHeader />
       <div className='mt-2 space-y-6 md:mt-4 lg:space-y-8 xl:space-y-10'>
         <div className='space-y-4 md:space-y-6'>

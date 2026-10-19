@@ -30,7 +30,7 @@ export const AddsBrandsSection = () => {
           <ProductSection
             href={`/collection/${item.data.id}`}
             products={item.data.products}
-            title={<h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2>}
+            title={item.data.name ? <h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2> : <div />}
           />
         ) : item.type === 'banners' ? (
           <div className='overflow-hidden'>

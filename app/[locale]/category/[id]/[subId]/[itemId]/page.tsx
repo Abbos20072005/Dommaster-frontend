@@ -16,6 +16,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { orNotFound } from '@/lib/orNotFound';
 import { getBrands, getItemCategoryById } from '@/utils/api/requests';
 
 interface Props {
@@ -24,7 +25,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { itemId } = await params;
-  const itemCategoryResponse = await getItemCategoryById({ id: itemId });
+  const itemCategoryResponse = await orNotFound(getItemCategoryById({ id: itemId }));
   const itemCategory = itemCategoryResponse.data.result;
 
   return {
@@ -38,7 +39,7 @@ const ItemCategoryPage = async ({ params }: Props) => {
   const brandsResponse = await getBrands({ config: { params: { item_category_id: itemId } } });
   const brands = brandsResponse.data.result || [];
 
-  const itemCategoryResponse = await getItemCategoryById({ id: itemId });
+  const itemCategoryResponse = await orNotFound(getItemCategoryById({ id: itemId }));
   const itemCategory = itemCategoryResponse.data.result;
   // const salesResponse = await getSales();
   // const sales = salesResponse.data.result;

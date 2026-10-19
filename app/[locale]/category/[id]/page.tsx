@@ -18,6 +18,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { orNotFound } from '@/lib/orNotFound';
 import { getBrands, getCategoryById } from '@/utils/api/requests';
 
 import { CategoryChips } from '../_components/CategoryChips';
@@ -29,7 +30,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const categoryResponse = await getCategoryById({ id });
+  const categoryResponse = await orNotFound(getCategoryById({ id }));
   const category = categoryResponse.data.result;
 
   return {

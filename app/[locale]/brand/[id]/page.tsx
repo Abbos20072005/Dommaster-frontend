@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
+import { notFound } from 'next/navigation';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
@@ -14,6 +15,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { Link } from '@/i18n/navigation';
+import { orNotFound } from '@/lib/orNotFound';
 import { getBrandById, getProducts } from '@/utils/api/requests';
 
 interface Props {
@@ -43,7 +45,7 @@ const getBrandCategories = async (brandId: number) => {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const brandResponse = await getBrandById({ id });
+  const brandResponse = await orNotFound(getBrandById({ id }));
   const brand = brandResponse.data.result;
 
   return { title: brand?.name };
@@ -52,8 +54,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const SearchPage = async ({ params }: Props) => {
   const t = await getTranslations();
   const { id } = await params;
-  const brandResponse = await getBrandById({ id });
+  const brandResponse = await orNotFound(getBrandById({ id }));
   const brand = brandResponse.data.result;
+  if (!brand?.id) notFound();
   const initialProducts = await getInitialProducts({ brand: brand.id });
   // the categories of the brand: those of its products (the API has no such list)
   const categories = await getBrandCategories(brand.id);
