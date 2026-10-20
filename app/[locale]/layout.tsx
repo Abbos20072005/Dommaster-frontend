@@ -11,6 +11,7 @@ import React from 'react';
 import type { Locale } from '@/i18n/routing';
 
 import { AppFooter, AppHeader, BottomNav, FloatingActions } from '@/components/layout';
+import { CrawlerNav } from '@/components/layout/CrawlerNav';
 import { Providers } from '@/components/Providers';
 import { Analytics } from '@/components/Analytics';
 import { TelegramWebAppInit } from '@/components/TelegramWebAppInit';
@@ -123,6 +124,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
             <TelegramWebAppInit />
             <Analytics />
             <AppHeader />
+            <CrawlerNav />
             <main className='flex-1'>{children}</main>
             <AppFooter />
             <BottomNav />
