@@ -19,6 +19,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
+import { metaOverride } from '@/lib/seo';
 import { getBrands, getItemCategoryById } from '@/utils/api/requests';
 
 interface Props {
@@ -31,7 +32,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const itemCategory = itemCategoryResponse.data.result;
 
   return {
-    title: itemCategory?.name
+    title: itemCategory?.name,
+    ...metaOverride(itemCategory)
   };
 }
 

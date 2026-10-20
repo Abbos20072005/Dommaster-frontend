@@ -18,7 +18,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Link } from '@/i18n/navigation';
 import { orNotFound } from '@/lib/orNotFound';
-import { htmlToText } from '@/lib/seo';
+import { htmlToText, metaOverride } from '@/lib/seo';
 import { getBrandById, getProducts } from '@/utils/api/requests';
 
 interface Props {
@@ -57,7 +57,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: t('Brand meta title', { brand: brand.name }),
     description:
-      htmlToText(brand.description) || t('Brand meta description', { brand: brand.name })
+      htmlToText(brand.description) || t('Brand meta description', { brand: brand.name }),
+    ...metaOverride(brand)
   };
 }
 

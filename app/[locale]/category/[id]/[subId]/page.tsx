@@ -19,6 +19,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
+import { metaOverride } from '@/lib/seo';
 import { getSubCategoryById } from '@/utils/api/requests';
 
 import { CategoryChips } from '../../_components/CategoryChips';
@@ -34,7 +35,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const subCategory = subCategoryResponse.data.result;
 
   return {
-    title: subCategory?.name
+    title: subCategory?.name,
+    ...metaOverride(subCategory)
   };
 }
 

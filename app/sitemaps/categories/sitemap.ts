@@ -26,7 +26,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const urls: MetadataRoute.Sitemap = [];
   categories.forEach((category, index) => {
     if (!category.name) return;
-    urls.push({ url: `${BASE_URL}/category/${category.id}` });
+    urls.push({
+      url: `${BASE_URL}/category/${category.id}`,
+      lastModified: lastModified((category as { updated_at?: string }).updated_at)
+    });
     for (const sub of details[index]?.result?.sub_categories ?? []) {
       // an empty category is not worth indexing (it shows "no products found")
       const items = (sub.product_item_categories ?? []).filter(

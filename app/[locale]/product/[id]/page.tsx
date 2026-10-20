@@ -8,6 +8,7 @@ import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd, productJsonLd } from '@/lib/jsonLd';
 import { orNotFound } from '@/lib/orNotFound';
+import { metaOverride } from '@/lib/seo';
 import { getProductById } from '@/utils/api/requests';
 
 import {
@@ -47,6 +48,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: product.name,
     description,
+    ...metaOverride(product),
     // the card of the link (messengers, social networks): this product, not the site
     openGraph: {
       title: product.name,
