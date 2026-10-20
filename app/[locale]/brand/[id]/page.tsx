@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Link } from '@/i18n/navigation';
 import { orNotFound } from '@/lib/orNotFound';
+import { htmlToText } from '@/lib/seo';
 import { getBrandById, getProducts } from '@/utils/api/requests';
 
 interface Props {
@@ -49,8 +50,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
   const brandResponse = await orNotFound(getBrandById({ id }));
   const brand = brandResponse.data.result;
+  if (!brand?.name) return {};
+  const t = await getTranslations();
 
-  return { title: brand?.name };
+  // the brand's own text when the admin panel has one, else a template (not the home page text)
+  return {
+    title: t('Brand meta title', { brand: brand.name }),
+    description:
+      htmlToText(brand.description) || t('Brand meta description', { brand: brand.name })
+  };
 }
 
 const SearchPage = async ({ params }: Props) => {
