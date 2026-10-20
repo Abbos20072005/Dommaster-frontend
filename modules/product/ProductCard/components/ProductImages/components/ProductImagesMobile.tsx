@@ -1,12 +1,13 @@
 'use client';
 
-import Image from 'next/image';
 import React from 'react';
 
 import type { CarouselApi } from '@/components/ui/carousel';
 
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { cn } from '@/lib/utils';
+
+import { CardImage } from './CardImage';
 
 interface Props {
   product: Product;
@@ -30,11 +31,10 @@ export const ProductImagesMobile = ({ product }: Props) => {
       <Carousel setApi={setApi}>
         <CarouselContent className='ml-0'>
           {product.images.map((image, i) => (
-            <CarouselItem key={image.id} className='relative h-[288px] pl-0'>
-              <Image
+            <CarouselItem key={image.id} className='relative h-[288px] overflow-hidden pl-0'>
+              <CardImage
                 fill
                 alt={product.name || 'Buildex'}
-                className='object-cover'
                 loading={i === 0 ? 'eager' : 'lazy'}
                 priority={i === 0}
                 sizes='50vw'

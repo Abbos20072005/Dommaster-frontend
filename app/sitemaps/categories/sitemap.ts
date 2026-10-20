@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 
+import { lastModified } from '@/lib/sitemap';
 import { BASE_URL } from '@/utils/constants';
 
 // the list is rebuilt once an hour, not on every visit of the crawler
@@ -27,9 +28,20 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     if (!category.name) return;
     urls.push({ url: `${BASE_URL}/category/${category.id}` });
     for (const sub of details[index]?.result?.sub_categories ?? []) {
-      urls.push({ url: `${BASE_URL}/category/${category.id}/${sub.id}` });
-      for (const item of sub.product_item_categories ?? []) {
-        urls.push({ url: `${BASE_URL}/category/${category.id}/${sub.id}/${item.id}` });
+      // an empty category is not worth indexing (it shows "no products found")
+      const items = (sub.product_item_categories ?? []).filter(
+        (item) => (item as { product_amount?: number }).product_amount !== 0
+      );
+      if (!items.length) continue;
+      urls.push({
+        url: `${BASE_URL}/category/${category.id}/${sub.id}`,
+        lastModified: lastModified((sub as { updated_at?: string }).updated_at)
+      });
+      for (const item of items) {
+        urls.push({
+          url: `${BASE_URL}/category/${category.id}/${sub.id}/${item.id}`,
+          lastModified: lastModified((item as { updated_at?: string }).updated_at)
+        });
       }
     }
   });

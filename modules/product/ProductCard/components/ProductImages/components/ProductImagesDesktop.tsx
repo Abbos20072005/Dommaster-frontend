@@ -1,9 +1,10 @@
 'use client';
 
-import Image from 'next/image';
 import React from 'react';
 
 import { cn } from '@/lib/utils';
+
+import { CardImage } from './CardImage';
 
 interface Props {
   product: Product;
@@ -15,11 +16,11 @@ export const ProductImagesDesktop = ({ product }: Props) => {
   return (
     <div className='relative hidden h-[288px] overflow-hidden rounded-xl bg-white group-data-[on-dark]/card:rounded-none md:block'>
       {product.images.map((image, i) => (
-        <Image
+        <CardImage
           fill
           key={image.id}
           alt={product.name || 'Buildex'}
-          className={cn('object-cover', { hidden: tab !== i })}
+          className={cn({ hidden: tab !== i })}
           priority={i === 0}
           sizes='(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, 33vw'
           src={image.image}
