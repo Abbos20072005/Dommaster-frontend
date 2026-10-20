@@ -5,7 +5,9 @@ import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 
 import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
+import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
+import { breadcrumbJsonLd } from '@/lib/jsonLd';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
 import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
@@ -53,6 +55,13 @@ const SubCategoryPage = async ({ params }: Props) => {
 
   return (
     <div>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: t('Catalog'), path: '/catalog' },
+          { name: subCategory.breadcrumbs?.[0]?.name, path: `/category/${id}` },
+          { name: subCategory.name }
+        ])}
+      />
       <MobileHeader />
       <BaseLayout className='mt-2 space-y-4 md:mt-4 md:space-y-6'>
         <Breadcrumb className='mb-2 md:mb-4'>

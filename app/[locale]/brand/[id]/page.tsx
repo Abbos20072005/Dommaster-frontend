@@ -3,7 +3,9 @@ import type { Metadata } from 'next';
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 
+import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
+import { breadcrumbJsonLd } from '@/lib/jsonLd';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
 import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
@@ -85,12 +87,23 @@ const SearchPage = async ({ params }: Props) => {
 
   return (
     <div>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: t('Home'), path: '/' },
+          { name: t('Brands'), path: '/brands' },
+          { name: brand.name }
+        ])}
+      />
       <MobileHeader />
       <BaseLayout className='mt-2 md:mt-4'>
         <Breadcrumb className='mb-2 md:mb-4'>
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbLink href='/'>{t('Home')}</BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink href='/brands'>{t('Brands')}</BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
