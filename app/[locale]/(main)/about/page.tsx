@@ -1,8 +1,8 @@
 import type { Metadata } from 'next';
 
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 
-import { withMainPhone } from '@/lib/phone';
+import { withCurrentCompany, withMainPhone } from '@/lib/phone';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
   Breadcrumb,
@@ -22,6 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const ArticlesPage = async () => {
   const t = await getTranslations();
+  const locale = await getLocale();
   const aboutResponse = await getAbout();
   const about = aboutResponse.data.result.description;
 
@@ -40,9 +41,10 @@ const ArticlesPage = async () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
+        <h1 className='sr-only'>{t('About company')}</h1>
         <div
           className='prose prose-sm md:prose-base max-w-max'
-          dangerouslySetInnerHTML={{ __html: withMainPhone(about) }}
+          dangerouslySetInnerHTML={{ __html: withCurrentCompany(withMainPhone(about), locale) }}
         />
       </BaseLayout>
     </div>
