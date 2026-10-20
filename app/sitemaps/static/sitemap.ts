@@ -17,6 +17,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/contacts` },
     { url: `${BASE_URL}/oferta` },
     { url: `${BASE_URL}/privacy` },
+    { url: `${BASE_URL}/privacy/partners` },
+    { url: `${BASE_URL}/privacy-request` },
     { url: `${BASE_URL}/catalog` },
     { url: `${BASE_URL}/brands` },
     { url: `${BASE_URL}/blogs` }
