@@ -23,8 +23,9 @@ export const ProductLinks = () => {
   const links = getLinksQuery.data?.data.result;
   if (!links) return null;
 
-  const alternativesTitle =
-    links.alternatives_source === 'manual' ? t('Alternatives') : t('Similar products');
+  // the automatic "Similar products" repeats "Other products in this category" below: only
+  // the alternatives picked by hand are shown
+  const showAlternatives = links.alternatives_source === 'manual' && links.alternatives.length > 0;
 
   return (
     <>
@@ -34,9 +35,9 @@ export const ProductLinks = () => {
           <ProductList products={links.related} />
         </section>
       )}
-      {links.alternatives.length > 0 && (
+      {showAlternatives && (
         <section className='mt-8'>
-          <h2 className='text-lg font-bold md:text-2xl'>{alternativesTitle}</h2>
+          <h2 className='text-lg font-bold md:text-2xl'>{t('Alternatives')}</h2>
           <ProductList products={links.alternatives} />
         </section>
       )}
