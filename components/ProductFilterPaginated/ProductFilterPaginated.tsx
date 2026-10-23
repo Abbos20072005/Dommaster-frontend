@@ -160,9 +160,10 @@ export const ProductFilterPaginated = ({
           />
         </div>
         {getProductsQuery.isFetching ? (
-          <ProductListSkeleton view='grid' />
+          <ProductListSkeleton className='lg:grid-cols-4' view='grid' />
         ) : products.length ? (
-          <ProductList view='grid' products={products} />
+          // 4 columns (the filter column takes a part of the width), not 5
+          <ProductList className='lg:grid-cols-4' view='grid' products={products} />
         ) : q ? (
           <SearchNotFound filtersApplied={!isCleared} query={q} onResetFilters={onReset} />
         ) : (
