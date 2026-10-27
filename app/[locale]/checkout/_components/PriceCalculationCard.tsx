@@ -157,9 +157,9 @@ export const PriceCalculationCard = () => {
     }
 
     const data: OrderRequest = {
-      // the backend needs an address for pickup too (the default one is used when it is missing)
-      address_id: defaultAddress?.id,
-      store_id: isDelivery ? undefined : (storeId ?? undefined),
+      // pickup: the shop is `branch_id` (the ids of the stores list), no address, delivery costs 0
+      address_id: isDelivery ? defaultAddress?.id : undefined,
+      branch_id: isDelivery ? undefined : (storeId ?? undefined),
       channel: 'site',
       delivery_type: deliveryType,
       delivery_price: isDelivery ? (deliveryPrice ?? undefined) : undefined,

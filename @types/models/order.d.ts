@@ -2,8 +2,10 @@ const enum OrderStatus {
   Pending = 0,
   Collecting = 1,
   Delivering = 2,
+  /** pickup: Collecting -> ReadyForPickup -> Delivered (the customer took the order) */
   Delivered = 3,
-  Canceled = 4
+  Canceled = 4,
+  ReadyForPickup = 5
 }
 
 /** copied from the address when the order is created: later changes of the address do not touch it */
@@ -32,9 +34,15 @@ interface OrderPreview extends OrderAddressDetails {
 }
 
 interface Order extends Omit<OrderPreview, 'order_items'> {
-  /** pickup: the shop as it was when the order was placed (BLD-313) */
-  store?: Partial<Store> | null;
-  store_id?: number | null;
+  /** pickup: the shop as it was when the order was placed (null for a delivery) */
+  pickup_store?: PickupStore | null;
+  /** pickup: the same shop as it is now, in the old branches shape (older orders have only this) */
+  pickup_branch?: Partial<Branch> | null;
+  /** the time the order became ready for pickup, and the time it must be picked up by (+2 days) */
+  ready_for_pickup_at?: string | null;
+  pickup_deadline?: string | null;
+  /** true: the order is ready and the deadline has passed */
+  pickup_expired?: boolean;
   promocode: Promo | null;
   ofd_url: string | null;
   delivery_price: string | number | null;
@@ -54,10 +62,20 @@ enum PaymentMethod {
   Cash = 4
 }
 
+interface PickupStore {
+  id: number;
+  name: string;
+  address: string;
+  landmark: string;
+  phone: string | null;
+  latitude: number;
+  longitude: number;
+}
+
 interface OrderRequest {
   address_id?: number;
-  /** the shop of the pickup (delivery_type = pickup) */
-  store_id?: number;
+  /** the shop of the pickup: its id (the same ids as in the stores list), with delivery_type 1 */
+  branch_id?: number;
   /** where the order was placed: analytics ("Channels") relies on it */
   channel?: 'site' | 'ios' | 'android';
   delivery_price?: string;

@@ -7,6 +7,7 @@ import React from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
+import { DELIVERY_TYPE } from '@/utils/constants';
 import { CHECKOUT_PAYMENT_METHODS } from '@/utils/constants/checkoutPaymentMethods';
 import { useCheckoutStore } from '@/utils/stores';
 
@@ -15,7 +16,10 @@ import { SavedCardsList } from './components/SavedCardsList';
 // To'lov usullari: Uzum, Click, Payme, Naqd va eng oxirida Atmos (saqlangan karta orqali)
 export const PaymentMethodSelector = () => {
   const t = useTranslations();
-  const { paymentMethod, setPaymentMethod } = useCheckoutStore();
+  const { deliveryType, paymentMethod, setPaymentMethod } = useCheckoutStore();
+  const isPickup = deliveryType === DELIVERY_TYPE.Pickup;
+  // every method works for a pickup too; cash is paid to the courier or in the shop
+  const methods = CHECKOUT_PAYMENT_METHODS;
 
   return (
     <Card variant='subtle'>
@@ -27,7 +31,7 @@ export const PaymentMethodSelector = () => {
       </CardHeader>
       <CardContent>
         <div aria-label={t('Payment method')} className='space-y-2' role='radiogroup'>
-          {CHECKOUT_PAYMENT_METHODS.map((method) => {
+          {methods.map((method) => {
             const isSelected = paymentMethod === method.value;
             const label = method.label ?? t(method.labelKey!);
 
@@ -70,7 +74,9 @@ export const PaymentMethodSelector = () => {
                     <span className='block text-sm font-semibold'>{label}</span>
                     {method.descriptionKey && (
                       <span className='text-muted-foreground block text-xs'>
-                        {t(method.descriptionKey)}
+                        {isPickup && method.value === 'cash'
+                          ? t('Pay at the store')
+                          : t(method.descriptionKey)}
                       </span>
                     )}
                   </span>

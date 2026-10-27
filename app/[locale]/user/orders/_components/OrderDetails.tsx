@@ -39,7 +39,12 @@ import {
   CONTACT_PHONE_HREF,
   SOCIAL_LINKS
 } from '@/utils/constants/contacts';
-import { getPaymentLabel, orderStatusMap } from '@/utils/constants/orderStatus';
+import {
+  getOrderSteps,
+  getPaymentLabel,
+  getStepLabel,
+  orderStatusMap
+} from '@/utils/constants/orderStatus';
 
 import { MobilePageHeader } from '@/app/[locale]/user/_components/MobilePageHeader';
 
@@ -62,7 +67,8 @@ const STATUS_STYLE: Record<OrderStatus, string> = {
   1: 'bg-[#FFF7DB] text-[#7A5600]',
   2: 'bg-primary/10 text-primary',
   3: 'bg-[#E6F6EC] text-[#12703C]',
-  4: 'bg-[#FDECEC] text-[#B42318]'
+  4: 'bg-[#FDECEC] text-[#B42318]',
+  5: 'bg-[#E6F6EC] text-[#12703C]'
 };
 
 const STATUS_ICON: Record<OrderStatus, React.ComponentType<{ className?: string }>> = {
@@ -70,7 +76,8 @@ const STATUS_ICON: Record<OrderStatus, React.ComponentType<{ className?: string 
   1: BoxIcon,
   2: TruckIcon,
   3: CheckIcon,
-  4: XIcon
+  4: XIcon,
+  5: StoreIcon
 };
 
 const STEP_TEXT: Record<OrderStatus, string> = {
@@ -78,7 +85,8 @@ const STEP_TEXT: Record<OrderStatus, string> = {
   1: 'Step collecting text',
   2: 'Step delivering text',
   3: 'Step delivered text',
-  4: 'Step canceled text'
+  4: 'Step canceled text',
+  5: 'Step ready for pickup text'
 };
 
 const Card = ({ className, ...props }: React.ComponentProps<'section'>) => (
@@ -169,10 +177,12 @@ export const OrderDetails = ({ scope }: Props) => {
         { status: 0, label: t('Step placed') },
         { status: 4, label: t(orderStatusMap[4]) }
       ]
-    : ([0, 1, 2, 3] as OrderStatus[]).map((status) => ({
+    : getOrderSteps(order.delivery_type).map((status) => ({
         status,
-        label: status === 0 ? t('Step placed') : t(orderStatusMap[status])
+        label: status === 0 ? t('Step placed') : t(getStepLabel(status, order.delivery_type))
       }));
+  // a pickup goes 0 -> 1 -> 5 -> 3: the order of the steps, not the number of the status, tells what is done
+  const currentStep = steps.findIndex((step) => step.status === order.status);
 
   const items = showAll ? order.order_items : order.order_items.slice(0, VISIBLE_ITEMS);
 
@@ -222,7 +232,7 @@ export const OrderDetails = ({ scope }: Props) => {
                 )}
               >
                 <StatusIcon className='size-4' />
-                {t(orderStatusMap[order.status])}
+                {t(getStepLabel(order.status, order.delivery_type))}
               </span>
             </div>
             <span className='text-muted-foreground text-sm'>
@@ -236,7 +246,11 @@ export const OrderDetails = ({ scope }: Props) => {
               {steps.map((step, index) => {
                 const isLast = index === steps.length - 1;
                 const isCancel = step.status === 4;
-                const done = isCancel ? true : order.status > step.status;
+                const done = isCancel
+                  ? true
+                  : currentStep >= 0
+                    ? index < currentStep
+                    : order.status > step.status;
                 const current = order.status === step.status;
                 const reached = done || current;
 
@@ -285,7 +299,7 @@ export const OrderDetails = ({ scope }: Props) => {
                       </div>
                       {current && (
                         <span className='text-sm leading-5 text-[#4A5563]'>
-                          {t(STEP_TEXT[step.status])}
+                          {t(step.status === 3 && !isDelivery ? 'Step picked up text' : STEP_TEXT[step.status])}
                         </span>
                       )}
                     </div>

@@ -12,6 +12,7 @@ import {
   MapPinIcon,
   MessageSquareIcon,
   PackageIcon,
+  StoreIcon,
   TicketIcon,
   UserIcon
 } from 'lucide-react';
@@ -31,10 +32,9 @@ import { useIsPro } from '@/modules/pro';
 import { ProDashboard } from './ProDashboard';
 import { getOrdersActive, getOrdersHistory } from '@/utils/api/requests';
 import { COOKIES } from '@/utils/constants';
-import { orderStatusMap } from '@/utils/constants/orderStatus';
+import { getOrderSteps, getStepLabel, orderStatusMap } from '@/utils/constants/orderStatus';
 import { useFavoritesStore } from '@/utils/stores';
 
-const STEPS: OrderStatus[] = [0, 1, 2, 3];
 
 const initialsOf = (name?: string) =>
   (name ?? '')
@@ -150,7 +150,8 @@ export const MobileCards = () => {
       badge: favorites.length,
       muted: true
     },
-    { href: '/user/products-history', label: t('Viewed products'), icon: EyeIcon }
+    { href: '/user/products-history', label: t('Viewed products'), icon: EyeIcon },
+    { href: '/stores', label: t('Stores'), icon: StoreIcon }
   ];
 
   return (
@@ -215,8 +216,8 @@ export const MobileCards = () => {
 
               {activeOrder && lastOrder.status !== 4 && (
                 <div className='grid grid-cols-4'>
-                  {STEPS.map((step, index) => {
-                    const done = lastOrder.status > step;
+                  {getOrderSteps(lastOrder.delivery_type).map((step, index, steps) => {
+                    const done = index < steps.indexOf(lastOrder.status);
                     const current = lastOrder.status === step;
                     return (
                       <div key={step} className='grid gap-2'>
@@ -232,7 +233,7 @@ export const MobileCards = () => {
                             {done && <CheckIcon className='size-2.5 text-white' strokeWidth={3.4} />}
                             {current && <span className='size-1.5 rounded-full bg-white' />}
                           </span>
-                          {index < STEPS.length - 1 && (
+                          {index < steps.length - 1 && (
                             <span
                               className={cn('h-0.5 flex-1', done ? 'bg-primary' : 'bg-[#E1E5EB]')}
                             />
@@ -244,7 +245,7 @@ export const MobileCards = () => {
                             current ? 'font-bold' : !done && 'text-[#6B7685]'
                           )}
                         >
-                          {t(orderStatusMap[step])}
+                          {t(getStepLabel(step, lastOrder.delivery_type))}
                         </span>
                       </div>
                     );

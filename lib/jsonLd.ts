@@ -77,6 +77,36 @@ export const siteJsonLd = () => [
   }
 ];
 
+const WEEKDAYS = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+/** schema.org Store for each shop of the "Stores" page (BLD-316): address, phone, place, hours. */
+export const storesJsonLd = (stores: Store[]) =>
+  stores.map((store) => ({
+    '@context': 'https://schema.org',
+    '@type': 'Store',
+    '@id': `${BASE_URL}/stores#store-${store.id}`,
+    name: `${COMPANY.name} — ${store.name}`,
+    url: `${BASE_URL}/stores`,
+    ...(store.photo ? { image: store.photo } : {}),
+    ...(store.phone ? { telephone: store.phone.replace(/\s/g, '') } : {}),
+    address: {
+      '@type': 'PostalAddress',
+      ...(store.address ? { streetAddress: store.address } : {}),
+      addressLocality: COMPANY.city,
+      addressCountry: 'UZ'
+    },
+    geo: { '@type': 'GeoCoordinates', latitude: store.latitude, longitude: store.longitude },
+    openingHoursSpecification: (store.schedule ?? [])
+      .filter((day) => day.is_open && day.open_time && day.close_time)
+      .map((day) => ({
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: WEEKDAYS[day.day],
+        opens: day.open_time,
+        closes: day.close_time
+      })),
+    parentOrganization: { '@id': `${BASE_URL}/#organization` }
+  }));
+
 /** Only the items with a name and a link: an empty item makes the markup invalid. */
 export const breadcrumbJsonLd = (items: { name?: string | null; path?: string }[]) => ({
   '@context': 'https://schema.org',

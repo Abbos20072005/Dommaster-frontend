@@ -14,7 +14,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { TrackedLink } from '@/components/TrackedLink';
 import { Link } from '@/i18n/navigation';
+import { cn } from '@/lib/utils';
 
 const URL_PATTERN = /(https?:\/\/[^\s)]+[^\s).,;:])/g;
 
@@ -147,6 +149,49 @@ const Block = ({ block }: { block: TrustBlock }) => {
           ))}
         </div>
       );
+    case 'cta':
+      return (
+        <section className='bg-primary/5 border-primary/15 grid gap-3 rounded-2xl border p-5 md:p-6'>
+          <h2 className='text-lg font-bold md:text-2xl'>{block.title}</h2>
+          {block.text && <p className='text-[15px] leading-7'>{block.text}</p>}
+          <div className='flex flex-wrap gap-2'>
+            {block.buttons.map((button) => {
+              const className = cn(
+                'inline-flex h-11 items-center justify-center rounded-lg px-5 text-sm font-bold transition-colors',
+                button.variant === 'outline'
+                  ? 'border-primary text-primary hover:bg-primary/5 border bg-white'
+                  : 'bg-primary hover:bg-primary/90 text-white'
+              );
+              const external = /^(https?:|tel:|mailto:)/.test(button.href);
+
+              if (button.event) {
+                return (
+                  <TrackedLink
+                    className={className}
+                    event={button.event}
+                    href={button.href}
+                    key={button.href}
+                    {...(external && button.href.startsWith('http')
+                      ? { rel: 'noreferrer', target: '_blank' }
+                      : {})}
+                  >
+                    {button.text}
+                  </TrackedLink>
+                );
+              }
+              return external ? (
+                <a className={className} href={button.href} key={button.href}>
+                  {button.text}
+                </a>
+              ) : (
+                <Link className={className} href={button.href} key={button.href}>
+                  {button.text}
+                </Link>
+              );
+            })}
+          </div>
+        </section>
+      );
     case 'links':
       return (
         <p className='text-sm leading-7'>
@@ -174,7 +219,8 @@ export const getTrustMetadata = async (set: TrustPageSet): Promise<Metadata> => 
 
   return {
     title: { absolute: content.title },
-    description: content.description
+    description: content.description,
+    ...(content.noindex ? { robots: { index: false, follow: true } } : {})
   };
 };
 

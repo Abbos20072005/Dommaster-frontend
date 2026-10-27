@@ -24,17 +24,20 @@ export const CHECKOUT_PAYMENT_METHODS: CheckoutPaymentMethodConfig[] = [
   // { value: 'click', label: 'Click', image: '/payments/click.png', paymentType: 1 },
   // { value: 'payme', label: 'Payme', image: '/payments/payme.png', paymentType: 2 },
   // {
-  //   value: 'cash',
-  //   labelKey: 'Cash',
-  //   image: '/payments/cash.png',
-  //   paymentType: 4,
-  //   paymentMethod: 'cash'
-  // },
   {
     value: 'atmos',
     labelKey: 'Pay online by card',
     descriptionKey: 'Atmos payment',
     paymentType: 1
+  },
+  // Naqd: kuryerga yoki (olib ketishda) do'konda to'lanadi
+  {
+    value: 'cash',
+    labelKey: 'Cash',
+    descriptionKey: 'Cash on delivery',
+    image: '/payments/cash.png',
+    paymentType: 4,
+    paymentMethod: 'cash'
   }
 ];
 

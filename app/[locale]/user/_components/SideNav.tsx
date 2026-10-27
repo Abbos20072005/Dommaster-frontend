@@ -9,6 +9,7 @@ import {
   MapPinIcon,
   MessageSquareIcon,
   PackageIcon,
+  StoreIcon,
   TicketIcon,
   UserIcon
 } from 'lucide-react';
@@ -113,6 +114,11 @@ export const SideNav = () => {
         },
         { href: '/user/products-history', label: 'Viewed products', icon: EyeIcon }
       ]
+    },
+    {
+      title: 'Stores',
+      authorized: false,
+      items: [{ href: '/stores', label: 'Stores', icon: StoreIcon }]
     }
   ];
 

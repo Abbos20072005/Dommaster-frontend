@@ -41,15 +41,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const ItemCategoryPage = async ({ params }: Props) => {
   const { id, subId, itemId } = await params;
   const t = await getTranslations();
-  const brandsResponse = await getBrands({ config: { params: { item_category_id: itemId } } });
-  const brands = brandsResponse.data.result || [];
-
+  // the category first: one that does not exist is a 404, not a 500 of the brands request
   const itemCategoryResponse = await orNotFound(getItemCategoryById({ id: itemId }));
   const itemCategory = itemCategoryResponse.data.result;
   // const salesResponse = await getSales();
   // const sales = salesResponse.data.result;
 
   if (!itemCategory) return notFound();
+
+  const brandsResponse = await getBrands({ config: { params: { item_category_id: itemId } } });
+  const brands = brandsResponse.data.result || [];
 
   // [category, sub-category, item category]: the levels of the address
   const crumbs = (itemCategory.breadcrumbs ?? []).slice(0, 3).map((crumb) => ({

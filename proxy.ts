@@ -4,6 +4,7 @@ import createMiddleware from 'next-intl/middleware';
 import { NextRequest as Request, NextResponse } from 'next/server';
 
 import { brandSlugById, catalogPathByIds, productSlugById, toLanguage } from './lib/catalogTree';
+import { isCrawler, pageLastModified } from './lib/lastModified';
 import { routing } from './i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
@@ -52,7 +53,26 @@ export default async function proxy(request: NextRequest) {
   headers.set('x-pathname', request.nextUrl.pathname);
   headers.set('x-search', request.nextUrl.search);
 
-  return intlMiddleware(new Request(request, { headers }));
+  // BLD-352: a crawler gets `Last-Modified` (the `updated_at` of the page) and, when the page has
+  // not changed since its `If-Modified-Since`, an empty 304 instead of the whole page
+  let lastModified: Date | null = null;
+  if (request.method === 'GET' && isCrawler(request.headers.get('user-agent'))) {
+    lastModified = await pageLastModified(
+      request.nextUrl.pathname,
+      request.cookies.get('NEXT_LOCALE')?.value
+    );
+    const since = Date.parse(request.headers.get('if-modified-since') ?? '');
+    if (lastModified && !Number.isNaN(since) && lastModified.getTime() <= since) {
+      return new NextResponse(null, {
+        status: 304,
+        headers: { 'Last-Modified': lastModified.toUTCString() }
+      });
+    }
+  }
+
+  const response = await intlMiddleware(new Request(request, { headers }));
+  if (lastModified) response.headers.set('Last-Modified', lastModified.toUTCString());
+  return response;
 }
 
 export const config = {

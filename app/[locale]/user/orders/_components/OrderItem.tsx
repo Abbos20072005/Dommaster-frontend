@@ -6,6 +6,7 @@ import {
   ClockIcon,
   CreditCardIcon,
   MapPinIcon,
+  StoreIcon,
   TruckIcon,
   WalletIcon,
   XIcon
@@ -32,7 +33,8 @@ const STATUS_STYLE: Record<OrderStatus, string> = {
   1: 'bg-[#FFF7DB] text-[#7A5600]',
   2: 'bg-primary/10 text-primary',
   3: 'bg-[#E6F6EC] text-[#12703C]',
-  4: 'bg-[#FDECEC] text-[#B42318]'
+  4: 'bg-[#FDECEC] text-[#B42318]',
+  5: 'bg-[#E6F6EC] text-[#12703C]'
 };
 
 const STATUS_ICON: Record<OrderStatus, React.ComponentType<{ className?: string }>> = {
@@ -40,7 +42,8 @@ const STATUS_ICON: Record<OrderStatus, React.ComponentType<{ className?: string 
   1: BoxIcon,
   2: TruckIcon,
   3: CheckIcon,
-  4: XIcon
+  4: XIcon,
+  5: StoreIcon
 };
 
 export const OrderItem = ({ order }: Props) => {

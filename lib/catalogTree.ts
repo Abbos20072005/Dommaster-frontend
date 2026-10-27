@@ -5,7 +5,7 @@
  * The slugs are written in the language of the request (`krepezh` in ru, `mahkamlagichlar` in uz).
  */
 
-export type Slugged = { id: number; slug: string; name: string };
+export type Slugged = { id: number; slug: string; name: string; updatedAt?: string };
 export type TreeSub = Slugged & { items: Slugged[] };
 export type TreeCategory = Slugged & { subs: TreeSub[] };
 
@@ -20,6 +20,8 @@ const cache = new Map<string, { at: number; value: Promise<unknown> }>();
 
 /** One request per hour for each key; a failed request is not kept. */
 const cached = <T>(key: string, load: () => Promise<T>): Promise<T> => {
+  // the products are kept one by one: the memory must not grow without a limit
+  if (cache.size > 10000) cache.clear();
   const hit = cache.get(key);
   if (hit && Date.now() - hit.at < TTL) return hit.value as Promise<T>;
   const value = load().catch((error) => {
@@ -41,8 +43,15 @@ export const fetchApi = async <T>(path: string, language: Language): Promise<T |
   }
 };
 
-const named = (item: { id: number; slug?: string | null; name?: string | null }): Slugged | null =>
-  item.slug ? { id: item.id, slug: item.slug, name: item.name ?? '' } : null;
+const named = (item: {
+  id: number;
+  slug?: string | null;
+  name?: string | null;
+  updated_at?: string | null;
+}): Slugged | null =>
+  item.slug
+    ? { id: item.id, slug: item.slug, name: item.name ?? '', updatedAt: item.updated_at ?? undefined }
+    : null;
 
 export const getCatalogTree = (language: Language): Promise<TreeCategory[]> =>
   cached(`tree:${language}`, async () => {
@@ -83,6 +92,8 @@ export const getBrandList = (language: Language): Promise<Slugged[]> =>
 export interface CatalogMatch {
   /** ids from the top: [category], [category, sub] or [category, sub, item] */
   ids: number[];
+  /** the last change of the category of the deepest level (API updated_at) */
+  updatedAt?: string;
   /** the address in the language of the request */
   path: string;
 }
@@ -105,7 +116,11 @@ export const matchCatalogSlugs = async (
     if (levels.some((level) => !level)) continue;
 
     const ids = (levels as Slugged[]).map((level) => level.id);
-    return { ids, path: (await catalogPathByIds(ids, language)) ?? pathOf(levels as Slugged[]) };
+    return {
+      ids,
+      updatedAt: (levels.at(-1) as Slugged).updatedAt,
+      path: (await catalogPathByIds(ids, language)) ?? pathOf(levels as Slugged[])
+    };
   }
   return null;
 };
@@ -127,12 +142,12 @@ export const catalogPathByIds = async (
 export const matchBrandSlug = async (
   slug: string,
   language: Language
-): Promise<{ id: number; slug: string } | null> => {
+): Promise<{ id: number; slug: string; updatedAt?: string } | null> => {
   for (const candidate of [language, ...LANGUAGES.filter((item) => item !== language)]) {
     const found = (await getBrandList(candidate).catch(() => [])).find((brand) => brand.slug === slug);
     if (!found) continue;
     const own = (await getBrandList(language).catch(() => [])).find((brand) => brand.id === found.id);
-    return { id: found.id, slug: own?.slug ?? found.slug };
+    return { id: found.id, slug: own?.slug ?? found.slug, updatedAt: found.updatedAt };
   }
   return null;
 };
@@ -145,3 +160,10 @@ export const productSlugById = async (id: number, language: Language) => {
   const data = await fetchApi<{ result?: Product }>(`products/${id}/`, language);
   return data?.result?.slug ?? null;
 };
+
+/** the last change of a product (API `updated_at`), for the `Last-Modified` header of its page */
+export const productUpdatedAt = (id: number, language: Language) =>
+  cached(`product:${language}:${id}`, async () => {
+    const data = await fetchApi<{ result?: { updated_at?: string } }>(`products/${id}/`, language);
+    return data?.result?.updated_at ?? null;
+  }).catch(() => null);

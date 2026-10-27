@@ -36,20 +36,19 @@ import {
   postCart
 } from '@/utils/api/requests';
 import { CONTACT_PHONE, CONTACT_PHONE_HREF, SOCIAL_LINKS } from '@/utils/constants';
-import { orderStatusMap } from '@/utils/constants/orderStatus';
+import { getOrderSteps, getStepLabel, orderStatusMap } from '@/utils/constants/orderStatus';
 import { useFavoritesStore } from '@/utils/stores';
 import { productHref } from '@/lib/urls';
 import { categoryHref } from '@/lib/urls';
 
-/** the order statuses a customer sees on the way: placed → collecting → on the way → delivered */
-const STEPS: OrderStatus[] = [0, 1, 2, 3];
 
 const statusBadgeClass: Record<OrderStatus, string> = {
   0: 'bg-muted text-foreground/70',
   1: 'bg-[#FFF7DB] text-[#7A5600]',
   2: 'bg-primary/10 text-primary',
   3: 'bg-[#E6F6EC] text-[#12703C]',
-  4: 'bg-[#FDECEC] text-[#B42318]'
+  4: 'bg-[#FDECEC] text-[#B42318]',
+  5: 'bg-[#E6F6EC] text-[#12703C]'
 };
 
 const Tile = ({
@@ -188,8 +187,8 @@ export const DesktopCards = () => {
 
             {activeOrder && order.status !== 4 && (
               <div className='grid grid-cols-4'>
-                {STEPS.map((step, index) => {
-                  const done = order.status > step;
+                {getOrderSteps(order.delivery_type).map((step, index, steps) => {
+                  const done = index < steps.indexOf(order.status);
                   const current = order.status === step;
                   return (
                     <div key={step} className='grid gap-2.5'>
@@ -205,7 +204,7 @@ export const DesktopCards = () => {
                           {done && <CheckIcon className='size-3.5 text-white' strokeWidth={3.2} />}
                           {current && <span className='size-2 rounded-full bg-white' />}
                         </span>
-                        {index < STEPS.length - 1 && (
+                        {index < steps.length - 1 && (
                           <span
                             className={cn('h-0.5 flex-1', done ? 'bg-primary' : 'bg-[#E1E5EB]')}
                           />
@@ -217,7 +216,7 @@ export const DesktopCards = () => {
                           current ? 'font-bold' : done ? '' : 'text-muted-foreground'
                         )}
                       >
-                        {t(orderStatusMap[step])}
+                        {t(getStepLabel(step, order.delivery_type))}
                       </span>
                     </div>
                   );

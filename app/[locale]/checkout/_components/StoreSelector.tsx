@@ -7,7 +7,7 @@ import React from 'react';
 
 import { Skeleton } from '@/components/ui/skeleton';
 import { trackEvent } from '@/lib/analytics';
-import { storeMapUrl, todayHours } from '@/lib/stores';
+import { nextOpenDate, storeMapUrl, todayHours } from '@/lib/stores';
 import { cn } from '@/lib/utils';
 import { getStores } from '@/utils/api/requests';
 import { useCheckoutStore } from '@/utils/stores';
@@ -91,6 +91,14 @@ export const StoreSelector = () => {
                     {store.is_open_now ? t('Open now') : t('Closed now')}
                   </span>
                 </span>
+                {!store.is_open_now && store.next_open && (
+                  <span className='text-muted-foreground block text-xs'>
+                    {t('Opens next', {
+                      date: nextOpenDate(store.next_open),
+                      time: store.next_open.time
+                    })}
+                  </span>
+                )}
                 {(store.address || store.landmark) && (
                   <span className='text-muted-foreground flex items-start gap-1.5 text-xs'>
                     <MapPinIcon className='mt-0.5 size-3.5 shrink-0' />

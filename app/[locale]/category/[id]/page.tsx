@@ -44,16 +44,18 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 const CategoryPage = async ({ params }: Props) => {
   const { id } = await params;
   const t = await getTranslations();
+  // a category that does not exist is a real 404 (the API answers 4xx; it was a 500 before)
   const [categoryResponse, brandsResponse] = await Promise.all([
-    getCategoryById({ id }),
+    orNotFound(getCategoryById({ id })),
     getBrands()
   ]);
   const category = categoryResponse.data.result;
-  // the first page of products is in the HTML: the crawler sees the products and their links
-  const initialProducts = await getInitialProducts({ category: +id });
 
   // a category without a name must not be shown with an empty title and H1
   if (!category?.name) return notFound();
+
+  // the first page of products is in the HTML: the crawler sees the products and their links
+  const initialProducts = await getInitialProducts({ category: +id });
 
   return (
     <div>

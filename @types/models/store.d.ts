@@ -13,7 +13,7 @@ interface Store {
   address: string;
   /** the landmark ("near the bank") */
   landmark: string;
-  phone: string;
+  phone: string | null;
   photo: string | null;
   latitude: number;
   longitude: number;
@@ -21,7 +21,8 @@ interface Store {
   /** counted by the server in the Tashkent time */
   is_open_now: boolean;
   closes_at: string | null;
-  next_open: string | null;
+  /** when a closed shop opens next; null if it is closed all the week */
+  next_open: { day: number; time: string; date: string } | null;
   sort_order: number;
 }
 

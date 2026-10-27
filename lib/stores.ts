@@ -12,6 +12,14 @@ export const todayHours = (store: Pick<Store, 'schedule'>) => {
     : null;
 };
 
+/** "Get directions": Yandex Maps opens a route to the shop (the coordinates of the shop only). */
+export const storeDirectionsUrl = (store: Pick<Store, 'latitude' | 'longitude'>) =>
+  `https://yandex.uz/maps/?rtext=~${store.latitude},${store.longitude}&rtt=auto`;
+
 /** The shop on a map (the coordinates are the place of the shop, nothing else is sent). */
 export const storeMapUrl = (store: Pick<Store, 'latitude' | 'longitude'>) =>
   `https://www.google.com/maps/search/?api=1&query=${store.latitude},${store.longitude}`;
+
+/** "26.10": the date of the next opening of a closed shop (the API gives "2026-10-26") */
+export const nextOpenDate = (next: NonNullable<Store['next_open']>) =>
+  next.date.slice(5).split('-').reverse().join('.');
