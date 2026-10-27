@@ -42,7 +42,7 @@ export const PriceCalculationCard = () => {
     recipientName,
     deliveryType,
     deliveryPrice,
-    branchId,
+    storeId,
     setRecipientNameError,
     reset: resetCheckout
   } = useCheckoutStore();
@@ -60,7 +60,7 @@ export const PriceCalculationCard = () => {
   const addresses = getAddressesQuery.data?.data.result;
   const defaultAddress = addresses?.find((item) => item.is_default);
   const isDelivery = deliveryType === DELIVERY_TYPE.Delivery;
-  const isAddressSelected = isDelivery ? !!defaultAddress : !!branchId;
+  const isAddressSelected = isDelivery ? !!defaultAddress : !!storeId;
   const isDeliveryPriceSelected = isDelivery ? !!deliveryPrice : true;
   const deliveryTotal = isDelivery && deliveryPrice ? Number(deliveryPrice) : 0;
   const totalPrice = (promo?.total_price ?? cart?.total_price ?? 0) + deliveryTotal;
@@ -159,7 +159,7 @@ export const PriceCalculationCard = () => {
     const data: OrderRequest = {
       // the backend needs an address for pickup too (the default one is used when it is missing)
       address_id: defaultAddress?.id,
-      branch_id: isDelivery ? undefined : (branchId ?? undefined),
+      store_id: isDelivery ? undefined : (storeId ?? undefined),
       channel: 'site',
       delivery_type: deliveryType,
       delivery_price: isDelivery ? (deliveryPrice ?? undefined) : undefined,
@@ -215,6 +215,13 @@ export const PriceCalculationCard = () => {
             <span>
               {formatPrice(deliveryPrice)} {t('sum')}
             </span>
+          </div>
+        )}
+        {/* pickup costs nothing to deliver */}
+        {!isDelivery && (
+          <div className='align-center flex justify-between gap-1 text-sm'>
+            <p>{t('Delivery price')}</p>
+            <span>0 {t('sum')}</span>
           </div>
         )}
         <div className='align-center flex justify-between gap-1 text-xl font-bold'>

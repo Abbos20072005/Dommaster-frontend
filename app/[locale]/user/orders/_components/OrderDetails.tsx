@@ -24,11 +24,13 @@ import { useParams } from 'next/navigation';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useFormatDate } from '@/hooks';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPhoneNumber, formatPrice } from '@/lib/utils';
 import { AuthWrapper, useAuth } from '@/modules/auth';
+import { LinkConflictDialog, useIsPro, useProLink } from '@/modules/pro';
 import { trackPurchase } from '@/lib/analytics';
 import { getOrderById } from '@/utils/api/requests';
 import { DELIVERY_TYPE } from '@/utils/constants';
@@ -42,7 +44,9 @@ import { getPaymentLabel, orderStatusMap } from '@/utils/constants/orderStatus';
 import { MobilePageHeader } from '@/app/[locale]/user/_components/MobilePageHeader';
 
 import { OrderCancelAction } from './OrderCancelAction';
+import { OrderProjectBar } from './OrderProjectBar';
 import { PayOrderDialog } from './PayOrderDialog';
+import { PickupBlock } from './PickupBlock';
 import { useRepeatOrder } from './useRepeatOrder';
 import { productHref } from '@/lib/urls';
 
@@ -97,6 +101,10 @@ export const OrderDetails = ({ scope }: Props) => {
   });
   const order = orderQuery.data?.data.result;
   const repeat = useRepeatOrder(+id);
+  // PRO: the items of the order are linked to the customer's projects (BLD-295)
+  const { isPro } = useIsPro();
+  const linker = useProLink();
+  const [selected, setSelected] = React.useState<number[]>([]);
 
   // `purchase`: once per confirmed order (status > Pending: paid or cash on delivery), the order
   // is remembered in this browser so that a reload does not count it twice
@@ -145,6 +153,8 @@ export const OrderDetails = ({ scope }: Props) => {
 
   const StatusIcon = STATUS_ICON[order.status];
   const isCanceled = order.status === 4;
+  // a canceled order cannot be linked
+  const canLink = isPro && !isCanceled;
   const isDelivery = order.delivery_type === DELIVERY_TYPE.Delivery;
   const isOnline = order.payment_type !== 4;
   const deliveryPrice = order.delivery_price ? Number(order.delivery_price) : 0;
@@ -340,19 +350,47 @@ export const OrderDetails = ({ scope }: Props) => {
             </dl>
           </Card>
 
+          {!isDelivery && <PickupBlock order={order} />}
+
           <Card className='pb-0'>
             <h2 className='mb-2 text-[17px] leading-6 font-bold'>
               {t('Order products')}{' '}
               <span className='text-muted-foreground font-normal'>{order.order_items.length}</span>
             </h2>
+            {canLink && (
+              <div className='mb-2'>
+                <OrderProjectBar
+                  linker={linker}
+                  orderId={order.id}
+                  selected={selected}
+                  onDone={() => setSelected([])}
+                />
+              </div>
+            )}
             <div className='grid'>
-              {items.map(({ id: itemId, product, quantity }) => {
+              {items.map(({ id: itemId, product, quantity, project }) => {
                 const price = product.discount_price ?? product.price;
                 return (
                   <div
                     key={itemId}
-                    className='grid grid-cols-[64px_minmax(0,1fr)_140px] items-center gap-4 border-t border-[#EDF0F5] py-3.5'
+                    className={cn(
+                      'grid items-center gap-4 border-t border-[#EDF0F5] py-3.5',
+                      canLink
+                        ? 'grid-cols-[20px_64px_minmax(0,1fr)_110px] md:grid-cols-[20px_64px_minmax(0,1fr)_140px]'
+                        : 'grid-cols-[64px_minmax(0,1fr)_140px]'
+                    )}
                   >
+                    {canLink && (
+                      <Checkbox
+                        aria-label={product.name}
+                        checked={selected.includes(itemId)}
+                        onCheckedChange={(checked) =>
+                          setSelected((prev) =>
+                            checked ? [...prev, itemId] : prev.filter((value) => value !== itemId)
+                          )
+                        }
+                      />
+                    )}
                     <Link
                       className='relative size-16 overflow-hidden rounded-lg border border-border bg-white'
                       href={productHref(product)}
@@ -382,6 +420,14 @@ export const OrderDetails = ({ scope }: Props) => {
                           <span className='rounded bg-[#FDECEC] px-2 py-0.5 text-xs font-bold text-[#B42318]'>
                             {t('Out of stock')}
                           </span>
+                        )}
+                        {isPro && project && (
+                          <Link
+                            className='bg-primary/10 text-primary rounded px-2 py-0.5 text-xs font-bold'
+                            href={`/user/projects/${project.id}`}
+                          >
+                            {project.name}
+                          </Link>
                         )}
                       </div>
                     </div>
@@ -547,6 +593,14 @@ export const OrderDetails = ({ scope }: Props) => {
           </Card>
         </aside>
       </div>
+      <LinkConflictDialog
+        conflict={linker.conflict}
+        pending={linker.pending}
+        onCancel={linker.cancelConflict}
+        onConfirm={async () => {
+          if (await linker.confirmConflict()) setSelected([]);
+        }}
+      />
     </AuthWrapper>
   );
 };

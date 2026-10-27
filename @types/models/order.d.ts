@@ -32,6 +32,9 @@ interface OrderPreview extends OrderAddressDetails {
 }
 
 interface Order extends Omit<OrderPreview, 'order_items'> {
+  /** pickup: the shop as it was when the order was placed (BLD-313) */
+  store?: Partial<Store> | null;
+  store_id?: number | null;
   promocode: Promo | null;
   ofd_url: string | null;
   delivery_price: string | number | null;
@@ -39,6 +42,8 @@ interface Order extends Omit<OrderPreview, 'order_items'> {
     id: number;
     quantity: number;
     product: Product;
+    /** the PRO project the item is linked to (`null`: not linked or the customer is not PRO) */
+    project?: { id: number; name: string } | null;
   }[];
 }
 
@@ -51,7 +56,8 @@ enum PaymentMethod {
 
 interface OrderRequest {
   address_id?: number;
-  branch_id?: number;
+  /** the shop of the pickup (delivery_type = pickup) */
+  store_id?: number;
   /** where the order was placed: analytics ("Channels") relies on it */
   channel?: 'site' | 'ios' | 'android';
   delivery_price?: string;

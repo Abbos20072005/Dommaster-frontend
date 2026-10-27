@@ -15,8 +15,8 @@ import { getCustomerAddresses, postDeliveryCheckPrice } from '@/utils/api/reques
 import { DELIVERY_TYPE, STORE_LOCATION } from '@/utils/constants';
 import { useCheckoutStore } from '@/utils/stores';
 
-import { BranchAddress } from './BranchCard';
 import { DeliveryAddress } from './DeliveryCard';
+import { StoreSelector } from './StoreSelector';
 
 const PRICE_REFRESH_INTERVAL = 30 * 1000;
 
@@ -119,8 +119,8 @@ export const DeliveryTypeSelector = () => {
           })}
         </div>
 
-        {/* Manzil yoki olib ketish punkti */}
-        {isDelivery ? <DeliveryAddress /> : <BranchAddress />}
+        {/* Manzil yoki olib ketish do'koni */}
+        {isDelivery ? <DeliveryAddress /> : <StoreSelector />}
 
         {/* Yetkazib berish narxi (manzil tanlangandan keyin) */}
         {isDelivery && defaultAddress && (

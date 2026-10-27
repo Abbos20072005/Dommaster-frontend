@@ -6,6 +6,7 @@ import {
   ChevronRightIcon,
   ClockIcon,
   HeartIcon,
+  FolderKanbanIcon,
   MapPinIcon,
   MessageSquareIcon,
   PackageIcon,
@@ -24,6 +25,9 @@ import { useFormatDate } from '@/hooks';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
+import { useIsPro } from '@/modules/pro';
+
+import { ProDashboard } from './ProDashboard';
 import {
   getCategories,
   getOrderById,
@@ -80,6 +84,7 @@ export const DesktopCards = () => {
   const t = useTranslations();
   const formatDate = useFormatDate();
   const { user } = useAuth();
+  const { isPro } = useIsPro();
   const { favorites } = useFavoritesStore();
   const queryClient = useQueryClient();
 
@@ -133,6 +138,8 @@ export const DesktopCards = () => {
       <h1 className='text-[32px] leading-[38px] font-bold tracking-tight'>
         {firstName ? t('Hello, {name}', { name: firstName }) : t('My cabinet')}
       </h1>
+
+      <ProDashboard />
 
       {isLoading && <Skeleton className='h-60 w-full rounded-xl' />}
 
@@ -317,6 +324,14 @@ export const DesktopCards = () => {
           note={favorites.length ? t('{count} products', { count: favorites.length }) : t('No products')}
           title={t('Favorites')}
         />
+        {isPro && (
+          <Tile
+            href='/user/projects'
+            icon={FolderKanbanIcon}
+            note={t('Projects and expenses')}
+            title={t('My projects')}
+          />
+        )}
         <Tile
           href='/user/addresses'
           icon={MapPinIcon}

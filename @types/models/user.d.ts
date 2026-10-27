@@ -3,6 +3,8 @@ interface User {
   full_name: string;
   id: number;
   phone_number: string;
+  /** `prorab` = PRO customer (given by the staff only), `user` = an ordinary customer */
+  role?: 'prorab' | 'user';
 }
 
 type UserResponse = ApiResponse<User>;

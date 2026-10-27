@@ -6,7 +6,6 @@ import { DELIVERY_TYPE } from '@/utils/constants';
 import { DEFAULT_CHECKOUT_PAYMENT_METHOD } from '@/utils/constants/checkoutPaymentMethods';
 
 interface CheckoutStore {
-  branchId: number | null;
   deliveryPrice: string | null;
   deliveryType: DeliveryType;
   // Tanlangan to'lov usuli: uzum / click / payme / cash / atmos
@@ -15,16 +14,18 @@ interface CheckoutStore {
   recipientName: string;
   recipientNameError: boolean;
   reset: () => void;
-  setBranchId: (branchId: number | null) => void;
+  setStoreId: (storeId: number | null) => void;
   setDeliveryPrice: (deliveryPrice: string | null) => void;
   setDeliveryType: (deliveryType: DeliveryType) => void;
   setPaymentMethod: (paymentMethod: CheckoutPaymentMethod) => void;
   setRecipientName: (recipientName: string) => void;
   setRecipientNameError: (recipientNameError: boolean) => void;
+  /** the shop where the order is picked up (BLD-315) */
+  storeId: number | null;
 }
 
 const initialState = {
-  branchId: null,
+  storeId: null,
   deliveryType: DELIVERY_TYPE.Delivery as DeliveryType,
   deliveryPrice: null,
   paymentMethod: DEFAULT_CHECKOUT_PAYMENT_METHOD,
@@ -34,7 +35,7 @@ const initialState = {
 
 export const useCheckoutStore = create<CheckoutStore>()((set) => ({
   ...initialState,
-  setBranchId: (branchId) => set({ branchId }),
+  setStoreId: (storeId) => set({ storeId }),
   setDeliveryType: (deliveryType) => set({ deliveryType }),
   setDeliveryPrice: (deliveryPrice) => set({ deliveryPrice }),
   setPaymentMethod: (paymentMethod) => set({ paymentMethod }),

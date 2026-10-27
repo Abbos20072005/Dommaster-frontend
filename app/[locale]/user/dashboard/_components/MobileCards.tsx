@@ -8,6 +8,7 @@ import {
   ClockIcon,
   EyeIcon,
   HeartIcon,
+  FolderKanbanIcon,
   MapPinIcon,
   MessageSquareIcon,
   PackageIcon,
@@ -25,6 +26,9 @@ import { LogoutConfirm } from '@/app/[locale]/user/_components/LogoutConfirm';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
 import { AuthDialog, useAuth } from '@/modules/auth';
+import { useIsPro } from '@/modules/pro';
+
+import { ProDashboard } from './ProDashboard';
 import { getOrdersActive, getOrdersHistory } from '@/utils/api/requests';
 import { COOKIES } from '@/utils/constants';
 import { orderStatusMap } from '@/utils/constants/orderStatus';
@@ -97,6 +101,7 @@ export const MobileCards = () => {
   const t = useTranslations();
   const formatDate = useFormatDate();
   const { user, isPending } = useAuth();
+  const { isPro } = useIsPro();
   const { favorites } = useFavoritesStore();
   const mounted = useMounted();
 
@@ -128,7 +133,8 @@ export const MobileCards = () => {
 
   const purchases: Row[] = [
     { href: '/user/orders/active', label: t('My orders'), icon: PackageIcon, badge: activeCount },
-    { href: '/user/orders/history', label: t('Purchase history'), icon: ClockIcon }
+    { href: '/user/orders/history', label: t('Purchase history'), icon: ClockIcon },
+    ...(isPro ? [{ href: '/user/projects', label: t('My projects'), icon: FolderKanbanIcon }] : [])
   ];
   const profile: Row[] = [
     { href: '/user/personal-info', label: t('Personal info'), icon: UserIcon },
@@ -184,6 +190,8 @@ export const MobileCards = () => {
             </span>
             <ChevronRightIcon className='size-5 text-[#9AA4B2]' />
           </Link>
+
+          <ProDashboard className='mx-4 mt-3' />
 
           {lastOrder ? (
             <div className='mx-4 mt-3 grid gap-4 rounded-2xl bg-white px-4 pt-4'>

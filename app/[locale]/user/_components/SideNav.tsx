@@ -3,6 +3,7 @@
 import { useQuery } from '@tanstack/react-query';
 import {
   EyeIcon,
+  FolderKanbanIcon,
   HeartIcon,
   LogOutIcon,
   MapPinIcon,
@@ -17,6 +18,7 @@ import React from 'react';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
+import { useIsPro } from '@/modules/pro';
 import { getOrdersActive } from '@/utils/api/requests';
 import { useFavoritesStore } from '@/utils/stores';
 
@@ -31,6 +33,8 @@ interface NavItem {
   match?: string;
   /** a pale badge (a count), not the blue one (something that waits for the customer) */
   badgeMuted?: boolean;
+  /** shown to PRO customers only */
+  pro?: boolean;
 }
 
 interface NavGroup {
@@ -57,6 +61,7 @@ export const SideNav = () => {
   const t = useTranslations();
   const pathname = usePathname();
   const { user } = useAuth();
+  const { isPro } = useIsPro();
   const { favorites } = useFavoritesStore();
 
   const activeOrdersQuery = useQuery({
@@ -81,7 +86,8 @@ export const SideNav = () => {
           icon: PackageIcon,
           badge: activeOrders || undefined,
           match: '/user/orders'
-        }
+        },
+        { href: '/user/projects', label: 'My projects', icon: FolderKanbanIcon, pro: true }
       ]
     },
     {
@@ -133,7 +139,7 @@ export const SideNav = () => {
         {groups.map((group) =>
           group.authorized && !user ? null : (
             <div key={group.title} className='grid gap-0.5 pt-3'>
-              {group.items.map((item) => {
+              {group.items.filter((item) => !item.pro || isPro).map((item) => {
                 const base = item.match ?? item.href;
                 const isActive = pathname === base || pathname.startsWith(`${base}/`);
                 const Icon = item.icon;
