@@ -2,9 +2,10 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
 import React from 'react';
 
+import { useProductId } from '@/hooks';
+import { categoryHref } from '@/lib/urls';
 import { ProductListSkeleton, ProductSection } from '@/modules/product';
 import { getAuthorizedProductById, getProducts } from '@/utils/api/requests';
 
@@ -14,7 +15,7 @@ const SIZE = 12;
 /** Other products of the same (third-level) category as the open product. */
 export const SameCategoryProducts = () => {
   const t = useTranslations();
-  const { id } = useParams<{ id: string }>();
+  const id = useProductId();
 
   // the same query as the page header — React Query shares the response
   const getProductByIdQuery = useQuery({
@@ -26,8 +27,8 @@ export const SameCategoryProducts = () => {
   const breadcrumbs = getProductByIdQuery.data?.data.result.breadcrumbs;
   const itemCategoryId = breadcrumbs?.[2]?.id;
   // the page of the category: all of its products
-  const categoryHref = breadcrumbs?.[2]
-    ? `/category/${breadcrumbs[0].id}/${breadcrumbs[1].id}/${breadcrumbs[2].id}`
+  const sectionHref = breadcrumbs?.[2]
+    ? categoryHref(breadcrumbs[0], breadcrumbs[1], breadcrumbs[2])
     : '/catalog';
 
   const getProductsQuery = useQuery({
@@ -53,7 +54,7 @@ export const SameCategoryProducts = () => {
   return (
     <section className='mt-8'>
       <ProductSection
-        href={categoryHref}
+        href={sectionHref}
         products={products}
         title={
           <h2 className='text-lg font-bold md:text-2xl'>{t('More products from this category')}</h2>

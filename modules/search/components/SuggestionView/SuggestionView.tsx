@@ -11,6 +11,8 @@ import { useAuth } from '@/modules/auth';
 import { getMostSearched, getSearch, getViewedProducts } from '@/utils/api/requests';
 import { useSearchHistoryStore } from '@/utils/stores';
 
+import { brandHref, categoryHref, productHref } from '@/lib/urls';
+
 interface Props {
   searchInput: string;
   onClose: () => void;
@@ -143,7 +145,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
         <div className='p-3'>
           <p className='mb-2 text-sm font-bold'>{t('Recently viewed')}</p>
           {viewedProducts?.map((product) => (
-            <Link href={`/product/${product.id}`} key={product.id} onClick={onClose}>
+            <Link href={productHref(product)} key={product.id} onClick={onClose}>
               <article className='hover:bg-muted flex gap-2 rounded-md px-4 py-2.5 transition-colors'>
                 <Image
                   alt={'product'}
@@ -179,7 +181,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
           <div className='grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-2'>
             {categories.map((item) => (
               <Link
-                href={`/category/${item.id}`}
+                href={categoryHref(item)}
                 key={item.id}
                 className='bg-muted hover:bg-secondary/10 flex items-center gap-3 rounded-md p-2 transition-colors'
                 onClick={() => onClose()}
@@ -203,7 +205,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
           <div className='grid grid-cols-[repeat(auto-fill,minmax(280px,1fr))] gap-2'>
             {brands.map((item) => (
               <Link
-                href={`/brand/${item.id}`}
+                href={brandHref(item)}
                 key={item.id}
                 className='bg-muted hover:bg-secondary/10 flex items-center gap-3 rounded-md p-2 transition-colors'
                 onClick={() => onClose()}

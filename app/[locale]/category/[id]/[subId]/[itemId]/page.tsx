@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
 import { metaOverride } from '@/lib/seo';
+import { categoryHref } from '@/lib/urls';
 import { getBrands, getItemCategoryById } from '@/utils/api/requests';
 
 interface Props {
@@ -49,6 +50,12 @@ const ItemCategoryPage = async ({ params }: Props) => {
   // const sales = salesResponse.data.result;
 
   if (!itemCategory) return notFound();
+
+  // [category, sub-category, item category]: the levels of the address
+  const crumbs = (itemCategory.breadcrumbs ?? []).slice(0, 3).map((crumb) => ({
+    id: crumb.id,
+    slug: crumb.slug
+  }));
 
   const initialProducts = await getInitialProducts({ item_category: +itemId });
 
@@ -86,9 +93,9 @@ const ItemCategoryPage = async ({ params }: Props) => {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: t('Catalog'), path: '/catalog' },
-          { name: itemCategory.breadcrumbs?.[0]?.name, path: `/category/${id}` },
-          { name: itemCategory.breadcrumbs?.[1]?.name, path: `/category/${id}/${subId}` },
-          { name: itemCategory.name }
+          { name: itemCategory.breadcrumbs?.[0]?.name, path: categoryHref(...crumbs.slice(0, 1)) },
+          { name: itemCategory.breadcrumbs?.[1]?.name, path: categoryHref(...crumbs.slice(0, 2)) },
+          { name: itemCategory.name, path: categoryHref(...crumbs) }
         ])}
       />
       <MobileHeader />
@@ -100,13 +107,13 @@ const ItemCategoryPage = async ({ params }: Props) => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href={`/category/${id}`}>
+              <BreadcrumbLink href={categoryHref(...crumbs.slice(0, 1))}>
                 {itemCategory.breadcrumbs?.[0].name}
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href={`/category/${id}/${subId}`}>
+              <BreadcrumbLink href={categoryHref(...crumbs.slice(0, 2))}>
                 {itemCategory.breadcrumbs?.[1].name}
               </BreadcrumbLink>
             </BreadcrumbItem>

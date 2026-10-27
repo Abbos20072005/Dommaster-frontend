@@ -1,12 +1,12 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import { useQueryState } from 'nuqs';
 import React from 'react';
 
 import { ProductCart, ProductMobileBar } from '@/app/[locale]/product/[id]/_components/ProductCart';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useProductId } from '@/hooks';
 import { getAuthorizedProductById } from '@/utils/api/requests';
 
 import type { ProductSectionId } from './components/ProductSections';
@@ -20,7 +20,7 @@ const SECTION_IDS: ProductSectionId[] = ['description', 'characteristics', 'revi
 export const ProductBody = () => {
   // `?tab=reviews` kabi eski havolalar ham ishlaydi: shu bo'limga o'tiladi
   const [tab, setTab] = useQueryState('tab', { defaultValue: 'description' });
-  const { id } = useParams<{ id: string }>();
+  const id = useProductId();
   const scrolledRef = React.useRef(false);
 
   const getProductByIdQuery = useQuery({

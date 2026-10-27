@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { lastModified } from '@/lib/sitemap';
+import { categoryHref } from '@/lib/urls';
 import { BASE_URL } from '@/utils/constants';
 
 // the list is rebuilt once an hour, not on every visit of the crawler
@@ -27,7 +28,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   categories.forEach((category, index) => {
     if (!category.name) return;
     urls.push({
-      url: `${BASE_URL}/category/${category.id}`,
+      url: `${BASE_URL}${categoryHref(category)}`,
       lastModified: lastModified((category as { updated_at?: string }).updated_at)
     });
     for (const sub of details[index]?.result?.sub_categories ?? []) {
@@ -37,12 +38,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       );
       if (!items.length) continue;
       urls.push({
-        url: `${BASE_URL}/category/${category.id}/${sub.id}`,
+        url: `${BASE_URL}${categoryHref(category, sub)}`,
         lastModified: lastModified((sub as { updated_at?: string }).updated_at)
       });
       for (const item of items) {
         urls.push({
-          url: `${BASE_URL}/category/${category.id}/${sub.id}/${item.id}`,
+          url: `${BASE_URL}${categoryHref(category, sub, item)}`,
           lastModified: lastModified((item as { updated_at?: string }).updated_at)
         });
       }

@@ -14,6 +14,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Link } from '@/i18n/navigation';
 import { getBrands } from '@/utils/api/requests';
+import { brandHref } from '@/lib/urls';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -47,7 +48,7 @@ const BrandsPage = async () => {
             <Link
               key={brand.id}
               className='hover:border-primary/50 flex flex-col items-center justify-center gap-2 rounded-xl border p-4 transition-colors'
-              href={`/brand/${brand.id}`}
+              href={brandHref(brand)}
             >
               <Image
                 alt={brand.name || 'Buildex'}

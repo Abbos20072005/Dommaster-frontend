@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
 import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
+import { notFound, permanentRedirect } from 'next/navigation';
 import React, { cache } from 'react';
 
 import { JsonLd } from '@/components/JsonLd';
@@ -9,6 +9,7 @@ import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd, productJsonLd } from '@/lib/jsonLd';
 import { orNotFound } from '@/lib/orNotFound';
 import { metaOverride } from '@/lib/seo';
+import { categoryHref, productIdFromParam } from '@/lib/urls';
 import { getProductById } from '@/utils/api/requests';
 
 import {
@@ -25,17 +26,25 @@ interface Props {
   params: Promise<{ id: string }>;
 }
 
-/** One request for the metadata and the page. A product that does not exist is a 404. */
-const getProduct = cache(async (id: string) => {
+/**
+ * One request for the metadata and the page. A product that does not exist is a 404. The address
+ * is `/product/{slug}-{id}` (BLD-243): the id at its end finds the product, and any other form of
+ * the address (the old `/product/{id}`, a slug of the other language, an old slug) leads to the
+ * right one.
+ */
+const getProduct = cache(async (param: string) => {
+  const id = productIdFromParam(param);
+  if (!id) notFound();
   const product = (await orNotFound(getProductById({ id }))).data.result;
   if (!product?.id) notFound();
+  if (product.slug && product.slug !== param) permanentRedirect(`/product/${product.slug}`);
   return product;
 });
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations();
-  const { id } = await params;
-  const product = await getProduct(id);
+  const { id: param } = await params;
+  const product = await getProduct(param);
   const description = t('metadata.product.description', {
     name: product.name,
     price: product.discount_price ?? product.price,
@@ -66,8 +75,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 const ProductPage = async ({ params }: Props) => {
-  const { id } = await params;
-  const product = await getProduct(id);
+  const { id: param } = await params;
+  const product = await getProduct(param);
+  const id = String(product.id);
   const [category, subCategory, itemCategory] = product.breadcrumbs ?? [];
 
   return (
@@ -79,10 +89,10 @@ const ProductPage = async ({ params }: Props) => {
           productJsonLd(product),
           breadcrumbJsonLd([
             { name: 'Buildex', path: '/' },
-            { name: category?.name, path: category && `/category/${category.id}` },
+            { name: category?.name, path: category && categoryHref(category) },
             {
               name: subCategory?.name,
-              path: category && subCategory && `/category/${category.id}/${subCategory.id}`
+              path: category && subCategory && categoryHref(category, subCategory)
             },
             {
               name: itemCategory?.name,
@@ -90,7 +100,7 @@ const ProductPage = async ({ params }: Props) => {
                 category &&
                 subCategory &&
                 itemCategory &&
-                `/category/${category.id}/${subCategory.id}/${itemCategory.id}`
+                categoryHref(category, subCategory, itemCategory)
             },
             { name: product.name }
           ])

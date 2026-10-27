@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { useDidYouMean } from '@/modules/search';
 import { getCategories } from '@/utils/api/requests';
+import { categoryHref } from '@/lib/urls';
 
 interface Props {
   query: string;
@@ -60,7 +61,7 @@ export const SearchNotFound = ({ query, filtersApplied, onResetFilters }: Props)
           <div className='flex flex-wrap justify-center gap-2'>
             {categories.slice(0, 8).map((category) => (
               <Link
-                href={`/category/${category.id}`}
+                href={categoryHref(category)}
                 key={category.id}
                 className='bg-muted hover:bg-muted/60 rounded-full px-3 py-1.5 text-xs font-medium transition-colors md:text-sm'
               >

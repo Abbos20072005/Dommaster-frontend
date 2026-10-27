@@ -44,6 +44,7 @@ import { MobilePageHeader } from '@/app/[locale]/user/_components/MobilePageHead
 import { OrderCancelAction } from './OrderCancelAction';
 import { PayOrderDialog } from './PayOrderDialog';
 import { useRepeatOrder } from './useRepeatOrder';
+import { productHref } from '@/lib/urls';
 
 interface Props {
   /** which list the customer came from: the back link and the breadcrumb lead there */
@@ -354,7 +355,7 @@ export const OrderDetails = ({ scope }: Props) => {
                   >
                     <Link
                       className='relative size-16 overflow-hidden rounded-lg border border-border bg-white'
-                      href={`/product/${product.id}`}
+                      href={productHref(product)}
                     >
                       {product.images?.[0]?.image && (
                         <Image
@@ -369,7 +370,7 @@ export const OrderDetails = ({ scope }: Props) => {
                     <div className='grid min-w-0 gap-1'>
                       <Link
                         className='hover:text-primary line-clamp-2 text-sm leading-5 transition-colors'
-                        href={`/product/${product.id}`}
+                        href={productHref(product)}
                       >
                         {product.name}
                       </Link>

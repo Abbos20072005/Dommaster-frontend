@@ -1,7 +1,8 @@
 import type { Metadata } from 'next';
 
-import { getTranslations } from 'next-intl/server';
-import { notFound } from 'next/navigation';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { notFound, permanentRedirect } from 'next/navigation';
+import { cache } from 'react';
 
 import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
@@ -18,7 +19,9 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Link } from '@/i18n/navigation';
 import { orNotFound } from '@/lib/orNotFound';
+import { matchBrandSlug, toLanguage } from '@/lib/catalogTree';
 import { htmlToText, metaOverride } from '@/lib/seo';
+import { categoryHref } from '@/lib/urls';
 import { getBrandById, getProducts } from '@/utils/api/requests';
 
 interface Props {
@@ -34,7 +37,7 @@ const getBrandCategories = async (brandId: number) => {
     for (const product of data.result.content ?? []) {
       const [category, subCategory, itemCategory] = product.breadcrumbs ?? [];
       if (!category || !subCategory || !itemCategory?.name) continue;
-      const href = `/category/${category.id}/${subCategory.id}/${itemCategory.id}`;
+      const href = categoryHref(category, subCategory, itemCategory);
       const existing = byHref.get(href);
       if (existing) existing.count += 1;
       else byHref.set(href, { name: itemCategory.name, href, count: 1 });
@@ -46,10 +49,26 @@ const getBrandCategories = async (brandId: number) => {
   }
 };
 
+/**
+ * One lookup for the metadata and the page. The address is `/brand/{slug}` (BLD-243); the slug
+ * of the other language, an old numeric address or any other form leads to the right one.
+ */
+const getBrand = cache(async (param: string) => {
+  const slug = decodeURIComponent(param);
+  let id: string | number = slug;
+  if (!/^\d+$/.test(slug)) {
+    const match = await matchBrandSlug(slug, toLanguage(await getLocale()));
+    if (!match) notFound();
+    id = match.id;
+  }
+  const brand = (await orNotFound(getBrandById({ id }))).data.result;
+  if (!brand?.id) notFound();
+  if (brand.slug && brand.slug !== slug) permanentRedirect(`/brand/${brand.slug}`);
+  return brand;
+});
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const { id } = await params;
-  const brandResponse = await orNotFound(getBrandById({ id }));
-  const brand = brandResponse.data.result;
+  const brand = await getBrand((await params).id);
   if (!brand?.name) return {};
   const t = await getTranslations();
 
@@ -64,10 +83,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 const SearchPage = async ({ params }: Props) => {
   const t = await getTranslations();
-  const { id } = await params;
-  const brandResponse = await orNotFound(getBrandById({ id }));
-  const brand = brandResponse.data.result;
-  if (!brand?.id) notFound();
+  const brand = await getBrand((await params).id);
   const initialProducts = await getInitialProducts({ brand: brand.id });
   // the categories of the brand: those of its products (the API has no such list)
   const categories = await getBrandCategories(brand.id);

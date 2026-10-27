@@ -11,6 +11,7 @@ import { Link } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { ProductCommentDialog } from '@/modules/product';
 import { getOrderById, getOrdersHistory } from '@/utils/api/requests';
+import { productHref } from '@/lib/urls';
 
 const ORDERS_TO_CHECK = 5;
 
@@ -78,7 +79,7 @@ export const PendingReviews = ({ query }: { query: UseQueryResult<Product[]> }) 
           <div key={product.id} className='flex items-center gap-3.5 bg-white px-5 py-3.5'>
             <Link
               className='bg-muted relative size-14 shrink-0 overflow-hidden rounded-lg'
-              href={`/product/${product.id}`}
+              href={productHref(product)}
             >
               {product.images?.[0]?.image && (
                 <Image
@@ -93,7 +94,7 @@ export const PendingReviews = ({ query }: { query: UseQueryResult<Product[]> }) 
             <div className='grid min-w-0 flex-1 gap-0.5'>
               <Link
                 className='hover:text-primary line-clamp-2 text-sm leading-5 font-bold transition-colors'
-                href={`/product/${product.id}`}
+                href={productHref(product)}
               >
                 {product.name}
               </Link>

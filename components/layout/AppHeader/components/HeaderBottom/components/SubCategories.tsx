@@ -65,7 +65,7 @@ export const SubCategories = ({ categoryId, onClose }: Props) => {
           {columnCategories.map((subCategory) => (
             <ItemCategories
               key={subCategory.id}
-              categoryId={category.id}
+              parent={category}
               onClose={onClose}
               subCategory={subCategory}
             />

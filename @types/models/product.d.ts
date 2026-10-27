@@ -13,6 +13,8 @@ interface Product {
   is_commented: boolean;
   is_favourite: boolean;
   name: string;
+  /** the readable address of the product: `{name}-{id}` (the language of the request) */
+  slug?: string;
   price: number;
   quantity: number;
   questions_quantity: number;
@@ -21,6 +23,7 @@ interface Product {
   breadcrumbs: {
     id: number;
     name: string;
+    slug?: string;
   }[];
   characteristics: {
     name: string;

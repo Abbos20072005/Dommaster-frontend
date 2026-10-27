@@ -3,6 +3,8 @@ interface Category {
   id: number;
   image: string;
   name: string;
+  /** the readable address part of the category (the language of the request) */
+  slug?: string;
   sub_categories: SubCategory[];
 }
 
@@ -13,10 +15,12 @@ interface SubCategory {
   id: number;
   image: string;
   name: string;
+  slug?: string;
   product_item_categories: ItemCategory[];
   breadcrumbs: {
     id: number;
     name: string;
+    slug?: string;
   }[];
 }
 
@@ -26,10 +30,12 @@ interface ItemCategory {
   id: number;
   image: string;
   name: string;
+  slug?: string;
   product_amount: number;
   breadcrumbs: {
     id: number;
     name: string;
+    slug?: string;
     url: string | null;
   }[];
 }

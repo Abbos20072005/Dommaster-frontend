@@ -4,7 +4,8 @@ import React from 'react';
 
 import { Badge } from '@/components/ui/badge';
 import { Link } from '@/i18n/navigation';
-import { formatPrice } from '@/lib/utils';
+import { formatPrice } from '@/lib/utils';
+import { productHref } from '@/lib/urls';
 
 interface Props {
   order: Order;
@@ -18,7 +19,7 @@ export const OrderProducts = ({ order }: Props) => {
       {order.order_items.map(({ product, quantity }) => (
         <div key={product.id} className='flex flex-1 flex-col gap-4 py-4 sm:flex-row'>
           <div className='flex flex-1 gap-1 sm:gap-3'>
-            <Link href={`/product/${product.id}`}>
+            <Link href={productHref(product)}>
               <Image
                 alt={product.name || 'Buildex'}
                 className='size-[80px] object-contain sm:size-[100px]'
@@ -32,7 +33,7 @@ export const OrderProducts = ({ order }: Props) => {
                 <p className='text-muted-foreground mb-3 text-xs'>
                   {t('code')}: {product.id}
                 </p>
-                <Link href={`/product/${product.id}`} className='line-clamp-3 text-sm'>
+                <Link href={productHref(product)} className='line-clamp-3 text-sm'>
                   {product.name}
                 </Link>
               </div>

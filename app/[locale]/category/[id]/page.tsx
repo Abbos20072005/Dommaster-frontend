@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
 import { metaOverride } from '@/lib/seo';
+import { categoryHref } from '@/lib/urls';
 import { getBrands, getCategoryById } from '@/utils/api/requests';
 
 import { CategoryChips } from '../_components/CategoryChips';
@@ -59,7 +60,7 @@ const CategoryPage = async ({ params }: Props) => {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: t('Catalog'), path: '/catalog' },
-          { name: category.name }
+          { name: category.name, path: categoryHref(category) }
         ])}
       />
       <MobileHeader />
@@ -80,7 +81,7 @@ const CategoryPage = async ({ params }: Props) => {
           <BannerCarousel bare placement='catalog' />
         </Suspense>
         <CategoryChips
-          hrefOf={(subId) => `/category/${id}/${subId}`}
+          hrefOf={(sub) => categoryHref(category, sub)}
           items={category.sub_categories}
         />
         {/* all products of the category, with the price and brand filters */}

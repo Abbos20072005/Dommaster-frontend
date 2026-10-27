@@ -23,7 +23,8 @@ import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { getCategories } from '@/utils/api/requests';
 
-import { SubCategories } from './components';
+import { SubCategories } from './components';
+import { categoryHref } from '@/lib/urls';
 
 const SCROLL_OFFSET_THRESHOLD = 32;
 const CAROUSEL_SKELETON_COUNT = 15;
@@ -121,7 +122,7 @@ export const HeaderBottom = () => {
                 <CarouselItem key={item.id} className='max-w-fit pl-2'>
                   <Button asChild size='sm' variant={tab === index ? 'secondaryFlat' : 'muted'}>
                     <Link
-                      href={`/category/${item.id}`}
+                      href={categoryHref(item)}
                       onClick={handleClose}
                       onMouseEnter={() => handleCategoryHover(index)}
                     >
@@ -162,7 +163,7 @@ export const HeaderBottom = () => {
             ) : (
               categories?.map((item, index) => (
                 <Link
-                  href={`/category/${item.id}`}
+                  href={categoryHref(item)}
                   key={item.id}
                   className={cn(
                     'flex items-center gap-3 px-3 py-2 transition-colors',

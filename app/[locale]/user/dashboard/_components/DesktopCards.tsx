@@ -34,6 +34,8 @@ import {
 import { CONTACT_PHONE, CONTACT_PHONE_HREF, SOCIAL_LINKS } from '@/utils/constants';
 import { orderStatusMap } from '@/utils/constants/orderStatus';
 import { useFavoritesStore } from '@/utils/stores';
+import { productHref } from '@/lib/urls';
+import { categoryHref } from '@/lib/urls';
 
 /** the order statuses a customer sees on the way: placed → collecting → on the way → delivered */
 const STEPS: OrderStatus[] = [0, 1, 2, 3];
@@ -288,7 +290,7 @@ export const DesktopCards = () => {
               <div className='grid grid-cols-4 gap-4'>
                 {categoriesQuery.data.data.result.slice(0, 4).map((category) => (
                   <Link
-                    href={`/category/${category.id}`}
+                    href={categoryHref(category)}
                     key={category.id}
                     className='bg-muted hover:bg-[#E1E7EC] relative flex min-h-[132px] flex-col justify-between overflow-hidden rounded-xl p-3.5 transition-colors'
                   >
@@ -345,7 +347,7 @@ export const DesktopCards = () => {
                 className='border-border grid content-start gap-2 rounded-xl border bg-white p-3'
               >
                 <Link
-                  href={`/product/${product.id}`}
+                  href={productHref(product)}
                   className='bg-muted relative block aspect-square overflow-hidden rounded-lg'
                 >
                   {product.images[0]?.image && (
@@ -366,7 +368,7 @@ export const DesktopCards = () => {
                   </span>
                 )}
                 <Link
-                  href={`/product/${product.id}`}
+                  href={productHref(product)}
                   className='line-clamp-2 min-h-10 text-sm leading-5'
                 >
                   {product.name}

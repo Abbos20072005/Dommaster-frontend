@@ -11,6 +11,7 @@ import type { ProductSectionId } from './ProductSections';
 
 import { ProductVariantGroups } from './ProductDescription/components';
 import { DeliveryInfo, PriceBlock } from './ProductPurchase';
+import { brandHref } from '@/lib/urls';
 
 const KEY_SPECS_COUNT = 6;
 
@@ -65,7 +66,7 @@ export const ProductInfo = ({ product, onNavigate }: Props) => {
 
       <div className='flex flex-wrap items-center gap-x-4 gap-y-0.5 text-sm'>
         {product.brand && (
-          <Link className='font-medium hover:underline' href={`/brand/${product.brand.id}`}>
+          <Link className='font-medium hover:underline' href={brandHref(product.brand)}>
             {product.brand.name}
           </Link>
         )}

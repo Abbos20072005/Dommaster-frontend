@@ -10,7 +10,8 @@ import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
-import { CartCounter, useProductCart } from '@/modules/cart';
+import { CartCounter, useProductCart } from '@/modules/cart';
+import { productHref } from '@/lib/urls';
 
 interface Props {
   checked?: boolean;
@@ -32,7 +33,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
           disabled={notValidQuantity}
           onCheckedChange={onCheckedChange}
         />
-        <Link href={`/product/${product.id}`} className={cn({ 'opacity-50': notValidQuantity })}>
+        <Link href={productHref(product)} className={cn({ 'opacity-50': notValidQuantity })}>
           <Image
             alt={product.name || 'Buildex'}
             className='size-[80px] object-contain sm:size-[100px]'
@@ -50,7 +51,7 @@ export const ProductCartItem = ({ product, checked, onCheckedChange }: Props) =>
             <p className='text-muted-foreground mb-3 text-xs'>
               {t('code')}: {product.id}
             </p>
-            <Link href={`/product/${product.id}`} className='line-clamp-3 text-sm'>
+            <Link href={productHref(product)} className='line-clamp-3 text-sm'>
               {product.name}
             </Link>
           </div>

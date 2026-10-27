@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
+import { useProductId } from '@/hooks';
 import { patchCommentById, postComment } from '@/utils/api/requests';
 
 import type { CommentFormSchema } from '../constants';
@@ -18,8 +18,8 @@ interface Props {
 
 export const useCommentForm = ({ onSuccess, defaultValues, productId }: Props) => {
   const isEdit = !!defaultValues;
-  const params = useParams<{ id: string }>();
-  const id = productId ?? params.id;
+  const pageProductId = useProductId();
+  const id = productId ?? pageProductId;
   const form = useForm<CommentFormSchema>({
     resolver: zodResolver(commentFormSchema),
     defaultValues: {

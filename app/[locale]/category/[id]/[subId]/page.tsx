@@ -20,6 +20,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
 import { metaOverride } from '@/lib/seo';
+import { categoryHref } from '@/lib/urls';
 import { getSubCategoryById } from '@/utils/api/requests';
 
 import { CategoryChips } from '../../_components/CategoryChips';
@@ -48,6 +49,13 @@ const SubCategoryPage = async ({ params }: Props) => {
 
   if (!subCategory) return notFound();
 
+  // [category, sub-category]: the levels of the address (the category has the id of the address)
+  const crumbs = (subCategory.breadcrumbs ?? []).slice(0, 2).map((crumb) => ({
+    id: crumb.id,
+    slug: crumb.slug
+  }));
+  const parentHref = crumbs[0] ? categoryHref(crumbs[0]) : `/category/${id}`;
+
   const initialProducts = await getInitialProducts({ sub_category: +subId });
 
   // only the brands that have products in this sub-category
@@ -60,8 +68,8 @@ const SubCategoryPage = async ({ params }: Props) => {
       <JsonLd
         data={breadcrumbJsonLd([
           { name: t('Catalog'), path: '/catalog' },
-          { name: subCategory.breadcrumbs?.[0]?.name, path: `/category/${id}` },
-          { name: subCategory.name }
+          { name: subCategory.breadcrumbs?.[0]?.name, path: parentHref },
+          { name: subCategory.name, path: categoryHref(...crumbs) }
         ])}
       />
       <MobileHeader />
@@ -73,7 +81,7 @@ const SubCategoryPage = async ({ params }: Props) => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink href={`/category/${id}`}>
+              <BreadcrumbLink href={parentHref}>
                 {subCategory.breadcrumbs?.[0].name}
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -88,7 +96,7 @@ const SubCategoryPage = async ({ params }: Props) => {
           <BannerCarousel bare placement='catalog' />
         </Suspense>
         <CategoryChips
-          hrefOf={(itemId) => `/category/${id}/${subId}/${itemId}`}
+          hrefOf={(item) => categoryHref(...crumbs, item)}
           items={subCategory.product_item_categories}
         />
         {/* all products of the sub-category, with the price and brand filters */}

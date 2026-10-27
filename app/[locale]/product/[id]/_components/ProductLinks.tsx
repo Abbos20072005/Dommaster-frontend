@@ -2,16 +2,16 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
 import React from 'react';
 
+import { useProductId } from '@/hooks';
 import { ProductList } from '@/modules/product';
 import { getProductLinks } from '@/utils/api/requests';
 
 /** "Bought together" and "Alternatives": picked by the content team; an empty list hides the block. */
 export const ProductLinks = () => {
   const t = useTranslations();
-  const { id } = useParams<{ id: string }>();
+  const id = useProductId();
 
   const getLinksQuery = useQuery({
     // under `products` so that cart changes refresh `in_cart` of these cards

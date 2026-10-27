@@ -1,6 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 import { lastModified, PRODUCTS_PER_SITEMAP } from '@/lib/sitemap';
+import { productHref } from '@/lib/urls';
 import { BASE_URL } from '@/utils/constants';
 
 // the files are made when the crawler asks (and kept for an hour by the fetch cache), not at
@@ -46,7 +47,7 @@ export default async function sitemap(props: {
   const data = await fetchProducts(id, PRODUCTS_PER_SITEMAP);
 
   return (data.result?.content ?? []).map((product) => ({
-    url: `${BASE_URL}/product/${product.id}`,
+    url: `${BASE_URL}${productHref(product)}`,
     lastModified: lastModified((product as { updated_at?: string }).updated_at),
     images: (product.images ?? []).map((image) => image.image).filter(Boolean)
   }));

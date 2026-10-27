@@ -7,7 +7,8 @@ import React, { Suspense } from 'react';
 import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { Link } from '@/i18n/navigation';
-import { getCategories } from '@/utils/api/requests';
+import { getCategories } from '@/utils/api/requests';
+import { categoryHref } from '@/lib/urls';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
@@ -33,7 +34,7 @@ const CategoryPage = async () => {
         <div className='grid grid-cols-[repeat(auto-fill,minmax(110px,1fr))] gap-2 md:grid-cols-[repeat(auto-fill,minmax(180px,1fr))] md:gap-4'>
           {categories.map((item) => (
             <Link
-              href={`/category/${item.id}`}
+              href={categoryHref(item)}
               key={item.id}
               className='bg-muted relative aspect-square rounded-md p-2 md:p-3'
             >

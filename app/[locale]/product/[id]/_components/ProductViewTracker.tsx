@@ -1,15 +1,15 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import React from 'react';
 
+import { useProductId } from '@/hooks';
 import { trackViewItem } from '@/lib/analytics';
 import { getAuthorizedProductById } from '@/utils/api/requests';
 
 /** `view_item`: once for every opened product (the same query as the page header). */
 export const ProductViewTracker = () => {
-  const { id } = useParams<{ id: string }>();
+  const id = useProductId();
   const product = useQuery({
     queryKey: ['product', id],
     staleTime: 0,

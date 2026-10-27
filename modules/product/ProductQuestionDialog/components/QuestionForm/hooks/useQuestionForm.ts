@@ -1,8 +1,8 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useParams } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 
+import { useProductId } from '@/hooks';
 import { patchQuestionById, postQuestion } from '@/utils/api/requests';
 
 import type { QuestionFormSchema } from '../constants';
@@ -16,7 +16,7 @@ interface Props {
 
 export const useQuestionForm = ({ onSuccess, defaultValues }: Props) => {
   const isEdit = !!defaultValues;
-  const { id } = useParams<{ id: string }>();
+  const id = useProductId();
   const form = useForm<QuestionFormSchema>({
     resolver: zodResolver(questionFormSchema),
     defaultValues: {

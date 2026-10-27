@@ -1,6 +1,7 @@
 import { BASE_URL, CONTACT_PHONE, SOCIAL_LINKS } from '@/utils/constants';
 
 import { htmlToText } from './seo';
+import { productHref } from './urls';
 
 /** the legal name and the address of the company (they must be the same everywhere) */
 const COMPANY = {
@@ -103,13 +104,13 @@ export const productJsonLd = (product: Product) => {
     '@type': 'Product',
     name: product.name,
     sku: String(product.id),
-    url: `${BASE_URL}/product/${product.id}`,
+    url: `${BASE_URL}${productHref(product)}`,
     ...(images.length ? { image: images } : {}),
     ...(product.description ? { description: htmlToText(product.description, 300) } : {}),
     ...(product.brand?.name ? { brand: { '@type': 'Brand', name: product.brand.name } } : {}),
     offers: {
       '@type': 'Offer',
-      url: `${BASE_URL}/product/${product.id}`,
+      url: `${BASE_URL}${productHref(product)}`,
       priceCurrency: 'UZS',
       price,
       availability:

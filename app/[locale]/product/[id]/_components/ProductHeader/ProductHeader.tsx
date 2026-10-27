@@ -2,7 +2,6 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
-import { useParams } from 'next/navigation';
 import React from 'react';
 
 import {
@@ -13,11 +12,13 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { Skeleton } from '@/components/ui/skeleton';
+import { useProductId } from '@/hooks';
+import { categoryHref } from '@/lib/urls';
 import { getAuthorizedProductById } from '@/utils/api/requests';
 
 export const ProductHeader = () => {
   const t = useTranslations();
-  const { id } = useParams<{ id: string }>();
+  const id = useProductId();
 
   const getProductByIdQuery = useQuery({
     queryKey: ['product', id],
@@ -50,22 +51,24 @@ export const ProductHeader = () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink href={`/category/${product.breadcrumbs[0].id}`}>
+            <BreadcrumbLink href={categoryHref(product.breadcrumbs[0])}>
               {product.breadcrumbs[0].name}
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbLink
-              href={`/category/${product.breadcrumbs[0].id}/${product.breadcrumbs[1].id}`}
-            >
+            <BreadcrumbLink href={categoryHref(product.breadcrumbs[0], product.breadcrumbs[1])}>
               {product.breadcrumbs[1].name}
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink
-              href={`/category/${product.breadcrumbs[0].id}/${product.breadcrumbs[1].id}/${product.breadcrumbs[2].id}`}
+              href={categoryHref(
+                product.breadcrumbs[0],
+                product.breadcrumbs[1],
+                product.breadcrumbs[2]
+              )}
             >
               {product.breadcrumbs[2].name}
             </BreadcrumbLink>

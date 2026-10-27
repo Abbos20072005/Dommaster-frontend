@@ -4,15 +4,16 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion';
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/i18n/navigation';
+import { categoryHref } from '@/lib/urls';
 
 interface Props {
-  categoryId: number;
+  parent: { id: number; slug?: string };
   subCategory: SubCategory;
   onClose: () => void;
 }
 
-export const ItemCategories = ({ subCategory, onClose, categoryId }: Props) => {
+export const ItemCategories = ({ subCategory, onClose, parent }: Props) => {
   const accordionValue = `subcategory-${subCategory.id}`;
   const hasItemCategories = subCategory.product_item_categories?.length > 0;
 
@@ -27,7 +28,7 @@ export const ItemCategories = ({ subCategory, onClose, categoryId }: Props) => {
               </div>
             )}
             <Link
-              href={`/category/${categoryId}/${subCategory.id}`}
+              href={categoryHref(parent, subCategory)}
               className='text-sm'
               onClick={onClose}
             >
@@ -42,7 +43,7 @@ export const ItemCategories = ({ subCategory, onClose, categoryId }: Props) => {
                 {subCategory.product_item_categories.map((itemCategory) => (
                   <li key={itemCategory.id}>
                     <Link
-                      href={`/category/${categoryId}/${subCategory.id}/${itemCategory.id}`}
+                      href={categoryHref(parent, subCategory, itemCategory)}
                       className='text-sm'
                       onClick={onClose}
                     >

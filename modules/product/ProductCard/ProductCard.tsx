@@ -6,7 +6,8 @@ import React from 'react';
 import { cn, formatPrice } from '@/lib/utils';
 
 import { PriceUnit } from '../PriceUnit/PriceUnit';
-import { ProductCart, ProductControl, ProductImages } from './components';
+import { ProductCart, ProductControl, ProductImages } from './components';
+import { productHref } from '@/lib/urls';
 
 type Props = React.ComponentProps<'div'> & {
   product: Product;
@@ -45,7 +46,7 @@ export const ProductCard = ({
       {...props}
     >
       <div className='relative'>
-        <Link href={`/product/${product.id}`} aria-label={name}>
+        <Link href={productHref(product)} aria-label={name}>
           <ProductImages product={{ ...product, name }} />
           <span className='sr-only'>{name}</span>
         </Link>
@@ -58,7 +59,7 @@ export const ProductCard = ({
       <div className={cn('flex flex-1 flex-col gap-3 pt-3', onDark && 'px-2 pb-2')}>
         <div className='space-y-0.5'>
           <Link
-            href={{ pathname: `/product/${product.id}`, query: { tab: 'reviews' } }}
+            href={{ pathname: productHref(product), query: { tab: 'reviews' } }}
             className='flex h-5 items-center gap-1 text-sm'
           >
             <StarIcon className='text-secondary fill-secondary size-4' />
@@ -67,7 +68,7 @@ export const ProductCard = ({
               • {product.comments_quantity} {t('reviews')}
             </span>
           </Link>
-          <Link className='block h-10' href={`/product/${product.id}`}>
+          <Link className='block h-10' href={productHref(product)}>
             <span className='line-clamp-2 text-sm leading-5 font-medium'>{name}</span>
           </Link>
         </div>
