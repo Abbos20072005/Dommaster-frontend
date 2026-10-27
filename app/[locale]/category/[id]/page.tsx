@@ -79,15 +79,17 @@ const CategoryPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{category.name}</h1>
-        <Suspense>
-          <BannerCarousel bare placement='catalog' />
-        </Suspense>
         <CategoryChips
           hrefOf={(sub) => categoryHref(category, sub)}
           items={category.sub_categories}
         />
         {/* all products of the category, with the price and brand filters */}
         <ProductFilterPaginated
+          banner={
+            <Suspense>
+              <BannerCarousel bare placement='catalog' />
+            </Suspense>
+          }
           attributeCategoryIds={category.sub_categories.flatMap((sub) =>
             (sub.product_item_categories ?? []).map((item) => item.id)
           )}

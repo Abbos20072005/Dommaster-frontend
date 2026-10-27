@@ -23,6 +23,8 @@ type Props = React.ComponentProps<'div'> & {
   onDark?: boolean;
   /** overrides the carousel item width, e.g. `lg:basis-1/5` next to a side menu */
   itemClassName?: string;
+  /** grid only: shown across the full width after the 12th product (3 rows of 4) */
+  inserted?: React.ReactNode;
 };
 
 export const ProductList = ({
@@ -33,6 +35,7 @@ export const ProductList = ({
   products,
   className,
   itemClassName,
+  inserted,
   ...props
 }: Props) => {
   const pathname = usePathname();
@@ -56,14 +59,19 @@ export const ProductList = ({
           )}
           {...props}
         >
-          {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              hideCart={hideCart}
-              hideControl={hideControl}
-              onDark={onDark}
-              product={product}
-            />
+          {products.map((product, index) => (
+            <React.Fragment key={product.id}>
+              <ProductCard
+                hideCart={hideCart}
+                hideControl={hideControl}
+                onDark={onDark}
+                product={product}
+              />
+              {/* 12 fills whole rows of 2, 3 and 4 columns, so the banner never splits a row */}
+              {inserted && index === 11 && products.length > 12 && (
+                <div className='col-span-full overflow-hidden'>{inserted}</div>
+              )}
+            </React.Fragment>
           ))}
         </div>
       )}

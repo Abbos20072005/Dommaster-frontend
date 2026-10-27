@@ -125,10 +125,12 @@ const ItemCategoryPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{itemCategory.name}</h1>
-        <Suspense>
-          <BannerCarousel bare placement='catalog' />
-        </Suspense>
         <ProductFilterPaginated
+          banner={
+            <Suspense>
+              <BannerCarousel bare placement='catalog' />
+            </Suspense>
+          }
           filters={filters}
           initialProducts={initialProducts}
           queries={{ item_category: +itemId }}

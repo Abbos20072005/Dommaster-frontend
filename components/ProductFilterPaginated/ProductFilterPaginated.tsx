@@ -33,6 +33,8 @@ interface Props {
    * links in the HTML. It is used only while no filter, sorting or search is chosen.
    */
   initialProducts?: ProductsResponse;
+  /** shown in the middle of the product grid (a banner carousel) */
+  banner?: React.ReactNode;
 }
 
 const MAX_MERGED_FILTERS = 5;
@@ -71,7 +73,8 @@ export const ProductFilterPaginated = ({
   filters,
   hideCategories,
   queries,
-  initialProducts
+  initialProducts,
+  banner
 }: Props) => {
   const t = useTranslations();
   const pathname = usePathname();
@@ -163,7 +166,12 @@ export const ProductFilterPaginated = ({
           <ProductListSkeleton className='lg:grid-cols-4' view='grid' />
         ) : products.length ? (
           // 4 columns (the filter column takes a part of the width), not 5
-          <ProductList className='lg:grid-cols-4' view='grid' products={products} />
+          <ProductList
+            className='lg:grid-cols-4'
+            inserted={banner}
+            view='grid'
+            products={products}
+          />
         ) : q ? (
           <SearchNotFound filtersApplied={!isCleared} query={q} onResetFilters={onReset} />
         ) : (

@@ -92,15 +92,17 @@ const SubCategoryPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{subCategory.name}</h1>
-        <Suspense>
-          <BannerCarousel bare placement='catalog' />
-        </Suspense>
         <CategoryChips
           hrefOf={(item) => categoryHref(...crumbs, item)}
           items={subCategory.product_item_categories}
         />
         {/* all products of the sub-category, with the price and brand filters */}
         <ProductFilterPaginated
+          banner={
+            <Suspense>
+              <BannerCarousel bare placement='catalog' />
+            </Suspense>
+          }
           attributeCategoryIds={subCategory.product_item_categories.map((item) => item.id)}
           filters={getCatalogFilters(t, brands)}
           initialProducts={initialProducts}
