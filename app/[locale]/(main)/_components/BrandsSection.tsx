@@ -12,6 +12,7 @@ import {
   CarouselPrevious
 } from '@/components/ui/carousel';
 import { Link } from '@/i18n/navigation';
+import { brandHref } from '@/lib/urls';
 import { getBrands } from '@/utils/api/requests';
 
 /** how many brands the home page shows (the API has no "top" flag yet: the first ones) */
@@ -43,7 +44,7 @@ export const BrandsSection = async () => {
           <div className='flex h-16 gap-4'>
             {brands.map((item) => (
               <Link
-                href={`/brand/${item.id}`}
+                href={brandHref(item)}
                 key={item.id}
                 className='flex h-16 w-28 shrink-0 items-center justify-center rounded-md'
               >
@@ -65,7 +66,7 @@ export const BrandsSection = async () => {
             {brands.map((item) => (
               <CarouselItem key={item.id} className='basis-50 space-y-4'>
                 <Link
-                  href={`/brand/${item.id}`}
+                  href={brandHref(item)}
                   key={item.id}
                   className='flex h-22 items-center justify-center rounded-md'
                 >

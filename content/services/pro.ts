@@ -29,7 +29,7 @@ const ctaButtons = (call: string, write: string, register: string) => [
 
 export const proPage: TrustPageSet = {
   uz: {
-    title: "Ustalar va prorablar uchun — obyektlar bo'yicha xarid hisobi | Buildex",
+    title: "Ustalar va prorablar uchun — obyekt bo'yicha hisob | Buildex",
     description:
       "Buildex'da har bir obyekt uchun alohida loyiha oching, xaridlarni unga bog'lang va har bir obyektga qancha ketganini ko'ring.",
     h1: 'Ustalar va prorablar uchun',

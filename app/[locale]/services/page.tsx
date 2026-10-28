@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 
-import { getTranslations } from 'next-intl/server';
-import Image from 'next/image';
+import { getLocale, getTranslations } from 'next-intl/server';
 
 import {
   Breadcrumb,
@@ -11,19 +10,21 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { servicesIndexPage } from '@/content/services';
 import { Link } from '@/i18n/navigation';
-import { getServices } from '@/utils/api/requests';
+
+const contentOf = async () => servicesIndexPage[(await getLocale()) === 'uz' ? 'uz' : 'ru'];
 
 export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations();
+  const { title, description } = await contentOf();
 
-  return { title: t('Services') };
+  return { title: { absolute: title }, description };
 }
 
+/** The entrance to the service pages: an intro and a card for each of them (BLD-252). */
 const ServicesPage = async () => {
   const t = await getTranslations();
-  const servicesResponse = await getServices();
-  const services = servicesResponse.data.result || [];
+  const { h1, intro, cards } = await contentOf();
 
   return (
     <>
@@ -34,25 +35,25 @@ const ServicesPage = async () => {
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           <BreadcrumbItem>
-            <BreadcrumbPage>{t('Services')}</BreadcrumbPage>
+            <BreadcrumbPage>{h1}</BreadcrumbPage>
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <h1 className='mb-6 text-xl font-bold md:text-3xl'>{t('Services')}</h1>
-      <div className='grid grid-cols-[repeat(auto-fill,minmax(150px,1fr))] gap-4 md:gap-8'>
-        {services.map((service) => (
-          <Link
-            href={`/services/${service.id}`}
-            key={service.id}
-            className='group flex flex-col items-center text-center'
-          >
-            <div className='bg-muted group-hover:bg-primary/20 flex size-25 items-center justify-center rounded-md transition-colors'>
-              <Image alt={service.name} height={56} src={service.icon} width={56} />
-            </div>
-            <p className='mt-2 text-sm font-medium'>{service.name}</p>
-          </Link>
+      <h1 className='mb-3 text-xl font-bold md:text-3xl'>{h1}</h1>
+      <p className='mb-6 max-w-3xl text-[15px] leading-7'>{intro}</p>
+      <ul className='grid gap-3 sm:grid-cols-2 xl:grid-cols-3'>
+        {cards.map((card) => (
+          <li key={card.href}>
+            <Link
+              className='border-border hover:border-primary hover:bg-primary/5 block h-full rounded-xl border p-4 transition-colors'
+              href={card.href}
+            >
+              <h2 className='text-base font-bold'>{card.title}</h2>
+              <p className='text-muted-foreground mt-1 text-sm leading-6'>{card.text}</p>
+            </Link>
+          </li>
         ))}
-      </div>
+      </ul>
     </>
   );
 };

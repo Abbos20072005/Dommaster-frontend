@@ -12,6 +12,8 @@ type BannerPlacement = 'catalog' | 'home_bottom' | 'home_top';
 type BannerLinkType = 'badge' | 'brand' | 'category' | 'page' | 'product' | 'url' | (string & {});
 
 interface Banner {
+  /** the readable address of what the banner opens, found on the server (see `BannerCarousel`) */
+  resolved_href?: string | null;
   /** what the banner opens: `model` is `productcategory`, `productsubcategory`, `productitemcategory`, `product`, `brand` or `productbadge` */
   content_type_info?: { id: number; model: string } | null;
   /** wide picture (16:5), always there */

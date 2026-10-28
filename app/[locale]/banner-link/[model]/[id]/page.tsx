@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import type { Locale } from '@/i18n/routing';
 
 import { redirect } from '@/i18n/navigation';
+import { catalogPathByIds, toLanguage } from '@/lib/catalogTree';
 import { getItemCategoryById, getSubCategoryById } from '@/utils/api/requests';
 
 interface Props {
@@ -20,14 +21,21 @@ const BannerLinkPage = async ({ params }: Props) => {
   if (model === 'productsubcategory') {
     const response = await getSubCategoryById({ id });
     const parentId = response.data.result?.breadcrumbs?.[0]?.id;
-    redirect({ href: parentId ? `/category/${parentId}/${id}` : '/catalog', locale });
+    const path = parentId && (await catalogPathByIds([parentId, +id], toLanguage(locale)));
+    redirect({ href: path || (parentId ? `/category/${parentId}/${id}` : '/catalog'), locale });
   }
 
   if (model === 'productitemcategory') {
     const response = await getItemCategoryById({ id });
     const [category, subCategory] = response.data.result?.breadcrumbs ?? [];
+    const path =
+      category &&
+      subCategory &&
+      (await catalogPathByIds([category.id, subCategory.id, +id], toLanguage(locale)));
     redirect({
-      href: category && subCategory ? `/category/${category.id}/${subCategory.id}/${id}` : '/catalog',
+      href:
+        path ||
+        (category && subCategory ? `/category/${category.id}/${subCategory.id}/${id}` : '/catalog'),
       locale
     });
   }

@@ -3,8 +3,8 @@ import type { MetadataRoute } from 'next';
 import { BASE_URL } from '@/utils/constants';
 
 /**
- * The fixed pages. `/requisites` (404) and `/services` (no content yet) are not listed: only
- * the addresses that open are in the sitemap. There is no `lastmod`: a made-up date is worse
+ * The fixed pages. `/requisites` (404) is not listed: only the addresses that open are in the
+ * sitemap. `/pro` is not listed until it is opened for the search engines (the launch day). There is no `lastmod`: a made-up date is worse
  * than none.
  */
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -15,6 +15,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/payment-methods` },
     { url: `${BASE_URL}/returns` },
     { url: `${BASE_URL}/contacts` },
+    { url: `${BASE_URL}/services` },
     { url: `${BASE_URL}/stores` },
     { url: `${BASE_URL}/pickup` },
     { url: `${BASE_URL}/lifting` },

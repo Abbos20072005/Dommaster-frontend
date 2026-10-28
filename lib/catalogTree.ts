@@ -138,6 +138,32 @@ export const catalogPathByIds = async (
   return levels.length && levels.every(Boolean) ? pathOf(levels as Slugged[]) : null;
 };
 
+/**
+ * The new address of a category known by its own id only (a banner holds nothing else):
+ * a category, a sub-category or an item category — the parents are found in the tree.
+ */
+export const catalogPathByLeaf = async (
+  model: string,
+  id: number,
+  language: Language
+): Promise<string | null> => {
+  const tree = await getCatalogTree(language).catch(() => []);
+
+  for (const category of tree) {
+    if (model === 'productcategory' && category.id === id) return pathOf([category]);
+    for (const sub of category.subs) {
+      if (model === 'productsubcategory' && sub.id === id) return pathOf([category, sub]);
+      for (const item of sub.items) {
+        if (model === 'productitemcategory' && item.id === id) {
+          return pathOf([category, sub, item]);
+        }
+      }
+    }
+  }
+
+  return null;
+};
+
 /** `/brand/{slug}`: the slug of any language leads to the brand; `slug` is the one of the language. */
 export const matchBrandSlug = async (
   slug: string,

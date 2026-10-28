@@ -17,6 +17,11 @@ export const getBannerLink = (banner: Banner): BannerLinkTarget | null => {
   // old banners: no `link_type`, only a `link`
   if (!banner.link_type) return banner.link ? { href: banner.link, external: true } : null;
 
+  // a product, a brand or a category: the server has already found its readable address
+  if (banner.resolved_href && ['product', 'brand', 'category'].includes(banner.link_type)) {
+    return { href: banner.resolved_href, external: false };
+  }
+
   switch (banner.link_type) {
     case 'url':
       return banner.link ? { href: banner.link, external: true } : null;
