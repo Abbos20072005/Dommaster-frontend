@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 
 import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
+import { CategoryDescription } from '@/components/CategoryDescription';
 import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd } from '@/lib/jsonLd';
@@ -136,6 +137,7 @@ const ItemCategoryPage = async ({ params }: Props) => {
           queries={{ item_category: +itemId }}
           hideCategories
         />
+        <CategoryDescription html={itemCategory.description} />
       </BaseLayout>
     </div>
   );

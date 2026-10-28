@@ -5,6 +5,8 @@ interface Category {
   name: string;
   /** the readable address part of the category (the language of the request) */
   slug?: string;
+  /** the text under the products (HTML from the admin editor); only in the detail */
+  description?: string | null;
   sub_categories: SubCategory[];
 }
 
@@ -16,6 +18,7 @@ interface SubCategory {
   image: string;
   name: string;
   slug?: string;
+  description?: string | null;
   product_item_categories: ItemCategory[];
   breadcrumbs: {
     id: number;
@@ -31,6 +34,7 @@ interface ItemCategory {
   image: string;
   name: string;
   slug?: string;
+  description?: string | null;
   product_amount: number;
   breadcrumbs: {
     id: number;
