@@ -54,9 +54,14 @@ export default async function proxy(request: NextRequest) {
   headers.set('x-search', request.nextUrl.search);
 
   // BLD-352: a crawler gets `Last-Modified` (the `updated_at` of the page) and, when the page has
-  // not changed since its `If-Modified-Since`, an empty 304 instead of the whole page
+  // not changed since its `If-Modified-Since`, an empty 304 instead of the whole page. Any client
+  // that asks with `If-Modified-Since` gets the same answer (a browser sends it only after it was
+  // given `Last-Modified`, so an ordinary visitor never does and costs no extra lookup).
   let lastModified: Date | null = null;
-  if (request.method === 'GET' && isCrawler(request.headers.get('user-agent'))) {
+  if (
+    request.method === 'GET' &&
+    (isCrawler(request.headers.get('user-agent')) || request.headers.has('if-modified-since'))
+  ) {
     lastModified = await pageLastModified(
       request.nextUrl.pathname,
       request.cookies.get('NEXT_LOCALE')?.value

@@ -6,7 +6,7 @@ import {
 } from './catalogTree';
 import { productIdFromParam } from './urls';
 
-/** the crawlers: only they ask with `If-Modified-Since`, so only for them the date is looked up */
+/** the crawlers: they get `Last-Modified` even on a first visit (others only when they send `If-Modified-Since`) */
 const CRAWLER = /bot|crawl|spider|slurp|yandex|bing|duckduck|baidu|facebookexternalhit|embedly/i;
 
 export const isCrawler = (userAgent: string | null) => !!userAgent && CRAWLER.test(userAgent);
