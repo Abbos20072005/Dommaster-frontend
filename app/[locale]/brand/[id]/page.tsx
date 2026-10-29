@@ -4,7 +4,6 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { cache } from 'react';
 
-import { CategoryDescription } from '@/components/CategoryDescription';
 import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd } from '@/lib/jsonLd';
@@ -21,6 +20,7 @@ import {
 import { Link } from '@/i18n/navigation';
 import { orNotFound } from '@/lib/orNotFound';
 import { matchBrandSlug, toLanguage } from '@/lib/catalogTree';
+import { hasText, sanitizeHtml } from '@/lib/sanitizeHtml';
 import { htmlToText, metaOverride } from '@/lib/seo';
 import { categoryHref } from '@/lib/urls';
 import { getBrandById, getProducts } from '@/utils/api/requests';
@@ -90,6 +90,7 @@ const SearchPage = async ({ params }: Props) => {
   const initialProducts = await getInitialProducts({ brand: brand.id });
   // the categories of the brand: those of its products (the API has no such list)
   const categories = await getBrandCategories(brand.id);
+  const description = sanitizeHtml(brand.description);
   // const salesResponse = await getSales();
   // const sales = salesResponse.data.result;
 
@@ -140,6 +141,13 @@ const SearchPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>{brand.name}</h1>
+        {/* the short text of the brand (BLD-248): limited HTML like the category text, nothing when empty */}
+        {hasText(description) && (
+          <div
+            className='prose prose-sm md:prose-base mb-4 max-w-3xl'
+            dangerouslySetInnerHTML={{ __html: description }}
+          />
+        )}
         {categories.length > 0 && (
           <nav aria-label={t('Categories')} className='mb-4 flex flex-wrap gap-2'>
             {categories.map((category) => (
@@ -159,8 +167,6 @@ const SearchPage = async ({ params }: Props) => {
           initialProducts={initialProducts}
           queries={{ brand: brand.id }}
         />
-        {/* the text of the brand (BLD-248): limited HTML like the category text, nothing when empty */}
-        <CategoryDescription html={brand.description} />
       </BaseLayout>
     </div>
   );
