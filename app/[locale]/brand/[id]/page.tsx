@@ -4,6 +4,7 @@ import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, permanentRedirect } from 'next/navigation';
 import { cache } from 'react';
 
+import { CategoryDescription } from '@/components/CategoryDescription';
 import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd } from '@/lib/jsonLd';
@@ -139,11 +140,6 @@ const SearchPage = async ({ params }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>{brand.name}</h1>
-        {brand.description && (
-          <p className='text-muted-foreground mb-4 max-w-3xl text-sm leading-6 md:text-base'>
-            {brand.description}
-          </p>
-        )}
         {categories.length > 0 && (
           <nav aria-label={t('Categories')} className='mb-4 flex flex-wrap gap-2'>
             {categories.map((category) => (
@@ -163,6 +159,8 @@ const SearchPage = async ({ params }: Props) => {
           initialProducts={initialProducts}
           queries={{ brand: brand.id }}
         />
+        {/* the text of the brand (BLD-248): limited HTML like the category text, nothing when empty */}
+        <CategoryDescription html={brand.description} />
       </BaseLayout>
     </div>
   );
