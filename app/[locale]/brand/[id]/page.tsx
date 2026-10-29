@@ -144,7 +144,7 @@ const SearchPage = async ({ params }: Props) => {
         {/* the short text of the brand (BLD-248): limited HTML like the category text, nothing when empty */}
         {hasText(description) && (
           <div
-            className='prose prose-sm md:prose-base mb-4 max-w-3xl'
+            className='prose prose-sm md:prose-base mb-4 max-w-none'
             dangerouslySetInnerHTML={{ __html: description }}
           />
         )}
