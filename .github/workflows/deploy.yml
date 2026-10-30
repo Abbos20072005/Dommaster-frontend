@@ -61,6 +61,14 @@ jobs:
             git checkout -- package-lock.json
           fi
 
+          # GTM konteyner ID (BLD-362): ochiq qiymat (sahifa manbasida ko'rinadi). NEXT_PUBLIC_* build
+          # paytida kodga kiradi, shuning uchun .env ga build'dan oldin yoziladi.
+          if grep -q '^NEXT_PUBLIC_GTM_ID=' .env 2>/dev/null; then
+            sed -i 's|^NEXT_PUBLIC_GTM_ID=.*|NEXT_PUBLIC_GTM_ID=GTM-NTZ26TX6|' .env
+          else
+            printf '\nNEXT_PUBLIC_GTM_ID=GTM-NTZ26TX6\n' >> .env
+          fi
+
           rm -rf .next.prev
           cp -a .next .next.prev
           npm run build
