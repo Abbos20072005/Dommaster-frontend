@@ -21,8 +21,11 @@ const TOP_BRANDS = 20;
 export const BrandsSection = async () => {
   const t = await getTranslations();
   const brandsResponse = await getBrands();
-  // the home page links to the top brands only; the rest are on "All brands"
-  const brands = (brandsResponse.data.result ?? []).slice(0, TOP_BRANDS);
+  // the home page links to the top brands only; the rest are on "All brands".
+  // A brand without a logo would render an <Image> with an empty src, so it is left out here.
+  const brands = (brandsResponse.data.result ?? [])
+    .filter((item) => item.image)
+    .slice(0, TOP_BRANDS);
 
   if (!brands.length) return null;
 
