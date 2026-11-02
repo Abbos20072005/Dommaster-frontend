@@ -214,8 +214,8 @@ export const MobileCards = () => {
                 </span>
               </div>
 
-              {activeOrder && lastOrder.status !== 4 && (
-                <div className='grid grid-cols-4'>
+              {activeOrder && lastOrder.status !== 6 && (
+                <div className='grid grid-cols-5'>
                   {getOrderSteps(lastOrder.delivery_type).map((step, index, steps) => {
                     const done = index < steps.indexOf(lastOrder.status);
                     const current = lastOrder.status === step;

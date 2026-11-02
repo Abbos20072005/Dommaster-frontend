@@ -27,7 +27,7 @@ export const usePendingReviews = () =>
       const history = await getOrdersHistory({
         config: { params: { page: 1, page_size: ORDERS_TO_CHECK } }
       });
-      const delivered = history.data.result.content.filter((order) => order.status === 3);
+      const delivered = history.data.result.content.filter((order) => order.status === 5);
       const orders = await Promise.all(delivered.map((order) => getOrderById({ id: order.id })));
 
       const byId = new Map<number, Product>();

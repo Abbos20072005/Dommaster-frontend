@@ -40,6 +40,7 @@ import {
   SOCIAL_LINKS
 } from '@/utils/constants/contacts';
 import {
+  canCancelOrder,
   getOrderSteps,
   getPaymentLabel,
   getStepLabel,
@@ -64,29 +65,32 @@ const VISIBLE_ITEMS = 5;
 
 const STATUS_STYLE: Record<OrderStatus, string> = {
   0: 'bg-muted text-foreground/70',
-  1: 'bg-[#FFF7DB] text-[#7A5600]',
-  2: 'bg-primary/10 text-primary',
-  3: 'bg-[#E6F6EC] text-[#12703C]',
-  4: 'bg-[#FDECEC] text-[#B42318]',
-  5: 'bg-[#E6F6EC] text-[#12703C]'
+  1: 'bg-primary/10 text-primary',
+  2: 'bg-[#FFF7DB] text-[#7A5600]',
+  3: 'bg-primary/10 text-primary',
+  4: 'bg-[#E6F6EC] text-[#12703C]',
+  5: 'bg-[#E6F6EC] text-[#12703C]',
+  6: 'bg-[#FDECEC] text-[#B42318]'
 };
 
 const STATUS_ICON: Record<OrderStatus, React.ComponentType<{ className?: string }>> = {
   0: ClockIcon,
-  1: BoxIcon,
-  2: TruckIcon,
-  3: CheckIcon,
-  4: XIcon,
-  5: StoreIcon
+  1: CheckIcon,
+  2: BoxIcon,
+  3: TruckIcon,
+  4: StoreIcon,
+  5: CheckIcon,
+  6: XIcon
 };
 
 const STEP_TEXT: Record<OrderStatus, string> = {
   0: 'Step placed text',
-  1: 'Step collecting text',
-  2: 'Step delivering text',
-  3: 'Step delivered text',
-  4: 'Step canceled text',
-  5: 'Step ready for pickup text'
+  1: 'Step confirmed text',
+  2: 'Step collecting text',
+  3: 'Step delivering text',
+  4: 'Step ready for pickup text',
+  5: 'Step delivered text',
+  6: 'Step canceled text'
 };
 
 const Card = ({ className, ...props }: React.ComponentProps<'section'>) => (
@@ -117,7 +121,7 @@ export const OrderDetails = ({ scope }: Props) => {
   // `purchase`: once per confirmed order (status > Pending: paid or cash on delivery), the order
   // is remembered in this browser so that a reload does not count it twice
   React.useEffect(() => {
-    if (!order || order.status === 0 || order.status === 4) return;
+    if (!order || order.status === 0 || order.status === 6) return;
     if (Date.now() - new Date(order.created_at).getTime() > 2 * 24 * 60 * 60 * 1000) return;
     const key = `purchase_tracked_${order.id}`;
     try {
@@ -160,7 +164,7 @@ export const OrderDetails = ({ scope }: Props) => {
   }
 
   const StatusIcon = STATUS_ICON[order.status];
-  const isCanceled = order.status === 4;
+  const isCanceled = order.status === 6;
   // a canceled order cannot be linked
   const canLink = isPro && !isCanceled;
   const isDelivery = order.delivery_type === DELIVERY_TYPE.Delivery;
@@ -175,13 +179,14 @@ export const OrderDetails = ({ scope }: Props) => {
   const steps: { status: OrderStatus; label: string }[] = isCanceled
     ? [
         { status: 0, label: t('Step placed') },
-        { status: 4, label: t(orderStatusMap[4]) }
+        { status: 6, label: t(orderStatusMap[6]) }
       ]
     : getOrderSteps(order.delivery_type).map((status) => ({
         status,
         label: status === 0 ? t('Step placed') : t(getStepLabel(status, order.delivery_type))
       }));
-  // a pickup goes 0 -> 1 -> 5 -> 3: the order of the steps, not the number of the status, tells what is done
+  // a pickup goes 0 -> 1 -> 2 -> 4 -> 5 and an order may skip 1 (confirmed): the position of the
+  // status among the steps tells what is done; a skipped step is found by its number below
   const currentStep = steps.findIndex((step) => step.status === order.status);
 
   const items = showAll ? order.order_items : order.order_items.slice(0, VISIBLE_ITEMS);
@@ -245,7 +250,7 @@ export const OrderDetails = ({ scope }: Props) => {
             <ol className='grid'>
               {steps.map((step, index) => {
                 const isLast = index === steps.length - 1;
-                const isCancel = step.status === 4;
+                const isCancel = step.status === 6;
                 const done = isCancel
                   ? true
                   : currentStep >= 0
@@ -299,7 +304,7 @@ export const OrderDetails = ({ scope }: Props) => {
                       </div>
                       {current && (
                         <span className='text-sm leading-5 text-[#4A5563]'>
-                          {t(step.status === 3 && !isDelivery ? 'Step picked up text' : STEP_TEXT[step.status])}
+                          {t(step.status === 5 && !isDelivery ? 'Step picked up text' : STEP_TEXT[step.status])}
                         </span>
                       )}
                     </div>
@@ -548,7 +553,7 @@ export const OrderDetails = ({ scope }: Props) => {
               )}
             </div>
 
-            {order.status === 0 && (
+            {canCancelOrder(order.status) && (
               <div className='grid gap-1'>
                 <OrderCancelAction asChild orderId={order.id}>
                   <button

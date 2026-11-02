@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/modules/auth';
 import { getOrderById, getOrdersHistory } from '@/utils/api/requests';
 
-const DELIVERED = 3; // OrderStatus.Delivered
+const DELIVERED = 5; // OrderStatus.Completed
 const MAX_ORDERS = 20;
 
 /** A review can be written only by a customer who has received this product. */

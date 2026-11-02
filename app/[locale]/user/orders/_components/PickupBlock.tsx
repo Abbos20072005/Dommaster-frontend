@@ -49,7 +49,7 @@ export const PickupBlock = ({ order }: { order: Order }) => {
   );
   const hours = live ? todayHours(live) : null;
 
-  const isReady = order.status === 5;
+  const isReady = order.status === 4;
   const deadline = order.pickup_deadline
     ? formatDate(order.pickup_deadline, 'dd MMMM, HH:mm')
     : null;

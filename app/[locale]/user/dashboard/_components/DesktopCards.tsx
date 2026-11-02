@@ -44,11 +44,12 @@ import { categoryHref } from '@/lib/urls';
 
 const statusBadgeClass: Record<OrderStatus, string> = {
   0: 'bg-muted text-foreground/70',
-  1: 'bg-[#FFF7DB] text-[#7A5600]',
-  2: 'bg-primary/10 text-primary',
-  3: 'bg-[#E6F6EC] text-[#12703C]',
-  4: 'bg-[#FDECEC] text-[#B42318]',
-  5: 'bg-[#E6F6EC] text-[#12703C]'
+  1: 'bg-primary/10 text-primary',
+  2: 'bg-[#FFF7DB] text-[#7A5600]',
+  3: 'bg-primary/10 text-primary',
+  4: 'bg-[#E6F6EC] text-[#12703C]',
+  5: 'bg-[#E6F6EC] text-[#12703C]',
+  6: 'bg-[#FDECEC] text-[#B42318]'
 };
 
 const Tile = ({
@@ -107,7 +108,7 @@ export const DesktopCards = () => {
   const historyOrders = historyQuery.data?.data.result.content ?? [];
   // the latest delivered order, else any previous one (even a canceled one still lists what was chosen)
   const lastDelivered =
-    historyOrders.find((order) => order.status === 3) ?? historyOrders[0] ?? activeOrder;
+    historyOrders.find((order) => order.status === 5) ?? historyOrders[0] ?? activeOrder;
   // the card of the page: the active order, else the last finished one
   const order = activeOrder ?? historyOrders[0];
 
@@ -185,8 +186,8 @@ export const DesktopCards = () => {
               </div>
             </div>
 
-            {activeOrder && order.status !== 4 && (
-              <div className='grid grid-cols-4'>
+            {activeOrder && order.status !== 6 && (
+              <div className='grid grid-cols-5'>
                 {getOrderSteps(order.delivery_type).map((step, index, steps) => {
                   const done = index < steps.indexOf(order.status);
                   const current = order.status === step;

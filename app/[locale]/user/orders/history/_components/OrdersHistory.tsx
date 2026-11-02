@@ -14,7 +14,7 @@ import { cn } from '@/lib/utils';
 import { getOrdersHistory } from '@/utils/api/requests';
 
 type Period = '3m' | '1y' | 'all';
-type StatusFilter = 'all' | 3 | 4;
+type StatusFilter = 'all' | 5 | 6;
 
 const PERIOD_DAYS: Record<Period, number | null> = { '3m': 92, '1y': 366, all: null };
 
@@ -81,8 +81,8 @@ export const OrdersHistory = () => {
 
   const chips: { value: StatusFilter; label: string }[] = [
     { value: 'all', label: t('All') },
-    { value: 3, label: t('Delivered') },
-    { value: 4, label: t('Canceled') }
+    { value: 5, label: t('Delivered') },
+    { value: 6, label: t('Canceled') }
   ];
   const isFiltered = status !== 'all' || period !== '3m';
 

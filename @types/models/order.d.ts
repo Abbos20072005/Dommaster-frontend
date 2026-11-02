@@ -1,11 +1,18 @@
+/**
+ * The codes follow the way of an order (since 02.11.2026):
+ * delivery 0 -> 1 -> 2 -> 3 -> 5, pickup 0 -> 1 -> 2 -> 4 -> 5, canceled 6 from anywhere.
+ * `Confirmed` is set only by the admin panel: after an online payment or a pay-in-store pickup
+ * the order goes from 0 straight to 2, so a screen must handle both.
+ */
 const enum OrderStatus {
   Pending = 0,
-  Collecting = 1,
-  Delivering = 2,
-  /** pickup: Collecting -> ReadyForPickup -> Delivered (the customer took the order) */
-  Delivered = 3,
-  Canceled = 4,
-  ReadyForPickup = 5
+  Confirmed = 1,
+  Collecting = 2,
+  Delivering = 3,
+  ReadyForPickup = 4,
+  /** delivered, or (pickup) picked up by the customer */
+  Completed = 5,
+  Canceled = 6
 }
 
 /** copied from the address when the order is created: later changes of the address do not touch it */

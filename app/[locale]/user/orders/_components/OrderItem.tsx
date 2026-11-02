@@ -18,7 +18,7 @@ import { Button } from '@/components/ui/button';
 import { useFormatDate } from '@/hooks';
 import { Link, usePathname } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
-import { getPaymentLabel, orderStatusMap } from '@/utils/constants/orderStatus';
+import { canCancelOrder, getPaymentLabel, orderStatusMap } from '@/utils/constants/orderStatus';
 
 import { OrderCancelAction } from './OrderCancelAction';
 import { PayOrderDialog } from './PayOrderDialog';
@@ -30,20 +30,22 @@ interface Props {
 
 const STATUS_STYLE: Record<OrderStatus, string> = {
   0: 'bg-muted text-foreground/70',
-  1: 'bg-[#FFF7DB] text-[#7A5600]',
-  2: 'bg-primary/10 text-primary',
-  3: 'bg-[#E6F6EC] text-[#12703C]',
-  4: 'bg-[#FDECEC] text-[#B42318]',
-  5: 'bg-[#E6F6EC] text-[#12703C]'
+  1: 'bg-primary/10 text-primary',
+  2: 'bg-[#FFF7DB] text-[#7A5600]',
+  3: 'bg-primary/10 text-primary',
+  4: 'bg-[#E6F6EC] text-[#12703C]',
+  5: 'bg-[#E6F6EC] text-[#12703C]',
+  6: 'bg-[#FDECEC] text-[#B42318]'
 };
 
 const STATUS_ICON: Record<OrderStatus, React.ComponentType<{ className?: string }>> = {
   0: ClockIcon,
-  1: BoxIcon,
-  2: TruckIcon,
-  3: CheckIcon,
-  4: XIcon,
-  5: StoreIcon
+  1: CheckIcon,
+  2: BoxIcon,
+  3: TruckIcon,
+  4: StoreIcon,
+  5: CheckIcon,
+  6: XIcon
 };
 
 export const OrderItem = ({ order }: Props) => {
@@ -51,7 +53,7 @@ export const OrderItem = ({ order }: Props) => {
   const formatDate = useFormatDate();
   const pathname = usePathname();
   const url = `${pathname}/${order.id}`;
-  const isDone = order.status === 3 || order.status === 4;
+  const isDone = order.status === 5 || order.status === 6;
   const isOnline = order.payment_type !== 4;
   const StatusIcon = STATUS_ICON[order.status];
   const extra = order.order_items.length - 4;
@@ -207,20 +209,20 @@ export const OrderItem = ({ order }: Props) => {
       </div>
 
       <div className='border-border flex items-center justify-end gap-2 border-t pt-4'>
+        {canCancelOrder(order.status) && (
+          <OrderCancelAction asChild orderId={order.id}>
+            <Button size='sm' variant='destructiveFlat'>
+              <XIcon />
+              {t('Cancel')}
+            </Button>
+          </OrderCancelAction>
+        )}
         {order.status === 0 && (
-          <>
-            <OrderCancelAction asChild orderId={order.id}>
-              <Button size='sm' variant='destructiveFlat'>
-                <XIcon />
-                {t('Cancel')}
-              </Button>
-            </OrderCancelAction>
-            <PayOrderDialog orderId={order.id}>
-              <Button size='sm' variant='primaryFlat'>
-                {t('Pay order')}
-              </Button>
-            </PayOrderDialog>
-          </>
+          <PayOrderDialog orderId={order.id}>
+            <Button size='sm' variant='primaryFlat'>
+              {t('Pay order')}
+            </Button>
+          </PayOrderDialog>
         )}
         {!isDone && order.status !== 0 && (
           <Button asChild size='sm' variant='outline'>
