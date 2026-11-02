@@ -33,8 +33,8 @@ export const ProductCard = ({
     <div
       className={cn(
         // no card box: the rounded photo and the text lie right on the page
-        // 480px: the photo takes 288px (60%), the details the other 192px (40%)
-        'flex h-[480px] flex-col',
+        // 504px: the photo takes 312px, the details the other 192px
+        'flex h-[504px] flex-col',
         'group/card',
         // on the dark banner every card is a slightly lighter panel: the photo is flush with its
         // edges, only the text block has padding

@@ -7,6 +7,7 @@ import * as React from 'react';
 
 import { ImageLightbox } from '@/components/ImageLightbox';
 import { cn } from '@/lib/utils';
+import { CardImage } from '@/modules/product/ProductCard/components/ProductImages/components/CardImage';
 import { ProductControl } from '@/modules/product/ProductCard/components/ProductControl/ProductControl';
 
 import { ShareButton } from '../../ShareButton';
@@ -78,13 +79,7 @@ export const ProductImageCarousel = ({
               type='button'
               onClick={() => goTo(i)}
             >
-              <Image
-                fill
-                alt={name}
-                className='object-cover'
-                sizes='64px'
-                src={image.image}
-              />
+              <CardImage fill alt={name} sizes='64px' src={image.image} />
             </button>
           ))}
         </div>

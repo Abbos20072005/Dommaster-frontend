@@ -1,7 +1,6 @@
-import Image from 'next/image';
-
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
+import { CardImage } from '@/modules/product/ProductCard/components/ProductImages/components/CardImage';
 
 interface Props {
   variantGroups: Product['variant_groups'];
@@ -38,11 +37,11 @@ export const ProductVariantGroups = ({ variantGroups }: Props) => {
                     href={`/product/${item.product_id}`}
                   >
                     {group.display_type === 'image' && item.image ? (
-                      <div className='relative h-full w-full'>
-                        <Image
+                      <div className='relative h-full w-full overflow-hidden'>
+                        <CardImage
                           fill
                           alt={item.display_value || 'Buildex'}
-                          className='object-cover'
+                          sizes='56px'
                           src={item.image}
                         />
                       </div>

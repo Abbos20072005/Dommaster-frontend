@@ -14,7 +14,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
   const [tab, setTab] = React.useState(0);
 
   return (
-    <div className='relative hidden h-[288px] overflow-hidden rounded-xl bg-white group-data-[on-dark]/card:rounded-none md:block'>
+    <div className='relative hidden h-[312px] overflow-hidden rounded-xl bg-white group-data-[on-dark]/card:rounded-none md:block'>
       {product.images.map((image, i) => (
         <CardImage
           fill

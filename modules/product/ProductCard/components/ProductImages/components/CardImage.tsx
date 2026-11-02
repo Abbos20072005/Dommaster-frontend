@@ -7,14 +7,15 @@ import React from 'react';
 
 import { cn } from '@/lib/utils';
 
-// A photo whose shape is close to the shape of its slot fills it; any other photo is shown
-// whole (the empty space is white). Product photos often reach their edges, so even a crop of
-// 5-7% cuts a part of the product: only a difference of up to 3% is filled.
-const MAX_DEVIATION = 1.03;
+// A product photo is always shown whole (never cropped). When its shape differs from the shape
+// of its slot, the rest of the slot is filled with a blurred, enlarged copy of the same photo
+// instead of white bars. A difference of up to 1% is not visible and gets no backdrop.
+const MAX_DEVIATION = 1.01;
 
+/** Image for a `relative overflow-hidden` slot, used with `fill`. */
 export const CardImage = ({ className, onLoad, ...props }: ImageProps) => {
   const ref = React.useRef<HTMLImageElement>(null);
-  const [fit, setFit] = React.useState<'cover' | 'contain'>('cover');
+  const [mismatch, setMismatch] = React.useState(false);
 
   // measured on load, when the photo is already there (the server HTML) and when the slot
   // changes its size (the number of columns of the grid changes with the window)
@@ -25,7 +26,7 @@ export const CardImage = ({ className, onLoad, ...props }: ImageProps) => {
       return;
     }
     const ratio = image.naturalWidth / image.naturalHeight / (slot.clientWidth / slot.clientHeight);
-    setFit(ratio > MAX_DEVIATION || ratio < 1 / MAX_DEVIATION ? 'contain' : 'cover');
+    setMismatch(ratio > MAX_DEVIATION || ratio < 1 / MAX_DEVIATION);
   }, []);
 
   React.useEffect(() => {
@@ -38,14 +39,27 @@ export const CardImage = ({ className, onLoad, ...props }: ImageProps) => {
   }, [measure]);
 
   return (
-    <Image
-      {...props}
-      ref={ref}
-      className={cn(fit === 'cover' ? 'object-cover' : 'object-contain', className)}
-      onLoad={(event) => {
-        measure();
-        onLoad?.(event);
-      }}
-    />
+    <>
+      {mismatch && (
+        <Image
+          {...props}
+          aria-hidden
+          alt=''
+          className={cn('scale-125 object-cover blur-2xl', className)}
+          loading='lazy'
+          priority={false}
+          sizes='48px'
+        />
+      )}
+      <Image
+        {...props}
+        ref={ref}
+        className={cn('object-contain', className)}
+        onLoad={(event) => {
+          measure();
+          onLoad?.(event);
+        }}
+      />
+    </>
   );
 };
