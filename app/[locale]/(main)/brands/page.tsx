@@ -50,13 +50,18 @@ const BrandsPage = async () => {
               className='hover:border-primary/50 flex flex-col items-center justify-center gap-2 rounded-xl border p-4 transition-colors'
               href={brandHref(brand)}
             >
-              <Image
-                alt={brand.name || 'Buildex'}
-                className='h-16 w-full object-contain'
-                height={64}
-                src={brand.image}
-                width={160}
-              />
+              {brand.image ? (
+                <Image
+                  alt={brand.name || 'Buildex'}
+                  className='h-16 w-full object-contain'
+                  height={64}
+                  src={brand.image}
+                  width={160}
+                />
+              ) : (
+                // no logo: keep the card the same height, the name is shown below
+                <div className='h-16 w-full' />
+              )}
               {brand.name && (
                 <span className='line-clamp-1 text-center text-sm font-medium'>{brand.name}</span>
               )}
