@@ -1,12 +1,13 @@
 import type { Metadata } from 'next';
 
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound, permanentRedirect } from 'next/navigation';
 import React, { cache } from 'react';
 
 import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd, productJsonLd } from '@/lib/jsonLd';
+import { withLocale } from '@/lib/localePath';
 import { orNotFound } from '@/lib/orNotFound';
 import { metaOverride } from '@/lib/seo';
 import { categoryHref, productIdFromParam } from '@/lib/urls';
@@ -37,7 +38,9 @@ const getProduct = cache(async (param: string) => {
   if (!id) notFound();
   const product = (await orNotFound(getProductById({ id }))).data.result;
   if (!product?.id) notFound();
-  if (product.slug && product.slug !== param) permanentRedirect(`/product/${product.slug}`);
+  if (product.slug && product.slug !== param) {
+    permanentRedirect(withLocale(`/product/${product.slug}`, await getLocale()));
+  }
   return product;
 });
 

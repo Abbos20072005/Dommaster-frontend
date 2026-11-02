@@ -6,18 +6,18 @@ import { COOKIES } from '@/utils/constants';
 
 /**
  * Gets the current locale on the client side:
- * cookie (til tanlagich yozadi) → <html lang> → default locale
+ * <html lang> (the language of the address: `/uz/...`) → cookie → default locale
  */
 export const getClientLocale = (): string => {
   if (typeof window === 'undefined') {
     return routing.defaultLocale;
   }
 
-  const cookieLocale = Cookies.get(COOKIES.LOCALE);
-  if (hasLocale(routing.locales, cookieLocale)) return cookieLocale;
-
   const htmlLocale = document.documentElement.lang;
   if (hasLocale(routing.locales, htmlLocale)) return htmlLocale;
+
+  const cookieLocale = Cookies.get(COOKIES.LOCALE);
+  if (hasLocale(routing.locales, cookieLocale)) return cookieLocale;
 
   return routing.defaultLocale;
 };

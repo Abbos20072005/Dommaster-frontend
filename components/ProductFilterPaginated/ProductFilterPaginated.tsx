@@ -3,7 +3,7 @@
 import type { AxiosResponse } from 'axios';
 
 import { useQuery } from '@tanstack/react-query';
-import { useTranslations } from 'next-intl';
+import { useLocale, useTranslations } from 'next-intl';
 import Image from 'next/image';
 import { useQueryState } from 'nuqs';
 import React from 'react';
@@ -13,6 +13,7 @@ import type { FilterDefaultValues } from '@/modules/filter/useFilter';
 import { Button } from '@/components/ui/button';
 import { Pagination } from '@/components/ui/pagination';
 import { usePathname } from '@/i18n/navigation';
+import { withLocale } from '@/lib/localePath';
 import { Filter, useAttributeFilters, useFilter } from '@/modules/filter';
 import { ProductList, ProductListSkeleton } from '@/modules/product';
 import { searchProducts } from '@/modules/search';
@@ -78,6 +79,7 @@ export const ProductFilterPaginated = ({
 }: Props) => {
   const t = useTranslations();
   const pathname = usePathname();
+  const locale = useLocale();
   const { filter, isCleared, onReset } = useFilter();
   const { filters: attributeValues } = useAttributeFilters();
   const [q] = useQueryState('q');
@@ -194,7 +196,7 @@ export const ProductFilterPaginated = ({
         {pagesCount > 1 && (
           <nav aria-label='pages' className='sr-only'>
             {Array.from({ length: pagesCount }, (_, index) => index + 1).map((page) => (
-              <a href={`${pathname}?page=${page}`} key={page}>
+              <a href={`${withLocale(pathname, locale)}?page=${page}`} key={page}>
                 {page}
               </a>
             ))}

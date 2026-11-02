@@ -15,7 +15,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
-import { useRouter } from '@/i18n/navigation';
+import { usePathname, useRouter } from '@/i18n/navigation';
 import { LOCALE_LABELS, routing } from '@/i18n/routing';
 import { cn } from '@/lib/utils';
 import { COOKIES } from '@/utils/constants';
@@ -29,18 +29,19 @@ export const LocaleSwitcher = ({ className }: Props) => {
   const t = useTranslations();
   const currentLocale = useLocale() as Locale;
   const router = useRouter();
+  const pathname = usePathname();
   const queryClient = useQueryClient();
   const [isPending, startTransition] = useTransition();
 
   const onLocaleChange = (locale: Locale) => {
     if (locale === currentLocale) return;
 
-    // localePrefix: 'never' — URL o'zgarmaydi, til cookie orqali aniqlanadi.
-    // Cookie yozilgach server komponentlar yangi tilda qayta chiziladi (router.refresh),
-    // klientdagi so'rovlar esa yangi Accept-Language bilan qayta yuklanadi.
+    // The language is in the address (`/uz/...`): the same page is opened in the other language
+    // (a slug of the other language is redirected to its own by the page). The cookie keeps the
+    // choice for the next visit to `/`.
     Cookies.set(COOKIES.LOCALE, locale, { expires: 365, path: '/', sameSite: 'lax' });
     startTransition(() => {
-      router.refresh();
+      router.replace(`${pathname}${window.location.search}`, { locale });
     });
     queryClient.invalidateQueries();
   };

@@ -20,6 +20,7 @@ import {
 import { Link } from '@/i18n/navigation';
 import { orNotFound } from '@/lib/orNotFound';
 import { matchBrandSlug, toLanguage } from '@/lib/catalogTree';
+import { withLocale } from '@/lib/localePath';
 import { hasText, sanitizeHtml } from '@/lib/sanitizeHtml';
 import { htmlToText, metaOverride } from '@/lib/seo';
 import { categoryHref } from '@/lib/urls';
@@ -64,7 +65,9 @@ const getBrand = cache(async (param: string) => {
   }
   const brand = (await orNotFound(getBrandById({ id }))).data.result;
   if (!brand?.id) notFound();
-  if (brand.slug && brand.slug !== slug) permanentRedirect(`/brand/${brand.slug}`);
+  if (brand.slug && brand.slug !== slug) {
+    permanentRedirect(withLocale(`/brand/${brand.slug}`, await getLocale()));
+  }
   return brand;
 });
 

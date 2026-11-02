@@ -8,7 +8,10 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: '*',
       allow: '/',
       // the private pages, the site search and the duplicates made by sorting and tabs (BLD-102)
-      disallow: ['/cart', '/user/', '/checkout', '/search', '/*?sort=', '/*?sort_by=', '/*?tab=']
+      // the same rules for the Uzbek site under `/uz`
+      disallow: ['', '/uz'].flatMap((prefix) =>
+        ['/cart', '/user/', '/checkout', '/search'].map((path) => `${prefix}${path}`)
+      ).concat(['/*?sort=', '/*?sort_by=', '/*?tab='])
     },
     sitemap: `${BASE_URL}/sitemap.xml`
   };

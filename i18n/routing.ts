@@ -8,8 +8,10 @@ export const routing = defineRouting({
   // Used when no locale matches
   defaultLocale: 'ru',
 
-  // The prefix for the default locale
-  localePrefix: 'never',
+  // The Russian site is at the root, the Uzbek one under `/uz/...` (BLD: UZ for Google): the
+  // language is in the address, so a crawler without a cookie gets the Uzbek page at its own URL
+  // ESKI KOD: localePrefix: 'never' (til faqat cookie'da edi)
+  localePrefix: 'as-needed',
 
   // Tanlangan til cookie'da 1 yil saqlanadi (standart holatda brauzer yopilganda o'chib ketadi)
   localeCookie: {

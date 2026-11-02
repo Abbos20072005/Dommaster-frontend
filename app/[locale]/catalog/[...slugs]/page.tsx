@@ -5,6 +5,7 @@ import { notFound, permanentRedirect } from 'next/navigation';
 import { cache } from 'react';
 
 import { matchCatalogSlugs, toLanguage } from '@/lib/catalogTree';
+import { withLocale } from '@/lib/localePath';
 
 import CategoryPage, { generateMetadata as categoryMetadata } from '../../category/[id]/page';
 import SubCategoryPage, {
@@ -25,9 +26,13 @@ interface Props {
  */
 const resolve = cache(async (slugs: string[]) => {
   const decoded = slugs.map(decodeURIComponent);
-  const match = await matchCatalogSlugs(decoded, toLanguage(await getLocale()));
+  const locale = await getLocale();
+  const match = await matchCatalogSlugs(decoded, toLanguage(locale));
   if (!match) notFound();
-  if (match.path !== `/catalog/${decoded.join('/')}`) permanentRedirect(match.path);
+  // the slug of the other language leads to the one of this language, inside the same `/uz` or root
+  if (match.path !== `/catalog/${decoded.join('/')}`) {
+    permanentRedirect(withLocale(match.path, locale));
+  }
   return match.ids;
 });
 

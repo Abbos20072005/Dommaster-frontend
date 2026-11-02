@@ -18,6 +18,7 @@ import { TelegramWebAppInit } from '@/components/TelegramWebAppInit';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
 import { getCanonicalMetadata } from '@/lib/canonical';
+import { getHreflang } from '@/lib/hreflang';
 import { cn } from '@/lib/utils';
 import { BASE_URL } from '@/utils/constants';
 
@@ -43,8 +44,15 @@ export async function generateMetadata(): Promise<Metadata> {
   // set by the proxy: the canonical address of every page is built from the request
   const requestHeaders = await headers();
 
+  const pathname = requestHeaders.get('x-pathname');
+  const search = requestHeaders.get('x-search');
+  const canonical = getCanonicalMetadata(pathname, search);
+  // the same page in the other language (hreflang ru / uz / x-default)
+  const hreflang = await getHreflang(pathname, search);
+
   return {
-    ...getCanonicalMetadata(requestHeaders.get('x-pathname'), requestHeaders.get('x-search')),
+    ...canonical,
+    alternates: { ...canonical.alternates, ...hreflang },
     metadataBase: new URL(BASE_URL),
     title: {
       default: t('metadata.title.default'),

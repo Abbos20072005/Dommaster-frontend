@@ -139,6 +139,41 @@ export const catalogPathByIds = async (
 };
 
 /**
+ * Where an old `/category/{id}/{subId}/{itemId}` address leads when the exact category is gone:
+ * the nearest parent that still exists, else `/catalog`. `null` only when the catalog could not
+ * be loaded (then the address is left alone: a failed request must not become a 301).
+ */
+export const nearestCatalogPath = async (
+  ids: number[],
+  language: Language
+): Promise<string | null> => {
+  let tree: TreeCategory[];
+  try {
+    tree = await getCatalogTree(language);
+  } catch {
+    return null;
+  }
+  const category = tree.find((node) => node.id === ids[0]);
+  if (!category) return '/catalog';
+  const sub = ids[1] ? category.subs.find((node) => node.id === ids[1]) : undefined;
+  if (!sub) return pathOf([category]);
+  const item = ids[2] ? sub.items.find((node) => node.id === ids[2]) : undefined;
+  return item ? pathOf([category, sub, item]) : pathOf([category, sub]);
+};
+
+/** Where an old `/brand/{id}` address leads: the brand, or `/brands` when it is gone (`null`: no answer). */
+export const nearestBrandPath = async (id: number, language: Language): Promise<string | null> => {
+  let list: Slugged[];
+  try {
+    list = await getBrandList(language);
+  } catch {
+    return null;
+  }
+  const brand = list.find((item) => item.id === id);
+  return brand ? `/brand/${brand.slug}` : '/brands';
+};
+
+/**
  * The new address of a category known by its own id only (a banner holds nothing else):
  * a category, a sub-category or an item category — the parents are found in the tree.
  */

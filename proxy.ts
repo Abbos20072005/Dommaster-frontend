@@ -3,8 +3,14 @@ import type { NextRequest } from 'next/server';
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest as Request, NextResponse } from 'next/server';
 
-import { brandSlugById, catalogPathByIds, productSlugById, toLanguage } from './lib/catalogTree';
+import {
+  nearestBrandPath,
+  nearestCatalogPath,
+  productSlugById,
+  toLanguage
+} from './lib/catalogTree';
 import { isCrawler, pageLastModified } from './lib/lastModified';
+import { splitLocale, withLocale } from './lib/localePath';
 import { routing } from './i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
@@ -12,32 +18,38 @@ const intlMiddleware = createMiddleware(routing);
 /**
  * The old numeric addresses lead to the readable ones with ONE 301 (BLD-243):
  * /product/2294 -> /product/{slug}-2294, /category/1/191/699 -> /catalog/{a}/{b}/{c},
- * /brand/14?brand=14 -> /brand/{slug}. An address that cannot be resolved is left to the page (404).
+ * /brand/14?brand=14 -> /brand/{slug}. The language of the address (`/uz/...`) is kept; without
+ * one the cookie decides. A category or a brand that is gone leads to the nearest parent
+ * (`/category/12/243` -> `/catalog/santehnika`, `/brand/9999` -> `/brands`). A product that is
+ * gone, or an answer that failed, is left to the page (404).
  */
 const redirectOldAddress = async (request: NextRequest) => {
   const { pathname, searchParams } = request.nextUrl;
-  const language = toLanguage(request.cookies.get('NEXT_LOCALE')?.value);
+  const { locale: pathLocale, path } = splitLocale(pathname);
+  const prefixed = pathname !== path;
+  const language = prefixed
+    ? toLanguage(pathLocale)
+    : toLanguage(request.cookies.get('NEXT_LOCALE')?.value);
 
   let target: string | null = null;
 
-  const product = /^\/product\/(\d+)\/?$/.exec(pathname);
-  const category = /^\/category\/(\d+)(?:\/(\d+))?(?:\/(\d+))?\/?$/.exec(pathname);
-  const brand = /^\/brand\/(\d+)\/?$/.exec(pathname);
+  const product = /^\/product\/(\d+)\/?$/.exec(path);
+  const category = /^\/category\/(\d+)(?:\/(\d+))?(?:\/(\d+))?\/?$/.exec(path);
+  const brand = /^\/brand\/(\d+)\/?$/.exec(path);
 
   if (product) {
     const slug = await productSlugById(Number(product[1]), language);
     if (slug) target = `/product/${slug}`;
   } else if (category) {
     const ids = category.slice(1).filter(Boolean).map(Number);
-    target = await catalogPathByIds(ids, language);
+    target = await nearestCatalogPath(ids, language);
   } else if (brand) {
-    const slug = await brandSlugById(Number(brand[1]), language);
-    if (slug) target = `/brand/${slug}`;
+    target = await nearestBrandPath(Number(brand[1]), language);
   }
   if (!target) return null;
 
   const url = request.nextUrl.clone();
-  url.pathname = target;
+  url.pathname = withLocale(target, language);
   // `?brand=` repeated the id of the brand: the readable address does not need it
   searchParams.delete('brand');
   url.search = searchParams.toString() ? `?${searchParams.toString()}` : '';
@@ -62,9 +74,10 @@ export default async function proxy(request: NextRequest) {
     request.method === 'GET' &&
     (isCrawler(request.headers.get('user-agent')) || request.headers.has('if-modified-since'))
   ) {
+    const { locale, path } = splitLocale(request.nextUrl.pathname);
     lastModified = await pageLastModified(
-      request.nextUrl.pathname,
-      request.cookies.get('NEXT_LOCALE')?.value
+      path,
+      request.nextUrl.pathname !== path ? locale : request.cookies.get('NEXT_LOCALE')?.value
     );
     const since = Date.parse(request.headers.get('if-modified-since') ?? '');
     if (lastModified && !Number.isNaN(since) && lastModified.getTime() <= since) {

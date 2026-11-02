@@ -1,12 +1,12 @@
 import { StarIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
 import React from 'react';
 
+import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
 
 import { PriceUnit } from '../PriceUnit/PriceUnit';
-import { ProductCart, ProductControl, ProductImages } from './components';
+import { ProductCart, ProductControl, ProductImages } from './components';
 import { productHref } from '@/lib/urls';
 
 type Props = React.ComponentProps<'div'> & {
