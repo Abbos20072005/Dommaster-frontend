@@ -21,7 +21,8 @@ import {
   getCustomerCards,
   patchMe,
   postOrder,
-  postPaymentHold
+  postPaymentHold,
+  sendFunnelEvent
 } from '@/utils/api/requests';
 import { DELIVERY_TYPE } from '@/utils/constants';
 import { getCheckoutPaymentMethod } from '@/utils/constants/checkoutPaymentMethods';
@@ -88,6 +89,8 @@ export const PriceCalculationCard = () => {
     if (checkoutTracked.current || !cart || !availableCartItems.length) return;
     checkoutTracked.current = true;
     trackBeginCheckout(availableCartItems, cart.total_price);
+    // the backend funnel: the checked cart items are taken by the backend itself
+    sendFunnelEvent({ type: 'checkout_start' });
   }, [cart, availableCartItems]);
 
   const goToOrder = (id: number) => {

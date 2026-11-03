@@ -5,9 +5,12 @@ import React from 'react';
 
 import { useProductId } from '@/hooks';
 import { trackViewItem } from '@/lib/analytics';
-import { getAuthorizedProductById } from '@/utils/api/requests';
+import { getAuthorizedProductById, sendFunnelEvent } from '@/utils/api/requests';
 
-/** `view_item`: once for every opened product (the same query as the page header). */
+/**
+ * `view_item` and the backend `product_view`: once for every opened product (the same query as
+ * the page header).
+ */
 export const ProductViewTracker = () => {
   const id = useProductId();
   const product = useQuery({
@@ -21,6 +24,7 @@ export const ProductViewTracker = () => {
     if (!product || sentFor.current === product.id) return;
     sentFor.current = product.id;
     trackViewItem(product);
+    sendFunnelEvent({ type: 'product_view', product_id: product.id });
   }, [product]);
 
   return null;

@@ -12,6 +12,7 @@ import { setAuthTokens } from './authTokens';
 import { useSessionStore } from './sessionStore';
 import { getClientLocale } from './getClientLocale';
 import { getClientToken } from './getClientToken';
+import { getDeviceId } from './getDeviceId';
 import { getServerLocale } from './getServerLocale';
 import { getServerToken } from './getServerToken';
 
@@ -57,11 +58,23 @@ const attachAuthToken = async (config: InternalAxiosRequestConfig<any>) => {
   return config;
 };
 
+// A guest is told apart by the id of the browser (the funnel events, the guest counters). Only the
+// browser sends it: the server-side requests have no browser.
+const attachDeviceId = (config: InternalAxiosRequestConfig<any>) => {
+  const id = getDeviceId();
+  if (id) config.headers['X-Device-Id'] = id;
+  return config;
+};
+
 api.interceptors.request.use(attachAuthToken);
 
 api.interceptors.request.use(getCurrentLocale);
 
+api.interceptors.request.use(attachDeviceId);
+
 publicApi.interceptors.request.use(getCurrentLocale);
+
+publicApi.interceptors.request.use(attachDeviceId);
 
 // Bir vaqtda kelgan bir nechta 401 uchun refresh bitta marta chaqiriladi
 let refreshPromise: Promise<string | null> | null = null;
