@@ -350,6 +350,7 @@
       "template": "Toshkentda xarid qiling, eng yaxshi narxlar Buildex internet-do'konida"
     },
     "description": "Buildex'da qurilish materiallarini xarid qiling: asboblar, elektr, santexnika, mahkamlagichlar va uskunalar. Toshkent bo'ylab 1 kundan yetkazib berish. Ulgurji va chakana.",
+    "page": "{page}-sahifa",
     "pages": {
       "about": "Buildex.uz haqida: kompaniya, qurilish materiallari va asboblarni Toshkentda yetkazib berish bilan sotish.",
       "news": "Buildex.uz maqolalari: yangi mahsulotlar, aksiyalar va kompaniya e'lonlari.",

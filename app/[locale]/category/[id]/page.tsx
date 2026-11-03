@@ -10,7 +10,10 @@ import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd } from '@/lib/jsonLd';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
-import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
+import {
+  getInitialProducts,
+  parsePage
+} from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,7 +23,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
-import { metaOverride } from '@/lib/seo';
+import { categoryMetadata } from '@/lib/categoryMeta';
 import { categoryHref } from '@/lib/urls';
 import { getBrands, getCategoryById } from '@/utils/api/requests';
 
@@ -29,21 +32,22 @@ import { getCatalogFilters } from '../_lib/catalogFilters';
 
 interface Props {
   params: Promise<{ id: string }>;
+  /** `?page=N`: the page of the list, rendered on the server too */
+  searchParams?: Promise<{ page?: string }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { id } = await params;
+  const page = parsePage((await searchParams)?.page);
   const categoryResponse = await orNotFound(getCategoryById({ id }));
   const category = categoryResponse.data.result;
 
-  return {
-    title: category?.name,
-    ...metaOverride(category)
-  };
+  return categoryMetadata({ source: category, page });
 }
 
-const CategoryPage = async ({ params }: Props) => {
+const CategoryPage = async ({ params, searchParams }: Props) => {
   const { id } = await params;
+  const page = parsePage((await searchParams)?.page);
   const t = await getTranslations();
   // a category that does not exist is a real 404 (the API answers 4xx; it was a 500 before)
   const [categoryResponse, brandsResponse] = await Promise.all([
@@ -55,8 +59,8 @@ const CategoryPage = async ({ params }: Props) => {
   // a category without a name must not be shown with an empty title and H1
   if (!category?.name) return notFound();
 
-  // the first page of products is in the HTML: the crawler sees the products and their links
-  const initialProducts = await getInitialProducts({ category: +id });
+  // the page of products (`?page=N`) is in the HTML: the crawler sees the products and their links
+  const initialProducts = await getInitialProducts({ category: +id }, page);
 
   return (
     <div>
@@ -95,6 +99,7 @@ const CategoryPage = async ({ params }: Props) => {
             (sub.product_item_categories ?? []).map((item) => item.id)
           )}
           filters={getCatalogFilters(t, brandsResponse.data.result ?? [])}
+          initialPage={page}
           initialProducts={initialProducts}
           queries={{ category: +id }}
           hideCategories

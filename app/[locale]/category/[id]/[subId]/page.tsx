@@ -10,7 +10,10 @@ import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd } from '@/lib/jsonLd';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
-import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
+import {
+  getInitialProducts,
+  parsePage
+} from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,7 +23,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
-import { metaOverride } from '@/lib/seo';
+import { categoryMetadata } from '@/lib/categoryMeta';
 import { categoryHref } from '@/lib/urls';
 import { getSubCategoryById } from '@/utils/api/requests';
 
@@ -29,22 +32,23 @@ import { getBrandsOfItemCategories, getCatalogFilters } from '../../_lib/catalog
 
 interface Props {
   params: Promise<{ id: string; subId: string }>;
+  /** `?page=N`: the page of the list, rendered on the server too */
+  searchParams?: Promise<{ page?: string }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { subId } = await params;
+  const page = parsePage((await searchParams)?.page);
   const subCategoryResponse = await orNotFound(getSubCategoryById({ id: subId }));
   const subCategory = subCategoryResponse.data.result;
 
-  return {
-    title: subCategory?.name,
-    ...metaOverride(subCategory)
-  };
+  return categoryMetadata({ source: subCategory, page });
 }
 
-const SubCategoryPage = async ({ params }: Props) => {
+const SubCategoryPage = async ({ params, searchParams }: Props) => {
   const t = await getTranslations();
   const { id, subId } = await params;
+  const page = parsePage((await searchParams)?.page);
   const subCategoryResponse = await orNotFound(getSubCategoryById({ id: subId }));
   const subCategory = subCategoryResponse.data.result;
 
@@ -57,7 +61,7 @@ const SubCategoryPage = async ({ params }: Props) => {
   }));
   const parentHref = crumbs[0] ? categoryHref(crumbs[0]) : `/category/${id}`;
 
-  const initialProducts = await getInitialProducts({ sub_category: +subId });
+  const initialProducts = await getInitialProducts({ sub_category: +subId }, page);
 
   // only the brands that have products in this sub-category
   const brands = await getBrandsOfItemCategories(
@@ -106,6 +110,7 @@ const SubCategoryPage = async ({ params }: Props) => {
           }
           attributeCategoryIds={subCategory.product_item_categories.map((item) => item.id)}
           filters={getCatalogFilters(t, brands)}
+          initialPage={page}
           initialProducts={initialProducts}
           queries={{ sub_category: +subId }}
           hideCategories

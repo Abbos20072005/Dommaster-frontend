@@ -48,9 +48,13 @@ export const useFilter = (defaultValues?: FilterDefaultValues) => {
 
   const hasAttributes = [...searchParams.keys()].some(isAttributeParam);
 
-  const isCleared =
+  // no filter is chosen (the page of the list does not count as a filter)
+  const isUnfiltered =
     !hasAttributes &&
-    Object.entries(filter).every(([key, value]) => value === values[key as keyof typeof filter]);
+    Object.entries(filter).every(
+      ([key, value]) => key === 'page' || value === values[key as keyof typeof filter]
+    );
+  const isCleared = isUnfiltered && filter.page === values.page;
 
   const setFilterItem = <K extends keyof typeof filter>(key: K, value: (typeof filter)[K]) => {
     setFilter({ ...filter, [key]: value });
@@ -74,6 +78,7 @@ export const useFilter = (defaultValues?: FilterDefaultValues) => {
     setFilterItem,
     setFilter,
     isCleared,
+    isUnfiltered,
     onReset
   };
 };

@@ -350,6 +350,7 @@
       "template": "buy in Tashkent, best prices in the Buildex online store"
     },
     "description": "Buy building materials at Buildex: tools, electrical, plumbing, fasteners and equipment. Delivery in Tashkent from 1 day. Wholesale and retail.",
+    "page": "page {page}",
     "pages": {
       "about": "About Buildex.uz: the company, building materials and tools with delivery in Tashkent.",
       "news": "Buildex.uz articles: new products, promotions and company announcements.",

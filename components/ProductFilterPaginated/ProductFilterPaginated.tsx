@@ -34,6 +34,8 @@ interface Props {
    * links in the HTML. It is used only while no filter, sorting or search is chosen.
    */
   initialProducts?: ProductsResponse;
+  /** the page of the list `initialProducts` is (`?page=N` of the address; 1 by default) */
+  initialPage?: number;
   /** shown in the middle of the product grid (a banner carousel) */
   banner?: React.ReactNode;
 }
@@ -75,18 +77,21 @@ export const ProductFilterPaginated = ({
   hideCategories,
   queries,
   initialProducts,
+  initialPage = 1,
   banner
 }: Props) => {
   const t = useTranslations();
   const pathname = usePathname();
   const locale = useLocale();
-  const { filter, isCleared, onReset } = useFilter();
+  const { filter, isCleared, isUnfiltered, onReset } = useFilter();
   const { filters: attributeValues } = useAttributeFilters();
   const [q] = useQueryState('q');
   const [chosenSortBy] = useQueryState('sort_by');
   const sort_by = resolveSortBy(chosenSortBy, q);
-  // the server's first page is the answer only for the untouched list (page 1, default sorting)
-  const useInitial = !!initialProducts && isCleared && !q && !chosenSortBy;
+  // the server's page is the answer only for the list without filters and with the default
+  // sorting, and only for the page it was fetched for (`?page=N` is rendered on the server too)
+  const useInitial =
+    !!initialProducts && isUnfiltered && filter.page === initialPage && !q && !chosenSortBy;
 
   const getProductsQuery = useQuery({
     initialData: useInitial

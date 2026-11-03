@@ -17,6 +17,8 @@ import ItemCategoryPage, {
 
 interface Props {
   params: Promise<{ slugs: string[] }>;
+  /** `?page=N`: the page of the list (it is rendered on the server too) */
+  searchParams: Promise<{ page?: string }>;
 }
 
 /**
@@ -36,18 +38,26 @@ const resolve = cache(async (slugs: string[]) => {
   return match.ids;
 });
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const [id, subId, itemId] = (await resolve((await params).slugs)).map(String);
-  if (itemId) return itemCategoryMetadata({ params: Promise.resolve({ id, subId, itemId }) });
-  if (subId) return subCategoryMetadata({ params: Promise.resolve({ id, subId }) });
-  return categoryMetadata({ params: Promise.resolve({ id }) });
+  if (itemId) {
+    return itemCategoryMetadata({ params: Promise.resolve({ id, subId, itemId }), searchParams });
+  }
+  if (subId) return subCategoryMetadata({ params: Promise.resolve({ id, subId }), searchParams });
+  return categoryMetadata({ params: Promise.resolve({ id }), searchParams });
 }
 
-const CatalogPage = async ({ params }: Props) => {
+const CatalogPage = async ({ params, searchParams }: Props) => {
   const [id, subId, itemId] = (await resolve((await params).slugs)).map(String);
-  if (itemId) return <ItemCategoryPage params={Promise.resolve({ id, subId, itemId })} />;
-  if (subId) return <SubCategoryPage params={Promise.resolve({ id, subId })} />;
-  return <CategoryPage params={Promise.resolve({ id })} />;
+  if (itemId) {
+    return (
+      <ItemCategoryPage params={Promise.resolve({ id, subId, itemId })} searchParams={searchParams} />
+    );
+  }
+  if (subId) {
+    return <SubCategoryPage params={Promise.resolve({ id, subId })} searchParams={searchParams} />;
+  }
+  return <CategoryPage params={Promise.resolve({ id })} searchParams={searchParams} />;
 };
 
 export default CatalogPage;

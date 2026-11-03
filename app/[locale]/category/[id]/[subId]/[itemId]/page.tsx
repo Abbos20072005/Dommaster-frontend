@@ -10,7 +10,10 @@ import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd } from '@/lib/jsonLd';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
-import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
+import {
+  getInitialProducts,
+  parsePage
+} from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -20,27 +23,28 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
-import { metaOverride } from '@/lib/seo';
+import { categoryMetadata } from '@/lib/categoryMeta';
 import { categoryHref } from '@/lib/urls';
 import { getBrands, getItemCategoryById } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string; subId: string; itemId: string }>;
+  /** `?page=N`: the page of the list, rendered on the server too */
+  searchParams?: Promise<{ page?: string }>;
 }
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const { itemId } = await params;
+  const page = parsePage((await searchParams)?.page);
   const itemCategoryResponse = await orNotFound(getItemCategoryById({ id: itemId }));
   const itemCategory = itemCategoryResponse.data.result;
 
-  return {
-    title: itemCategory?.name,
-    ...metaOverride(itemCategory)
-  };
+  return categoryMetadata({ source: itemCategory, page });
 }
 
-const ItemCategoryPage = async ({ params }: Props) => {
+const ItemCategoryPage = async ({ params, searchParams }: Props) => {
   const { id, subId, itemId } = await params;
+  const page = parsePage((await searchParams)?.page);
   const t = await getTranslations();
   // the category first: one that does not exist is a 404, not a 500 of the brands request
   const itemCategoryResponse = await orNotFound(getItemCategoryById({ id: itemId }));
@@ -59,7 +63,7 @@ const ItemCategoryPage = async ({ params }: Props) => {
     slug: crumb.slug
   }));
 
-  const initialProducts = await getInitialProducts({ item_category: +itemId });
+  const initialProducts = await getInitialProducts({ item_category: +itemId }, page);
 
   const filters: Filter[] = [
     {
@@ -133,6 +137,7 @@ const ItemCategoryPage = async ({ params }: Props) => {
             </Suspense>
           }
           filters={filters}
+          initialPage={page}
           initialProducts={initialProducts}
           queries={{ item_category: +itemId }}
           hideCategories

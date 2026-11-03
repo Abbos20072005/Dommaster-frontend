@@ -4,10 +4,13 @@ import createNextIntlPlugin from 'next-intl/plugin';
 
 const withNextIntl = createNextIntlPlugin();
 
-/** The hosts the images come from: the site, the API and the host of `API_URL` (staging, local). */
+/**
+ * The hosts the images come from: the site, the API, the host of `API_URL` (staging, local) and
+ * YouTube (the previews of the video cards).
+ */
 const imageHosts = [
   ...new Set(
-    ['buildex.uz', 'www.buildex.uz', 'api.buildex.uz']
+    ['buildex.uz', 'www.buildex.uz', 'api.buildex.uz', 'img.youtube.com', 'i.ytimg.com']
       .concat(
         (() => {
           try {
