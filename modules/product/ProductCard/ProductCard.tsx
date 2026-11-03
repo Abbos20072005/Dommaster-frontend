@@ -33,8 +33,8 @@ export const ProductCard = ({
     <div
       className={cn(
         // no card box: the rounded photo and the text lie right on the page
-        // 504px: the photo takes 312px, the details the other 192px
-        'flex h-[504px] flex-col',
+        // the 3:4 photo and a details block of a fixed height: every card is the same size
+        'flex flex-col',
         'group/card',
         // on the dark banner every card is a slightly lighter panel: the photo is flush with its
         // edges, only the text block has padding
@@ -56,7 +56,7 @@ export const ProductCard = ({
           </div>
         )}
       </div>
-      <div className={cn('flex flex-1 flex-col gap-3 pt-3', onDark && 'px-2 pb-2')}>
+      <div className={cn('flex h-48 flex-col gap-3 pt-3', onDark && 'px-2 pb-2')}>
         <div className='space-y-0.5'>
           <Link
             href={{ pathname: productHref(product), query: { tab: 'reviews' } }}
