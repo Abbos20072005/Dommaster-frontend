@@ -28,7 +28,8 @@ export const ProductListSkeleton = ({
       {view === 'grid' && (
         <div
           className={cn(
-            'grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-2 sm:grid-cols-[repeat(auto-fill,minmax(220px,1fr))] md:gap-4',
+            // the same columns as `ProductList`
+            'grid grid-cols-2 gap-x-3 gap-y-6 sm:grid-cols-3 md:gap-x-4 lg:grid-cols-5',
             className
           )}
           {...props}
@@ -44,7 +45,7 @@ export const ProductListSkeleton = ({
             {Array.from({ length: count }).map((_, index) => (
               <CarouselItem
                 key={index}
-                className='basis-[186px] sm:basis-1/2 md:basis-1/3 lg:basis-1/6'
+                className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/6'
               >
                 <ProductCardSkeleton hideCart={hideCart} />
               </CarouselItem>

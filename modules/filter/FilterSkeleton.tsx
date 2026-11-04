@@ -9,14 +9,18 @@ interface Props extends React.ComponentProps<'div'> {
 
 export const FilterSkeleton = ({ className, ...props }: Props) => {
   return (
-    <div className={cn('space-y-4', className)} {...props}>
-      {Array.from({ length: 3 }).map((_, index) => (
-        <React.Fragment key={index}>
-          <Skeleton className='h-5 w-full' />
-          <Skeleton className='h-5 w-3/4' />
-          <Skeleton className='h-5 w-1/4' />
-          <Skeleton className='h-5 w-2/4' />
-        </React.Fragment>
+    // groups like the real filter: a heading, then the rows with a check box
+    <div className={cn('space-y-6', className)} {...props}>
+      {Array.from({ length: 3 }).map((_, group) => (
+        <div key={group} className='space-y-3'>
+          <Skeleton className='h-5 w-1/2' />
+          {[70, 55, 85, 45].map((width) => (
+            <div key={width} className='flex items-center gap-2'>
+              <Skeleton className='size-4 shrink-0 rounded' />
+              <Skeleton className='h-4' style={{ width: `${width}%` }} />
+            </div>
+          ))}
+        </div>
       ))}
     </div>
   );

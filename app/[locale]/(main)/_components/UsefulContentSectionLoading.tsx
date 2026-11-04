@@ -1,7 +1,9 @@
 import { BaseLayout } from '@/components/layout';
+import { Card, CardFooter, CardHeader } from '@/components/ui/card';
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel';
 import { Skeleton } from '@/components/ui/skeleton';
 
+/** The tabs, "view all" and four cards like the ones of the news / video / article tabs. */
 export const UsefulContentSectionLoading = () => {
   return (
     <section>
@@ -14,7 +16,16 @@ export const UsefulContentSectionLoading = () => {
           <CarouselContent>
             {Array.from({ length: 4 }).map((_, index) => (
               <CarouselItem key={index} className='basis-[280px] md:basis-1/3 lg:basis-1/4'>
-                <Skeleton className='h-[250px] w-full' />
+                <Card className='flex h-full flex-col' variant='outline'>
+                  <Skeleton className='aspect-video w-full rounded-t-lg rounded-b-none' />
+                  <CardHeader className='flex-1 gap-1.5 p-3'>
+                    <Skeleton className='h-4 w-full' />
+                    <Skeleton className='h-4 w-2/3' />
+                  </CardHeader>
+                  <CardFooter className='p-3 pt-0'>
+                    <Skeleton className='h-4 w-20' />
+                  </CardFooter>
+                </Card>
               </CarouselItem>
             ))}
           </CarouselContent>
