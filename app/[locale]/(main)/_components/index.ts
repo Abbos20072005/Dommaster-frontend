@@ -6,6 +6,7 @@ export { BenefitsCards } from './BenefitsCards';
 export { BrandsSection } from './BrandsSection';
 export { BrandsSectionLoading } from './BrandsSectionLoading';
 export { DiscountProductsSection } from './DiscountProductsSection';
+export { MobileCategories } from './MobileCategories';
 export { MostSoldProductsSection } from './MostSoldProductsSection';
 export { UsefulContentSection } from './UsefulContentSection/UsefulContentSection';
 export { UsefulContentSectionLoading } from './UsefulContentSectionLoading';

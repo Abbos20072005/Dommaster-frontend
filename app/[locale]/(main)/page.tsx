@@ -13,6 +13,7 @@ import {
   BrandsSection,
   BrandsSectionLoading,
   DiscountProductsSection,
+  MobileCategories,
   MostSoldProductsSection,
   UsefulContentSection,
   UsefulContentSectionLoading
@@ -34,6 +35,9 @@ const Home = () => {
           */}
           <Suspense fallback={<BannerCarouselLoading />}>
             <BannerCarousel />
+          </Suspense>
+          <Suspense>
+            <MobileCategories />
           </Suspense>
         </div>
         <DiscountProductsSection />

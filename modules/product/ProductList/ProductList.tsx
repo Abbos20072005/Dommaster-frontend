@@ -82,7 +82,8 @@ export const ProductList = ({
               {products.map((product) => (
                 <ProductCard
                   key={product.id}
-                  className='max-w-[170px] min-w-[170px]'
+                  // two cards always fit the row (up to 170px each), so the second is never cut off
+                  className='w-[min(170px,calc(50%-6px))] shrink-0'
                   hideCart={hideCart}
                   hideControl={hideControl}
                   onDark={onDark}
