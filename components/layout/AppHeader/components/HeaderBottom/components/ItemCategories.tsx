@@ -4,7 +4,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion';
-import { Link } from '@/i18n/navigation';
+import { Link } from '@/i18n/navigation';
 import { categoryHref } from '@/lib/urls';
 
 interface Props {
@@ -29,6 +29,7 @@ export const ItemCategories = ({ subCategory, onClose, parent }: Props) => {
             )}
             <Link
               href={categoryHref(parent, subCategory)}
+              prefetch={false}
               className='text-sm'
               onClick={onClose}
             >
@@ -44,6 +45,7 @@ export const ItemCategories = ({ subCategory, onClose, parent }: Props) => {
                   <li key={itemCategory.id}>
                     <Link
                       href={categoryHref(parent, subCategory, itemCategory)}
+                      prefetch={false}
                       className='text-sm'
                       onClick={onClose}
                     >

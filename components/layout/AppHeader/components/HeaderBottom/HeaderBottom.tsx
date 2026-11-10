@@ -23,7 +23,7 @@ import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
 import { getCategories } from '@/utils/api/requests';
 
-import { SubCategories } from './components';
+import { SubCategories } from './components';
 import { categoryHref } from '@/lib/urls';
 
 const SCROLL_OFFSET_THRESHOLD = 32;
@@ -165,6 +165,7 @@ export const HeaderBottom = () => {
                 <Link
                   href={categoryHref(item)}
                   key={item.id}
+                  prefetch={false}
                   className={cn(
                     'flex items-center gap-3 px-3 py-2 transition-colors',
                     tab === index && 'text-secondary bg-secondary/8 cursor-pointer rounded-md'

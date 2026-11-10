@@ -76,6 +76,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
                 <li key={item} className='flex'>
                   <Link
                     href={`/search?q=${item}`}
+                    prefetch={false}
                     className='hover:bg-muted flex flex-1 items-center gap-2 rounded-md py-2.5 transition-colors md:px-4'
                     onClick={() => {
                       onClose();
@@ -105,6 +106,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
               <li key={item}>
                 <Link
                   href={`/search?q=${item}`}
+                  prefetch={false}
                   className='hover:bg-muted block rounded-md py-2.5 transition-colors md:px-4'
                   onClick={() => {
                     onClose();
@@ -127,6 +129,7 @@ export const SuggestionView = ({ searchInput, onClose, setSearchInput }: Props) 
               <li key={item}>
                 <Link
                   href={`/search?q=${item}`}
+                  prefetch={false}
                   className='hover:bg-muted block rounded-md py-2.5 transition-colors md:px-4'
                   onClick={() => {
                     onClose();

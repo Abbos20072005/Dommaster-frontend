@@ -24,7 +24,8 @@
   --tertiary: hsl(223 59% 24%);
   --tertiary-foreground: hsl(0 0% 100%);
   --muted: hsl(210 14% 97%);
-  --muted-foreground: hsl(207 5% 60%);
+  /* 4.5:1 on white and on --muted (WCAG AA for small text); was 60% lightness = 2.85:1 */
+  --muted-foreground: hsl(207 5% 43%);
   --accent: hsl(210 14% 97%);
   --accent-foreground: hsl(24 9.8% 10%);
   --destructive: hsl(0 84.2% 60.2%);

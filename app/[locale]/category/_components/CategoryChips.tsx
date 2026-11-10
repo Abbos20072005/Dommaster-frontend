@@ -23,6 +23,7 @@ export const CategoryChips = ({ items, hrefOf }: Props) => {
         <Link
           href={hrefOf(item)}
           key={item.id}
+          prefetch={false}
           className='bg-muted hover:bg-muted/60 rounded-full px-3 py-1.5 text-xs font-medium transition-colors md:text-sm'
         >
           {item.name}

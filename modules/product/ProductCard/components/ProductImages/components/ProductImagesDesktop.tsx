@@ -12,20 +12,27 @@ interface Props {
 
 export const ProductImagesDesktop = ({ product }: Props) => {
   const [tab, setTab] = React.useState(0);
+  // the other photos are only in the DOM once the card is hovered: a catalog page has hundreds
+  // of cards, and most photos are never looked at
+  const [hovered, setHovered] = React.useState(false);
 
   return (
-    <div className='relative hidden aspect-3/4 overflow-hidden rounded-xl bg-white group-data-[on-dark]/card:rounded-none md:block'>
-      {product.images.map((image, i) => (
-        <CardImage
-          fill
-          key={image.id}
-          alt={product.name || 'Buildex'}
-          className={cn({ hidden: tab !== i })}
-          priority={i === 0}
-          sizes='(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, 33vw'
-          src={image.image}
-        />
-      ))}
+    <div
+      className='relative hidden aspect-3/4 overflow-hidden rounded-xl bg-white group-data-[on-dark]/card:rounded-none md:block'
+      onMouseEnter={() => setHovered(true)}
+    >
+      {product.images.map((image, i) =>
+        i === 0 || hovered ? (
+          <CardImage
+            fill
+            key={image.id}
+            alt={product.name || 'Buildex'}
+            className={cn({ hidden: tab !== i })}
+            sizes='(min-width: 1280px) 20vw, (min-width: 1024px) 25vw, 33vw'
+            src={image.image}
+          />
+        ) : null
+      )}
 
       {product.images.length > 1 && (
         <div className='absolute inset-0 z-1 flex'>

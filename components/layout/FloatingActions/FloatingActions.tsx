@@ -1,6 +1,7 @@
 'use client';
 
 import { MessageSquareTextIcon } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
 
@@ -9,15 +10,17 @@ import { ChatDialog } from '@/modules/chat';
 import { SOCIAL_LINKS } from '@/utils/constants';
 
 export const FloatingActions = () => {
+  const t = useTranslations();
+
   return (
     <div className='fixed right-12 bottom-12 z-50 hidden items-center gap-2 md:flex md:flex-col'>
       <Button asChild className='rounded-full' size='icon' variant='outline'>
-        <a href={SOCIAL_LINKS.telegram} rel='noreferrer' target='_blank'>
-          <Image alt='telegram' height={40} src='/logos/telegram.png' width={40} />
+        <a aria-label='Telegram' href={SOCIAL_LINKS.telegram} rel='noreferrer' target='_blank'>
+          <Image alt='' height={40} src='/logos/telegram.png' width={40} />
         </a>
       </Button>
       <ChatDialog asChild>
-        <Button className='rounded-full' size='iconLg' variant='secondary'>
+        <Button aria-label={t('Chat')} className='rounded-full' size='iconLg' variant='secondary'>
           <MessageSquareTextIcon className='size-6' />
         </Button>
       </ChatDialog>

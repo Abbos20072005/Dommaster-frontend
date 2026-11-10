@@ -1,5 +1,6 @@
 export * from './useDeboucedValue';
 export * from './useFormatDate';
+export * from './useMinWidth';
 export * from './useMobile';
 export * from './useMounted';
 export * from './useOutsideClick';

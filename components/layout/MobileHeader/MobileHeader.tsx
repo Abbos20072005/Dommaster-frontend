@@ -38,7 +38,7 @@ export const MobileHeader = () => {
         </Link>
         <div className='flex items-center gap-3'>
           <ChatDialog asChild>
-            <Button size='iconSm' variant='muted'>
+            <Button aria-label={t('Chat')} size='iconSm' variant='muted'>
               <MessageSquareTextIcon className='size-4' />
             </Button>
           </ChatDialog>

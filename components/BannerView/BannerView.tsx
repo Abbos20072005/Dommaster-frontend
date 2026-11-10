@@ -1,4 +1,4 @@
-import Image from 'next/image';
+import { getImageProps } from 'next/image';
 import React from 'react';
 
 import { Link } from '@/i18n/navigation';
@@ -20,25 +20,32 @@ export const BannerView = ({ banner, className, priority }: Props) => {
   const alt = banner.title || 'Buildex';
   const boxClassName = cn('block aspect-[3/1] md:aspect-[6/1]', className);
 
+  // one <picture>: the browser takes the phone or the wide picture and loads only that one (two
+  // <Image>s with `priority` made it fetch both)
+  // `priority` alone no longer sets the fetch priority in `getImageProps`: it is set here
+  const loadingProps = priority ? { fetchPriority: 'high' as const, loading: 'eager' as const } : {};
+  const mobile = getImageProps({
+    alt,
+    ...loadingProps,
+    height: 230,
+    sizes: '100vw',
+    src: banner.mobile_image || banner.desktop_image,
+    width: 690
+  });
+  const desktop = getImageProps({
+    alt,
+    ...loadingProps,
+    height: 413,
+    sizes: '(min-width: 1280px) 1240px, 100vw',
+    src: banner.desktop_image,
+    width: 1240
+  });
+
   const pictures = (
-    <>
-      <Image
-        alt={alt}
-        className='size-full rounded-lg object-cover md:hidden md:rounded-xl'
-        height={230}
-        priority={priority}
-        src={banner.mobile_image || banner.desktop_image}
-        width={690}
-      />
-      <Image
-        alt={alt}
-        className='hidden size-full rounded-lg object-cover md:block md:rounded-xl'
-        height={413}
-        priority={priority}
-        src={banner.desktop_image}
-        width={1240}
-      />
-    </>
+    <picture className='contents'>
+      <source media='(min-width: 768px)' sizes={desktop.props.sizes} srcSet={desktop.props.srcSet} />
+      <img {...mobile.props} alt={alt} className='size-full rounded-lg object-cover md:rounded-xl' />
+    </picture>
   );
 
   if (!link) return <div className={boxClassName}>{pictures}</div>;

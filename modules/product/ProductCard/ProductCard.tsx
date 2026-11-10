@@ -46,7 +46,9 @@ export const ProductCard = ({
       {...props}
     >
       <div className='relative'>
-        <Link href={productHref(product)} aria-label={name}>
+        {/* no prefetch on the card links: a page has hundreds of them and a product page is
+            rendered on demand anyway, so a prefetch only costs requests */}
+        <Link href={productHref(product)} aria-label={name} prefetch={false}>
           <ProductImages product={{ ...product, name }} />
           <span className='sr-only'>{name}</span>
         </Link>
@@ -61,6 +63,7 @@ export const ProductCard = ({
           <Link
             href={{ pathname: productHref(product), query: { tab: 'reviews' } }}
             className='flex h-5 items-center gap-1 text-sm'
+            prefetch={false}
           >
             <StarIcon className='text-secondary fill-secondary size-4' />
             <span>{(product.rating ?? 0).toFixed(1)}</span>
@@ -68,7 +71,7 @@ export const ProductCard = ({
               • {product.comments_quantity} {t('reviews')}
             </span>
           </Link>
-          <Link className='block h-10' href={productHref(product)}>
+          <Link className='block h-10' href={productHref(product)} prefetch={false}>
             <span className='line-clamp-2 text-sm leading-5 font-medium'>{name}</span>
           </Link>
         </div>
