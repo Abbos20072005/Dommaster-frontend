@@ -70,8 +70,11 @@ export const sendAssistantMessage = async ({
   } catch (error) {
     if (isAxiosError(error)) {
       if (error.response?.status === 429) throw new AssistantError('limit');
-      // the assistant is switched off on the server
-      if (error.response?.status === 503) throw new AssistantError('disabled');
+      // switched off on the server (503), or the chat endpoint is not there yet (404): the panel
+      // shows the "temporarily unavailable" state with the phone of the operator
+      if (error.response?.status === 503 || error.response?.status === 404) {
+        throw new AssistantError('disabled');
+      }
       if (!error.response) throw new AssistantError('offline');
     }
     throw new AssistantError('generic');
