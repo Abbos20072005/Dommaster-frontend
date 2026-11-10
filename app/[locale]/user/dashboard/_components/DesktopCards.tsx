@@ -192,7 +192,7 @@ export const DesktopCards = () => {
                   const done = index < steps.indexOf(order.status);
                   const current = order.status === step;
                   return (
-                    <div key={step} className='grid gap-2.5'>
+                    <div key={step} className='grid min-w-0 content-start gap-2.5'>
                       <div className='flex items-center'>
                         <span
                           className={cn(
@@ -213,7 +213,7 @@ export const DesktopCards = () => {
                       </div>
                       <span
                         className={cn(
-                          'pr-3 text-sm leading-5',
+                          'min-w-0 pr-3 text-xs leading-4 [overflow-wrap:anywhere] hyphens-auto sm:text-sm sm:leading-5',
                           current ? 'font-bold' : done ? '' : 'text-muted-foreground'
                         )}
                       >

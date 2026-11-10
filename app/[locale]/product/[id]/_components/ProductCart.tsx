@@ -80,6 +80,7 @@ export const ProductMobileBar = ({ product }: Props) => {
 
   return (
     <div
+      data-product-bar
       className={cn(
         'bg-background fixed inset-x-0 bottom-[4.5rem] z-40 flex items-center gap-2 border-t px-4 py-2.5',
         'shadow-[0_-6px_20px_rgba(15,22,32,0.06)] md:bottom-0 lg:hidden'

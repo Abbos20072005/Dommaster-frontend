@@ -113,6 +113,19 @@
   }
 }
 
+/* The product page has a fixed price bar above the bottom nav (phone) or at the bottom (tablet):
+   the footer gets room so the end of the page is not hidden behind it. */
+@media (max-width: 1023px) {
+  body:has([data-product-bar]) footer {
+    padding-bottom: 9.5rem;
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  body:has([data-product-bar]) footer {
+    padding-bottom: 6.5rem;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

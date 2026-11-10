@@ -215,13 +215,13 @@ export const MobileCards = () => {
               </div>
 
               {activeOrder && lastOrder.status !== 6 && (
-                <div className='grid grid-cols-5'>
+                <div className='flex flex-col'>
                   {getOrderSteps(lastOrder.delivery_type).map((step, index, steps) => {
                     const done = index < steps.indexOf(lastOrder.status);
                     const current = lastOrder.status === step;
                     return (
-                      <div key={step} className='grid gap-2'>
-                        <div className='flex items-center'>
+                      <div key={step} className='flex gap-3'>
+                        <div className='flex flex-col items-center'>
                           <span
                             className={cn(
                               'flex size-5 shrink-0 items-center justify-center rounded-full border-2',
@@ -235,13 +235,14 @@ export const MobileCards = () => {
                           </span>
                           {index < steps.length - 1 && (
                             <span
-                              className={cn('h-0.5 flex-1', done ? 'bg-primary' : 'bg-[#E1E5EB]')}
+                              className={cn('w-0.5 flex-1', done ? 'bg-primary' : 'bg-[#E1E5EB]')}
                             />
                           )}
                         </div>
                         <span
                           className={cn(
-                            'text-xs leading-4',
+                            'pb-3 text-sm leading-5',
+                            index === steps.length - 1 && 'pb-0',
                             current ? 'font-bold' : !done && 'text-[#6B7685]'
                           )}
                         >

@@ -37,7 +37,7 @@ export const ProductSection = ({
   return (
     <div className={className}>
       <div className={cn('flex items-center justify-between gap-3', headerClassName)}>
-        {title}
+        <div className='min-w-0'>{title}</div>
         <Button asChild className='shrink-0' size='sm' variant='muted'>
           <Link href={href}>
             {t('View all')}
