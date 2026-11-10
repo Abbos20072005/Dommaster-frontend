@@ -127,6 +127,19 @@
   }
 }
 
+/* The AI assistant button stands above the fixed price bar of a product page (BLD-406): the bar is
+   ~65px high, above the bottom menu on a phone, at the very bottom on a tablet. */
+@media (max-width: 767px) {
+  body:has([data-product-bar]) [data-assistant-launcher] {
+    bottom: calc(4.5rem + 4.25rem + 0.75rem);
+  }
+}
+@media (min-width: 768px) and (max-width: 1023px) {
+  body:has([data-product-bar]) [data-assistant-launcher] {
+    bottom: 5.25rem;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

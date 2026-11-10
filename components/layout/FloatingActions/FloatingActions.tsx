@@ -13,7 +13,8 @@ export const FloatingActions = () => {
   const t = useTranslations();
 
   return (
-    <div className='fixed right-12 bottom-12 z-50 hidden items-center gap-2 md:flex md:flex-col'>
+    // above the AI assistant button (bottom right, 24px from the edges)
+    <div className='fixed right-6 bottom-24 z-50 hidden items-center gap-2 md:flex md:flex-col'>
       <Button asChild className='rounded-full' size='icon' variant='outline'>
         <a aria-label='Telegram' href={SOCIAL_LINKS.telegram} rel='noreferrer' target='_blank'>
           <Image alt='' height={40} src='/logos/telegram.png' width={40} />

@@ -20,6 +20,7 @@ import { routing } from '@/i18n/routing';
 import { getCanonicalMetadata } from '@/lib/canonical';
 import { getHreflang } from '@/lib/hreflang';
 import { cn } from '@/lib/utils';
+import { AssistantLauncher } from '@/modules/assistant';
 import { BASE_URL } from '@/utils/constants';
 
 import '@/styles/globals.css';
@@ -138,6 +139,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
             <BottomNav />
             <Toaster />
             <FloatingActions />
+            <AssistantLauncher />
           </Providers>
         </NextIntlClientProvider>
       </body>
