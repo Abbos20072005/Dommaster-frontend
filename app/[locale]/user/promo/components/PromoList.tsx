@@ -38,7 +38,9 @@ export const PromoList = () => {
   const shown = tab === 'active' ? active : history;
 
   return (
-    <div className='grid gap-4 md:gap-5'>
+    // one column that may be narrower than its content: without `minmax(0, 1fr)` the input of the
+    // form (a default width of ~20 characters) and the button made the column wider than a phone
+    <div className='grid grid-cols-[minmax(0,1fr)] gap-4 md:gap-5'>
       <PromoAddForm
         activeCodes={active.map((promo) => promo.code.toUpperCase())}
         expiredCodes={history.map((promo) => promo.code.toUpperCase())}

@@ -81,7 +81,7 @@ export const PromoAddForm = ({ activeCodes, expiredCodes, onAdded }: Props) => {
   const canApply = code.trim().length > 0 && !mutation.isPending;
 
   return (
-    <div className='border-border grid gap-2 rounded-2xl border bg-white p-4 md:rounded-xl md:p-5'>
+    <div className='border-border grid grid-cols-[minmax(0,1fr)] gap-2 rounded-2xl border bg-white p-4 md:rounded-xl md:p-5'>
       <label className='text-[15px] leading-5 font-bold md:text-sm' htmlFor='promo-code'>
         {t('Add promo code')}
       </label>
@@ -94,7 +94,7 @@ export const PromoAddForm = ({ activeCodes, expiredCodes, onAdded }: Props) => {
           type='text'
           value={code}
           className={cn(
-            'focus:ring-primary/25 h-12 min-w-0 flex-1 rounded-lg border bg-white px-3.5 text-base tracking-[0.04em] uppercase outline-none focus:ring-[3px] md:h-11',
+            'focus:ring-primary/25 h-12 w-0 min-w-0 flex-1 rounded-lg border bg-white px-3.5 text-base tracking-[0.04em] uppercase outline-none focus:ring-[3px] md:h-11',
             isError ? 'border-[1.5px] border-[#C0211D]' : 'border-[#CBD2DB]'
           )}
           onChange={(event) => {
