@@ -216,7 +216,7 @@ export const OrderDetails = ({ scope }: Props) => {
         </span>
       </nav>
 
-      <div className='grid items-start gap-5 px-4 md:px-0 lg:grid-cols-[minmax(0,1fr)_376px] lg:gap-8'>
+      <div className='grid grid-cols-[minmax(0,1fr)] items-start gap-5 px-4 md:px-0 lg:grid-cols-[minmax(0,1fr)_376px] lg:gap-8'>
         <div className='grid min-w-0 gap-5'>
           <div className='grid gap-3'>
             <Link

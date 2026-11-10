@@ -42,7 +42,8 @@ const Section = ({
 }) => (
   <section
     className={cn(
-      'border-border grid gap-4 border-t p-5 first:border-t-0 md:grid-cols-[260px_minmax(0,1fr)] md:gap-8 md:p-6',
+      // a phone: one column that may be narrower than its content (the language buttons)
+      'border-border grid grid-cols-[minmax(0,1fr)] gap-4 border-t p-5 first:border-t-0 md:grid-cols-[260px_minmax(0,1fr)] md:gap-8 md:p-6',
       className
     )}
   >
@@ -187,14 +188,14 @@ export const PersonalInfoView = () => {
           <Section hint={t('Language hint')} title={t('Interface language')}>
             <div
               aria-label={t('Interface language')}
-              className='border-border inline-flex gap-1 rounded-[10px] border bg-[#EDF0F5] p-1'
+              className='border-border flex w-full gap-1 rounded-[10px] border bg-[#EDF0F5] p-1 sm:inline-flex sm:w-auto'
               role='radiogroup'
             >
               {routing.locales.map((item) => (
                 <button
                   aria-checked={item === locale}
                   className={cn(
-                    'h-9 rounded-lg px-4 text-sm font-semibold transition-colors',
+                    'h-9 min-w-0 flex-1 rounded-lg px-2 text-sm font-semibold transition-colors sm:flex-none sm:px-4',
                     item === locale
                       ? 'text-foreground bg-white shadow-sm'
                       : 'text-[#4A5563] hover:text-foreground'
