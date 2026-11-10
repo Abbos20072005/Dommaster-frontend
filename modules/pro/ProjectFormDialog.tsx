@@ -67,7 +67,12 @@ export const ProjectFormDialog = ({ project, children, onSaved }: Props) => {
       const response = project
         ? await patchProProject({ id: project.id, data })
         : await postProProject({ data });
-      if (!project) trackEvent('pro_project_created');
+      if (!project) {
+        trackEvent('pro_project_created');
+        // BLD-393: the PRO form was sent: a lead in GA4 (the GTM tag takes `form`; no name,
+        // address or comment goes into the dataLayer)
+        trackEvent('generate_lead', { form: 'pro' });
+      }
       await queryClient.invalidateQueries({ queryKey: ['pro'] });
       toast.success(project ? t('Project saved') : t('Project created'));
       setOpen(false);
