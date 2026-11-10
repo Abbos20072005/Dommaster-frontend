@@ -17,6 +17,7 @@ import React from 'react';
 import { useFormatDate } from '@/hooks';
 import { storeMapUrl, todayHours } from '@/lib/stores';
 import { getStores } from '@/utils/api/requests';
+import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
 
 /**
  * "Pickup" block of the order (BLD-315): the shop, its address, phone, hours and a map link, the
@@ -91,9 +92,9 @@ export const PickupBlock = ({ order }: { order: Order }) => {
           </div>
         )}
         {phone && (
-          <a className='text-primary flex items-center gap-2' href={`tel:${phone.replace(/\s/g, '')}`}>
+          <a className='text-primary flex items-center gap-2' href={CONTACT_PHONE_HREF}>
             <PhoneIcon className='size-4 shrink-0' />
-            {phone}
+            {CONTACT_PHONE}
           </a>
         )}
         {live && (

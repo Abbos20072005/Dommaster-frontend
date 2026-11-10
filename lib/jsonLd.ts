@@ -88,7 +88,7 @@ export const storesJsonLd = (stores: Store[]) =>
     name: `${COMPANY.name} — ${store.name}`,
     url: `${BASE_URL}/stores`,
     ...(store.photo ? { image: store.photo } : {}),
-    ...(store.phone ? { telephone: store.phone.replace(/\s/g, '') } : {}),
+    ...(store.phone ? { telephone: phone } : {}),
     address: {
       '@type': 'PostalAddress',
       ...(store.address ? { streetAddress: store.address } : {}),

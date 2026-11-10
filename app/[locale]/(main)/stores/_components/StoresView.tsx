@@ -7,6 +7,7 @@ import React from 'react';
 
 import { nextOpenDate, storeDirectionsUrl, todayHours } from '@/lib/stores';
 import { cn } from '@/lib/utils';
+import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
 
 import { StoresMapLoader } from './StoresMapLoader';
 
@@ -116,10 +117,10 @@ export const StoresView = ({ stores }: { stores: Store[] }) => {
                   {store.phone && (
                     <a
                       className='text-primary flex items-center gap-2 font-medium'
-                      href={`tel:${store.phone.replace(/\s/g, '')}`}
+                      href={CONTACT_PHONE_HREF}
                     >
                       <PhoneIcon className='size-4 shrink-0' />
-                      {store.phone}
+                      {CONTACT_PHONE}
                     </a>
                   )}
                   <div className='flex flex-wrap gap-2 pt-1'>

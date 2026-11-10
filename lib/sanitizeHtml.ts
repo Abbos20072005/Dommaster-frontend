@@ -1,3 +1,5 @@
+import { withMainPhone } from './phone';
+
 /** Tags of a category text written in the admin editor; everything else is dropped (its text stays). */
 const ALLOWED = new Set(['p', 'h2', 'h3', 'ul', 'ol', 'li', 'a', 'strong', 'em', 'br']);
 
@@ -32,7 +34,8 @@ const hrefOf = (attributes: string) => {
 export const sanitizeHtml = (html: string | null | undefined): string => {
   const source = (html ?? '').replace(/<!--[\s\S]*?-->/g, '').replace(DROP_WITH_CONTENT, '');
 
-  return source
+  // the company has one phone number: an old one in a text from the admin panel becomes it
+  return withMainPhone(source
     .replace(/<(\/?)([a-zA-Z][a-zA-Z0-9]*)\b([^>]*)>/g, (_, closing: string, rawName: string, attrs: string) => {
       const lower = rawName.toLowerCase();
       const name = RENAMED[lower] ?? lower;
@@ -49,7 +52,7 @@ export const sanitizeHtml = (html: string | null | undefined): string => {
       return `<${name}>`;
     })
     .replace(/<(?![a-z/])/gi, '&lt;')
-    .trim();
+    .trim());
 };
 
 /** The text without tags: tells an empty text (`<p></p>`, only spaces) from a real one. */

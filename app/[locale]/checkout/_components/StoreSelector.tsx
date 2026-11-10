@@ -10,6 +10,7 @@ import { trackEvent } from '@/lib/analytics';
 import { nextOpenDate, storeMapUrl, todayHours } from '@/lib/stores';
 import { cn } from '@/lib/utils';
 import { getStores } from '@/utils/api/requests';
+import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
 import { useCheckoutStore } from '@/utils/stores';
 
 /**
@@ -119,10 +120,10 @@ export const StoreSelector = () => {
               {store.phone && (
                 <a
                   className='text-primary flex items-center gap-1'
-                  href={`tel:${store.phone.replace(/\s/g, '')}`}
+                  href={CONTACT_PHONE_HREF}
                 >
                   <PhoneIcon className='size-3.5' />
-                  {store.phone}
+                  {CONTACT_PHONE}
                 </a>
               )}
               <a
