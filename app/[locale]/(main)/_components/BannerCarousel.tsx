@@ -1,4 +1,5 @@
 import { getLocale } from 'next-intl/server';
+import { unstable_cache } from 'next/cache';
 
 import { BannerSlider } from '@/components/BannerSlider/BannerSlider';
 import { BaseLayout } from '@/components/layout';
@@ -46,15 +47,34 @@ const resolveHref = async (banner: Banner, language: 'ru' | 'uz'): Promise<strin
   return null;
 };
 
+/**
+ * The banners of a place with the readable address of each, kept for two minutes per place and
+ * language: the page does not wait for the API on every visit (the first picture is the LCP of the
+ * home page, BLD-395). The language goes in as a header, so nothing in here reads the request.
+ */
+const getCachedBanners = unstable_cache(
+  async (placement: BannerPlacement, language: 'ru' | 'uz') => {
+    const response = await getBanners({
+      config: {
+        headers: { 'Accept-Language': language },
+        params: { placement, platform: 'site' }
+      }
+    });
+
+    return Promise.all(
+      response.data.result.map(async (banner) => ({
+        ...banner,
+        resolved_href: await resolveHref(banner, language)
+      }))
+    );
+  },
+  ['banners'],
+  { revalidate: 120 }
+);
+
 export const BannerCarousel = async ({ placement = 'home_top', bare }: Props) => {
-  const bannersResponse = await getBanners({ config: { params: { placement, platform: 'site' } } });
   const language = toLanguage(await getLocale());
-  const banners = await Promise.all(
-    bannersResponse.data.result.map(async (banner) => ({
-      ...banner,
-      resolved_href: await resolveHref(banner, language)
-    }))
-  );
+  const banners = await getCachedBanners(placement, language);
 
   // no banner — no place for it either
   if (!banners.length) return null;

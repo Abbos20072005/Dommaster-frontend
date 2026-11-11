@@ -12,8 +12,10 @@ import {
   // BenefitsCards, // vaqtincha o'chirilgan
   BrandsSection,
   BrandsSectionLoading,
-  DiscountProductsSection,
+  DiscountProducts,
+  DiscountProductsSkeleton,
   MobileCategories,
+  MobileCategoriesLoading,
   MostSoldProductsSection,
   UsefulContentSection,
   UsefulContentSectionLoading
@@ -36,11 +38,13 @@ const Home = () => {
           <Suspense fallback={<BannerCarouselLoading />}>
             <BannerCarousel />
           </Suspense>
-          <Suspense>
+          <Suspense fallback={<MobileCategoriesLoading />}>
             <MobileCategories />
           </Suspense>
         </div>
-        <DiscountProductsSection />
+        <Suspense fallback={<DiscountProductsSkeleton />}>
+          <DiscountProducts />
+        </Suspense>
         <Suspense fallback={<BrandsSectionLoading />}>
           <BrandsSection />
         </Suspense>
