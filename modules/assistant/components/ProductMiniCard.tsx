@@ -10,15 +10,16 @@ import { trackEvent } from '@/lib/analytics';
 import { cn, formatPrice } from '@/lib/utils';
 import { productHref } from '@/lib/urls';
 
-import type { AssistantProduct } from '../types';
+import type { AssistantProduct, StockStatus } from '../types';
 
-/** Up to this many are left, and the stock pill says "few". */
-const LOW_STOCK = 10;
-
-const Stock = ({ quantity }: { quantity: number }) => {
+/**
+ * The badge follows `stock_status` of the server (its limits may change): `check` is almost every
+ * product while 1C sends no real stock, and the card then never says "in stock".
+ */
+const Stock = ({ status }: { status: StockStatus }) => {
   const t = useTranslations();
 
-  if (!Number.isFinite(quantity)) {
+  if (status === 'check') {
     return (
       <span className='inline-flex items-center gap-1 rounded-full border border-[#CBD2DB] px-2 py-0.5 text-xs font-medium text-[#4A5563]'>
         <ClockIcon className='size-3' />
@@ -28,9 +29,9 @@ const Stock = ({ quantity }: { quantity: number }) => {
   }
 
   const [label, className, dot] =
-    quantity <= 0
+    status === 'out_of_stock'
       ? ['assistant.outOfStock', 'bg-[#EDF0F5] text-[#4A5563]', 'bg-[#6B7685]']
-      : quantity <= LOW_STOCK
+      : status === 'low'
         ? ['assistant.lowStock', 'bg-[#FFF1D6] text-[#8A5A00]', 'bg-[#F5A524]']
         : ['assistant.inStock', 'bg-[#E6F6EC] text-[#12703C]', 'bg-[#12A150]'];
 
@@ -97,7 +98,7 @@ export const ProductMiniCard = ({ product }: { product: AssistantProduct }) => {
           <span className='text-xs whitespace-nowrap text-[#6B7685]'>/ {t(product.unit)}</span>
         </span>
         <span className='flex flex-wrap items-center justify-between gap-x-3 gap-y-1'>
-          <Stock quantity={product.quantity} />
+          <Stock status={product.stock_status ?? 'check'} />
           <span className='text-primary inline-flex items-center text-sm font-semibold'>
             {t('assistant.toProduct')}
             <ChevronRightIcon className='size-4' />

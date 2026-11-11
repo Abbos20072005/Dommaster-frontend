@@ -4,7 +4,7 @@ import { ChevronRightIcon, ClockIcon, PhoneIcon, SendIcon, XIcon } from 'lucide-
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
-import { CONTACT_PHONE, CONTACT_PHONE_HREF, SOCIAL_LINKS } from '@/utils/constants';
+import { useOperatorInfo } from '../info';
 
 interface RowProps {
   href: string;
@@ -31,7 +31,7 @@ const Row = ({ href, icon, title, subtitle, external }: RowProps) => (
   </a>
 );
 
-/** "@name" of the Telegram link of the company, when it has one. */
+/** "@name" of a Telegram link, when it has one. */
 const telegramHandle = (url: string) => {
   const name = url.split('?')[0].split('/').filter(Boolean).pop();
   return name ? `@${name.replace(/^@/, '')}` : undefined;
@@ -39,11 +39,11 @@ const telegramHandle = (url: string) => {
 
 /**
  * "Contact an operator" (BLD-412, no. 13): a popover inside the panel on a laptop, a bottom sheet
- * on a phone. A call to the one phone of the company and, when it is set, a Telegram chat.
+ * on a phone. The contacts come from `/base/info/`: a call, Telegram and the working hours.
  */
 export const ContactSheet = ({ onClose }: { onClose: () => void }) => {
   const t = useTranslations();
-  const telegram = SOCIAL_LINKS.telegram;
+  const info = useOperatorInfo();
 
   return (
     <div
@@ -74,24 +74,24 @@ export const ContactSheet = ({ onClose }: { onClose: () => void }) => {
         </div>
         <div className='grid gap-2'>
           <Row
-            href={CONTACT_PHONE_HREF}
+            href={info.phoneHref}
             icon={<PhoneIcon className='size-4' />}
-            subtitle={CONTACT_PHONE}
+            subtitle={info.phone}
             title={t('assistant.call')}
           />
-          {telegram && (
+          {info.telegram && (
             <Row
               external
-              href={telegram}
+              href={info.telegram}
               icon={<SendIcon className='size-4' />}
-              subtitle={telegramHandle(telegram)}
+              subtitle={telegramHandle(info.telegram)}
               title={t('assistant.telegramWrite')}
             />
           )}
         </div>
         <p className='mt-3 flex items-center gap-2 text-xs leading-4 text-[#6B7685]'>
           <ClockIcon className='size-3.5' />
-          {t('assistant.workHours')}
+          {info.hours ?? t('assistant.workHours')}
         </p>
       </div>
     </div>

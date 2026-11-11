@@ -69,7 +69,7 @@ interface Props {
  */
 export const AssistantPanel = ({ hidden, onClose, onMinimize, onUnread }: Props) => {
   const t = useTranslations();
-  const { messages, loading, error, arrivedId, send, retry, reset, rate, giveReason } =
+  const { messages, loading, searching, error, arrivedId, send, retry, reset, rate, giveReason } =
     useAssistant();
   const [draft, setDraft] = React.useState('');
   const [scrolledUp, setScrolledUp] = React.useState(false);
@@ -262,13 +262,16 @@ export const AssistantPanel = ({ hidden, onClose, onMinimize, onUnread }: Props)
                   arrivedId={arrivedId}
                   loading={loading}
                   messages={messages}
+                  searching={searching}
                   onRate={rate}
                   onReason={giveReason}
                   onRephrase={() => inputRef.current?.focus()}
                   onStep={keepBottom}
                   onSuggestion={submit}
                 />
-                {error && <ErrorNotice kind={error as 'generic' | 'offline'} onRetry={retry} />}
+                {error && (
+                  <ErrorNotice kind={error as 'generic' | 'offline' | 'rate'} onRetry={retry} />
+                )}
               </div>
             )}
           </div>

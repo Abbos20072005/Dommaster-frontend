@@ -181,9 +181,16 @@ const AssistantAnswer = ({
 }: AssistantProps) => {
   const t = useTranslations();
   const products = message.products ?? [];
-  const shown = useTypewriter(message.text, animate, onStep);
-  const typing = animate && shown.length < message.text.length;
-  const stockUnknown = products.some((product) => !Number.isFinite(product.quantity));
+  // an answer that comes in through the socket already grows piece by piece; a whole one (HTTP) is
+  // written out here
+  const written = useTypewriter(message.text, animate && !message.streaming, onStep);
+  const shown = message.streaming ? message.text : written;
+  const typing = !!message.streaming || (animate && written.length < message.text.length);
+
+  React.useEffect(() => {
+    if (message.streaming) onStep();
+  }, [message.streaming, message.text, onStep]);
+  const stockUnknown = products.some((product) => (product.stock_status ?? 'check') === 'check');
 
   return (
     <div className='flex items-start gap-2'>
@@ -256,8 +263,8 @@ const AssistantAnswer = ({
   );
 };
 
-/** Three dots and "Typing...": the assistant is writing an answer. */
-export const TypingIndicator = () => {
+/** Three dots and "Typing..." (or "Searching..." while it looks through the catalog). */
+export const TypingIndicator = ({ searching }: { searching?: boolean }) => {
   const t = useTranslations();
 
   return (
@@ -273,7 +280,9 @@ export const TypingIndicator = () => {
             />
           ))}
         </span>
-        <span className='pl-1 text-[11px] leading-4 text-[#6B7685]'>{t('assistant.typing')}</span>
+        <span className='pl-1 text-[11px] leading-4 text-[#6B7685]'>
+          {t(searching ? 'assistant.searching' : 'assistant.typing')}
+        </span>
       </div>
     </div>
   );
@@ -282,6 +291,8 @@ export const TypingIndicator = () => {
 interface Props {
   messages: AssistantMessage[];
   loading: boolean;
+  /** the assistant is looking through the catalog */
+  searching: boolean;
   /** the answer that came in this visit (its text is written out) */
   arrivedId: string | null;
   onSuggestion: (text: string) => void;
@@ -295,6 +306,7 @@ interface Props {
 export const Messages = ({
   messages,
   loading,
+  searching,
   arrivedId,
   onSuggestion,
   onRephrase,
@@ -310,7 +322,7 @@ export const Messages = ({
         ) : (
           <AssistantAnswer
             animate={message.id === arrivedId}
-            last={index === messages.length - 1 && !loading}
+            last={index === messages.length - 1 && !loading && !message.streaming}
             message={message}
             onRate={(rating) => onRate(message.id, rating)}
             onReason={(reason) => onReason(message.id, reason)}
@@ -322,6 +334,7 @@ export const Messages = ({
         {message.masked && <PiiNotice />}
       </React.Fragment>
     ))}
-    {loading && <TypingIndicator />}
+    {/* the dots only while nothing of the answer is on the screen yet */}
+    {loading && !messages.at(-1)?.streaming && <TypingIndicator searching={searching} />}
   </div>
 );

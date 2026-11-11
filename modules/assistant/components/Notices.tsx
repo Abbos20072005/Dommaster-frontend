@@ -18,10 +18,9 @@ import React from 'react';
 
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
-
 import type { AssistantErrorKind, AssistantSource } from '../types';
 
+import { useOperatorInfo } from '../info';
 import { useOpenOperator } from './OperatorContext';
 
 const tones = {
@@ -159,6 +158,7 @@ export const ErrorNotice = ({
   onRetry: () => void;
 }) => {
   const t = useTranslations();
+  const text = { generic: 'assistant.error', offline: 'assistant.offline', rate: 'assistant.rate' };
 
   return (
     <Box
@@ -172,7 +172,7 @@ export const ErrorNotice = ({
       role='alert'
       tone='error'
     >
-      <span>{t(kind === 'offline' ? 'assistant.offline' : 'assistant.error')}</span>
+      <span>{t(text[kind])}</span>
       <button
         className='inline-flex h-9 items-center gap-1.5 self-start rounded-lg border border-[#E5E8EC] bg-white px-3 text-[13px] font-semibold text-[#0F1620] transition-colors hover:bg-[#F5F6F8]'
         type='button'
@@ -223,15 +223,16 @@ export const LimitNotice = () => {
 /** The assistant is switched off (its budget is over): only the phone, no input. */
 export const DisabledNotice = () => {
   const t = useTranslations();
+  const info = useOperatorInfo();
 
   return (
     <PanelState icon={<PowerIcon className='size-6 text-[#4A5563]' />} tone='grey'>
       <p className='max-w-[280px] text-sm leading-5 text-[#0F1620]'>
-        {t('assistant.disabled', { phone: CONTACT_PHONE })}
+        {t('assistant.disabled', { phone: info.phone })}
       </p>
       <a
         className='bg-primary hover:bg-primary/90 inline-flex h-10 items-center justify-center gap-2 rounded-lg px-4 text-sm font-semibold text-white transition-colors'
-        href={CONTACT_PHONE_HREF}
+        href={info.phoneHref}
       >
         <PhoneIcon className='size-4' />
         {t('assistant.call')}
