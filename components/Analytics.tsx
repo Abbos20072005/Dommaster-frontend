@@ -38,7 +38,10 @@ export const Analytics = () => {
 
   return (
     <>
-      <Script id='gtm' strategy='afterInteractive'>
+      {/* after the page is loaded, not while it is made interactive: the tag manager (with GA4 and
+          Metrika inside) is the heaviest third-party script and its long tasks counted into TBT
+          (BLD-395); what is pushed into the dataLayer before it loads waits in the queue */}
+      <Script id='gtm' strategy='lazyOnload'>
         {`(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${GTM_ID}');`}
       </Script>
       <noscript>
