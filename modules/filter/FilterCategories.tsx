@@ -125,7 +125,7 @@ const CategoryContent = ({ brandId, categoryId }: CategoryContentProps) => {
                     <RadioGroupItem
                       className={cn(
                         'hover:text-secondary block text-sm text-nowrap transition-colors',
-                        itemCategory.id === filter.item_category && 'text-secondary font-medium'
+                        itemCategory.id === filter.item_category && 'text-primary font-medium'
                       )}
                       id={String(itemCategory.id)}
                       value={String(itemCategory.id)}

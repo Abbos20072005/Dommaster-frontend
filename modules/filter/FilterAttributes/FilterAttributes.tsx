@@ -76,7 +76,7 @@ const AttributeCheckbox = ({ filter }: { filter: AttributeFilter }) => {
       </div>
       {values.length > COUNT_MAX && (
         <button
-          className='text-secondary flex items-center gap-1 text-sm hover:underline'
+          className='text-primary flex items-center gap-1 text-sm hover:underline'
           type='button'
           onClick={() => setShowAll((prev) => !prev)}
         >

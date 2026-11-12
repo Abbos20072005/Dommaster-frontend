@@ -42,7 +42,7 @@ export const FilterRadio = ({ filter }: Props) => {
       </div>
       {filter.filter_items.length > COUNT_MAX && (
         <button
-          className='text-secondary text-sm hover:underline'
+          className='text-primary text-sm hover:underline'
           type='button'
           onClick={() => setShowAll((prev) => !prev)}
         >

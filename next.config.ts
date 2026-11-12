@@ -26,6 +26,9 @@ const imageHosts = [
 const nextConfig: NextConfig = {
   // no `X-Powered-By: Next.js` in the answers (BLD-352)
   poweredByHeader: false,
+  // the style sheets go into the page itself: two blocking CSS requests (140 KB) held the first
+  // paint of a phone back (BLD-395)
+  experimental: { inlineCss: true },
   // Metadata (title, description, canonical) is resolved before the HTML is sent for every
   // user agent: with streaming it ended up at the end of the page, where Yandex and Bing miss it.
   htmlLimitedBots: /.*/,
