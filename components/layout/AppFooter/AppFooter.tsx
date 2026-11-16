@@ -15,7 +15,7 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
   return (
     <footer
       className={cn(
-        'md:bg-primary text-primary-foreground pt-6 pb-20 md:mt-10 md:pt-10 md:pb-10',
+        'text-primary-foreground md:bg-[#002478] pt-6 pb-20 md:mt-10 md:pt-10 md:pb-10',
         className
       )}
       {...props}
@@ -30,7 +30,6 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
               </a>
             </div>
             <div>
-              <div className='mb-2 text-sm font-medium'>{t('Receiving calls')}</div>
               <p>{t('Mon – Sun: from 07:00 – 22:00')}</p>
             </div>
 

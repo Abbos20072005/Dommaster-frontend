@@ -6,6 +6,6 @@ export const CONTACT_PHONE_HREF = 'tel:+998772400909';
 export const SOCIAL_LINKS = {
   facebook: '',
   telegram: 'https://t.me/buildexuz',
-  instagram: '',
+  instagram: 'https://www.instagram.com/buildex.uz/',
   youtube: ''
 };
