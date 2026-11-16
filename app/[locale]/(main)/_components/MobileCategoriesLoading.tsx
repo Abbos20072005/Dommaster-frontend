@@ -11,7 +11,7 @@ export const MobileCategoriesLoading = () => (
     <div className='grid grid-cols-3 gap-2 md:grid-cols-4 md:gap-3 lg:auto-cols-fr lg:grid-flow-col'>
       {Array.from({ length: 8 }).map((_, index) => (
         <Skeleton
-          className={`aspect-[4/5] rounded-xl md:aspect-square md:rounded-md ${index >= 6 ? 'max-md:hidden' : ''}`}
+          className={`aspect-[4/5] rounded-xl md:aspect-[4/3] md:rounded-md ${index >= 6 ? 'max-md:hidden' : ''}`}
           key={index}
         />
       ))}

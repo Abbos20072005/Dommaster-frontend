@@ -25,7 +25,7 @@ export const MobileCategories = async () => {
             href={categoryHref(item)}
             key={item.id}
             className={cn(
-              'bg-muted relative aspect-[4/5] overflow-hidden rounded-xl p-2 md:aspect-square md:rounded-md lg:p-2.5',
+              'bg-muted relative aspect-[4/5] overflow-hidden rounded-xl p-2 md:aspect-[4/3] md:rounded-md lg:p-2.5',
               // the phone keeps two full rows of three
               index >= 6 && 'max-md:hidden'
             )}
@@ -35,7 +35,7 @@ export const MobileCategories = async () => {
             </span>
             <Image
               alt={item.name || 'Buildex'}
-              className='absolute inset-x-0 bottom-0 h-[70%] w-full object-contain p-1 md:h-[72%] md:p-3'
+              className='absolute inset-x-0 bottom-0 h-[70%] w-full object-contain p-1 md:h-[70%] md:px-3 md:pt-2 md:pb-0 md:object-bottom'
               height={200}
               src={item.image}
               width={200}
