@@ -7,15 +7,18 @@ import React, { Suspense } from 'react';
 import { BannerCarousel } from '@/app/[locale]/(main)/_components/BannerCarousel';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { Link } from '@/i18n/navigation';
-import { getCategories } from '@/utils/api/requests';
+import { getCategories } from '@/utils/api/requests';
+import { shareCards } from '@/lib/seo';
 import { categoryHref } from '@/lib/urls';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
 
-  return {
-    title: t('Catalog')
-  };
+  const title = t('Catalog meta title');
+  const description = t('metadata.description');
+
+  // `absolute`: the title already ends with the site name; the global suffix is not added (BLD-424)
+  return { title: { absolute: title }, description, ...shareCards({ title, description }) };
 }
 
 const CategoryPage = async () => {

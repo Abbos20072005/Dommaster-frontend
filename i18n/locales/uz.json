@@ -416,7 +416,7 @@
       "payments": "Buildex.uz'da to'lov usullari: onlayn karta orqali yoki olib ketishda to'lash."
     },
     "product": {
-      "description": "Buildex onlayn do'konida {name} - tavsif, texnik xususiyatlar, jihozlar, fotolar ({images}), sharhlar ({reviews}), savollar ({questions})."
+      "description": "Buildex onlayn do'konida {name} — {price} so'm. Texnik xususiyatlar, fotolar va Toshkent bo'ylab yetkazib berish."
     },
     "user": {
       "title": {
@@ -665,6 +665,10 @@
   "Delete account page support": "Akkauntni o'chirish uchun biz bilan bog'laning: +998 77 240 09 09, buildexuz@gmail.com.",
   "How to delete the account": "Akkauntni o'chirish tartibi",
   "Home h1": "Toshkentda qurilish materiallari — Buildex",
+  "Product meta title": "{name} — Toshkentda sotib olish | Buildex",
+  "Catalog meta title": "Qurilish materiallari va asboblar katalogi — Buildex",
+  "About meta title": "Kompaniya haqida — Buildex",
+  "Brands meta title": "Brendlar — Buildex",
   "Brand meta title": "{brand} — Toshkentda sotib olish | Buildex",
   "Brand meta description": "{brand} mahsulotlari: narxlar, mavjudlik va xususiyatlar. Toshkentda yetkazib berish bilan xarid qiling.",
   "Linked to project": "Loyihaga bog'landi",

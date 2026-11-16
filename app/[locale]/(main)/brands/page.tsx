@@ -14,12 +14,16 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Link } from '@/i18n/navigation';
 import { getBrands } from '@/utils/api/requests';
+import { shareCards } from '@/lib/seo';
 import { brandHref } from '@/lib/urls';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
 
-  return { title: t('Only original products'), description: t('metadata.pages.brands') };
+  const title = t('Brands meta title');
+  const description = t('metadata.pages.brands');
+
+  return { title: { absolute: title }, description, ...shareCards({ title, description }) };
 }
 
 const BrandsPage = async () => {
@@ -38,11 +42,11 @@ const BrandsPage = async () => {
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbPage>{t('Only original products')}</BreadcrumbPage>
+              <BreadcrumbPage>{t('Brands')}</BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl'>{t('Only original products')}</h1>
+        <h1 className='text-xl font-bold md:text-3xl'>{t('Brands')}</h1>
         <div className='grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4 lg:grid-cols-5 xl:grid-cols-6'>
           {brands.map((brand) => (
             <Link

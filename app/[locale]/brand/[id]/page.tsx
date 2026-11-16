@@ -22,7 +22,7 @@ import { orNotFound } from '@/lib/orNotFound';
 import { matchBrandSlug, toLanguage } from '@/lib/catalogTree';
 import { withLocale } from '@/lib/localePath';
 import { hasText, sanitizeHtml } from '@/lib/sanitizeHtml';
-import { htmlToText, metaOverride } from '@/lib/seo';
+import { htmlToText, metaOverride, shareCards } from '@/lib/seo';
 import { categoryHref } from '@/lib/urls';
 import { getBrandById, getProducts } from '@/utils/api/requests';
 
@@ -77,13 +77,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations();
 
   // the brand's own text when the admin panel has one, else a template (not the home page text)
+  const override = metaOverride(brand);
+  const title = override.title?.absolute ?? t('Brand meta title', { brand: brand.name });
+  const description =
+    override.description ||
+    htmlToText(brand.description) ||
+    t('Brand meta description', { brand: brand.name });
+
   return {
     // `absolute`: the title already ends with the site name; the global suffix is not added
     // (it repeated "купить в Ташкенте" and, in uz, held the forbidden claim "best prices")
-    title: { absolute: t('Brand meta title', { brand: brand.name }) },
-    description:
-      htmlToText(brand.description) || t('Brand meta description', { brand: brand.name }),
-    ...metaOverride(brand)
+    title: { absolute: title },
+    description,
+    ...shareCards({ title, description, image: brand.image })
   };
 }
 

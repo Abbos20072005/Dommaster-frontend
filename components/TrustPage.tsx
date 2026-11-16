@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { TrackedLink } from '@/components/TrackedLink';
 import { Link } from '@/i18n/navigation';
+import { shareCards } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 
 const URL_PATTERN = /(https?:\/\/[^\s)]+[^\s).,;:])/g;
@@ -220,6 +221,7 @@ export const getTrustMetadata = async (set: TrustPageSet): Promise<Metadata> => 
   return {
     title: { absolute: content.title },
     description: content.description,
+    ...shareCards({ title: content.title, description: content.description }),
     ...(content.noindex ? { robots: { index: false, follow: true } } : {})
   };
 };

@@ -69,29 +69,31 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations();
   const { id: param } = await params;
   const product = await getProduct(param);
-  const description = t('metadata.product.description', {
-    name: product.name,
-    price: product.discount_price ?? product.price,
-    images: product.images.length,
-    reviews: product.comments_quantity,
-    questions: product.questions_quantity
-  });
+  const override = metaOverride(product);
+  // "{name} — buy in Tashkent | Buildex", like the category and brand pages: the old site suffix
+  // made the title 123-132 characters long (BLD-424)
+  const title = override.title?.absolute ?? t('Product meta title', { name: product.name });
+  const description =
+    override.description ??
+    t('metadata.product.description', {
+      name: product.name,
+      price: product.discount_price ?? product.price
+    });
   const image = product.images[0]?.image;
 
   return {
-    title: product.name,
+    title: { absolute: title },
     description,
-    ...metaOverride(product),
     // the card of the link (messengers, social networks): this product, not the site
     openGraph: {
-      title: product.name,
+      title,
       description,
       type: 'website',
       ...(image ? { images: [{ url: image, alt: product.name }] } : {})
     },
     twitter: {
       card: 'summary_large_image',
-      title: product.name,
+      title,
       description,
       ...(image ? { images: [image] } : {})
     }

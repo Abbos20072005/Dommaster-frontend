@@ -12,12 +12,16 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { shareCards } from '@/lib/seo';
 import { getAbout } from '@/utils/api/requests';
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
 
-  return { title: t('About company'), description: t('metadata.pages.about') };
+  const title = t('About meta title');
+  const description = t('metadata.pages.about');
+
+  return { title: { absolute: title }, description, ...shareCards({ title, description }) };
 }
 
 const ArticlesPage = async () => {

@@ -416,7 +416,7 @@
       "payments": "Способы оплаты на Buildex.uz: онлайн картой или при получении."
     },
     "product": {
-      "description": "{name} по цене {price} сум в интернет-магазине Buildex - Описание, характеристики, оборудование, фото ({images}), отзывы ({reviews}), вопросы ({questions})."
+      "description": "{name} по цене {price} сум в интернет-магазине Buildex. Характеристики, фото и доставка по Ташкенту."
     },
     "user": {
       "title": {
@@ -665,6 +665,10 @@
   "Delete account page support": "Чтобы удалить аккаунт, свяжитесь с нами: +998 77 240 09 09, buildexuz@gmail.com.",
   "How to delete the account": "Порядок удаления аккаунта",
   "Home h1": "Строительные материалы в Ташкенте — Buildex",
+  "Product meta title": "{name} — купить в Ташкенте | Buildex",
+  "Catalog meta title": "Каталог стройматериалов и инструментов — Buildex",
+  "About meta title": "О компании — Buildex",
+  "Brands meta title": "Бренды — Buildex",
   "Brand meta title": "{brand} — купить в Ташкенте | Buildex",
   "Brand meta description": "{brand}: цены, наличие и характеристики. Купить в Ташкенте с доставкой.",
   "Linked to project": "Привязано к проекту",

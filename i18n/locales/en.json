@@ -416,7 +416,7 @@
       "payments": "Payment methods at Buildex.uz: online by card or on pickup."
     },
     "product": {
-      "description": "{name} at a price of {price} sum in the online store Buildex - description, specifications, equipment, photos ({images}), reviews ({reviews}), questions ({questions})."
+      "description": "{name} at a price of {price} sum in the online store Buildex. Specifications, photos and delivery across Tashkent."
     },
     "user": {
       "title": {
@@ -639,6 +639,10 @@
   "Delete account page support": "To delete the account, contact us: +998 77 240 09 09, buildexuz@gmail.com.",
   "How to delete the account": "How to delete the account",
   "Home h1": "Building materials in Tashkent — Buildex",
+  "Product meta title": "{name} — buy in Tashkent | Buildex",
+  "Catalog meta title": "Catalog of building materials and tools — Buildex",
+  "About meta title": "About the company — Buildex",
+  "Brands meta title": "Brands — Buildex",
   "Brand meta title": "{brand} — buy in Tashkent | Buildex",
   "Brand meta description": "{brand} products: prices, availability and specifications. Buy in Tashkent with delivery.",
   "Linked to project": "Linked to the project",
