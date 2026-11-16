@@ -1,7 +1,6 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { useQueryState } from 'nuqs';
 import React from 'react';
 
 import { ProductCart, ProductMobileBar } from '@/app/[locale]/product/[id]/_components/ProductCart';
@@ -17,9 +16,16 @@ import { ProductSections, sectionElementId } from './components/ProductSections'
 
 const SECTION_IDS: ProductSectionId[] = ['description', 'characteristics', 'reviews', 'questions'];
 
+/** The section the address asks for: `#reviews`, or the old `?tab=reviews` (those links still work). */
+const sectionFromAddress = (): ProductSectionId | null => {
+  const wanted =
+    window.location.hash.slice(1) || new URLSearchParams(window.location.search).get('tab');
+  return SECTION_IDS.find((section) => section === wanted) ?? null;
+};
+
 export const ProductBody = () => {
-  // `?tab=reviews` kabi eski havolalar ham ishlaydi: shu bo'limga o'tiladi
-  const [tab, setTab] = useQueryState('tab', { defaultValue: 'description' });
+  // the open section is kept in the page, not in the address: no `?tab=` URLs (BLD-453)
+  const [tab, setTab] = React.useState<string>('description');
   const id = useProductId();
   const scrolledRef = React.useRef(false);
 
@@ -53,10 +59,12 @@ export const ProductBody = () => {
   React.useEffect(() => {
     if (!product || scrolledRef.current) return;
     scrolledRef.current = true;
-    if (tab !== 'description' && SECTION_IDS.includes(tab as ProductSectionId)) {
-      setTimeout(() => scrollToSection(tab), 300);
+    const target = sectionFromAddress();
+    if (target && target !== 'description') {
+      setTab(target);
+      setTimeout(() => scrollToSection(target), 300);
     }
-  }, [product, tab, scrollToSection]);
+  }, [product, scrollToSection]);
 
   if (getProductByIdQuery.isLoading)
     return (
@@ -88,7 +96,7 @@ export const ProductBody = () => {
           <ProductSections
             openSection={tab}
             product={product}
-            onOpenSectionChange={(section) => setTab(section || null)}
+            onOpenSectionChange={(section) => setTab(section || 'description')}
           />
         </div>
         <ProductCart product={product} />

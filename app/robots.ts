@@ -7,11 +7,12 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: '*',
       allow: '/',
-      // the private pages, the site search and the duplicates made by sorting and tabs (BLD-102)
-      // the same rules for the Uzbek site under `/uz`
+      // the private pages, the site search and the duplicates made by sorting (BLD-102)
+      // the same rules for the Uzbek site under `/uz`. `?tab=` is no longer closed (BLD-453): the
+      // site does not link to it any more and the old URLs must be opened to see their canonical.
       disallow: ['', '/uz'].flatMap((prefix) =>
         ['/cart', '/user/', '/checkout', '/search'].map((path) => `${prefix}${path}`)
-      ).concat(['/*?sort=', '/*?sort_by=', '/*?tab='])
+      ).concat(['/*?sort=', '/*?sort_by='])
     },
     sitemap: `${BASE_URL}/sitemap.xml`
   };

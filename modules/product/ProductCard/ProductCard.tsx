@@ -60,17 +60,23 @@ export const ProductCard = ({
       </div>
       <div className={cn('flex h-48 flex-col gap-3 pt-3', onDark && 'px-2 pb-2')}>
         <div className='space-y-0.5'>
-          <Link
-            href={{ pathname: productHref(product), query: { tab: 'reviews' } }}
-            className='flex h-5 items-center gap-1 text-sm'
-            prefetch={false}
-          >
-            <StarIcon className='text-secondary fill-secondary size-4' />
-            <span>{(product.rating ?? 0).toFixed(1)}</span>
-            <span className='text-muted-foreground'>
-              • {product.comments_quantity} {t('reviews')}
-            </span>
-          </Link>
+          {/* the rating is shown only when there are reviews; it links to `#reviews`, not `?tab=`
+              (robots.txt blocked `?tab=`, BLD-453). An empty line keeps the card height. */}
+          {product.comments_quantity > 0 ? (
+            <Link
+              href={`${productHref(product)}#reviews`}
+              className='flex h-5 items-center gap-1 text-sm'
+              prefetch={false}
+            >
+              <StarIcon className='text-secondary fill-secondary size-4' />
+              <span>{(product.rating ?? 0).toFixed(1)}</span>
+              <span className='text-muted-foreground'>
+                • {product.comments_quantity} {t('reviews')}
+              </span>
+            </Link>
+          ) : (
+            <div className='h-5' />
+          )}
           <Link className='block h-10' href={productHref(product)} prefetch={false}>
             <span className='line-clamp-2 text-sm leading-5 font-medium'>{name}</span>
           </Link>
