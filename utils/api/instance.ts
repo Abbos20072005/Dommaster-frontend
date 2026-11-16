@@ -16,13 +16,20 @@ import { getDeviceId } from './getDeviceId';
 import { getServerLocale } from './getServerLocale';
 import { getServerToken } from './getServerToken';
 
+// In development the browser goes through `app/api/dev-proxy` (the API's CORS answers localhost
+// with another port); the server and production call the API directly.
+const baseURL =
+  process.env.NODE_ENV === 'development' && typeof window !== 'undefined'
+    ? '/api/dev-proxy/'
+    : process.env.API_URL;
+
 const api = axios.create({
   withCredentials: true,
-  baseURL: process.env.API_URL
+  baseURL
 });
 
 const publicApi = axios.create({
-  baseURL: process.env.API_URL
+  baseURL
 });
 
 // Server komponentda (RSC) React hook'lari (useState) bo'lmaydi — shu orqali uni klient komponentning
