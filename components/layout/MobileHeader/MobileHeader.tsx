@@ -28,10 +28,10 @@ export const MobileHeader = () => {
             />
             <Image
               alt='buildex'
-              className='h-5.5 w-auto'
-              height={24}
+              className='h-auto w-[94px]'
+              height={22}
               src='/logo-text.png'
-              width={93}
+              width={94}
               priority
             />
           </div>

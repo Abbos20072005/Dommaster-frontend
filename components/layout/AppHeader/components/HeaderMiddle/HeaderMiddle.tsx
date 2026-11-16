@@ -35,10 +35,10 @@ export const HeaderMiddle = () => {
             />
             <Image
               alt='buildex'
-              className='h-7 w-auto'
+              className='h-auto w-30'
               height={28}
               src='/logo-text.png'
-              width={128}
+              width={120}
               priority
             />
           </div>
