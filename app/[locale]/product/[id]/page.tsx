@@ -1,17 +1,19 @@
 import type { Metadata } from 'next';
 
 import { getLocale, getTranslations } from 'next-intl/server';
+import { unstable_cache } from 'next/cache';
 import { notFound, permanentRedirect } from 'next/navigation';
 import React, { cache } from 'react';
 
 import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
+import { toLanguage } from '@/lib/catalogTree';
 import { breadcrumbJsonLd, productJsonLd } from '@/lib/jsonLd';
 import { withLocale } from '@/lib/localePath';
 import { orNotFound } from '@/lib/orNotFound';
 import { metaOverride } from '@/lib/seo';
 import { categoryHref, productIdFromParam } from '@/lib/urls';
-import { getProductById } from '@/utils/api/requests';
+import { getProductById, getProducts } from '@/utils/api/requests';
 
 import {
   ProductBody,
@@ -43,6 +45,25 @@ const getProduct = cache(async (param: string) => {
   }
   return product;
 });
+
+/** how many neighbours the page asks for: the carousel shows 12, and one of them may be this product */
+const SAME_CATEGORY_SIZE = 13;
+
+/**
+ * The other products of a third-level category, kept for five minutes per language: the block
+ * "Другие товары из этой категории" is drawn with them on the server (BLD-426).
+ */
+const getSameCategory = unstable_cache(
+  async (itemCategory: number, language: 'ru' | 'uz') => {
+    const response = await getProducts({
+      data: { item_category: itemCategory, page_size: SAME_CATEGORY_SIZE },
+      config: { headers: { 'Accept-Language': language } }
+    });
+    return response.data;
+  },
+  ['product-same-category'],
+  { revalidate: 300 }
+);
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations();
@@ -82,6 +103,10 @@ const ProductPage = async ({ params }: Props) => {
   const product = await getProduct(param);
   const id = String(product.id);
   const [category, subCategory, itemCategory] = product.breadcrumbs ?? [];
+  // a failed request must not break the product page: the block then loads in the browser
+  const sameCategory = itemCategory
+    ? await getSameCategory(itemCategory.id, toLanguage(await getLocale())).catch(() => null)
+    : null;
 
   return (
     <>
@@ -115,7 +140,7 @@ const ProductPage = async ({ params }: Props) => {
         <ProductHeader />
         <ProductBody />
         <ProductLinks />
-        <SameCategoryProducts />
+        <SameCategoryProducts initial={sameCategory} />
         <RecentlyViewedProducts />
       </BaseLayout>
     </>

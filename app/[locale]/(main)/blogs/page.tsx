@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 
-import { getTranslations } from 'next-intl/server';
-import { useTranslations } from 'next-intl';
+import { getLocale, getTranslations } from 'next-intl/server';
+import { unstable_cache } from 'next/cache';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
@@ -12,7 +12,9 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { toLanguage } from '@/lib/catalogTree';
 import { RecentlyViewedProducts } from '@/modules/product';
+import { getNewsList } from '@/utils/api/requests';
 
 import { NewsList } from './_components/NewsList';
 
@@ -22,8 +24,23 @@ export async function generateMetadata(): Promise<Metadata> {
   return { title: t('News'), description: t('metadata.pages.news') };
 }
 
-const NewsPage = () => {
-  const t = useTranslations();
+/** the same request as the list makes in the browser: the first (big) page of the news */
+const getCachedNews = unstable_cache(
+  async (language: 'ru' | 'uz') => {
+    const response = await getNewsList({
+      config: { params: { page: 1, page_size: 100 }, headers: { 'Accept-Language': language } }
+    });
+    return response.data;
+  },
+  ['news-list'],
+  { revalidate: 300 }
+);
+
+const NewsPage = async () => {
+  const t = await getTranslations();
+  // the articles are in the HTML with their links (BLD-426): without them the search engines
+  // found the articles only through the sitemap. A failed request leaves the list to the browser.
+  const initial = await getCachedNews(toLanguage(await getLocale())).catch(() => null);
 
   return (
     <div>
@@ -41,7 +58,7 @@ const NewsPage = () => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-xl font-bold md:text-3xl'>{t('News')}</h1>
-        <NewsList />
+        <NewsList initial={initial} />
         <RecentlyViewedProducts />
       </BaseLayout>
     </div>

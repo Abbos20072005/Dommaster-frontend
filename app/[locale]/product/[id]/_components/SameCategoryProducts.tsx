@@ -1,5 +1,7 @@
 'use client';
 
+import type { AxiosResponse } from 'axios';
+
 import { useQuery } from '@tanstack/react-query';
 import { useTranslations } from 'next-intl';
 import React from 'react';
@@ -12,8 +14,16 @@ import { getAuthorizedProductById, getProducts } from '@/utils/api/requests';
 /** how many products the carousel shows */
 const SIZE = 12;
 
+interface Props {
+  /**
+   * The products the server already asked for (BLD-426): the block is in the HTML with its links,
+   * so the search engines see the way from a product to its neighbours.
+   */
+  initial?: ProductsResponse | null;
+}
+
 /** Other products of the same (third-level) category as the open product. */
-export const SameCategoryProducts = () => {
+export const SameCategoryProducts = ({ initial }: Props) => {
   const t = useTranslations();
   const id = useProductId();
 
@@ -34,7 +44,10 @@ export const SameCategoryProducts = () => {
   const getProductsQuery = useQuery({
     queryKey: ['products', 'sameCategory', itemCategoryId],
     enabled: !!itemCategoryId,
-    queryFn: () => getProducts({ data: { item_category: itemCategoryId, page_size: SIZE + 1 } })
+    queryFn: () => getProducts({ data: { item_category: itemCategoryId, page_size: SIZE + 1 } }),
+    // the browser still asks again (the cart and favourites of the customer)
+    staleTime: 0,
+    initialData: initial ? ({ data: initial } as AxiosResponse<ProductsResponse>) : undefined
   });
 
   const products = getProductsQuery.data?.data.result.content

@@ -1,5 +1,7 @@
 'use client';
 
+import type { AxiosResponse } from 'axios';
+
 import { useInfiniteQuery } from '@tanstack/react-query';
 import { format } from 'date-fns';
 import { useTranslations } from 'next-intl';
@@ -11,10 +13,18 @@ import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@/i18n/navigation';
 import { getNewsList } from '@/utils/api/requests';
 
-export const NewsList = () => {
+interface Props {
+  /** the first page as the server got it: the list is in the HTML, not drawn after a request */
+  initial?: NewsListResponse | null;
+}
+
+export const NewsList = ({ initial }: Props) => {
   const t = useTranslations();
   const getNewsQuery = useInfiniteQuery({
     queryKey: ['news'],
+    initialData: initial
+      ? { pages: [{ data: initial } as AxiosResponse<NewsListResponse>], pageParams: [1] }
+      : undefined,
     queryFn: ({ pageParam }) =>
       getNewsList({
         // the API has no ordering (the oldest come first): a big page is sorted here, newest first

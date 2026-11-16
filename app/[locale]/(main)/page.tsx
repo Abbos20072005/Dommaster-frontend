@@ -16,7 +16,8 @@ import {
   DiscountProductsSkeleton,
   MobileCategories,
   MobileCategoriesLoading,
-  MostSoldProductsSection,
+  MostSoldProducts,
+  MostSoldProductsSkeleton,
   UsefulContentSection,
   UsefulContentSectionLoading
 } from './_components';
@@ -48,7 +49,9 @@ const Home = () => {
         <Suspense fallback={<BrandsSectionLoading />}>
           <BrandsSection />
         </Suspense>
-        <MostSoldProductsSection />
+        <Suspense fallback={<MostSoldProductsSkeleton />}>
+          <MostSoldProducts />
+        </Suspense>
         <Suspense fallback={<UsefulContentSectionLoading />}>
           <UsefulContentSection />
         </Suspense>

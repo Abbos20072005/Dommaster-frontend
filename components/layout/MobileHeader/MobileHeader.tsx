@@ -53,11 +53,18 @@ export const MobileHeader = () => {
       <div className='bg-background px-4 py-2'>
         <MobileSearch>
           <Button
+            aria-label={t('Search placeholder')}
             className='bg-background text-muted-foreground w-full justify-start'
             variant='outline'
           >
             <SearchIcon />
-            {t('Search placeholder')}
+            {/* drawn by CSS from the attribute: a hint of the search box is not the text of the
+                page, and as text it was read by the search engines on every page (BLD-426) */}
+            <span
+              aria-hidden
+              className='before:content-[attr(data-placeholder)]'
+              data-placeholder={t('Search placeholder')}
+            />
           </Button>
         </MobileSearch>
       </div>

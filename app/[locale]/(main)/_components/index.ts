@@ -10,6 +10,7 @@ export { DiscountProductsSection } from './DiscountProductsSection';
 export { DiscountProductsSkeleton } from './DiscountProductsSkeleton';
 export { MobileCategories } from './MobileCategories';
 export { MobileCategoriesLoading } from './MobileCategoriesLoading';
-export { MostSoldProductsSection } from './MostSoldProductsSection';
+export { MostSoldProducts } from './MostSoldProducts';
+export { MostSoldProductsSection, MostSoldProductsSkeleton } from './MostSoldProductsSection';
 export { UsefulContentSection } from './UsefulContentSection/UsefulContentSection';
 export { UsefulContentSectionLoading } from './UsefulContentSectionLoading';
