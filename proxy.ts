@@ -9,7 +9,7 @@ import {
   productSlugById,
   toLanguage
 } from './lib/catalogTree';
-import { isCrawler, pageLastModified } from './lib/lastModified';
+import { pageLastModified } from './lib/lastModified';
 import { splitLocale, withLocale } from './lib/localePath';
 import { routing } from './i18n/routing';
 
@@ -65,31 +65,32 @@ export default async function proxy(request: NextRequest) {
   headers.set('x-pathname', request.nextUrl.pathname);
   headers.set('x-search', request.nextUrl.search);
 
-  // BLD-352: a crawler gets `Last-Modified` (the `updated_at` of the page) and, when the page has
-  // not changed since its `If-Modified-Since`, an empty 304 instead of the whole page. Any client
-  // that asks with `If-Modified-Since` gets the same answer (a browser sends it only after it was
-  // given `Last-Modified`, so an ordinary visitor never does and costs no extra lookup).
+  // BLD-352, BLD-451: a product, category or brand page gets `Last-Modified` (the `updated_at` of
+  // the page) and, when it has not changed since the `If-Modified-Since` of the request, an empty
+  // 304 instead of the whole page. `no-cache` lets the browser and the bots keep the page but
+  // makes them ask before using it, so an old price is never shown.
   let lastModified: Date | null = null;
-  if (
-    request.method === 'GET' &&
-    (isCrawler(request.headers.get('user-agent')) || request.headers.has('if-modified-since'))
-  ) {
+  if (request.method === 'GET') {
     const { locale, path } = splitLocale(request.nextUrl.pathname);
     lastModified = await pageLastModified(
       path,
-      request.nextUrl.pathname !== path ? locale : request.cookies.get('NEXT_LOCALE')?.value
+      request.nextUrl.pathname !== path ? locale : request.cookies.get('NEXT_LOCALE')?.value,
+      request.nextUrl.search
     );
     const since = Date.parse(request.headers.get('if-modified-since') ?? '');
     if (lastModified && !Number.isNaN(since) && lastModified.getTime() <= since) {
       return new NextResponse(null, {
         status: 304,
-        headers: { 'Last-Modified': lastModified.toUTCString() }
+        headers: { 'Last-Modified': lastModified.toUTCString(), 'Cache-Control': 'private, no-cache' }
       });
     }
   }
 
   const response = await intlMiddleware(new Request(request, { headers }));
-  if (lastModified) response.headers.set('Last-Modified', lastModified.toUTCString());
+  if (lastModified) {
+    response.headers.set('Last-Modified', lastModified.toUTCString());
+    response.headers.set('Cache-Control', 'private, no-cache');
+  }
   return response;
 }
 

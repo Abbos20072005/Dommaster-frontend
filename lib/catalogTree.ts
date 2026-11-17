@@ -16,14 +16,16 @@ type Language = (typeof LANGUAGES)[number];
 export const toLanguage = (locale?: string | null): Language => (locale === 'uz' ? 'uz' : 'ru');
 
 const TTL = 60 * 60 * 1000;
+/** the dates of the products (`Last-Modified`): a price changed in 1C must show within a minute */
+const DATES_TTL = 30 * 1000;
 const cache = new Map<string, { at: number; value: Promise<unknown> }>();
 
-/** One request per hour for each key; a failed request is not kept. */
-const cached = <T>(key: string, load: () => Promise<T>): Promise<T> => {
+/** One request per hour (or per `ttl`) for each key; a failed request is not kept. */
+const cached = <T>(key: string, load: () => Promise<T>, ttl = TTL): Promise<T> => {
   // the products are kept one by one: the memory must not grow without a limit
   if (cache.size > 10000) cache.clear();
   const hit = cache.get(key);
-  if (hit && Date.now() - hit.at < TTL) return hit.value as Promise<T>;
+  if (hit && Date.now() - hit.at < ttl) return hit.value as Promise<T>;
   const value = load().catch((error) => {
     cache.delete(key);
     throw error;
@@ -224,7 +226,35 @@ export const productSlugById = async (id: number, language: Language) => {
 
 /** the last change of a product (API `updated_at`), for the `Last-Modified` header of its page */
 export const productUpdatedAt = (id: number, language: Language) =>
-  cached(`product:${language}:${id}`, async () => {
-    const data = await fetchApi<{ result?: { updated_at?: string } }>(`products/${id}/`, language);
-    return data?.result?.updated_at ?? null;
-  }).catch(() => null);
+  cached(
+    `product:${language}:${id}`,
+    async () => {
+      const data = await fetchApi<{ result?: { updated_at?: string } }>(`products/${id}/`, language);
+      return data?.result?.updated_at ?? null;
+    },
+    DATES_TTL
+  ).catch(() => null);
+
+/**
+ * The `updated_at` of the products of a list page (the same request the page makes), for the
+ * `Last-Modified` of a category or a brand. `null` when the list did not answer: then no date is
+ * given and the page is sent in full.
+ */
+export const productListUpdatedAt = (
+  body: Record<string, unknown>,
+  language: Language
+): Promise<string[] | null> =>
+  cached(
+    `list:${language}:${JSON.stringify(body)}`,
+    async () => {
+      const res = await fetch(`${process.env.API_URL}product/filter/`, {
+        method: 'POST',
+        headers: { 'Accept-Language': language, 'Content-Type': 'application/json' },
+        body: JSON.stringify(body)
+      });
+      if (!res.ok) throw new Error('products are not available');
+      const data = (await res.json()) as { result?: { content?: { updated_at?: string }[] } };
+      return (data.result?.content ?? []).flatMap((item) => item.updated_at ?? []);
+    },
+    DATES_TTL
+  ).catch(() => null);
