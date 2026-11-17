@@ -58,7 +58,7 @@ export const ProductCard = ({
           </div>
         )}
       </div>
-      <div className={cn('flex h-48 flex-col gap-3 pt-3', onDark && 'h-44 px-2 pb-2')}>
+      <div className={cn('flex h-48 flex-col gap-3 pt-3', onDark && 'px-2 pb-2')}>
         <div className='space-y-0.5'>
           {/* the rating is shown only when there are reviews; it links to `#reviews`, not `?tab=`
               (robots.txt blocked `?tab=`, BLD-453). An empty line keeps the card height. */}

@@ -18,7 +18,7 @@ export const ProductImagesDesktop = ({ product }: Props) => {
 
   return (
     <div
-      className='relative hidden aspect-3/4 overflow-hidden rounded-xl bg-white group-data-[on-dark]/card:aspect-square group-data-[on-dark]/card:rounded-none md:block'
+      className='relative hidden aspect-3/4 overflow-hidden rounded-xl bg-white group-data-[on-dark]/card:rounded-none md:block'
       onMouseEnter={() => setHovered(true)}
     >
       {product.images.map((image, i) =>

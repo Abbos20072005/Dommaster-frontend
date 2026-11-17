@@ -14,14 +14,12 @@ type Props = React.ComponentProps<'div'> & {
   view?: 'carousel' | 'grid';
   count?: number;
   hideCart?: boolean;
-  onDark?: boolean;
 };
 
 export const ProductListSkeleton = ({
   view = 'carousel',
   count = 10,
   hideCart,
-  onDark,
   className,
   ...props
 }: Props) => {
@@ -37,7 +35,7 @@ export const ProductListSkeleton = ({
           {...props}
         >
           {Array.from({ length: count }).map((_, index) => (
-            <ProductCardSkeleton key={index} hideCart={hideCart} onDark={onDark} />
+            <ProductCardSkeleton key={index} hideCart={hideCart} />
           ))}
         </div>
       )}
@@ -49,7 +47,7 @@ export const ProductListSkeleton = ({
                 key={index}
                 className='basis-[230px] sm:basis-1/2 md:basis-1/3 lg:basis-1/6'
               >
-                <ProductCardSkeleton hideCart={hideCart} onDark={onDark} />
+                <ProductCardSkeleton hideCart={hideCart} />
               </CarouselItem>
             ))}
           </CarouselContent>
