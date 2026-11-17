@@ -21,7 +21,6 @@ const PAGES: [path: string, lastModified: string][] = [
   ['/services', '2026-10-28'],
   ['/stores', '2026-11-10'],
   ['/pickup', '2026-10-27'],
-  ['/lifting', '2026-10-27'],
   ['/legal-entities', '2026-10-27'],
   ['/oferta', '2026-10-19'],
   ['/privacy', '2026-10-20'],

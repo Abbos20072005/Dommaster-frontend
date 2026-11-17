@@ -10,7 +10,7 @@ export const deliveryPage: TrustPageSet = {
     blocks: [
       {
         type: 'p',
-        text: "Buyurtmani Toshkent bo'ylab yetkazib beramiz. Yetkazish narxi va taxminiy muddati manzilingiz va buyurtma tarkibiga qarab hisoblanadi va to'lovdan oldin buyurtmani rasmiylashtirish sahifasida ko'rsatiladi."
+        text: "Buyurtmalarni Toshkent bo'ylab Yandex kuryer orqali yetkazamiz. Yetkazish narxi va taxminiy muddati manzilingiz va buyurtma tarkibiga qarab hisoblanadi va to'lovdan oldin buyurtmani rasmiylashtirish sahifasida ko'rsatiladi."
       },
       { type: 'h2', text: 'Shartlar' },
       {
@@ -31,11 +31,6 @@ export const deliveryPage: TrustPageSet = {
             value: "Taxminiy muddat buyurtmani rasmiylashtirishda ko'rsatiladi."
           },
           {
-            key: "Og'ir va yirik yuk",
-            value:
-              "Qavatga ko'tarish, tushirish va kirish sharoiti oldindan kelishiladi. Bu xizmatlar uchun qo'shimcha haq bo'lsa, u oldindan aytiladi. Oddiy yetkazish narxi ularni avtomatik qamrab olmaydi."
-          },
-          {
             key: 'Kechikish',
             value:
               "Muddat buzilishi xavfi bo'lsa, sizga xabar beramiz va boshqa muddatni yoki buyurtmani bekor qilishni taklif qilamiz."
@@ -54,10 +49,6 @@ export const deliveryPage: TrustPageSet = {
           {
             q: 'Yetkazish narxini qachon bilaman?',
             a: "Manzilni kiritganingizdan keyin, to'lovdan oldin. Narx buyurtmaning jami summasida alohida ko'rsatiladi."
-          },
-          {
-            q: "Yetkazish narxiga qavatga ko'tarish kiradimi?",
-            a: "Avtomatik kirmaydi. Og'ir yoki yirik yuk uchun ko'tarish va tushirish oldindan kelishiladi, qo'shimcha haq bo'lsa oldindan aytiladi."
           },
           {
             q: 'Buyurtma kechiksa nima bo\'ladi?',
@@ -97,7 +88,7 @@ export const deliveryPage: TrustPageSet = {
     blocks: [
       {
         type: 'p',
-        text: 'Доставляем заказы по Ташкенту. Стоимость и ориентировочный срок доставки рассчитываются по вашему адресу и составу заказа и показываются на странице оформления до оплаты.'
+        text: 'Доставляем заказы по Ташкенту курьером Яндекс. Стоимость и ориентировочный срок доставки рассчитываются по вашему адресу и составу заказа и показываются на странице оформления до оплаты.'
       },
       { type: 'h2', text: 'Условия' },
       {
@@ -114,11 +105,6 @@ export const deliveryPage: TrustPageSet = {
               'Рассчитывается по адресу и заказу. Отдельной строкой в итоговой сумме до подтверждения заказа.'
           },
           { key: 'Срок', value: 'Ориентировочный срок показывается при оформлении заказа.' },
-          {
-            key: 'Тяжёлые и крупные грузы',
-            value:
-              'Подъём на этаж, разгрузка и условия заезда согласуются заранее. Если за эти услуги есть доплата, о ней сообщается заранее. Обычная стоимость доставки их автоматически не включает.'
-          },
           {
             key: 'Задержка',
             value:
@@ -138,10 +124,6 @@ export const deliveryPage: TrustPageSet = {
           {
             q: 'Когда я узнаю стоимость доставки?',
             a: 'После ввода адреса, до оплаты. Стоимость показывается отдельной строкой в итоговой сумме заказа.'
-          },
-          {
-            q: 'Входит ли подъём на этаж в стоимость доставки?',
-            a: 'Автоматически нет. Подъём и разгрузка тяжёлого или крупного груза согласуются заранее; если есть доплата, о ней сообщается заранее.'
           },
           {
             q: 'Что будет, если заказ задерживается?',

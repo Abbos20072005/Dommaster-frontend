@@ -13,27 +13,22 @@ export interface ServicesIndexContent {
 
 export const servicesIndexPage: Record<'uz' | 'ru', ServicesIndexContent> = {
   uz: {
-    title: "Buildex xizmatlari: yetkazish, olib ketish, qavatga ko'tarish",
+    title: "Buildex xizmatlari: yetkazish, do'kondan olib ketish",
     description:
-      "Buildex xizmatlari: Toshkent bo'ylab kuryer yetkazish, do'kondan olib ketish, tovarni qavatga ko'tarish, yuridik shaxslar va prorablar uchun buyurtma.",
+      "Buildex xizmatlari: Toshkent bo'ylab Yandex kuryer orqali yetkazish, do'kondan olib ketish, yuridik shaxslar va prorablar uchun buyurtma.",
     h1: 'Xizmatlar',
     intro:
-      "Buyurtmani qanday olish va rasmiylashtirishni tanlang: kuryer yetkazish, do'kondan olib ketish, qavatga ko'tarish, tashkilotlar va usta-prorablar uchun alohida sahifalar.",
+      "Buyurtmani qanday olish va rasmiylashtirishni tanlang: Yandex kuryer orqali yetkazish, do'kondan olib ketish, tashkilotlar va usta-prorablar uchun alohida sahifalar.",
     cards: [
       {
         title: 'Kuryer yetkazish',
-        text: "Toshkent bo'ylab kuryer yetkazish: shartlar va tartib.",
+        text: "Toshkent bo'ylab Yandex kuryer orqali yetkazish: shartlar va tartib.",
         href: '/courier-delivery'
       },
       {
         title: "Do'kondan olib ketish",
         text: "Buyurtmani do'kondan olib ketish: manzillar va olish tartibi.",
         href: '/pickup'
-      },
-      {
-        title: "Qavatga ko'tarish",
-        text: "Tovarni qavatga ko'tarish: qanday buyurtma qilinadi.",
-        href: '/lifting'
       },
       {
         title: 'Yuridik shaxslar uchun',
@@ -48,27 +43,22 @@ export const servicesIndexPage: Record<'uz' | 'ru', ServicesIndexContent> = {
     ]
   },
   ru: {
-    title: 'Услуги Buildex: доставка, самовывоз, подъём на этаж',
+    title: 'Услуги Buildex: доставка, самовывоз из магазина',
     description:
-      'Услуги Buildex: курьерская доставка по Ташкенту, самовывоз из магазинов, подъём товара на этаж, заказ для юридических лиц и прорабов.',
+      'Услуги Buildex: доставка по Ташкенту курьером Яндекс, самовывоз из магазинов, заказ для юридических лиц и прорабов.',
     h1: 'Услуги',
     intro:
-      'Выберите, как получить и оформить заказ: курьерская доставка, самовывоз из магазина, подъём на этаж, отдельные страницы для организаций и мастеров-прорабов.',
+      'Выберите, как получить и оформить заказ: доставка курьером Яндекс, самовывоз из магазина, отдельные страницы для организаций и мастеров-прорабов.',
     cards: [
       {
         title: 'Доставка',
-        text: 'Курьерская доставка по Ташкенту: условия и порядок.',
+        text: 'Доставка по Ташкенту курьером Яндекс: условия и порядок.',
         href: '/courier-delivery'
       },
       {
         title: 'Самовывоз',
         text: 'Заберите заказ в магазине: адреса и порядок получения.',
         href: '/pickup'
-      },
-      {
-        title: 'Подъём на этаж',
-        text: 'Подъём товара на этаж: как заказать.',
-        href: '/lifting'
       },
       {
         title: 'Для юрлиц',

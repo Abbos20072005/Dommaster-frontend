@@ -39,6 +39,9 @@ const nextConfig: NextConfig = {
       { source: '/delivery', destination: '/courier-delivery', permanent: true },
       { source: '/payment', destination: '/payment-methods', permanent: true },
       { source: '/requisites', destination: '/contacts', permanent: true },
+      // the lifting to a floor is not offered yet (BLD-458): its page leads to the delivery
+      { source: '/lifting', destination: '/courier-delivery', permanent: true },
+      { source: '/uz/lifting', destination: '/uz/courier-delivery', permanent: true },
       { source: '/news', destination: '/blogs', permanent: true },
       { source: '/news/:id', destination: '/blogs/:id', permanent: true }
     ];

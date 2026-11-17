@@ -21,7 +21,6 @@ const COLUMNS = [
       { href: '/courier-delivery', label: 'Delivery by courier' },
       { href: '/payment-methods', label: 'Payment methods' },
       { href: '/pickup', label: 'Pickup' },
-      { href: '/lifting', label: 'Floor lifting' },
       { href: '/returns', label: 'Returns' },
       { href: '/returns#kafolat', label: 'Warranty' }
     ]
