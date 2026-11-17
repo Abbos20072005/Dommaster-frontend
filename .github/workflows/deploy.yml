@@ -79,7 +79,8 @@ jobs:
 
           # HTTP 200 yetarli emas — sahifa aynan yangi build'dan kelayotganini tekshiramiz.
           for i in $(seq 1 30); do
-            if curl -fsS -m 10 "$SITE_URL" 2>/dev/null | grep -q "$BUILD_ID"; then
+            # -F -- : a BUILD_ID can start with "-" (it was read as options of grep: "-onKkT7...")
+            if curl -fsS -m 10 "$SITE_URL" 2>/dev/null | grep -qF -- "$BUILD_ID"; then
               trap - ERR
               echo "OK: $SITE_URL -> BUILD_ID $BUILD_ID ($(git rev-parse --short HEAD))"
               exit 0
