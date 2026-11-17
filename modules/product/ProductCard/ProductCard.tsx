@@ -58,7 +58,7 @@ export const ProductCard = ({
           </div>
         )}
       </div>
-      <div className={cn('flex flex-col gap-2 pt-2', onDark && 'px-2 pb-2')}>
+      <div className={cn('flex flex-col gap-2 pt-1', onDark && 'px-1.5 pb-1.5')}>
         <div className='space-y-0.5'>
           {/* the rating is shown only when there are reviews; it links to `#reviews`, not `?tab=`
               (robots.txt blocked `?tab=`, BLD-453). No empty line without reviews: the name
