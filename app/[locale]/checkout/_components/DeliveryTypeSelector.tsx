@@ -18,7 +18,7 @@ import { useCheckoutStore } from '@/utils/stores';
 import { DeliveryAddress } from './DeliveryCard';
 import { StoreSelector } from './StoreSelector';
 
-const PRICE_REFRESH_INTERVAL = 30 * 1000;
+const PRICE_REFRESH_INTERVAL = 20 * 1000;
 
 const deliveryOptions = [
   {
@@ -58,7 +58,14 @@ export const DeliveryTypeSelector = () => {
     .join(',');
 
   const checkPriceQuery = useQuery({
-    queryKey: ['deliveryCheckPrice', defaultAddress?.id, itemsKey],
+    // the coordinates too: an address edited in place keeps its id, but its price changes
+    queryKey: [
+      'deliveryCheckPrice',
+      defaultAddress?.id,
+      defaultAddress?.latitude,
+      defaultAddress?.longitude,
+      itemsKey
+    ],
     queryFn: () =>
       postDeliveryCheckPrice({
         data: {
