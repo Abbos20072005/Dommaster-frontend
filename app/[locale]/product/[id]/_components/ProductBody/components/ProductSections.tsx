@@ -9,6 +9,7 @@ import {
   AccordionItem,
   AccordionTrigger
 } from '@/components/ui/accordion';
+import { useMinWidth } from '@/hooks';
 import { cn } from '@/lib/utils';
 
 import { ProductCharacteristics } from './ProductCharacteristics';
@@ -92,63 +93,76 @@ const DesktopSections = ({ product, openSection, onOpenSectionChange }: Props) =
   );
 };
 
-export const ProductSections = ({ product, openSection, onOpenSectionChange }: Props) => {
+export const ProductSections = ({
+  product,
+  openSection,
+  onOpenSectionChange,
+  phone
+}: Props & { phone: boolean }) => {
   const t = useTranslations();
+  // One layout only: the description and the other sections were in the HTML twice, the desktop
+  // tabs and the phone accordion (BLD-461, F6). The server guesses by the User-Agent, the browser
+  // by the width (`null` until it knows: the guess stays, so the first render matches the server).
+  const isDesktop = useMinWidth(768) ?? !phone;
 
   return (
     <>
-      <DesktopSections
-        openSection={openSection}
-        product={product}
-        onOpenSectionChange={onOpenSectionChange}
-      />
+      {isDesktop && (
+        <DesktopSections
+          openSection={openSection}
+          product={product}
+          onOpenSectionChange={onOpenSectionChange}
+        />
+      )}
 
-      <Accordion
-        className='border-t md:hidden'
-        type='single'
-        value={openSection}
-        collapsible
-        onValueChange={onOpenSectionChange}
-      >
-        <AccordionItem
-          disabled={!product.description}
-          id={`${sectionElementId('description')}-mobile`}
-          value='description'
+      {!isDesktop && (
+        <Accordion
+          className='border-t md:hidden'
+          type='single'
+          value={openSection}
+          collapsible
+          onValueChange={onOpenSectionChange}
         >
-          <AccordionTrigger>{t('Description')}</AccordionTrigger>
-          <AccordionContent>
-            <ProductDescriptionPreview description={product.description} />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem
-          disabled={!product.characteristics.length}
-          id={`${sectionElementId('characteristics')}-mobile`}
-          value='characteristics'
-        >
-          <AccordionTrigger>{t('Characteristics')}</AccordionTrigger>
-          <AccordionContent>
-            <ProductCharacteristics characteristics={product.characteristics} />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem id={`${sectionElementId('reviews')}-mobile`} value='reviews'>
-          <AccordionTrigger>
-            {t('Reviews')}
-            {!!product.comments_quantity && `: ${product.comments_quantity}`}
-          </AccordionTrigger>
-          <AccordionContent>
-            <ProductComments product={product} />
-          </AccordionContent>
-        </AccordionItem>
-        <AccordionItem id={`${sectionElementId('questions')}-mobile`} value='questions'>
-          <AccordionTrigger>
-            {t('Questions')}
-            {!!product.questions_quantity && `: ${product.questions_quantity}`}
-          </AccordionTrigger>
-          <AccordionContent>
-            <ProductQuestions product={product} />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
+          <AccordionItem
+            disabled={!product.description}
+            id={`${sectionElementId('description')}-mobile`}
+            value='description'
+          >
+            <AccordionTrigger>{t('Description')}</AccordionTrigger>
+            <AccordionContent>
+              <ProductDescriptionPreview description={product.description} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem
+            disabled={!product.characteristics.length}
+            id={`${sectionElementId('characteristics')}-mobile`}
+            value='characteristics'
+          >
+            <AccordionTrigger>{t('Characteristics')}</AccordionTrigger>
+            <AccordionContent>
+              <ProductCharacteristics characteristics={product.characteristics} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem id={`${sectionElementId('reviews')}-mobile`} value='reviews'>
+            <AccordionTrigger>
+              {t('Reviews')}
+              {!!product.comments_quantity && `: ${product.comments_quantity}`}
+            </AccordionTrigger>
+            <AccordionContent>
+              <ProductComments product={product} />
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem id={`${sectionElementId('questions')}-mobile`} value='questions'>
+            <AccordionTrigger>
+              {t('Questions')}
+              {!!product.questions_quantity && `: ${product.questions_quantity}`}
+            </AccordionTrigger>
+            <AccordionContent>
+              <ProductQuestions product={product} />
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      )}
     </>
   );
 };

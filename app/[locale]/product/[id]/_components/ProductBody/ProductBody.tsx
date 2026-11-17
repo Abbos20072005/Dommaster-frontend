@@ -23,7 +23,8 @@ const sectionFromAddress = (): ProductSectionId | null => {
   return SECTION_IDS.find((section) => section === wanted) ?? null;
 };
 
-export const ProductBody = () => {
+/** `phone`: the guess of the server (User-Agent) which of the two layouts of the sections to send */
+export const ProductBody = ({ phone = false }: { phone?: boolean }) => {
   // the open section is kept in the page, not in the address: no `?tab=` URLs (BLD-453)
   const [tab, setTab] = React.useState<string>('description');
   const id = useProductId();
@@ -95,6 +96,7 @@ export const ProductBody = () => {
           </div>
           <ProductSections
             openSection={tab}
+            phone={phone}
             product={product}
             onOpenSectionChange={(section) => setTab(section || 'description')}
           />

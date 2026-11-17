@@ -2,10 +2,12 @@ import type { Metadata } from 'next';
 
 import { getLocale, getTranslations } from 'next-intl/server';
 import { unstable_cache } from 'next/cache';
+import { headers } from 'next/headers';
 import { notFound, permanentRedirect } from 'next/navigation';
 import React, { cache } from 'react';
 
 import { JsonLd } from '@/components/JsonLd';
+import { isPhoneUserAgent } from '@/lib/device';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { toLanguage } from '@/lib/catalogTree';
 import { breadcrumbJsonLd, productJsonLd } from '@/lib/jsonLd';
@@ -151,7 +153,7 @@ const ProductPage = async ({ params }: Props) => {
       <BaseLayout className='mt-2 md:mt-4'>
         <ProductViewTracker />
         <ProductHeader />
-        <ProductBody />
+        <ProductBody phone={isPhoneUserAgent((await headers()).get('user-agent'))} />
         <ProductLinks />
         <SameCategoryProducts initial={sameCategory} />
         <RecentlyViewedProducts />
