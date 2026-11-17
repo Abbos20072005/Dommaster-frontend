@@ -14,7 +14,7 @@ export const DiscountProductsSkeleton = () => (
           </div>
           <Skeleton className='hidden h-11 w-25 md:block' />
         </div>
-        <ProductListSkeleton />
+        <ProductListSkeleton onDark />
         <div className='pb-4'>
           <Skeleton className='h-8 w-full md:hidden' />
         </div>

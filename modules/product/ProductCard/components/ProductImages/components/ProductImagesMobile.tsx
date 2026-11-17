@@ -36,7 +36,10 @@ export const ProductImagesMobile = ({ product }: Props) => {
       <Carousel setApi={setApi}>
         <CarouselContent className='ml-0'>
           {product.images.map((image, i) => (
-            <CarouselItem key={image.id} className='relative aspect-3/4 overflow-hidden pl-0'>
+            <CarouselItem
+              key={image.id}
+              className='relative aspect-3/4 overflow-hidden pl-0 group-data-[on-dark]/card:aspect-square'
+            >
               {(i === 0 || touched) && (
                 <CardImage fill alt={product.name || 'Buildex'} sizes='50vw' src={image.image} />
               )}

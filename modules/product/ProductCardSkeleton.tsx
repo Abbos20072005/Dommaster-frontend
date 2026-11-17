@@ -5,14 +5,16 @@ import { cn } from '@/lib/utils';
 
 type Props = React.ComponentProps<'div'> & {
   hideCart?: boolean;
+  /** the card on the dark sale block: a square photo and a shorter text part, like `ProductCard` */
+  onDark?: boolean;
 };
 
 /** The shape of `ProductCard`: a 3:4 photo, the rating, two lines of the name, the price, the cart button. */
-export const ProductCardSkeleton = ({ className, hideCart, ...props }: Props) => {
+export const ProductCardSkeleton = ({ className, hideCart, onDark, ...props }: Props) => {
   return (
     <div className={cn('flex flex-col', className)} {...props}>
-      <Skeleton className='aspect-3/4 w-full rounded-xl' />
-      <div className='flex h-48 flex-col gap-3 pt-3'>
+      <Skeleton className={cn('aspect-3/4 w-full rounded-xl', onDark && 'aspect-square')} />
+      <div className={cn('flex h-48 flex-col gap-3 pt-3', onDark && 'h-44')}>
         <div className='space-y-0.5'>
           <div className='flex h-5 items-center'>
             <Skeleton className='h-3.5 w-28' />
