@@ -11,6 +11,7 @@ import { toLanguage } from '@/lib/catalogTree';
 import { breadcrumbJsonLd, productJsonLd } from '@/lib/jsonLd';
 import { withLocale } from '@/lib/localePath';
 import { orNotFound } from '@/lib/orNotFound';
+import { formatPrice } from '@/lib/utils';
 import { metaOverride } from '@/lib/seo';
 import { categoryHref, productIdFromParam } from '@/lib/urls';
 import { getProductById, getProducts } from '@/utils/api/requests';
@@ -77,7 +78,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     override.description ??
     t('metadata.product.description', {
       name: product.name,
-      price: product.discount_price ?? product.price
+      price: formatPrice(product.discount_price ?? product.price)
     });
   const image = product.images[0]?.image;
 
