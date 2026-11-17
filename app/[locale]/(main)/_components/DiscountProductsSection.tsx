@@ -43,7 +43,7 @@ export const DiscountProductsSection = ({ initial }: Props) => {
   return (
     <section>
       <BaseLayout className='px-0'>
-        <div className='relative px-2 pt-4'>
+        <div className='relative px-1.5 pt-3'>
           <Image
             alt={sales.name || 'Buildex'}
             className='absolute inset-0 -z-1 size-full rounded-2xl object-cover'
@@ -57,9 +57,11 @@ export const DiscountProductsSection = ({ initial }: Props) => {
           />
           <ProductSection
             onDark
-            headerClassName='px-4'
+            headerClassName='px-1'
             href={`/sale/${sales.id}`}
-            listClassName='px-4 pb-4'
+            // the cards are 6px from the sides and 1px from the bottom of the block (the carousel
+            // has 16px of its own below)
+            listClassName='-mb-[15px]'
             products={sales.products}
             title={
               <div className='flex flex-wrap items-baseline gap-x-3 gap-y-0.5'>
