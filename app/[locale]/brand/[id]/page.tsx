@@ -8,7 +8,10 @@ import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import { breadcrumbJsonLd } from '@/lib/jsonLd';
 import { ProductFilterPaginated } from '@/components/ProductFilterPaginated';
-import { getInitialProducts } from '@/components/ProductFilterPaginated/getInitialProducts';
+import {
+  getInitialProducts,
+  parsePage
+} from '@/components/ProductFilterPaginated/getInitialProducts';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -28,6 +31,8 @@ import { getBrandById, getProducts } from '@/utils/api/requests';
 
 interface Props {
   params: Promise<{ id: string }>;
+  /** `?page=N`: the page of the list, rendered on the server too */
+  searchParams?: Promise<{ page?: string }>;
 }
 
 /** The item categories of the brand's products (up to 100 of them are looked at). */
@@ -71,18 +76,22 @@ const getBrand = cache(async (param: string) => {
   return brand;
 });
 
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
+export async function generateMetadata({ params, searchParams }: Props): Promise<Metadata> {
   const brand = await getBrand((await params).id);
   if (!brand?.name) return {};
   const t = await getTranslations();
+  const page = parsePage((await searchParams)?.page);
+  // from the 2nd page of the list the title and the description end with the page number (BLD-461)
+  const suffix = page > 1 ? ` — ${t('metadata.page', { page })}` : '';
 
   // the brand's own text when the admin panel has one, else a template (not the home page text)
   const override = metaOverride(brand);
-  const title = override.title?.absolute ?? t('Brand meta title', { brand: brand.name });
-  const description =
+  const title = `${override.title?.absolute ?? t('Brand meta title', { brand: brand.name })}${suffix}`;
+  const description = `${
     override.description ||
     htmlToText(brand.description) ||
-    t('Brand meta description', { brand: brand.name });
+    t('Brand meta description', { brand: brand.name })
+  }${suffix}`;
 
   return {
     // `absolute`: the title already ends with the site name; the global suffix is not added
@@ -93,10 +102,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-const SearchPage = async ({ params }: Props) => {
+const SearchPage = async ({ params, searchParams }: Props) => {
   const t = await getTranslations();
   const brand = await getBrand((await params).id);
-  const initialProducts = await getInitialProducts({ brand: brand.id });
+  const page = parsePage((await searchParams)?.page);
+  // the page of products (`?page=N`) is in the HTML, as on the category pages
+  const initialProducts = await getInitialProducts({ brand: brand.id }, page);
   // the categories of the brand: those of its products (the API has no such list)
   const categories = await getBrandCategories(brand.id);
   const description = sanitizeHtml(brand.description);
@@ -173,6 +184,7 @@ const SearchPage = async ({ params }: Props) => {
         <ProductFilterPaginated
           filterDefaultValues={{ brand: brand.id }}
           filters={filters}
+          initialPage={page}
           initialProducts={initialProducts}
           queries={{ brand: brand.id }}
         />

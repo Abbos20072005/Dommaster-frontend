@@ -39,7 +39,11 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const itemCategoryResponse = await orNotFound(getItemCategoryById({ id: itemId }));
   const itemCategory = itemCategoryResponse.data.result;
 
-  return categoryMetadata({ source: itemCategory, page });
+  return {
+    ...(await categoryMetadata({ source: itemCategory, page })),
+    // an empty category shows "no products found": it is not worth indexing (BLD-461, F3)
+    ...(itemCategory?.product_amount === 0 ? { robots: { index: false, follow: true } } : {})
+  };
 }
 
 const ItemCategoryPage = async ({ params, searchParams }: Props) => {

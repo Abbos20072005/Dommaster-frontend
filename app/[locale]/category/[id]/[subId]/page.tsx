@@ -42,7 +42,15 @@ export async function generateMetadata({ params, searchParams }: Props): Promise
   const subCategoryResponse = await orNotFound(getSubCategoryById({ id: subId }));
   const subCategory = subCategoryResponse.data.result;
 
-  return categoryMetadata({ source: subCategory, page });
+  // none of its item categories has a product: the page is empty (same rule as the sitemap, BLD-461)
+  const isEmpty = !(subCategory?.product_item_categories ?? []).some(
+    (item) => item.product_amount !== 0
+  );
+
+  return {
+    ...(await categoryMetadata({ source: subCategory, page })),
+    ...(isEmpty ? { robots: { index: false, follow: true } } : {})
+  };
 }
 
 const SubCategoryPage = async ({ params, searchParams }: Props) => {
