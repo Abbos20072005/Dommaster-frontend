@@ -32,7 +32,18 @@ export const MostSoldProductsSection = ({ initial }: Props) => {
   const getMostSoldProductsQuery = useQuery({
     queryKey: ['products', 'mostSold'],
     staleTime: 0,
-    queryFn: () => getMostSoldProducts().then((response) => response.data),
+    // the API gives no slug here: keep the ones the server found, so the links do not change
+    queryFn: () =>
+      getMostSoldProducts().then((response) => {
+        const slugs = new Map(initial?.result.map((product) => [product.id, product.slug]));
+        return {
+          ...response.data,
+          result: response.data.result.map((product) => ({
+            ...product,
+            slug: product.slug ?? slugs.get(product.id)
+          }))
+        };
+      }),
     initialData: initial ?? undefined
   });
 

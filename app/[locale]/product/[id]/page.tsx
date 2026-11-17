@@ -66,6 +66,8 @@ const getSameCategory = unstable_cache(
   { revalidate: 300 }
 );
 
+const TITLE_LIMIT = 70;
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const t = await getTranslations();
   const { id: param } = await params;
@@ -73,7 +75,15 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const override = metaOverride(product);
   // "{name} — buy in Tashkent | Buildex", like the category and brand pages: the old site suffix
   // made the title 123-132 characters long (BLD-424)
-  const title = override.title?.absolute ?? t('Product meta title', { name: product.name });
+  // over 70 characters Google cuts the title: the suffix gets shorter, then goes
+  const withSuffix = t('Product meta title', { name: product.name });
+  const title =
+    override.title?.absolute ??
+    (withSuffix.length <= TITLE_LIMIT
+      ? withSuffix
+      : `${product.name} | Buildex`.length <= TITLE_LIMIT
+        ? `${product.name} | Buildex`
+        : product.name);
   const description =
     override.description ??
     t('metadata.product.description', {

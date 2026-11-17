@@ -13,6 +13,7 @@ import {
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
 import { toLanguage } from '@/lib/catalogTree';
+import { shareCards } from '@/lib/seo';
 import { RecentlyViewedProducts } from '@/modules/product';
 import { getNewsList } from '@/utils/api/requests';
 
@@ -21,7 +22,10 @@ import { NewsList } from './_components/NewsList';
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations();
 
-  return { title: t('News'), description: t('metadata.pages.news') };
+  const title = t('News meta title');
+  const description = t('metadata.pages.news');
+
+  return { title: { absolute: title }, description, ...shareCards({ title, description }) };
 }
 
 /** the same request as the list makes in the browser: the first (big) page of the news */

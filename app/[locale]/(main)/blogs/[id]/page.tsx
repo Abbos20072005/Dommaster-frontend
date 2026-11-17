@@ -7,7 +7,7 @@ import Image from 'next/image';
 import { notFound } from 'next/navigation';
 
 import { withMainPhone } from '@/lib/phone';
-import { htmlToText } from '@/lib/seo';
+import { htmlToText, shareCards } from '@/lib/seo';
 
 import { BaseLayout, MobileHeader } from '@/components/layout';
 import {
@@ -36,9 +36,15 @@ const getNews = async (id: string) => {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params;
-  const { title, description } = await getNews(id);
+  const news = await getNews(id);
+  const title = `${news.title} | Buildex`;
+  const description = htmlToText(news.description) || undefined;
 
-  return { title, description: htmlToText(description) || undefined };
+  return {
+    title: { absolute: title },
+    description,
+    ...shareCards({ title, description: description ?? title, image: news.image || undefined })
+  };
 }
 
 const NewsPage = async ({ params }: Props) => {

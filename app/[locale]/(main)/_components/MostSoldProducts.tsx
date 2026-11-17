@@ -2,22 +2,34 @@ import { getLocale } from 'next-intl/server';
 import { unstable_cache } from 'next/cache';
 
 import { toLanguage } from '@/lib/catalogTree';
-import { getMostSoldProducts } from '@/utils/api/requests';
+import { getMostSoldProducts, getProductById } from '@/utils/api/requests';
 
 import { MostSoldProductsSection } from './MostSoldProductsSection';
 
 /** How many bestsellers are drawn on the server: the links the search engines follow. */
 const SERVER_PRODUCTS = 12;
 
-/** The bestsellers, kept for a minute per language (the language goes in as a header). */
+/**
+ * The bestsellers, kept for a minute per language (the language goes in as a header). The API
+ * gives no `slug` for them, so it is taken from the product itself: the link then goes straight to
+ * `/product/{slug}-{id}`, not through the redirect of `/product/{id}` (BLD-424).
+ */
 const getCachedMostSold = unstable_cache(
   async (language: 'ru' | 'uz') => {
-    const response = await getMostSoldProducts({
-      config: { headers: { 'Accept-Language': language } }
-    });
-    return response.data;
+    const headers = { 'Accept-Language': language };
+    const response = await getMostSoldProducts({ config: { headers } });
+    const result = await Promise.all(
+      (response.data.result ?? []).slice(0, SERVER_PRODUCTS).map(async (product) => {
+        if (product.slug) return product;
+        const slug = await getProductById({ id: product.id, config: { headers } })
+          .then((full) => full.data.result.slug)
+          .catch(() => undefined);
+        return { ...product, slug };
+      })
+    );
+    return { ...response.data, result };
   },
-  ['most-sold'],
+  ['most-sold-slugs'],
   { revalidate: 60 }
 );
 
@@ -31,7 +43,6 @@ export const MostSoldProducts = async () => {
 
   // a failed request must not break the home page: the block loads in the browser as before
   const sold = await getCachedMostSold(language).catch(() => null);
-  const initial = sold && { ...sold, result: (sold.result ?? []).slice(0, SERVER_PRODUCTS) };
 
-  return <MostSoldProductsSection initial={initial} />;
+  return <MostSoldProductsSection initial={sold} />;
 };
