@@ -5,21 +5,33 @@ import { cn } from '@/lib/utils';
 
 type Props = React.ComponentProps<'div'> & {
   hideCart?: boolean;
+  /** the card of the sale block: a tighter text part, like `ProductCard` there */
+  onDark?: boolean;
 };
 
 /** The shape of `ProductCard`: a 3:4 photo, the rating, two lines of the name, the price, the cart button. */
-export const ProductCardSkeleton = ({ className, hideCart, ...props }: Props) => {
+export const ProductCardSkeleton = ({ className, hideCart, onDark, ...props }: Props) => {
   return (
     <div className={cn('flex flex-col', className)} {...props}>
       <Skeleton className='aspect-3/4 w-full rounded-xl' />
-      <div className={cn('flex flex-col gap-2 pt-1', hideCart ? 'h-23' : 'h-35')}>
-        <div className='space-y-0.5'>
+      <div
+        className={cn(
+          'flex flex-col',
+          onDark ? cn('gap-2 pt-1', hideCart ? 'h-23' : 'h-35') : 'h-48 gap-3 pt-3'
+        )}
+      >
+        <div className={cn('space-y-0.5', onDark && 'order-2')}>
+          {!onDark && (
+            <div className='flex h-5 items-center'>
+              <Skeleton className='h-3.5 w-28' />
+            </div>
+          )}
           <div className='flex h-10 flex-col justify-center gap-1.5'>
             <Skeleton className='h-3.5 w-full' />
             <Skeleton className='h-3.5 w-2/3' />
           </div>
         </div>
-        <div className='mt-auto flex h-6 items-center'>
+        <div className={cn('mt-auto flex h-6 items-center', onDark && 'order-1')}>
           <Skeleton className='h-5 w-32' />
         </div>
         {!hideCart && <Skeleton className='h-10 w-full rounded-xl' />}

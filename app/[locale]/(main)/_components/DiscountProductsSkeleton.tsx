@@ -14,7 +14,7 @@ export const DiscountProductsSkeleton = () => (
           </div>
           <Skeleton className='hidden h-11 w-25 md:block' />
         </div>
-        <ProductListSkeleton hideCart />
+        <ProductListSkeleton hideCart onDark />
         <div className='-mt-[15px] pb-px'>
           <Skeleton className='h-8 w-full md:hidden' />
         </div>

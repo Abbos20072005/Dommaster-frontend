@@ -58,12 +58,14 @@ export const ProductCard = ({
           </div>
         )}
       </div>
-      <div className={cn('flex flex-col gap-2 pt-1', onDark && 'px-1.5 pb-1.5')}>
-        <div className='space-y-0.5'>
+      {/* the sale block (dark) has a tighter text part; every other card keeps the fixed height */}
+      <div className={cn('flex flex-col', onDark ? 'gap-2 px-1.5 pt-1 pb-1.5' : 'h-48 gap-3 pt-3')}>
+        {/* the sale block shows the price first, then the name (`order`) */}
+        <div className={cn('space-y-0.5', onDark && 'order-2')}>
           {/* the rating is shown only when there are reviews; it links to `#reviews`, not `?tab=`
-              (robots.txt blocked `?tab=`, BLD-453). No empty line without reviews: the name
-              starts right under the photo. */}
-          {product.comments_quantity > 0 && (
+              (robots.txt blocked `?tab=`, BLD-453). An empty line keeps the card height (not on
+              the sale block, where the name starts right under the photo). */}
+          {product.comments_quantity > 0 ? (
             <Link
               href={`${productHref(product)}#reviews`}
               className='flex h-5 items-center gap-1 text-sm'
@@ -75,12 +77,14 @@ export const ProductCard = ({
                 • {product.comments_quantity} {t('reviews')}
               </span>
             </Link>
+          ) : (
+            !onDark && <div className='h-5' />
           )}
-          <Link className='block' href={productHref(product)} prefetch={false}>
+          <Link className={cn('block', !onDark && 'h-10')} href={productHref(product)} prefetch={false}>
             <span className='line-clamp-2 text-sm leading-5 font-medium'>{name}</span>
           </Link>
         </div>
-        <div className='mt-auto'>
+        <div className={cn('mt-auto', onDark && 'order-1')}>
           {product.discount_price && (
             <div className='text-muted-foreground text-xs leading-4 line-through'>
               {formatPrice(product.price)} {t('sum')}
