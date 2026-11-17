@@ -63,7 +63,7 @@ export const DiscountProductsSection = ({ initial }: Props) => {
             products={sales.products}
             title={
               <div className='flex flex-wrap items-baseline gap-x-3 gap-y-0.5'>
-                <p className='text-primary-foreground text-sm'>
+                <p className='text-primary-foreground order-last text-sm'>
                   {format(sales.discount_from, 'dd MMMM', {
                     locale: localeMap[locale as Locale]
                   })}{' '}
