@@ -2,6 +2,8 @@
  * /services (BLD-252): the entrance to the service pages. A short intro and one card for each
  * page; the texts only name what the pages already say (no prices, terms or promises).
  */
+import { LIFTING_ENABLED } from '@/lib/features';
+
 export interface ServicesIndexContent {
   /** `<title>` with the site suffix (30–65 characters) */
   title: string;
@@ -30,6 +32,15 @@ export const servicesIndexPage: Record<'uz' | 'ru', ServicesIndexContent> = {
         text: "Buyurtmani do'kondan olib ketish: manzillar va olish tartibi.",
         href: '/pickup'
       },
+      ...(LIFTING_ENABLED
+        ? [
+            {
+              title: "Qavatga ko'tarish",
+              text: "Tovarni qavatga ko'tarish: qanday buyurtma qilinadi.",
+              href: '/lifting'
+            }
+          ]
+        : []),
       {
         title: 'Yuridik shaxslar uchun',
         text: "Tashkilot nomidan buyurtma: rekvizitlar va rasmiylashtirish.",
@@ -60,6 +71,15 @@ export const servicesIndexPage: Record<'uz' | 'ru', ServicesIndexContent> = {
         text: 'Заберите заказ в магазине: адреса и порядок получения.',
         href: '/pickup'
       },
+      ...(LIFTING_ENABLED
+        ? [
+            {
+              title: 'Подъём на этаж',
+              text: 'Подъём товара на этаж: как заказать.',
+              href: '/lifting'
+            }
+          ]
+        : []),
       {
         title: 'Для юрлиц',
         text: 'Заказ от имени организации: реквизиты и оформление.',

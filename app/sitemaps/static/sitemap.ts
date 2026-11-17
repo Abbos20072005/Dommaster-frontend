@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 
+import { LIFTING_ENABLED } from '@/lib/features';
 import { languagePair } from '@/lib/sitemap';
 
 /**
@@ -21,6 +22,7 @@ const PAGES: [path: string, lastModified: string][] = [
   ['/services', '2026-10-28'],
   ['/stores', '2026-11-10'],
   ['/pickup', '2026-10-27'],
+  ...(LIFTING_ENABLED ? ([['/lifting', '2026-10-27']] as [string, string][]) : []),
   ['/legal-entities', '2026-10-27'],
   ['/oferta', '2026-10-19'],
   ['/privacy', '2026-10-20'],

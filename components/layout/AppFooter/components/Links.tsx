@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 import { Link } from '@/i18n/navigation';
+import { LIFTING_ENABLED } from '@/lib/features';
 
 const linkClass =
   'hover:text-secondary inline-block text-sm leading-[200%] whitespace-nowrap transition-colors';
@@ -21,6 +22,7 @@ const COLUMNS = [
       { href: '/courier-delivery', label: 'Delivery by courier' },
       { href: '/payment-methods', label: 'Payment methods' },
       { href: '/pickup', label: 'Pickup' },
+      ...(LIFTING_ENABLED ? [{ href: '/lifting', label: 'Floor lifting' }] : []),
       { href: '/returns', label: 'Returns' },
       { href: '/returns#kafolat', label: 'Warranty' }
     ]

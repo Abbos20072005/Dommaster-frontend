@@ -2,6 +2,8 @@ import type { NextConfig } from 'next';
 
 import createNextIntlPlugin from 'next-intl/plugin';
 
+import { LIFTING_ENABLED } from './lib/features';
+
 const withNextIntl = createNextIntlPlugin();
 
 /**
@@ -40,8 +42,13 @@ const nextConfig: NextConfig = {
       { source: '/payment', destination: '/payment-methods', permanent: true },
       { source: '/requisites', destination: '/contacts', permanent: true },
       // the lifting to a floor is not offered yet (BLD-458): its page leads to the delivery
-      { source: '/lifting', destination: '/courier-delivery', permanent: true },
-      { source: '/uz/lifting', destination: '/uz/courier-delivery', permanent: true },
+      // (temporary, until `LIFTING_ENABLED` is turned on)
+      ...(LIFTING_ENABLED
+        ? []
+        : [
+            { source: '/lifting', destination: '/courier-delivery', permanent: false },
+            { source: '/uz/lifting', destination: '/uz/courier-delivery', permanent: false }
+          ]),
       { source: '/news', destination: '/blogs', permanent: true },
       { source: '/news/:id', destination: '/blogs/:id', permanent: true }
     ];
