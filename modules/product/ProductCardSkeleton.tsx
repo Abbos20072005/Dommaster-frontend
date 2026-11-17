@@ -12,7 +12,7 @@ export const ProductCardSkeleton = ({ className, hideCart, ...props }: Props) =>
   return (
     <div className={cn('flex flex-col', className)} {...props}>
       <Skeleton className='aspect-3/4 w-full rounded-xl' />
-      <div className='flex h-40 flex-col gap-3 pt-3'>
+      <div className='flex h-39 flex-col gap-3 pt-3'>
         <div className='space-y-0.5'>
           <div className='flex h-10 flex-col justify-center gap-1.5'>
             <Skeleton className='h-3.5 w-full' />
