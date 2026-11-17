@@ -17,6 +17,8 @@ interface Props {
   /** the page with all the products of this carousel */
   href: React.ComponentProps<typeof Link>['href'];
   onDark?: boolean;
+  /** no "To cart" button on the cards */
+  hideCart?: boolean;
   className?: string;
   headerClassName?: string;
   listClassName?: string;
@@ -28,6 +30,7 @@ export const ProductSection = ({
   products,
   href,
   onDark,
+  hideCart,
   className,
   headerClassName,
   listClassName
@@ -46,7 +49,7 @@ export const ProductSection = ({
         </Button>
       </div>
       <div className={listClassName}>
-        <ProductList onDark={onDark} products={products} />
+        <ProductList hideCart={hideCart} onDark={onDark} products={products} />
       </div>
     </div>
   );
