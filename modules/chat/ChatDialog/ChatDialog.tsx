@@ -1,150 +1,51 @@
 'use client';
 
-import { useMutation } from '@tanstack/react-query';
-import { ImageIcon, SendIcon, XIcon } from 'lucide-react';
-import { useTranslations } from 'next-intl';
+import dynamic from 'next/dynamic';
+import { Slot } from 'radix-ui';
 import React from 'react';
-import { toast } from 'sonner';
 
-import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger
-} from '@/components/ui/dialog';
-import {
-  FileUpload,
-  FileUploadItem,
-  FileUploadItemDelete,
-  FileUploadItemMetadata,
-  FileUploadItemPreview,
-  FileUploadItemProgress,
-  FileUploadList,
-  FileUploadTrigger
-} from '@/components/ui/file-upload';
-import { Input } from '@/components/ui/input';
-import { MessageList } from '@/modules/chat/ChatDialog/components';
-import { postChatMessage } from '@/utils/api/requests';
+// the window (the message list, the photo upload, the form) is a separate chunk: it is loaded when
+// the customer reaches for the button, so the first load of a page does not carry it (BLD-485)
+const loadContent = () => import('./ChatDialogContent').then((module) => module.ChatDialogContent);
+const ChatDialogContent = dynamic(loadContent, { ssr: false });
 
-interface Props extends React.ComponentProps<typeof DialogTrigger> {
-  children: React.ReactNode;
+interface Props extends React.ComponentProps<'button'> {
+  /** the button is the child itself, not a new element around it */
+  asChild?: boolean;
 }
 
-export const ChatDialog = ({ children, ...props }: Props) => {
-  const t = useTranslations();
+/** The chat button; the window opens on a click. */
+export const ChatDialog = ({ asChild, children, onClick, onFocus, onPointerEnter, ...props }: Props) => {
   const [open, setOpen] = React.useState(false);
-  const [message, setMessage] = React.useState('');
-  const [image, setImage] = React.useState<File>();
-
-  const postChatMessageMutation = useMutation({
-    mutationFn: postChatMessage,
-    onSuccess: () => {
-      setMessage('');
-      setImage(undefined);
-    },
-    meta: {
-      invalidatesQuery: ['chat-messages']
-    }
-  });
-
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!message.trim() && !image) return;
-    const fd = new FormData();
-    if (image) fd.append('image', image);
-    if (message.trim()) fd.append('message', message);
-
-    postChatMessageMutation.mutate({ data: fd });
-  };
+  // once opened the window stays mounted: closing it keeps the typed message and the list
+  const [mounted, setMounted] = React.useState(false);
+  const Comp = asChild ? Slot.Root : 'button';
 
   return (
-    <Dialog onOpenChange={setOpen} open={open}>
-      <DialogTrigger {...props}>{children}</DialogTrigger>
-      <DialogContent
-        className='flex h-dvh w-screen flex-col gap-0 p-0 sm:max-w-auto md:h-full md:max-h-[700px] md:w-[500px]'
-        hideCloseButton
+    <>
+      <Comp
+        aria-haspopup='dialog'
+        type={asChild ? undefined : 'button'}
+        {...props}
+        onClick={(event: React.MouseEvent<HTMLButtonElement>) => {
+          onClick?.(event);
+          if (event.defaultPrevented) return;
+          setMounted(true);
+          setOpen(true);
+        }}
+        // the window starts loading when a finger or a cursor comes near the button
+        onFocus={(event: React.FocusEvent<HTMLButtonElement>) => {
+          void loadContent();
+          onFocus?.(event);
+        }}
+        onPointerEnter={(event: React.PointerEvent<HTMLButtonElement>) => {
+          void loadContent();
+          onPointerEnter?.(event);
+        }}
       >
-        <DialogHeader className='hidden flex-row justify-between p-5 md:flex'>
-          <DialogTitle>{t('Chat')}</DialogTitle>
-          <DialogClose asChild>
-            <button>
-              <XIcon className='text-muted-foreground hover:text-primary size-5' />
-            </button>
-          </DialogClose>
-        </DialogHeader>
-        <div className='flex items-center border-b md:hidden'>
-          <div className='size-13' />
-          <h1 className='flex-1 text-center font-bold lg:hidden'>{t('Chat')}</h1>
-          <DialogClose asChild>
-            <Button className='size-13' size='icon' variant='ghost'>
-              <XIcon className='text-muted-foreground size-5' />
-            </Button>
-          </DialogClose>
-        </div>
-        <MessageList />
-        <DialogFooter className='block space-y-2 p-3'>
-          <FileUpload
-            accept='image/png,image/jpeg,image/jpg,image/webp'
-            maxSize={5 * 1024 * 1024}
-            multiple={false}
-            value={image && [image]}
-            onFileReject={(_, message) => toast(message)}
-            onValueChange={(files) => setImage(files[files.length - 1])}
-          >
-            <FileUploadList>
-              {image && (
-                <FileUploadItem className='px-2 py-1.5' value={image}>
-                  <FileUploadItemPreview className='size-10 [&>svg]:size-5'>
-                    <FileUploadItemProgress variant='fill' />
-                  </FileUploadItemPreview>
-                  <FileUploadItemMetadata size='sm' />
-                  <FileUploadItemDelete asChild>
-                    <Button
-                      className='absolute -top-1 -right-1 size-4 shrink-0 cursor-pointer rounded-full'
-                      size='icon'
-                      variant='secondary'
-                    >
-                      <XIcon className='size-2.5' />
-                    </Button>
-                  </FileUploadItemDelete>
-                </FileUploadItem>
-              )}
-            </FileUploadList>
-            <form className='flex items-center gap-2' onSubmit={onSubmit}>
-              <FileUploadTrigger asChild>
-                <Button
-                  disabled={postChatMessageMutation.isPending}
-                  size='icon'
-                  type='button'
-                  variant='outline'
-                >
-                  <ImageIcon />
-                </Button>
-              </FileUploadTrigger>
-              <Input
-                className='flex-1'
-                type='text'
-                value={message}
-                onChange={(e) => setMessage(e.target.value)}
-                placeholder={t('Write a message')}
-              />
-              <Button
-                disabled={!message.trim() && !image}
-                size='icon'
-                type='submit'
-                variant='secondary'
-                isLoading={postChatMessageMutation.isPending}
-              >
-                <SendIcon />
-              </Button>
-            </form>
-          </FileUpload>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        {children}
+      </Comp>
+      {mounted && <ChatDialogContent open={open} onOpenChange={setOpen} />}
+    </>
   );
 };

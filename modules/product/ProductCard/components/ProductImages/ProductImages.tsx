@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import { useMinWidth } from '@/hooks';
+import { useIsDesktop } from '@/components/DeviceProvider';
 
 import { ProductImagesDesktop, ProductImagesMobile } from './components';
 
@@ -11,13 +11,16 @@ interface Props {
 }
 
 export const ProductImages = ({ product }: Props) => {
-  const isDesktop = useMinWidth(768);
+  const isDesktop = useIsDesktop();
 
-  // both are in the server markup (the CSS shows one); once the screen is known the other goes
+  // one variant only: the server picks it by the User-Agent, the browser by the screen width
   return (
     <div className='relative'>
-      {isDesktop !== false && <ProductImagesDesktop product={product} />}
-      {isDesktop !== true && <ProductImagesMobile product={product} />}
+      {isDesktop ? (
+        <ProductImagesDesktop product={product} />
+      ) : (
+        <ProductImagesMobile product={product} />
+      )}
     </div>
   );
 };

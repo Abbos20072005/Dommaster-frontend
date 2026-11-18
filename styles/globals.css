@@ -186,4 +186,10 @@
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
   }
+  /* A block below the first screen: the browser skips its style, layout and paint until it is
+     near the screen (BLD-485). `auto` keeps the real height once the block has been shown. */
+  .offscreen-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
+  }
 }

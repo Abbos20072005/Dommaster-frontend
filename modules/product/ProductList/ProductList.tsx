@@ -9,7 +9,7 @@ import {
   CarouselNext,
   CarouselPrevious
 } from '@/components/ui/carousel';
-import { useMinWidth } from '@/hooks';
+import { useIsDesktop } from '@/components/DeviceProvider';
 import { usePathname } from '@/i18n/navigation';
 import { trackViewItemList } from '@/lib/analytics';
 import { cn } from '@/lib/utils';
@@ -40,7 +40,7 @@ export const ProductList = ({
   ...props
 }: Props) => {
   const pathname = usePathname();
-  const isDesktop = useMinWidth(768);
+  const isDesktop = useIsDesktop();
 
   // `view_item_list`: a product grid (a category, favorites, search) was shown
   const productIds = products.map((product) => product.id).join(',');
@@ -79,9 +79,9 @@ export const ProductList = ({
       )}
       {view === 'carousel' && (
         <>
-          {/* the phone list and the laptop carousel are both in the server markup (the CSS shows
-              one); once the screen is known the hidden one is dropped from the DOM */}
-          {isDesktop !== true && (
+          {/* one layout only: the server picks it by the User-Agent, the browser by the screen
+              width (both layouts in the markup doubled the DOM and the HTML, BLD-485) */}
+          {!isDesktop && (
           <div className={cn('relative overflow-y-auto py-4 md:hidden', className)} {...props}>
             <div className='flex gap-3'>
               {products.map((product) => (
@@ -98,7 +98,7 @@ export const ProductList = ({
             </div>
           </div>
           )}
-          {isDesktop !== false && (
+          {isDesktop && (
           <Carousel className='hidden md:block' opts={{ align: 'start' }}>
             <CarouselContent className={cn('py-4', className)} {...props}>
               {products.map((product) => (

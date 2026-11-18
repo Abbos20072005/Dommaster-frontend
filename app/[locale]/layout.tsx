@@ -14,6 +14,8 @@ import { AppFooter, AppHeader, BottomNav, FloatingActions } from '@/components/l
 import { CrawlerNav } from '@/components/layout/CrawlerNav';
 import { Providers } from '@/components/Providers';
 import { Analytics } from '@/components/Analytics';
+import { DeviceProvider } from '@/components/DeviceProvider';
+import { isPhoneUserAgent } from '@/lib/device';
 import { TelegramWebAppInit } from '@/components/TelegramWebAppInit';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
@@ -119,6 +121,7 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
   if (!hasLocale(routing.locales, locale)) {
     notFound();
   }
+  const phone = isPhoneUserAgent((await headers()).get('user-agent'));
 
   return (
     <html
@@ -129,17 +132,19 @@ const RootLayout = async ({ children, params }: Readonly<Props>) => {
       <body className='flex min-h-screen flex-col font-sans antialiased'>
         <NextIntlClientProvider>
           <Providers>
-            <NextTopLoader height={5} color='var(--secondary)' showSpinner={false} />
-            <TelegramWebAppInit />
-            <Analytics />
-            <AppHeader />
-            <CrawlerNav />
-            <main className='flex-1'>{children}</main>
-            <AppFooter />
-            <BottomNav />
-            <Toaster />
-            <FloatingActions />
-            <AssistantLauncher />
+            <DeviceProvider phone={phone}>
+              <NextTopLoader height={5} color='var(--secondary)' showSpinner={false} />
+              <TelegramWebAppInit />
+              <Analytics />
+              <AppHeader />
+              <CrawlerNav />
+              <main className='flex-1'>{children}</main>
+              <AppFooter />
+              <BottomNav />
+              <Toaster />
+              <FloatingActions />
+              <AssistantLauncher />
+            </DeviceProvider>
           </Providers>
         </NextIntlClientProvider>
       </body>

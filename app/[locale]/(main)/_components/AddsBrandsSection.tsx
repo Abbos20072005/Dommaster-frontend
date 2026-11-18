@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { BannerSlider } from '@/components/BannerSlider/BannerSlider';
 import { BaseLayout } from '@/components/layout';
+import { LazyMount } from '@/components/LazyMount';
 import { ProductSection } from '@/modules/product';
 import { getMain } from '@/utils/api/requests';
 
@@ -23,21 +24,30 @@ export const AddsBrandsSection = () => {
   if (!main.length) return null;
 
   // Banner sarlavhasi backenddan bo'sh kelishi mumkin (masalan o'zbekcha to'ldirilmagan) — alt bo'sh qolmasin
+  // the first two blocks are built at once; the rest when they are about to be seen
+  const section = (item: (typeof main)[number]) => (
+    <BaseLayout>
+      {item.type === 'addsbrands' ? (
+        <ProductSection
+          href={`/collection/${item.data.id}`}
+          products={item.data.products}
+          title={item.data.name ? <h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2> : <div />}
+        />
+      ) : item.type === 'banners' ? (
+        <div className='overflow-hidden'>
+          <BannerSlider banners={item.data} />
+        </div>
+      ) : null}
+    </BaseLayout>
+  );
+
   return main.map((item, index) => (
     <section key={item.type === 'banners' ? `banners-${index}` : `${item.data.id}${item.type}`}>
-      <BaseLayout>
-        {item.type === 'addsbrands' ? (
-          <ProductSection
-            href={`/collection/${item.data.id}`}
-            products={item.data.products}
-            title={item.data.name ? <h2 className='text-lg font-bold md:text-2xl'>{item.data.name}</h2> : <div />}
-          />
-        ) : item.type === 'banners' ? (
-          <div className='overflow-hidden'>
-            <BannerSlider banners={item.data} />
-          </div>
-        ) : null}
-      </BaseLayout>
+      {index < 2 ? (
+        section(item)
+      ) : (
+        <LazyMount placeholderHeight={item.type === 'banners' ? 200 : 460}>{section(item)}</LazyMount>
+      )}
     </section>
   ));
 };

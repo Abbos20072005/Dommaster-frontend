@@ -46,16 +46,25 @@ const Home = () => {
         <Suspense fallback={<DiscountProductsSkeleton />}>
           <DiscountProducts />
         </Suspense>
-        <Suspense fallback={<BrandsSectionLoading />}>
-          <BrandsSection />
-        </Suspense>
-        <Suspense fallback={<MostSoldProductsSkeleton />}>
-          <MostSoldProducts />
-        </Suspense>
-        <Suspense fallback={<UsefulContentSectionLoading />}>
-          <UsefulContentSection />
-        </Suspense>
-        <AddsBrandsSection />
+        {/* the blocks below the first screen are not styled and painted until they are near it */}
+        <div className='offscreen-auto'>
+          <Suspense fallback={<BrandsSectionLoading />}>
+            <BrandsSection />
+          </Suspense>
+        </div>
+        <div className='offscreen-auto'>
+          <Suspense fallback={<MostSoldProductsSkeleton />}>
+            <MostSoldProducts />
+          </Suspense>
+        </div>
+        <div className='offscreen-auto'>
+          <Suspense fallback={<UsefulContentSectionLoading />}>
+            <UsefulContentSection />
+          </Suspense>
+        </div>
+        <div className='offscreen-auto'>
+          <AddsBrandsSection />
+        </div>
       </div>
     </>
   );
