@@ -10,7 +10,8 @@ import { Progress } from '@/components/ui/progress';
 import { Ratings } from '@/components/ui/rating';
 import { Spinner } from '@/components/ui/spinner';
 import { useAuth } from '@/modules/auth';
-import { ProductCommentDialog, useCanReviewProduct } from '@/modules/product';
+import { useCanReviewProduct } from '@/modules/product';
+import { ProductCommentDialog } from '@/modules/product/ProductCommentDialog/ProductCommentDialog';
 
 import { CommentReplies } from './components/CommentReplies/CommentReplies';
 import { ReviewImageStrip } from './components/ReviewImageStrip';

@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { Spinner } from '@/components/ui/spinner';
 import { AuthDialog, useAuth } from '@/modules/auth';
-import { ProductCommentReplyForm } from '@/modules/product';
+import { ProductCommentReplyForm } from '@/modules/product/ProductCommentReplyForm/ProductCommentReplyForm';
 
 import { CommentReplyItem } from './CommentReplyItem';
 import { useCommentReplies } from './hooks';

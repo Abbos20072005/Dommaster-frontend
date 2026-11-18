@@ -6,7 +6,7 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Collapsible, CollapsibleContent } from '@/components/ui/collapsible';
 import { Spinner } from '@/components/ui/spinner';
-import { ProductQuestionReplyForm } from '@/modules/product';
+import { ProductQuestionReplyForm } from '@/modules/product/ProductQuestionReplyForm/ProductQuestionReplyForm';
 
 import { useQuestionReplies } from './hooks';
 import { QuestionReplyItem } from './QuestionReplyItem';

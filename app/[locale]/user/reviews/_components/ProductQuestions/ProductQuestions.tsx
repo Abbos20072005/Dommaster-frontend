@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@/i18n/navigation';
 import { useAuth } from '@/modules/auth';
-import { ProductQuestionDialog } from '@/modules/product';
+import { ProductQuestionDialog } from '@/modules/product/ProductQuestionDialog/ProductQuestionDialog';
 
 import { QuestionReplies } from './components/QuestionReplies/QuestionReplies';
 import { useProductQuestions } from './hooks';

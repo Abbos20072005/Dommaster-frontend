@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from '@/i18n/navigation';
 import { cn } from '@/lib/utils';
-import { ProductCommentDialog } from '@/modules/product';
+import { ProductCommentDialog } from '@/modules/product/ProductCommentDialog/ProductCommentDialog';
 
 import { CommentReplies } from './components';
 import { useProductComments } from './hooks';

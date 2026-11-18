@@ -9,7 +9,7 @@ import { QuestionReplies } from '@/app/[locale]/product/[id]/_components/Product
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { AuthDialog, useAuth } from '@/modules/auth';
-import { ProductQuestionDialog } from '@/modules/product';
+import { ProductQuestionDialog } from '@/modules/product/ProductQuestionDialog/ProductQuestionDialog';
 
 import { useProductQuestions } from './hooks';
 
