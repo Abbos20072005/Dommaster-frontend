@@ -27,7 +27,8 @@ export const ProductControl = ({ product, className, withLabel }: Props) => {
   const mounted = useMounted();
   const { isFavorite, toggleFavorite } = useFavoritesStore();
 
-  const isFav = isFavorite(product.id);
+  // the favorites live in localStorage: before mount the client must render what the server did
+  const isFav = mounted && isFavorite(product.id);
   // Mehmon uchun backend sevimlilarni saqlamaydi (har safar yangi yozuv yaratadi) — avval login
   const needsAuth = mounted && !Cookies.get(COOKIES.ACCESS_TOKEN);
 

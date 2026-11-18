@@ -41,24 +41,24 @@ export const ProductCart = ({ product }: Props) => {
         </Button>
       ) : (
         <div className='grid gap-3'>
-          <CartCounter
-            className='bg-muted h-11 rounded-md'
-            maxValue={product.quantity}
-            value={state.cartCount}
-            onChange={functions.onCartCountChange}
-          />
+          {/* the yellow "to cart" button and the counter in one row */}
+          <div className='flex items-center gap-3'>
+            <Button asChild className='h-12 flex-1 text-[15px]'>
+              <Link href='/cart'>{t('To cart')}</Link>
+            </Button>
+            <CartCounter
+              className='h-12 w-32 shrink-0'
+              maxValue={product.quantity}
+              value={state.cartCount}
+              onChange={functions.onCartCountChange}
+            />
+          </div>
           <div className='flex items-center justify-between text-sm'>
             <span className='text-muted-foreground'>{t('Total')}</span>
             <strong className='tabular-nums'>
               {formatPrice(unitPrice * state.cartCount)} {t('sum')}
             </strong>
           </div>
-          <Button asChild className='h-12' variant='outline'>
-            <Link href='/cart'>
-              <ShoppingCartIcon />
-              {t('To cart')}
-            </Link>
-          </Button>
         </div>
       )}
 

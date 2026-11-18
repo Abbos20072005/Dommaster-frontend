@@ -25,17 +25,19 @@ export const useProductCart = (product: Product) => {
     }
   });
 
-  const onAddToCart = () => {
+  const onAddQuantity = (quantity: number) => {
     const previousQuantity = cartItemsQuantityMap[product.id] ?? 0;
-    setCartItemQuantity(product.id, 1);
+    setCartItemQuantity(product.id, quantity);
     postCartMutation.mutate(
-      { data: { product: product.id, quantity: 1 } },
+      { data: { product: product.id, quantity } },
       {
         onSuccess: () => trackAddToCart(product),
         onError: () => setCartItemQuantity(product.id, previousQuantity)
       }
     );
   };
+
+  const onAddToCart = () => onAddQuantity(1);
 
   const onCartCountChange = (value: number) => {
     const previousQuantity = cartItemsQuantityMap[product.id] ?? 0;
@@ -62,6 +64,7 @@ export const useProductCart = (product: Product) => {
     },
     functions: {
       onAddToCart,
+      onAddQuantity,
       onCartCountChange,
       onRemoveFromCart
     }
