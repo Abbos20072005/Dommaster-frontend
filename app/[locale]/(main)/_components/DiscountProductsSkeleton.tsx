@@ -6,7 +6,7 @@ import { ProductListSkeleton } from '@/modules/product';
 export const DiscountProductsSkeleton = () => (
   <section>
     <BaseLayout className='px-0'>
-      <div className='bg-muted rounded-2xl px-3 pt-3'>
+      <div className='rounded-2xl bg-[#D4E6F6] px-3 pt-3'>
         <div className='flex items-center justify-between px-1'>
           <div className='flex flex-1 items-center gap-3'>
             <Skeleton className='h-7 w-1/2 lg:h-8 lg:w-1/3' />

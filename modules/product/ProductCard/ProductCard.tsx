@@ -36,10 +36,9 @@ export const ProductCard = ({
         // the 3:4 photo and a details block of a fixed height: every card is the same size
         'flex flex-col',
         'group/card',
-        // on the dark banner every card is a slightly lighter panel: the photo is flush with its
+        // in the sale block (light blue) every card is a white panel: the photo is flush with its
         // edges, only the text block has padding
-        onDark &&
-          'text-primary-foreground overflow-hidden rounded-xl bg-white/10 [&_.text-muted-foreground]:text-white/70',
+        onDark && 'overflow-hidden rounded-xl bg-white',
         className
       )}
       data-on-dark={onDark ? '' : undefined}
