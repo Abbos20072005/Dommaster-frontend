@@ -27,9 +27,8 @@ const redirectOldAddress = async (request: NextRequest) => {
   const { pathname, searchParams } = request.nextUrl;
   const { locale: pathLocale, path } = splitLocale(pathname);
   const prefixed = pathname !== path;
-  const language = prefixed
-    ? toLanguage(pathLocale)
-    : toLanguage(request.cookies.get('NEXT_LOCALE')?.value);
+  // an address without `/uz` is Russian whatever the cookie says (BLD-488)
+  const language = prefixed ? toLanguage(pathLocale) : toLanguage('ru');
 
   let target: string | null = null;
 
@@ -74,7 +73,7 @@ export default async function proxy(request: NextRequest) {
     const { locale, path } = splitLocale(request.nextUrl.pathname);
     lastModified = await pageLastModified(
       path,
-      request.nextUrl.pathname !== path ? locale : request.cookies.get('NEXT_LOCALE')?.value,
+      request.nextUrl.pathname !== path ? locale : 'ru',
       request.nextUrl.search
     );
     const since = Date.parse(request.headers.get('if-modified-since') ?? '');

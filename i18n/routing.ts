@@ -13,6 +13,12 @@ export const routing = defineRouting({
   // ESKI KOD: localePrefix: 'never' (til faqat cookie'da edi)
   localePrefix: 'as-needed',
 
+  // The language of a page is the one of its address and nothing else (BLD-488): with detection
+  // on, a request of the Russian address with a `NEXT_LOCALE=uz` cookie (a crawler keeps the
+  // cookie it got on a `/uz/...` page) or `Accept-Language: uz` was redirected (307) to `/uz/...`,
+  // so a crawl recorded the Uzbek title and canonical for a Russian URL.
+  localeDetection: false,
+
   // Tanlangan til cookie'da 1 yil saqlanadi (standart holatda brauzer yopilganda o'chib ketadi)
   localeCookie: {
     maxAge: 60 * 60 * 24 * 365
