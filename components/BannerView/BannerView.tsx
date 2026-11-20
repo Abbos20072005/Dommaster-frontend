@@ -23,7 +23,9 @@ export const BannerView = ({ banner, className, priority }: Props) => {
   // one <picture>: the browser takes the phone or the wide picture and loads only that one (two
   // <Image>s with `priority` made it fetch both)
   // `priority` alone no longer sets the fetch priority in `getImageProps`: it is set here
-  const loadingProps = priority ? { fetchPriority: 'high' as const, loading: 'eager' as const } : {};
+  const loadingProps = priority
+    ? { fetchPriority: 'high' as const, loading: 'eager' as const }
+    : {};
   const mobile = getImageProps({
     alt,
     ...loadingProps,
@@ -41,24 +43,66 @@ export const BannerView = ({ banner, className, priority }: Props) => {
     width: 1240
   });
 
+  // the first banner is what a phone paints last (LCP): without these links the browser found it
+  // only after ~280 KB of the page, the inline CSS before it. One link per screen (a `media`
+  // each), so a phone does not fetch the wide picture and the other way round
+  const preloads = priority && (
+    <>
+      <link
+        as='image'
+        fetchPriority='high'
+        href={mobile.props.src}
+        imageSizes={mobile.props.sizes}
+        imageSrcSet={mobile.props.srcSet}
+        media='(max-width: 767px)'
+        rel='preload'
+      />
+      <link
+        as='image'
+        fetchPriority='high'
+        href={desktop.props.src}
+        imageSizes={desktop.props.sizes}
+        imageSrcSet={desktop.props.srcSet}
+        media='(min-width: 768px)'
+        rel='preload'
+      />
+    </>
+  );
+
   const pictures = (
     <picture className='contents'>
-      <source media='(min-width: 768px)' sizes={desktop.props.sizes} srcSet={desktop.props.srcSet} />
-      <img {...mobile.props} alt={alt} className='size-full rounded-lg object-cover md:rounded-xl' />
+      <source
+        media='(min-width: 768px)'
+        sizes={desktop.props.sizes}
+        srcSet={desktop.props.srcSet}
+      />
+      <img
+        {...mobile.props}
+        alt={alt}
+        className='size-full rounded-lg object-cover md:rounded-xl'
+      />
     </picture>
   );
 
-  if (!link) return <div className={boxClassName}>{pictures}</div>;
+  if (!link)
+    return (
+      <div className={boxClassName}>
+        {preloads}
+        {pictures}
+      </div>
+    );
 
   if (link.external)
     return (
       <a className={boxClassName} href={link.href} rel='noreferrer noopener' target='_blank'>
+        {preloads}
         {pictures}
       </a>
     );
 
   return (
     <Link className={boxClassName} href={link.href}>
+      {preloads}
       {pictures}
     </Link>
   );

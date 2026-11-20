@@ -25,13 +25,14 @@ export const HeaderMiddle = () => {
       <BaseLayout className='flex h-16 items-center gap-4'>
         <Link href='/'>
           <div className='flex items-center justify-center gap-2'>
+            {/* no `priority`: this header is hidden on a phone, and a preload of its logo there
+                competed with the photo of the product for the bandwidth (LCP, BLD-499) */}
             <Image
               alt='buildex'
               className='animate-spin-y size-9 duration-[5s]'
               height={36}
               src='/logo.png'
               width={36}
-              priority
             />
             <Image
               alt='buildex'
@@ -39,7 +40,6 @@ export const HeaderMiddle = () => {
               height={28}
               src='/logo-text.png'
               width={120}
-              priority
             />
           </div>
         </Link>

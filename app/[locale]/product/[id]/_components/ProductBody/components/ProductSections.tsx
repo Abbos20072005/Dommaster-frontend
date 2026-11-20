@@ -128,7 +128,7 @@ export const ProductSections = ({
             id={`${sectionElementId('description')}-mobile`}
             value='description'
           >
-            <AccordionTrigger>{t('Description')}</AccordionTrigger>
+            <AccordionTrigger heading='h2'>{t('Description')}</AccordionTrigger>
             <AccordionContent>
               <ProductDescriptionPreview description={product.description} />
             </AccordionContent>
@@ -138,13 +138,13 @@ export const ProductSections = ({
             id={`${sectionElementId('characteristics')}-mobile`}
             value='characteristics'
           >
-            <AccordionTrigger>{t('Characteristics')}</AccordionTrigger>
+            <AccordionTrigger heading='h2'>{t('Characteristics')}</AccordionTrigger>
             <AccordionContent>
               <ProductCharacteristics characteristics={product.characteristics} />
             </AccordionContent>
           </AccordionItem>
           <AccordionItem id={`${sectionElementId('reviews')}-mobile`} value='reviews'>
-            <AccordionTrigger>
+            <AccordionTrigger heading='h2'>
               {t('Reviews')}
               {!!product.comments_quantity && `: ${product.comments_quantity}`}
             </AccordionTrigger>
@@ -153,7 +153,7 @@ export const ProductSections = ({
             </AccordionContent>
           </AccordionItem>
           <AccordionItem id={`${sectionElementId('questions')}-mobile`} value='questions'>
-            <AccordionTrigger>
+            <AccordionTrigger heading='h2'>
               {t('Questions')}
               {!!product.questions_quantity && `: ${product.questions_quantity}`}
             </AccordionTrigger>

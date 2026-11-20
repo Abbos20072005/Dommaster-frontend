@@ -73,7 +73,7 @@ export const ProductQuestions = ({ product }: Props) => {
                 <span className='font-bold'>{question.customer?.full_name ?? t('User')}</span>
                 {!!user && user.id === question.customer?.id && (
                   <ProductQuestionDialog asChild defaultValues={question}>
-                    <Button size='iconSm' variant='ghost'>
+                    <Button aria-label={t('Edit')} size='iconSm' variant='ghost'>
                       <EditIcon />
                     </Button>
                   </ProductQuestionDialog>

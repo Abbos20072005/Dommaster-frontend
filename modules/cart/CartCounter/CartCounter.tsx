@@ -76,6 +76,7 @@ export const CartCounter = ({
   return (
     <div className={cn('relative h-8', className)} {...props}>
       <Button
+        aria-label={t('Decrease quantity')}
         className='absolute inset-y-0 left-0 aspect-square h-full w-auto'
         disabled={numericValue <= minValue}
         size='iconSm'
@@ -85,6 +86,7 @@ export const CartCounter = ({
         <MinusIcon />
       </Button>
       <input
+        aria-label={t('Quantity')}
         className='h-full w-full px-8 text-center outline-none'
         value={inputValue}
         autoComplete='off'
@@ -100,6 +102,7 @@ export const CartCounter = ({
         </div>
       )}
       <Button
+        aria-label={t('Increase quantity')}
         className='absolute inset-y-0 right-0 aspect-square h-full w-auto'
         disabled={numericValue >= maxValue}
         size='iconSm'

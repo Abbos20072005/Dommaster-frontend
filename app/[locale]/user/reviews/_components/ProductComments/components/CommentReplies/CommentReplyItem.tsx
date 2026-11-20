@@ -66,17 +66,27 @@ export const CommentReplyItem = ({ reply, comment }: Props) => {
             {reply.is_admin ? (
               <span className='text-secondary'>Buildex.uz</span>
             ) : (
-              reply.customer?.full_name ?? t('User')
+              (reply.customer?.full_name ?? t('User'))
             )}
           </span>
           {!reply.is_admin && !!user && user.id === reply.customer?.id && (
             <div className='flex gap-1'>
-              <Button size='iconSm' variant='ghost' onClick={() => setOpenReplyForm(true)}>
+              <Button
+                aria-label={t('Edit')}
+                size='iconSm'
+                variant='ghost'
+                onClick={() => setOpenReplyForm(true)}
+              >
                 <EditIcon />
               </Button>
               <AlertDialog onOpenChange={setOpenDelete} open={openDelete}>
                 <AlertDialogTrigger asChild>
-                  <Button size='iconSm' variant='ghost' onClick={() => setOpenDelete(true)}>
+                  <Button
+                    aria-label={t('Delete')}
+                    size='iconSm'
+                    variant='ghost'
+                    onClick={() => setOpenDelete(true)}
+                  >
                     <Trash2Icon />
                   </Button>
                 </AlertDialogTrigger>

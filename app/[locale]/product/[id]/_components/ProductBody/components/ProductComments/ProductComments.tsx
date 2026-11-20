@@ -121,7 +121,7 @@ export const ProductComments = ({ product }: Props) => {
                 />
                 {!!user && user.id === comment.customer?.id && (
                   <ProductCommentDialog asChild defaultValues={comment}>
-                    <Button size='iconSm' variant='ghost'>
+                    <Button aria-label={t('Edit')} size='iconSm' variant='ghost'>
                       <EditIcon />
                     </Button>
                   </ProductCommentDialog>

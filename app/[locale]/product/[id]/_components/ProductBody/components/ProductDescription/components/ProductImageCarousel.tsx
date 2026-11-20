@@ -98,17 +98,18 @@ export const ProductImageCarousel = ({
             {images.map((image, i) => (
               <button
                 key={image.id}
-                className='relative w-full shrink-0 cursor-zoom-in snap-start'
+                // a square is reserved before the photo arrives: with no size the page below the
+                // photo jumped down when it loaded (layout shift, BLD-499)
+                className='relative aspect-square w-full shrink-0 cursor-zoom-in snap-start'
                 aria-label={t('Zoom in')}
                 type='button'
                 onClick={() => setLightboxIndex(i)}
               >
                 <Image
+                  fill
                   alt={name}
-                  // the photo is shown whole, with its own proportions
-                  className='h-auto w-full'
-                  height={0}
-                  width={0}
+                  // the photo is shown whole, with its own proportions, inside the square
+                  className='object-contain'
                   priority={i === 0}
                   sizes='(min-width: 768px) 520px, 100vw'
                   src={image.image}
