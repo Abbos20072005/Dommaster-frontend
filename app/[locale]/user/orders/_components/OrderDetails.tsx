@@ -9,9 +9,9 @@ import {
   ChevronUpIcon,
   ClockIcon,
   CreditCardIcon,
-  DownloadIcon,
   InfoIcon,
   PhoneIcon,
+  ReceiptTextIcon,
   SendIcon,
   StoreIcon,
   TruckIcon,
@@ -543,11 +543,12 @@ export const OrderDetails = ({ scope }: Props) => {
                 <InfoIcon className='mt-0.5 size-3.5 shrink-0' />
                 {t('Repeat order hint')}
               </span>
+              {/* the fiscal receipt (Atmos OFD page, not a PDF): only once the held money is charged */}
               {order.ofd_url && (
                 <Button asChild className='mt-1 h-11 w-full' variant='outline'>
                   <a href={order.ofd_url} rel='noopener noreferrer' target='_blank'>
-                    <DownloadIcon />
-                    {t('Download receipt')}
+                    <ReceiptTextIcon />
+                    {t('View receipt')}
                   </a>
                 </Button>
               )}
