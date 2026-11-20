@@ -68,8 +68,8 @@ export const ProductQuestions = ({ product }: Props) => {
       <div className='space-y-6 text-sm md:space-y-10'>
         {state.questions?.map((question) => (
           <article key={question.id} className='space-y-3'>
-            <div>
-              <div className='mb-1 flex items-center gap-2'>
+            <div className='flex items-start justify-between gap-3'>
+              <div className='flex flex-wrap items-center gap-2'>
                 <span className='font-bold'>{question.customer?.full_name ?? t('User')}</span>
                 {!!user && user.id === question.customer?.id && (
                   <ProductQuestionDialog asChild defaultValues={question}>
@@ -79,11 +79,9 @@ export const ProductQuestions = ({ product }: Props) => {
                   </ProductQuestionDialog>
                 )}
               </div>
-              <div className='flex'>
-                <span className='text-muted-foreground text-xs italic'>
-                  {formatDate(question.created_at, 'dd MMMM yyyy')}
-                </span>
-              </div>
+              <span className='text-muted-foreground shrink-0 text-xs whitespace-nowrap italic'>
+                {formatDate(question.created_at, 'dd MMMM yyyy')}
+              </span>
             </div>
             <p className='text-sm'>{question.question}</p>
             <QuestionReplies question={question} />

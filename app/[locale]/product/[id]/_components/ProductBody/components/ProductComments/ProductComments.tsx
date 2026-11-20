@@ -111,8 +111,8 @@ export const ProductComments = ({ product }: Props) => {
       <div className='space-y-3 divide-y text-sm md:space-y-5'>
         {state.comments?.map((comment) => (
           <article key={comment.id} className='space-y-3 pb-3 md:pb-5'>
-            <div>
-              <div className='mb-1 flex items-center gap-2'>
+            <div className='flex items-start justify-between gap-3'>
+              <div className='flex flex-wrap items-center gap-2'>
                 <span className='font-bold'>{comment.customer?.full_name ?? t('User')}</span>
                 <Ratings
                   className='gap-1'
@@ -127,11 +127,9 @@ export const ProductComments = ({ product }: Props) => {
                   </ProductCommentDialog>
                 )}
               </div>
-              <div className='flex'>
-                <span className='text-muted-foreground text-xs italic'>
-                  {formatDate(comment.created_at, 'dd MMMM yyyy')}
-                </span>
-              </div>
+              <span className='text-muted-foreground shrink-0 text-xs whitespace-nowrap italic'>
+                {formatDate(comment.created_at, 'dd MMMM yyyy')}
+              </span>
             </div>
             <ReviewImageStrip
               alt={product.name || 'Buildex'}

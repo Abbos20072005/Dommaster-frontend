@@ -59,8 +59,8 @@ export const QuestionReplyItem = ({ reply, question }: Props) => {
 
   return (
     <article key={reply.id} className='space-y-2'>
-      <div>
-        <div className='mb-1 flex items-center gap-2'>
+      <div className='flex items-start justify-between gap-3'>
+        <div className='flex flex-wrap items-center gap-2'>
           <span className='font-bold'>
             {reply.is_admin ? (
               <span className='text-secondary'>Buildex.uz</span>
@@ -102,11 +102,9 @@ export const QuestionReplyItem = ({ reply, question }: Props) => {
             </div>
           )}
         </div>
-        <div className='flex'>
-          <span className='text-muted-foreground text-xs italic'>
-            {formatDate(reply.created_at, 'dd MMMM yyyy')}
-          </span>
-        </div>
+        <span className='text-muted-foreground shrink-0 text-xs whitespace-nowrap italic'>
+          {formatDate(reply.created_at, 'dd MMMM yyyy')}
+        </span>
       </div>
       <p className='text-sm'>{reply.answer}</p>
     </article>
