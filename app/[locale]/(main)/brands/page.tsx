@@ -46,7 +46,7 @@ const BrandsPage = async () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl'>{t('Brands')}</h1>
+        <h1 className='text-lg font-bold md:text-3xl'>{t('Brands')}</h1>
         <div className='grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4 md:gap-4 lg:grid-cols-5 xl:grid-cols-6'>
           {brands.map((brand) => (
             <Link

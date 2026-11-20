@@ -15,11 +15,28 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
   return (
     <footer
       className={cn(
-        'text-primary-foreground md:bg-[#002478] pt-6 pb-20 md:mt-10 md:pt-10 md:pb-10',
+        'text-primary-foreground mt-6 pb-24 md:mt-10 md:bg-[#002478] md:pt-10 md:pb-10',
         className
       )}
       {...props}
     >
+      {/* a phone has no dark footer, but the pages of the company, the delivery and the legal
+          texts must stay reachable: a light compact version of the same links */}
+      <BaseLayout className='text-foreground md:hidden'>
+        <div className='space-y-5 border-t pt-6'>
+          <div>
+            <div className='text-muted-foreground mb-1 text-sm'>{t('Have a question? Call us')}</div>
+            <a href={CONTACT_PHONE_HREF} className='inline-block py-1 text-lg font-semibold'>
+              {CONTACT_PHONE}
+            </a>
+            <p className='text-muted-foreground text-sm'>{t('Mon – Sun: from 07:00 – 22:00')}</p>
+          </div>
+          <Links />
+          <p className='text-muted-foreground text-xs'>
+            {new Date().getFullYear()} ©buildex.uz. {t('Footer copyright')}
+          </p>
+        </div>
+      </BaseLayout>
       <BaseLayout className='hidden md:block'>
         <div className='flex flex-col justify-between gap-4 md:gap-6 lg:flex-row'>
           <div>

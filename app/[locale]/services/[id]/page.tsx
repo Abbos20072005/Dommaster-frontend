@@ -63,7 +63,7 @@ const ServicePage = async ({ params }: Props) => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <h1 className='mb-6 text-xl font-bold md:text-3xl lg:text-4xl'>{service.name}</h1>
+      <h1 className='mb-6 text-lg font-bold md:text-3xl lg:text-4xl'>{service.name}</h1>
       <div
         className='prose prose-sm md:prose-base max-w-max'
         dangerouslySetInnerHTML={{ __html: withMainPhone(service.description) }}

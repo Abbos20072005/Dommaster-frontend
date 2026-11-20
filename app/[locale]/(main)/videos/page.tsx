@@ -39,7 +39,7 @@ const VideosPage = async () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl'>{t('Videos')}</h1>
+        <h1 className='text-lg font-bold md:text-3xl'>{t('Videos')}</h1>
         <VideosList />
         <RecentlyViewedProducts />
       </BaseLayout>

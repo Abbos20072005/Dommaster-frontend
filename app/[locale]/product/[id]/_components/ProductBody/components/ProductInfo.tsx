@@ -60,7 +60,7 @@ export const ProductInfo = ({ product, onNavigate }: Props) => {
 
   return (
     <div className='min-w-0 space-y-4'>
-      <h1 className='text-xl leading-7 font-bold text-pretty md:text-2xl md:leading-8'>
+      <h1 className='text-lg leading-6 font-bold text-pretty md:text-2xl md:leading-8'>
         {product.name || product.breadcrumbs.at(-1)?.name}
       </h1>
 

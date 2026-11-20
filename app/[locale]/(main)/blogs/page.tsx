@@ -61,7 +61,7 @@ const NewsPage = async () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl'>{t('News')}</h1>
+        <h1 className='text-lg font-bold md:text-3xl'>{t('News')}</h1>
         <NewsList initial={initial} />
         <RecentlyViewedProducts />
       </BaseLayout>

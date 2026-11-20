@@ -39,7 +39,7 @@ const ArticlesPage = () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl'>{t('Articles')}</h1>
+        <h1 className='text-lg font-bold md:text-3xl'>{t('Articles')}</h1>
         <ArticlesList />
       </BaseLayout>
     </div>

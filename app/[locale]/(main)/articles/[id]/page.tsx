@@ -49,7 +49,7 @@ const ArticlePage = async ({ params }: Props) => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl lg:text-4xl'>{article.title}</h1>
+        <h1 className='text-lg font-bold md:text-3xl lg:text-4xl'>{article.title}</h1>
         <p className='text-muted-foreground text-sm'>{format(article.created_at, 'dd.MM.yyyy')}</p>
         <div
           className='prose prose-sm md:prose-base max-w-max'

@@ -55,7 +55,7 @@ const StoresPage = async () => {
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl lg:text-4xl'>{t('Stores')}</h1>
+        <h1 className='text-lg font-bold md:text-3xl lg:text-4xl'>{t('Stores')}</h1>
         <p className='text-muted-foreground max-w-3xl text-sm md:text-base'>
           {t('Stores intro')}
         </p>

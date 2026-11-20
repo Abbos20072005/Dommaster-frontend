@@ -39,7 +39,7 @@ const ServicesPage = async () => {
           </BreadcrumbItem>
         </BreadcrumbList>
       </Breadcrumb>
-      <h1 className='mb-3 text-xl font-bold md:text-3xl'>{h1}</h1>
+      <h1 className='mb-3 text-lg font-bold md:text-3xl'>{h1}</h1>
       <p className='mb-6 max-w-3xl text-[15px] leading-7'>{intro}</p>
       <ul className='grid gap-3 sm:grid-cols-2 xl:grid-cols-3'>
         {cards.map((card) => (

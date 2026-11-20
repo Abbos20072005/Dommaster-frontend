@@ -43,7 +43,8 @@ const BreadcrumbLink = ({
 
   return (
     <Comp
-      className={cn('hover:text-secondary transition-colors', className)}
+      // `py-1 -my-1`: a 28px tap area on a phone with the same space on the page
+      className={cn('hover:text-secondary -my-1 py-1 transition-colors', className)}
       data-slot='breadcrumb-link'
       {...props}
     />

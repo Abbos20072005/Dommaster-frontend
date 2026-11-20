@@ -47,7 +47,7 @@ export const MobileHeader = () => {
               <PhoneCallIcon className='size-4' />
             </Link>
           </Button>
-          <LocaleSwitcher />
+          <LocaleSwitcher className='h-8 px-1' />
         </div>
       </div>
       <div className='bg-background px-4 py-2'>

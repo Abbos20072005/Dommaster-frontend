@@ -4,7 +4,7 @@ import { Link } from '@/i18n/navigation';
 import { LIFTING_ENABLED } from '@/lib/features';
 
 const linkClass =
-  'hover:text-secondary inline-block text-sm leading-[200%] whitespace-nowrap transition-colors';
+  'hover:text-secondary inline-block py-1 text-sm leading-[200%] whitespace-nowrap transition-colors md:py-0';
 
 /** The columns of the footer: the company, the conditions of an order, the legal texts. */
 const COLUMNS = [
@@ -44,7 +44,7 @@ export const Links = () => {
     <div className='flex flex-wrap gap-x-10 gap-y-6 md:gap-x-12 xl:gap-x-20'>
       {COLUMNS.map((column) => (
         <div key={column.title}>
-          <p className='mb-3 text-lg font-semibold whitespace-nowrap'>{t(column.title)}</p>
+          <p className='mb-2 text-base font-semibold md:mb-3 md:text-lg whitespace-nowrap'>{t(column.title)}</p>
           <ul>
             {column.links.map((link) => (
               <li key={link.href}>

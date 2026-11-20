@@ -245,7 +245,7 @@ export const TrustPage = async ({ content: set }: { content: TrustPageSet }) => 
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
-        <h1 className='text-xl font-bold md:text-3xl lg:text-4xl'>{content.h1}</h1>
+        <h1 className='text-lg font-bold md:text-3xl lg:text-4xl'>{content.h1}</h1>
         {content.blocks.map((block, index) => (
           <Block block={block} key={index} />
         ))}

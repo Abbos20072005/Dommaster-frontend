@@ -85,7 +85,8 @@ const Button = ({ className, variant, size, children, ...props }: ButtonProps) =
       <span
         className={cn(
           'flex items-center justify-center gap-2 transition-transform duration-300',
-          isLoading ? 'translate-y-[150%]' : 'translate-y-0'
+          // far enough down to be hidden fully in a tall button (the label showed under the spinner)
+          isLoading ? 'translate-y-[300%]' : 'translate-y-0'
         )}
       >
         {children}

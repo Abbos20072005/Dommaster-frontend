@@ -21,7 +21,7 @@ const DeleteAccountPage = async () => {
     <div>
       <MobileHeader />
       <BaseLayout className='mt-2 max-w-3xl space-y-4 md:mt-4'>
-        <h1 className='text-xl font-bold md:text-3xl lg:text-4xl'>{t('Delete account')}</h1>
+        <h1 className='text-lg font-bold md:text-3xl lg:text-4xl'>{t('Delete account')}</h1>
         <DeleteAccountPanel />
       </BaseLayout>
     </div>
