@@ -38,10 +38,11 @@ export const LocaleSwitcher = ({ className }: Props) => {
 
     // The language is in the address (`/uz/...`): the same page is opened in the other language
     // (a slug of the other language is redirected to its own by the page). The cookie keeps the
-    // choice for the next visit to `/`.
+    // choice for the next visit to `/`. `push`, not `replace`: the page in the old language stays
+    // in the history, so "back" returns to it and only then to the page before it.
     Cookies.set(COOKIES.LOCALE, locale, { expires: 365, path: '/', sameSite: 'lax' });
     startTransition(() => {
-      router.replace(`${pathname}${window.location.search}`, { locale });
+      router.push(`${pathname}${window.location.search}`, { locale });
     });
     queryClient.invalidateQueries();
   };
