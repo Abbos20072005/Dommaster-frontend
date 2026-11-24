@@ -23,7 +23,7 @@ export const MobileAppLinks = () => {
     <div>
       <div className='border-primary-foreground/60 flex justify-between gap-4 overflow-hidden rounded-3xl border p-4'>
         <div>
-          <p className='mb-4 max-w-[250px] font-semibold'>
+          <p className='mb-4 max-w-[212px] font-semibold'>
             {t('Point your camera at the QR to download the app')}
           </p>
           <div className='flex shrink-0 gap-3'>

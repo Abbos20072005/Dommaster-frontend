@@ -6,16 +6,8 @@ import { LIFTING_ENABLED } from '@/lib/features';
 const linkClass =
   'hover:text-secondary inline-block py-1 text-sm leading-[200%] whitespace-nowrap transition-colors md:py-0';
 
-/** The columns of the footer: the company, the conditions of an order, the legal texts. */
+/** The columns of the footer: the conditions of an order, the legal texts, the company (last). */
 const COLUMNS = [
-  {
-    title: 'About us',
-    links: [
-      { href: '/about', label: 'About company' },
-      { href: '/stores', label: 'Stores' },
-      { href: '/contacts', label: 'Contacts' }
-    ]
-  },
   {
     title: 'Delivery and lifting',
     links: [
@@ -34,6 +26,14 @@ const COLUMNS = [
       { href: '/oferta', label: 'Public offer' },
       { href: '/privacy', label: 'Privacy policy' }
     ]
+  },
+  {
+    title: 'About us',
+    links: [
+      { href: '/about', label: 'About company' },
+      { href: '/stores', label: 'Stores' },
+      { href: '/contacts', label: 'Contacts' }
+    ]
   }
 ];
 
@@ -41,7 +41,8 @@ export const Links = () => {
   const t = useTranslations();
 
   return (
-    <div className='flex flex-wrap gap-x-10 gap-y-6 md:gap-x-12 xl:gap-x-20'>
+    // on a larger screen the three columns stand in one row (the third one fell to a second row)
+    <div className='flex flex-wrap gap-x-10 gap-y-6 md:flex-nowrap'>
       {COLUMNS.map((column) => (
         <div key={column.title}>
           <p className='mb-2 text-base font-semibold md:mb-3 md:text-lg whitespace-nowrap'>{t(column.title)}</p>

@@ -38,11 +38,13 @@ export const AppFooter = ({ className, children, ...props }: Props) => {
         </div>
       </BaseLayout>
       <BaseLayout className='hidden md:block'>
-        <div className='flex flex-col justify-between gap-4 md:gap-6 lg:flex-row'>
-          <div>
+        {/* one row while it fits (the phone, the three columns of links, the app card); when it
+            does not, the last block goes to the next row instead of squeezing the others */}
+        <div className='flex flex-wrap items-start justify-between gap-x-10 gap-y-8'>
+          <div className='shrink-0'>
             <div className='mb-5'>
               <div className='mb-3 text-sm font-medium'>{t('Have a question? Call us')}</div>
-              <a href={CONTACT_PHONE_HREF} className='text-2xl font-semibold'>
+              <a href={CONTACT_PHONE_HREF} className='text-2xl font-semibold whitespace-nowrap'>
                 {CONTACT_PHONE}
               </a>
             </div>
