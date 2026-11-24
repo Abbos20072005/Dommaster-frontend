@@ -3,6 +3,6 @@ import { pickupPage } from '@/content/services/pickup';
 
 export const generateMetadata = () => getTrustMetadata(pickupPage);
 
-const PickupPage = () => <TrustPage content={pickupPage} />;
+const PickupPage = () => <TrustPage content={pickupPage} faqPage='pickup' />;
 
 export default PickupPage;

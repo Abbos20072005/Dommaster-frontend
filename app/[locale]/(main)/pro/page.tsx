@@ -3,6 +3,6 @@ import { proPage } from '@/content/services/pro';
 
 export const generateMetadata = () => getTrustMetadata(proPage);
 
-const ProPage = () => <TrustPage content={proPage} />;
+const ProPage = () => <TrustPage content={proPage} faqPage='pro' />;
 
 export default ProPage;

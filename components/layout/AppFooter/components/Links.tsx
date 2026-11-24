@@ -22,6 +22,7 @@ const COLUMNS = [
   {
     title: 'Information',
     links: [
+      { href: '/faq', label: 'FAQ' },
       { href: '/legal-entities', label: 'For legal entities' },
       { href: '/oferta', label: 'Public offer' },
       { href: '/privacy', label: 'Privacy policy' }
@@ -45,7 +46,9 @@ export const Links = () => {
     <div className='flex flex-wrap gap-x-10 gap-y-6 md:flex-nowrap'>
       {COLUMNS.map((column) => (
         <div key={column.title}>
-          <p className='mb-2 text-base font-semibold md:mb-3 md:text-lg whitespace-nowrap'>{t(column.title)}</p>
+          <p className='mb-2 text-base font-semibold whitespace-nowrap md:mb-3 md:text-lg'>
+            {t(column.title)}
+          </p>
           <ul>
             {column.links.map((link) => (
               <li key={link.href}>

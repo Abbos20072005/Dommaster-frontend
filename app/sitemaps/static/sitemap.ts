@@ -18,6 +18,7 @@ const PAGES: [path: string, lastModified: string][] = [
   ['/courier-delivery', '2026-10-19'],
   ['/payment-methods', '2026-10-19'],
   ['/returns', '2026-10-19'],
+  ['/faq', '2026-11-24'],
   ['/contacts', '2026-10-19'],
   ['/services', '2026-10-28'],
   ['/stores', '2026-11-10'],
@@ -34,5 +35,7 @@ const PAGES: [path: string, lastModified: string][] = [
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  return PAGES.flatMap(([path, lastModified]) => languagePair({ ru: path, uz: path }, { lastModified }));
+  return PAGES.flatMap(([path, lastModified]) =>
+    languagePair({ ru: path, uz: path }, { lastModified })
+  );
 }

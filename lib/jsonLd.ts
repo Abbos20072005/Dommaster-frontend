@@ -49,15 +49,7 @@ export const siteJsonLd = () => [
     },
     openingHoursSpecification: {
       '@type': 'OpeningHoursSpecification',
-      dayOfWeek: [
-        'Monday',
-        'Tuesday',
-        'Wednesday',
-        'Thursday',
-        'Friday',
-        'Saturday',
-        'Sunday'
-      ],
+      dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'],
       opens: '07:00',
       closes: '22:00'
     },
@@ -120,6 +112,26 @@ export const breadcrumbJsonLd = (items: { name?: string | null; path?: string }[
       ...(item.path ? { item: `${BASE_URL}${item.path}` } : {})
     }))
 });
+
+/**
+ * FAQPage: every active question of the FAQ with its answer (limited HTML is allowed in `text`).
+ * Nothing when there are no questions: an empty `mainEntity` makes the markup invalid.
+ */
+export const faqJsonLd = (topics: FaqTopic[], answerHtml: (html: string) => string) => {
+  const questions = topics.flatMap((topic) => topic.questions);
+
+  if (!questions.length) return null;
+
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: questions.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: answerHtml(item.answer) }
+    }))
+  };
+};
 
 /**
  * Product + Offer: the price in UZS and the availability are those of the page. The rating is

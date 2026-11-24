@@ -25,6 +25,7 @@ export * from './comments';
 export * from './comments/reply';
 export * from './delivery';
 export * from './events';
+export * from './faq';
 export * from './favorites';
 export * from './main';
 export * from './orders';

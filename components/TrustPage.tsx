@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { getLocale } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import React from 'react';
 
 import type { TrustBlock, TrustPageContent, TrustPageSet } from '@/content/trust/types';
@@ -14,8 +14,12 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator
 } from '@/components/ui/breadcrumb';
+import { FaqTopics } from '@/components/FaqTopics';
+import { JsonLd } from '@/components/JsonLd';
 import { TrackedLink } from '@/components/TrackedLink';
 import { Link } from '@/i18n/navigation';
+import { loadFaq, localizeFaqHtml } from '@/lib/faq';
+import { faqJsonLd } from '@/lib/jsonLd';
 import { shareCards } from '@/lib/seo';
 import { cn } from '@/lib/utils';
 
@@ -119,7 +123,10 @@ const Block = ({ block }: { block: TrustBlock }) => {
       return (
         <dl className='border-border divide-border divide-y rounded-xl border'>
           {block.rows.map((row) => (
-            <div className='grid gap-1 px-4 py-3 text-[15px] sm:grid-cols-[200px_1fr]' key={row.key}>
+            <div
+              className='grid gap-1 px-4 py-3 text-[15px] sm:grid-cols-[200px_1fr]'
+              key={row.key}
+            >
               <dt className='text-muted-foreground'>{row.key}</dt>
               <dd className='font-medium'>
                 {row.href ? (
@@ -226,12 +233,28 @@ export const getTrustMetadata = async (set: TrustPageSet): Promise<Metadata> => 
   };
 };
 
-/** One template for the trust pages: breadcrumb, H1 and the blocks of the text. */
-export const TrustPage = async ({ content: set }: { content: TrustPageSet }) => {
-  const content = pickContent(set, await getLocale());
+/**
+ * One template for the trust pages: breadcrumb, H1 and the blocks of the text. With `faqPage` the
+ * questions come from the admin; while the API does not answer or has none for the page, the
+ * questions written in the content file stay.
+ */
+export const TrustPage = async ({
+  content: set,
+  faqPage
+}: {
+  content: TrustPageSet;
+  faqPage?: FaqPageKey;
+}) => {
+  const locale = await getLocale();
+  const t = await getTranslations();
+  const content = pickContent(set, locale);
+  const faq = faqPage ? await loadFaq(locale, faqPage) : null;
+  const topics = faq?.length ? faq : null;
+  const faqData = topics && faqJsonLd(topics, (html) => localizeFaqHtml(html, locale));
 
   return (
     <div>
+      {faqData && <JsonLd data={faqData} />}
       <MobileHeader />
       <BaseLayout className='mt-2 max-w-4xl space-y-4 md:mt-4'>
         <Breadcrumb className='mb-2 md:mb-4'>
@@ -246,9 +269,22 @@ export const TrustPage = async ({ content: set }: { content: TrustPageSet }) => 
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg font-bold md:text-3xl lg:text-4xl'>{content.h1}</h1>
-        {content.blocks.map((block, index) => (
-          <Block block={block} key={index} />
-        ))}
+        {content.blocks.map((block, index) =>
+          block.type === 'faq' && topics ? (
+            <React.Fragment key={index}>
+              <FaqTopics heading='h3' locale={locale} topics={topics} />
+              {/* the whole topic of this page on the FAQ page: «All questions about delivery →» */}
+              <Link
+                className='text-primary inline-block text-sm font-semibold underline'
+                href={`/faq#${topics[0].slug}`}
+              >
+                {t(`FAQ all ${faqPage}`)} →
+              </Link>
+            </React.Fragment>
+          ) : (
+            <Block block={block} key={index} />
+          )
+        )}
       </BaseLayout>
     </div>
   );
