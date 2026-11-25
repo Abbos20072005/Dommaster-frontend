@@ -28,13 +28,13 @@ export const returnsPage: TrustPageSet = {
           ],
           [
             "Tovar nuqsonli, noto'g'ri yoki to'liq emas",
-            "Almashtirish, nuqsonni bartaraf etish, narxni kamaytirish yoki xaridni bekor qilish — qonunga muvofiq",
+            'Almashtirish, nuqsonni bartaraf etish, narxni kamaytirish yoki xaridni bekor qilish — qonunga muvofiq',
             "Qonun va kafolat muddati bo'yicha"
           ],
           [
             "Buyurtmani o'zgartirish yoki bekor qilish",
             "Buyurtma qaysi bosqichda ekaniga qarab ko'rib chiqiladi",
-            "Murojaat qilgan paytingizdan"
+            'Murojaat qilgan paytingizdan'
           ]
         ]
       },
@@ -44,7 +44,7 @@ export const returnsPage: TrustPageSet = {
         items: [
           {
             title: 'Murojaat qiling.',
-            text: "Telefon +998 77 240 09 09 yoki buildexuz@gmail.com. Buyurtma raqamini va sababini ayting."
+            text: 'Telefon +998 77 240 09 09 yoki buildexuz@gmail.com. Buyurtma raqamini va sababini ayting.'
           },
           {
             title: "Ko'rib chiqamiz.",
@@ -66,7 +66,7 @@ export const returnsPage: TrustPageSet = {
         items: [
           "Odatda siz to'lagan usul bilan. Boshqa usul qonun doirasida kelishiladi.",
           "Pul o'tkazish xarajatlarini Buildex to'laydi.",
-          "Tovarni ortga tashish xarajati qaytarish sababi va qonunchilikka qarab belgilanadi."
+          'Tovarni ortga tashish xarajati qaytarish sababi va qonunchilikka qarab belgilanadi.'
         ]
       },
       { type: 'h2', text: 'Kafolat', id: 'kafolat' },
@@ -78,32 +78,7 @@ export const returnsPage: TrustPageSet = {
           "Tovarni qabul qilganingiz yashirin nuqson yoki kafolat bo'yicha huquqlaringizdan voz kechish degani emas."
         ]
       },
-      { type: 'h2', text: 'Savol-javob' },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: 'Sifatli tovarni qaytarsam, pulni darhol olamanmi?',
-            a: "Avval ayni shunday tovarga almashtirish taklif qilinadi. Bunday tovar sotuvda bo'lmasa, pul qaytariladi."
-          },
-          {
-            q: "Qaysi tovarlarni qaytarib bo'lmaydi?",
-            a: "Hukumat belgilagan almashtirilmaydigan tovarlar ro'yxatidagilar. Nuqsonli tovarga bu cheklov tegishli emas."
-          },
-          {
-            q: "Tovar katta va og'ir. O'zim olib kelishim kerakmi?",
-            a: "Yo'q. Yirik tovarni olib ketishni siz bilan kelishamiz."
-          },
-          {
-            q: 'Pul qachon qaytadi?',
-            a: "Qaror qabul qilingach 10 kalendar kun ichida. Bank yoki to'lov tizimi pulni kartangizga o'tkazishi uchun qo'shimcha vaqt kerak bo'lishi mumkin."
-          },
-          {
-            q: 'Buyurtmani hali olmadim. Bekor qilsam bo\'ladimi?',
-            a: "Ha, buyurtma raqami bilan murojaat qiling. Bekor qilish buyurtma qaysi bosqichda ekaniga qarab ko'rib chiqiladi."
-          }
-        ]
-      },
+      { type: 'faq', title: 'Savol-javob' },
       { type: 'h2', text: 'Aloqa' },
       {
         type: 'p',
@@ -115,7 +90,7 @@ export const returnsPage: TrustPageSet = {
         items: [
           { text: 'Yetkazib berish', href: '/courier-delivery' },
           { text: "To'lov usullari", href: '/payment-methods' },
-          { text: 'Ommaviy oferta (8-bo\'lim)', href: '/oferta' }
+          { text: "Ommaviy oferta (8-bo'lim)", href: '/oferta' }
         ]
       }
     ]
@@ -193,32 +168,7 @@ export const returnsPage: TrustPageSet = {
           'Приёмка товара не означает отказ от прав по скрытым недостаткам или гарантии.'
         ]
       },
-      { type: 'h2', text: 'Вопросы и ответы' },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: 'Если верну качественный товар, деньги вернут сразу?',
-            a: 'Сначала предлагается обмен на такой же товар. Если его нет в продаже, деньги возвращаются.'
-          },
-          {
-            q: 'Какие товары нельзя вернуть?',
-            a: 'Товары из утверждённого правительством перечня товаров, не подлежащих обмену. На товар с недостатками это ограничение не распространяется.'
-          },
-          {
-            q: 'Товар большой и тяжёлый. Нужно привезти самому?',
-            a: 'Нет. Вывоз крупного товара согласуем с вами.'
-          },
-          {
-            q: 'Когда вернутся деньги?',
-            a: 'В течение 10 календарных дней после решения. Банку или платёжной системе может понадобиться дополнительное время для зачисления на карту.'
-          },
-          {
-            q: 'Заказ ещё не получен. Можно отменить?',
-            a: 'Да, обратитесь с номером заказа. Отмена рассматривается с учётом этапа выполнения заказа.'
-          }
-        ]
-      },
+      { type: 'faq', title: 'Вопросы и ответы' },
       { type: 'h2', text: 'Контакты' },
       {
         type: 'p',

@@ -18,7 +18,7 @@ interface Props {
 export const FaqTopics = ({ topics, locale, heading: Heading = 'h2', titles }: Props) => (
   <div className='space-y-6'>
     {topics.map((topic) => (
-      <section className='scroll-mt-24 space-y-2' id={topic.slug} key={topic.id}>
+      <section className='scroll-mt-24 space-y-2' id={topic.slug} key={topic.slug}>
         {/* a page with one topic has no use for its title */}
         {(titles || topics.length > 1) && (
           <Heading className='pt-2 text-lg font-bold md:text-2xl'>{topic.name}</Heading>

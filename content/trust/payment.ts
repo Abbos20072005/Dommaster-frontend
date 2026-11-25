@@ -38,9 +38,9 @@ export const paymentPage: TrustPageSet = {
         type: 'list',
         items: [
           "Tovar summasi, yetkazish va boshqa tanlangan xizmatlar narxi hamda jami summa to'lovdan oldin so'mda ko'rsatiladi.",
-          "Tasdiqlangan buyurtma narxi sizning roziligingizsiz oshirilmaydi.",
+          'Tasdiqlangan buyurtma narxi sizning roziligingizsiz oshirilmaydi.',
           "To'lov to'lov tizimidan tasdiq kelganda o'tgan hisoblanadi. Pul ikki marta yechilgan bo'lsa, bizga murojaat qiling — tekshirib, ortiqchasini qaytaramiz.",
-          "Chek va boshqa savdo hujjatlari qonunchilikka muvofiq beriladi.",
+          'Chek va boshqa savdo hujjatlari qonunchilikka muvofiq beriladi.',
           "Buyurtma bekor qilinsa yoki yetkazib bo'lmasa, bajarilmagan qism uchun pul qaytariladi, odatda to'langan usul bilan. Batafsil — «Qaytarish» sahifasida."
         ]
       },
@@ -53,43 +53,23 @@ export const paymentPage: TrustPageSet = {
           "To'lov rekvizitlari faqat rasmiy buyurtma yoki rasmiy aloqa kanali orqali beriladi."
         ]
       },
-      { type: 'h2', text: "Yuridik shaxslar uchun bank rekvizitlari" },
+      { type: 'h2', text: 'Yuridik shaxslar uchun bank rekvizitlari' },
       {
         type: 'kv',
         rows: [
-          { key: 'Tashkilot', value: "«ENERGOSNAB» MChJ" },
+          { key: 'Tashkilot', value: '«ENERGOSNAB» MChJ' },
           {
             key: 'Manzil',
-            value: "Toshkent shahri, Chilonzor tumani, Katta Chilonzor-1 MFY, Arnasoy ko'chasi, 10A-uy"
+            value:
+              "Toshkent shahri, Chilonzor tumani, Katta Chilonzor-1 MFY, Arnasoy ko'chasi, 10A-uy"
           },
           { key: 'STIR', value: '308542198' },
           { key: 'H/r', value: '20208000705400780001' },
           { key: 'MFO', value: '01158' },
-          { key: 'Bank', value: "«Kapitalbank» ATB Yagona filiali, Toshkent" }
+          { key: 'Bank', value: '«Kapitalbank» ATB Yagona filiali, Toshkent' }
         ]
       },
-      { type: 'h2', text: 'Savol-javob' },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: "Qaysi kartalar bilan to'lash mumkin?",
-            a: "To'lov oynasida tanlangan tizim qabul qiladigan kartalar bilan."
-          },
-          {
-            q: "To'lov o'tdimi, qanday bilaman?",
-            a: "To'lov tizimidan tasdiq kelgach buyurtma holati yangilanadi va sizga xabar yuboriladi."
-          },
-          {
-            q: "Pul yechildi, lekin buyurtma ko'rinmayapti.",
-            a: "Buyurtma raqami yoki to'lov vaqti bilan bizga murojaat qiling: +998 77 240 09 09."
-          },
-          {
-            q: "Yuridik shaxs sifatida qanday to'layman?",
-            a: "Buyurtmada tashkilot rekvizitlarini kiriting va yuqoridagi hisob raqamiga bank o'tkazmasi qiling."
-          }
-        ]
-      },
+      { type: 'faq', title: 'Savol-javob' },
       { type: 'h2', text: 'Aloqa' },
       { type: 'p', text: '+998 77 240 09 09, har kuni 07:00–22:00 · buildexuz@gmail.com' },
       {
@@ -169,28 +149,7 @@ export const paymentPage: TrustPageSet = {
           { key: 'Банк', value: 'АКБ «КапиталБанк», Ягона филиал, г. Ташкент' }
         ]
       },
-      { type: 'h2', text: 'Вопросы и ответы' },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: 'Какими картами можно оплатить?',
-            a: 'Картами, которые принимает выбранная платёжная система.'
-          },
-          {
-            q: 'Как понять, что оплата прошла?',
-            a: 'После подтверждения от платёжной системы статус заказа обновится и вы получите уведомление.'
-          },
-          {
-            q: 'Деньги списаны, а заказа не видно.',
-            a: 'Напишите нам с номером заказа или временем оплаты: +998 77 240 09 09.'
-          },
-          {
-            q: 'Как оплатить юридическому лицу?',
-            a: 'Укажите реквизиты организации в заказе и сделайте банковский перевод на расчётный счёт выше.'
-          }
-        ]
-      },
+      { type: 'faq', title: 'Вопросы и ответы' },
       { type: 'h2', text: 'Контакты' },
       { type: 'p', text: '+998 77 240 09 09, ежедневно 07:00–22:00 · buildexuz@gmail.com' },
       {

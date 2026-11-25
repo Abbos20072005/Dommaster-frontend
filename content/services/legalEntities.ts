@@ -9,7 +9,7 @@ import { contactButtons } from './shared';
  */
 export const legalEntitiesPage: TrustPageSet = {
   uz: {
-    title: "Yuridik shaxslar uchun — buyurtma va rekvizitlar | Buildex",
+    title: 'Yuridik shaxslar uchun — buyurtma va rekvizitlar | Buildex',
     description:
       "Tashkilotlar uchun Buildex'da buyurtma berish: vakilning vakolati, rekvizitlar, sotuvchi ma'lumotlari va aloqa.",
     h1: 'Yuridik shaxslar uchun',
@@ -23,7 +23,7 @@ export const legalEntitiesPage: TrustPageSet = {
         type: 'list',
         items: [
           "Yuridik shaxs vakili o'z vakolati doirasida harakat qiladi.",
-          "Tashkilot rekvizitlari buyurtmani rasmiylashtirishda taqdim etiladi.",
+          'Tashkilot rekvizitlari buyurtmani rasmiylashtirishda taqdim etiladi.',
           "Telefon raqamiga kelgan kod (OTP) tashkilot nomidan shartnoma tuzish vakolatini o'z-o'zidan tasdiqlamaydi.",
           "Buyurtmani tasdiqlashdan oldin tovar, yetkazish va tanlangan xizmatlar qiymati hamda jami to'lov so'mda ko'rsatiladi."
         ]
@@ -42,27 +42,11 @@ export const legalEntitiesPage: TrustPageSet = {
           {
             key: 'Bank',
             value:
-              "H/r: 20208000705400780001 · MFO: 01158 · «Kapitalbank» ATB Yagona filiali, Toshkent"
+              'H/r: 20208000705400780001 · MFO: 01158 · «Kapitalbank» ATB Yagona filiali, Toshkent'
           }
         ]
       },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: "Tashkilot nomidan buyurtma bersam bo'ladimi?",
-            a: "Ha. Vakil o'z vakolati doirasida buyurtma beradi va tashkilot rekvizitlarini buyurtmani rasmiylashtirishda taqdim etadi."
-          },
-          {
-            q: "Sotuvchi kim?",
-            a: "«ENERGOSNAB» MChJ, STIR 308542198 (Buildex brendi). Rekvizitlar yuqorida."
-          },
-          {
-            q: "To'lov va hujjatlar bo'yicha savolim bor.",
-            a: "Qo'ng'iroq qiling yoki Telegram'da yozing: savolingizga javob beramiz."
-          }
-        ]
-      },
+      { type: 'faq' },
       {
         type: 'cta',
         title: 'Savolingiz bormi?',
@@ -109,8 +93,7 @@ export const legalEntitiesPage: TrustPageSet = {
           { key: 'ИНН', value: '308542198' },
           {
             key: 'Юридический адрес',
-            value:
-              'г. Ташкент, Чиланзарский район, МСГ Катта Чиланзар-1, ул. Арнасой, дом 10А'
+            value: 'г. Ташкент, Чиланзарский район, МСГ Катта Чиланзар-1, ул. Арнасой, дом 10А'
           },
           {
             key: 'Банк',
@@ -119,23 +102,7 @@ export const legalEntitiesPage: TrustPageSet = {
           }
         ]
       },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: 'Можно ли заказать от имени организации?',
-            a: 'Да. Представитель действует в пределах своих полномочий и предоставляет реквизиты организации при оформлении заказа.'
-          },
-          {
-            q: 'Кто продавец?',
-            a: 'ООО «ENERGOSNAB», ИНН 308542198 (бренд Buildex). Реквизиты выше.'
-          },
-          {
-            q: 'У меня вопрос по оплате и документам.',
-            a: 'Позвоните или напишите в Telegram: ответим на ваш вопрос.'
-          }
-        ]
-      },
+      { type: 'faq' },
       {
         type: 'cta',
         title: 'Есть вопросы?',

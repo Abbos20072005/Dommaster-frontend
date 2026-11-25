@@ -142,6 +142,9 @@ const Block = ({ block }: { block: TrustBlock }) => {
         </dl>
       );
     case 'faq':
+      // the questions of a page come from the admin; nothing is shown when it has none
+      if (!block.items?.length) return null;
+
       return (
         <div className='space-y-2'>
           {block.items.map((item) => (
@@ -272,7 +275,8 @@ export const TrustPage = async ({
         {content.blocks.map((block, index) =>
           block.type === 'faq' && topics ? (
             <React.Fragment key={index}>
-              <FaqTopics heading='h3' locale={locale} topics={topics} />
+              {block.title && <Block block={{ type: 'h2', text: block.title }} />}
+              <FaqTopics heading={block.title ? 'h3' : 'h2'} locale={locale} topics={topics} />
               {/* the whole topic of this page on the FAQ page: «All questions about delivery →» */}
               <Link
                 className='text-primary inline-block text-sm font-semibold underline'

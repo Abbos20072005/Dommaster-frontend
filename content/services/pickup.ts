@@ -31,7 +31,7 @@ export const pickupPage: TrustPageSet = {
             text: "Onlayn (karta orqali) yoki do'konda: naqd pul yoki karta bilan. To'lov usulini buyurtmani rasmiylashtirishda tanlaysiz."
           },
           {
-            title: 'Buyurtma tayyor bo\'lishini kuting.',
+            title: "Buyurtma tayyor bo'lishini kuting.",
             text: "Buyurtma yig'ilgach, uning holati «Olib ketishga tayyor» bo'ladi. Buni kabinetda ko'rasiz."
           },
           {
@@ -40,45 +40,28 @@ export const pickupPage: TrustPageSet = {
           }
         ]
       },
-      { type: 'h2', text: 'Bilib qo\'ying' },
+      { type: 'h2', text: "Bilib qo'ying" },
       {
         type: 'kv',
         rows: [
           {
             key: "Do'konlar",
-            value: "Manzil, mo'ljal, ish vaqti va telefon «Do'konlar» sahifasida. U yerda do'kon hozir ochiq yoki yopiqligi ham ko'rinadi."
+            value:
+              "Manzil, mo'ljal, ish vaqti va telefon «Do'konlar» sahifasida. U yerda do'kon hozir ochiq yoki yopiqligi ham ko'rinadi."
           },
           {
-            key: 'Yopiq do\'kon',
-            value: "Hozir yopiq do'konni ham tanlash mumkin: buyurtmani ochilgandan keyin olib ketasiz."
+            key: "Yopiq do'kon",
+            value:
+              "Hozir yopiq do'konni ham tanlash mumkin: buyurtmani ochilgandan keyin olib ketasiz."
           },
           {
             key: 'Muddat',
-            value: "Tayyor buyurtma 2 kun saqlanadi. Muddat o'tib ketsa, do'kon xodimlari bilan bog'laning."
+            value:
+              "Tayyor buyurtma 2 kun saqlanadi. Muddat o'tib ketsa, do'kon xodimlari bilan bog'laning."
           }
         ]
       },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: "Olib ketish pullikmi?",
-            a: "Yo'q, olib ketishda yetkazish narxi 0 so'm. Faqat tovar uchun to'laysiz."
-          },
-          {
-            q: "Qaysi do'konni tanlasam bo'ladi?",
-            a: "Ro'yxatdagi istalgan faol do'konni. Hozirgi ro'yxat va xarita «Do'konlar» sahifasida."
-          },
-          {
-            q: "Buyurtma tayyor bo'lganini qanday bilaman?",
-            a: "Buyurtma holati «Olib ketishga tayyor»ga o'zgaradi: uni kabinetda ko'rasiz."
-          },
-          {
-            q: "Olib ketgan tovarni qaytarsam bo'ladimi?",
-            a: "Ha, qaytarish shartlari «Qaytarish» sahifasida."
-          }
-        ]
-      },
+      { type: 'faq' },
       {
         type: 'cta',
         title: "Do'konni tanlang",
@@ -153,27 +136,7 @@ export const pickupPage: TrustPageSet = {
           }
         ]
       },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: 'Самовывоз платный?',
-            a: 'Нет, при самовывозе доставка стоит 0 сум. Вы платите только за товар.'
-          },
-          {
-            q: 'Какой магазин можно выбрать?',
-            a: 'Любой действующий магазин из списка. Актуальный список и карта — на странице «Магазины».'
-          },
-          {
-            q: 'Как узнать, что заказ готов?',
-            a: 'Статус заказа изменится на «Готов к выдаче»: вы увидите его в кабинете.'
-          },
-          {
-            q: 'Можно ли вернуть товар, который я забрал?',
-            a: 'Да, условия возврата — на странице «Возврат».'
-          }
-        ]
-      },
+      { type: 'faq' },
       {
         type: 'cta',
         title: 'Выберите магазин',

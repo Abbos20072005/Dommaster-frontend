@@ -7,7 +7,8 @@ export type TrustBlock =
   | { type: 'table'; head?: string[]; rows: string[][] }
   /** key — value rows; `href` makes the value a link (a phone is `tel:`) */
   | { type: 'kv'; rows: { key: string; value: string; href?: string }[] }
-  | { type: 'faq'; items: { q: string; a: string }[] }
+  /** the place of the questions of the page: they come from the admin (`faqPage` of TrustPage); `items` are written here only where the admin has none */
+  | { type: 'faq'; title?: string; items?: { q: string; a: string }[] }
   | { type: 'links'; label: string; items: { text: string; href: string }[] }
   /** a small grey line: the edition and the date of a legal text */
   | { type: 'meta'; text: string }

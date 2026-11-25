@@ -53,36 +53,7 @@ export const deliveryPage: TrustPageSet = {
           }
         ]
       },
-      { type: 'h2', text: 'Savol-javob' },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: 'Yetkazish narxini qachon bilaman?',
-            a: "Manzilni kiritganingizdan keyin, to'lovdan oldin. Narx buyurtmaning jami summasida alohida ko'rsatiladi."
-          },
-          ...(LIFTING_ENABLED
-            ? [
-                {
-                  q: "Yetkazish narxiga qavatga ko'tarish kiradimi?",
-                  a: "Avtomatik kirmaydi. Og'ir yoki yirik yuk uchun ko'tarish va tushirish oldindan kelishiladi, qo'shimcha haq bo'lsa oldindan aytiladi."
-                }
-              ]
-            : []),
-          {
-            q: 'Buyurtma kechiksa nima bo\'ladi?',
-            a: "Sizga xabar beramiz va boshqa muddat yoki buyurtmani bekor qilishni taklif qilamiz. Bu sizning qonuniy huquqlaringizni cheklamaydi."
-          },
-          {
-            q: "Yetkazib berib bo'lmasa, pul nima bo'ladi?",
-            a: "Bajarilmagan qism uchun to'langan pul qaytariladi. Qaytarish tartibi — «Qaytarish» sahifasida."
-          },
-          {
-            q: 'Tovarni olganimda nimani tekshiray?',
-            a: "Miqdorni, ko'rinadigan shikastni va butlikni. Tovarni qabul qilganingiz yashirin nuqson yoki kafolat bo'yicha huquqlaringizdan voz kechish degani emas."
-          }
-        ]
-      },
+      { type: 'faq', title: 'Savol-javob' },
       { type: 'h2', text: 'Aloqa' },
       {
         type: 'p',
@@ -145,36 +116,7 @@ export const deliveryPage: TrustPageSet = {
           }
         ]
       },
-      { type: 'h2', text: 'Вопросы и ответы' },
-      {
-        type: 'faq',
-        items: [
-          {
-            q: 'Когда я узнаю стоимость доставки?',
-            a: 'После ввода адреса, до оплаты. Стоимость показывается отдельной строкой в итоговой сумме заказа.'
-          },
-          ...(LIFTING_ENABLED
-            ? [
-                {
-                  q: 'Входит ли подъём на этаж в стоимость доставки?',
-                  a: 'Автоматически нет. Подъём и разгрузка тяжёлого или крупного груза согласуются заранее; если есть доплата, о ней сообщается заранее.'
-                }
-              ]
-            : []),
-          {
-            q: 'Что будет, если заказ задерживается?',
-            a: 'Мы сообщим и предложим другой срок или отмену заказа. Это не ограничивает ваши законные права.'
-          },
-          {
-            q: 'Что с деньгами, если доставка невозможна?',
-            a: 'Деньги за невыполненную часть заказа возвращаются. Порядок возврата — на странице «Возврат».'
-          },
-          {
-            q: 'Что проверить при получении?',
-            a: 'Количество, видимые повреждения и комплектность. Приёмка товара не означает отказ от прав по скрытым недостаткам или гарантии.'
-          }
-        ]
-      },
+      { type: 'faq', title: 'Вопросы и ответы' },
       { type: 'h2', text: 'Контакты' },
       {
         type: 'p',
