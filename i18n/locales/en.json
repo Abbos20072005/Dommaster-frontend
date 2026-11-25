@@ -635,7 +635,7 @@
   "Checkout consent": "I have reviewed the order, the total, and the payment and delivery terms and agree to the <oferta>Public offer</oferta>.",
   "Terms links": "Terms of <delivery>delivery</delivery>, <payment>payment</payment> and <returns>returns</returns>",
   "Product delivery short": "Across Tashkent. The price and the time are calculated by the address and shown before the payment.",
-  "Product payment short": "Online by card (Atmos, Click, Payme, Uzum); companies — a bank transfer.",
+  "Product payment short": "Online by card (Atmos); companies — a bank transfer.",
   "Product returns short": "A product of proper quality can be exchanged within 10 days; defective goods follow the law.",
   "Delete account page intro": "Deleting the account removes the profile, saved addresses, the cart, favorites, viewed products and saved cards. This cannot be undone.",
   "Delete account page kept": "The order history is kept as the accounting and the law require, not linked to the account. See sections 8 and 9 of the Privacy policy.",

@@ -1,5 +1,5 @@
-// Checkout'dagi to'lov usullari (ko'rinish tartibi: Uzum, Click, Payme, Naqd, Atmos)
-export type CheckoutPaymentMethod = 'atmos' | 'cash' | 'click' | 'payme' | 'uzum';
+// Checkout'dagi to'lov usullari: karta bilan onlayn (Atmos) va naqd. Click, Payme va Uzum yo'q (BLD-531).
+export type CheckoutPaymentMethod = 'atmos' | 'cash';
 
 interface CheckoutPaymentMethodConfig {
   descriptionKey?: string;
@@ -15,15 +15,10 @@ interface CheckoutPaymentMethodConfig {
   value: CheckoutPaymentMethod;
 }
 
-// Backend `payment_type`: Click=1, Payme=2, Uzum=3, Naqd=4 (PaymentMethod enum bilan bir xil).
+// Backend `payment_type`: karta=1, Naqd=4 (PaymentMethod enum bilan bir xil).
 // Atmos: `payment_method` branch'idagi kabi 1 yuboriladi, keyin `payment/hold/create/` chaqiriladi.
 // TODO: Atmos uchun alohida payment_type bo'lsa — backenddan tasdiqlab, shu yerda o'zgartiring.
 export const CHECKOUT_PAYMENT_METHODS: CheckoutPaymentMethodConfig[] = [
-  // Vaqtincha o'chirilgan (faqat Atmos ishlaydi):
-  // { value: 'uzum', label: 'Uzum', image: '/payments/uzum.png', paymentType: 3 },
-  // { value: 'click', label: 'Click', image: '/payments/click.png', paymentType: 1 },
-  // { value: 'payme', label: 'Payme', image: '/payments/payme.png', paymentType: 2 },
-  // {
   {
     value: 'atmos',
     labelKey: 'Pay online by card',

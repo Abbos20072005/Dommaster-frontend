@@ -661,7 +661,7 @@
   "Checkout consent": "Men buyurtma tarkibi, yakuniy summa, to'lov va yetkazib berish shartlarini ko'rib chiqdim va <oferta>Ommaviy oferta</oferta> shartlariga roziman.",
   "Terms links": "<delivery>Yetkazib berish</delivery>, <payment>to'lov</payment> va <returns>qaytarish</returns> shartlari",
   "Product delivery short": "Toshkent bo'ylab. Narx va muddat manzil bo'yicha hisoblanadi va to'lovdan oldin ko'rsatiladi.",
-  "Product payment short": "Karta bilan onlayn (Atmos, Click, Payme, Uzum); yuridik shaxslar — bank o'tkazmasi.",
+  "Product payment short": "Karta bilan onlayn (Atmos); yuridik shaxslar — bank o'tkazmasi.",
   "Product returns short": "Sifatli tovarni 10 kun ichida almashtirish mumkin; nuqsonli tovar bo'yicha qonun talablari amal qiladi.",
   "Delete account page intro": "Akkauntni o'chirsangiz, profil, saqlangan manzillar, savat, sevimlilar, ko'rilgan tovarlar va saqlangan kartalar o'chiriladi. Bu amalni qaytarib bo'lmaydi.",
   "Delete account page kept": "Buyurtmalar tarixi buxgalteriya va qonun talablari bo'yicha akkauntga bog'lanmagan holda saqlanadi. Batafsil — Maxfiylik siyosatining 8 va 9-bo'limlari.",

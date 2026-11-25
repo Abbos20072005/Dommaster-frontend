@@ -13,7 +13,7 @@ import { useCheckoutStore } from '@/utils/stores';
 
 import { SavedCardsList } from './components/SavedCardsList';
 
-// To'lov usullari: Uzum, Click, Payme, Naqd va eng oxirida Atmos (saqlangan karta orqali)
+// To'lov usullari: Atmos (saqlangan karta orqali) va Naqd
 export const PaymentMethodSelector = () => {
   const t = useTranslations();
   const { deliveryType, paymentMethod, setPaymentMethod } = useCheckoutStore();

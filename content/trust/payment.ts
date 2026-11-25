@@ -5,7 +5,7 @@ export const paymentPage: TrustPageSet = {
   uz: {
     title: "Buyurtmani to'lash usullari — Buildex",
     description:
-      "Buildex'da buyurtmani to'lash: Atmos, Click, Payme yoki Uzum orqali karta bilan onlayn, yuridik shaxslar uchun bank o'tkazmasi.",
+      "Buildex'da buyurtmani to'lash: Atmos orqali karta bilan onlayn, yuridik shaxslar uchun bank o'tkazmasi.",
     h1: "To'lov usullari",
     blocks: [
       {
@@ -20,7 +20,7 @@ export const paymentPage: TrustPageSet = {
           [
             'Karta bilan onlayn',
             'Hamma xaridorlar',
-            "Buyurtmani rasmiylashtirishda to'lov tizimini tanlaysiz: Atmos, Click, Payme yoki Uzum. To'lov shu tizim oynasida o'tadi."
+            "Buyurtmani rasmiylashtirishda karta bilan onlayn to'lovni tanlaysiz. To'lov Atmos to'lov tizimi oynasida o'tadi."
           ],
           [
             "Bank o'tkazmasi",
@@ -86,7 +86,7 @@ export const paymentPage: TrustPageSet = {
   ru: {
     title: 'Способы оплаты заказа — Buildex',
     description:
-      'Оплата заказов в Buildex: онлайн картой через Atmos, Click, Payme или Uzum, для юридических лиц — банковский перевод.',
+      'Оплата заказов в Buildex: онлайн картой через Atmos, для юридических лиц — банковский перевод.',
     h1: 'Способы оплаты',
     blocks: [
       {
@@ -101,7 +101,7 @@ export const paymentPage: TrustPageSet = {
           [
             'Картой онлайн',
             'Все покупатели',
-            'При оформлении выберите платёжную систему: Atmos, Click, Payme или Uzum. Оплата проходит в окне этой системы.'
+            'При оформлении выберите оплату картой онлайн. Оплата проходит в окне платёжной системы Atmos.'
           ],
           [
             'Банковский перевод',

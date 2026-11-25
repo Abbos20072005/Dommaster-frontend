@@ -117,7 +117,7 @@ export const PriceCalculationCard = () => {
         paymentHoldMutation.mutate({ data: { order_id: data.order_id } });
         return;
       }
-      // Click / Payme / Uzum: backend to'lov havolasini qaytaradi — o'sha sahifaga o'tamiz
+      // Boshqa onlayn to'lov: backend to'lov havolasini qaytarsa — o'sha sahifaga o'tamiz
       if (data.result) {
         resetCheckout();
         window.location.href = data.result;
