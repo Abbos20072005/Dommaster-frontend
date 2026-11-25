@@ -167,7 +167,6 @@ export const PriceCalculationCard = () => {
       delivery_type: deliveryType,
       delivery_price: isDelivery ? (deliveryPrice ?? undefined) : undefined,
       is_web: true,
-      payment_method: selectedPaymentMethod.paymentMethod,
       payment_type: selectedPaymentMethod.paymentType,
       promocode: promo?.code,
       receiver_name: receiverName,

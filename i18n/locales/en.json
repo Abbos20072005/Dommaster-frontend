@@ -85,7 +85,6 @@
   "In favorites": "In favorites",
   "To favorites": "To favorites",
   "From the warehouse": "From the warehouse",
-  "Pay online by card or on pickup": "Online by card or on pickup at the warehouse",
   "Terms": "Terms",
   "Return policy": "Return policy",
   "Key characteristics": "Key characteristics",
@@ -254,8 +253,6 @@
   "Confirm": "Confirm",
   "Pay online by card": "Pay online by card",
   "Pay order": "Pay order",
-  "Pay upon receipt": "Pay upon receipt",
-  "Payment method on delivery": "Payment method on delivery",
   "Payment method": "Payment method",
   "Payment methods": "Payment methods",
   "Pending": "Pending",
@@ -416,7 +413,7 @@
       "articles": "Useful articles and tips on construction and renovation - Buildex.uz.",
       "reviews": "Reviews of Buildex.uz products and tools.",
       "delivery": "Delivery of building materials across Tashkent: terms, prices and timing.",
-      "payments": "Payment methods at Buildex.uz: online by card or on pickup."
+      "payments": "Payment methods at Buildex.uz: online by card."
     },
     "product": {
       "description": "{name} at a price of {price} sum in the online store Buildex. Specifications, photos and delivery across Tashkent."
@@ -753,7 +750,6 @@
   "Pick up by": "Pick up by {date}",
   "Pickup time is over": "The pickup time is over",
   "Pickup time is over text": "Contact the store staff.",
-  "Pay at the store": "Pay at the store",
   "Opens next": "Opens: {date}, {time}",
   "Floor lifting": "Lifting to the floor",
   "For legal entities": "For legal entities"

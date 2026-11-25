@@ -85,7 +85,6 @@
   "In favorites": "Sevimlilarda",
   "To favorites": "Sevimlilarga",
   "From the warehouse": "Ombordan",
-  "Pay online by card or on pickup": "Karta orqali onlayn yoki olib ketishda omborda",
   "Terms": "Shartlar",
   "Return policy": "Qaytarish shartlari",
   "Key characteristics": "Asosiy xususiyatlar",
@@ -254,8 +253,6 @@
   "Confirm": "Tasdiqlash",
   "Pay online by card": "Karta orqali onlayn to'lash",
   "Pay order": "Buyurtmani to'lash",
-  "Pay upon receipt": "Yetkazib berishda to'lash",
-  "Payment method on delivery": "Yetkazib berishda to'lov usuli",
   "Payment method": "To'lov usuli",
   "Payment methods": "To'lov usullari",
   "Pending": "Kutilmoqda",
@@ -416,7 +413,7 @@
       "articles": "Qurilish va ta'mirlash bo'yicha foydali maqolalar va maslahatlar - Buildex.uz.",
       "reviews": "Buildex.uz mahsulotlari va asboblarining sharhlari hamda ko'rib chiqishlari.",
       "delivery": "Toshkent shahri bo'ylab qurilish materiallarini yetkazib berish: shartlar, narxlar va muddatlar.",
-      "payments": "Buildex.uz'da to'lov usullari: onlayn karta orqali yoki olib ketishda to'lash."
+      "payments": "Buildex.uz'da to'lov usullari: onlayn karta orqali."
     },
     "product": {
       "description": "Buildex onlayn do'konida {name} — {price} so'm. Texnik xususiyatlar, fotolar va Toshkent bo'ylab yetkazib berish."
@@ -779,7 +776,6 @@
   "Pick up by": "Olib ketish muddati: {date}",
   "Pickup time is over": "Olib ketish muddati o'tdi",
   "Pickup time is over text": "Do'kon xodimlari bilan bog'laning.",
-  "Pay at the store": "Do'konda to'lanadi",
   "Opens next": "Ochiladi: {date}, {time}",
   "Floor lifting": "Qavatga ko'tarish",
   "For legal entities": "Yuridik shaxslar uchun"

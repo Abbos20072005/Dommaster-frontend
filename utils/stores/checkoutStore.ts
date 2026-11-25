@@ -8,7 +8,7 @@ import { DEFAULT_CHECKOUT_PAYMENT_METHOD } from '@/utils/constants/checkoutPayme
 interface CheckoutStore {
   deliveryPrice: string | null;
   deliveryType: DeliveryType;
-  // Tanlangan to'lov usuli: cash / atmos
+  // Tanlangan to'lov usuli: faqat atmos (BLD-549)
   paymentMethod: CheckoutPaymentMethod;
   // Profilda ism bo'lmasa — checkout'da kiritiladigan qabul qiluvchi ismi
   recipientName: string;

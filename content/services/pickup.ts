@@ -28,7 +28,7 @@ export const pickupPage: TrustPageSet = {
           },
           {
             title: "To'lang.",
-            text: "Onlayn (karta orqali) yoki do'konda: naqd pul yoki karta bilan. To'lov usulini buyurtmani rasmiylashtirishda tanlaysiz."
+            text: "Onlayn, karta orqali (Atmos). To'lov buyurtmani rasmiylashtirishda amalga oshiriladi."
           },
           {
             title: "Buyurtma tayyor bo'lishini kuting.",
@@ -103,7 +103,7 @@ export const pickupPage: TrustPageSet = {
           },
           {
             title: 'Оплатите.',
-            text: 'Онлайн (картой) или в магазине: наличными или картой. Способ оплаты вы выбираете при оформлении.'
+            text: 'Онлайн, картой (Atmos). Оплата проходит при оформлении заказа.'
           },
           {
             title: 'Дождитесь готовности.',

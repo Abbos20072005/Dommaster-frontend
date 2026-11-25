@@ -2,23 +2,19 @@
 
 import { CreditCardIcon, LandmarkIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
-import Image from 'next/image';
 import React from 'react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { cn } from '@/lib/utils';
-import { DELIVERY_TYPE } from '@/utils/constants';
 import { CHECKOUT_PAYMENT_METHODS } from '@/utils/constants/checkoutPaymentMethods';
 import { useCheckoutStore } from '@/utils/stores';
 
 import { SavedCardsList } from './components/SavedCardsList';
 
-// To'lov usullari: Atmos (saqlangan karta orqali) va Naqd
+// To'lov usuli: faqat Atmos (saqlangan karta orqali); bitta usul bo'lgani uchun u tanlangan holda turadi (BLD-549)
 export const PaymentMethodSelector = () => {
   const t = useTranslations();
-  const { deliveryType, paymentMethod, setPaymentMethod } = useCheckoutStore();
-  const isPickup = deliveryType === DELIVERY_TYPE.Pickup;
-  // every method works for a pickup too; cash is paid to the courier or in the shop
+  const { paymentMethod, setPaymentMethod } = useCheckoutStore();
   const methods = CHECKOUT_PAYMENT_METHODS;
 
   return (
@@ -53,30 +49,15 @@ export const PaymentMethodSelector = () => {
                   role='radio'
                 >
                   <span className='flex h-8 w-14 shrink-0 items-center justify-center'>
-                    {method.image ? (
-                      <Image
-                        alt={label}
-                        className='h-8 w-14 object-contain'
-                        height={32}
-                        src={method.image}
-                        width={56}
-                      />
-                    ) : (
-                      <LandmarkIcon
-                        className={cn(
-                          'size-7',
-                          isSelected ? 'text-primary' : 'text-muted-foreground'
-                        )}
-                      />
-                    )}
+                    <LandmarkIcon
+                      className={cn('size-7', isSelected ? 'text-primary' : 'text-muted-foreground')}
+                    />
                   </span>
                   <span className='min-w-0 flex-1'>
                     <span className='block text-sm font-semibold'>{label}</span>
                     {method.descriptionKey && (
                       <span className='text-muted-foreground block text-xs'>
-                        {isPickup && method.value === 'cash'
-                          ? t('Pay at the store')
-                          : t(method.descriptionKey)}
+                        {t(method.descriptionKey)}
                       </span>
                     )}
                   </span>

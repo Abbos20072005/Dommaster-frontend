@@ -85,7 +85,6 @@
   "In favorites": "В избранном",
   "To favorites": "В избранное",
   "From the warehouse": "Со склада",
-  "Pay online by card or on pickup": "Картой онлайн или при получении на складе",
   "Terms": "Условия",
   "Return policy": "Условия возврата",
   "Key characteristics": "Основные характеристики",
@@ -254,8 +253,6 @@
   "Pay": "Оплатить",
   "Pay online by card": "Оплата картой онлайн",
   "Pay order": "Оплатить заказ",
-  "Pay upon receipt": "Оплатить при получении",
-  "Payment method on delivery": "Способ оплаты при получении",
   "Payment method": "Способ оплаты",
   "Payment methods": "Способы оплаты",
   "Pending": "В ожидании",
@@ -416,7 +413,7 @@
       "articles": "Полезные статьи и советы по строительству и ремонту — Buildex.uz.",
       "reviews": "Обзоры и отзывы о товарах и инструментах Buildex.uz.",
       "delivery": "Доставка строительных материалов по Ташкенту: условия, стоимость и сроки.",
-      "payments": "Способы оплаты на Buildex.uz: онлайн картой или при получении."
+      "payments": "Способы оплаты на Buildex.uz: онлайн картой."
     },
     "product": {
       "description": "{name} по цене {price} сум в интернет-магазине Buildex. Характеристики, фото и доставка по Ташкенту."
@@ -779,7 +776,6 @@
   "Pick up by": "Заберите до {date}",
   "Pickup time is over": "Срок получения истёк",
   "Pickup time is over text": "Свяжитесь с сотрудниками магазина.",
-  "Pay at the store": "Оплата в магазине",
   "Opens next": "Откроется: {date}, {time}",
   "Floor lifting": "Подъём на этаж",
   "For legal entities": "Для юридических лиц"
