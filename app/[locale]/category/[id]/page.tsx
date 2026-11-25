@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 
-import { getTranslations } from 'next-intl/server';
+import { getLocale, getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 
@@ -24,11 +24,12 @@ import {
 } from '@/components/ui/breadcrumb';
 import { orNotFound } from '@/lib/orNotFound';
 import { categoryMetadata } from '@/lib/categoryMeta';
+import { toLanguage } from '@/lib/catalogTree';
 import { categoryHref } from '@/lib/urls';
 import { getBrands, getCategoryById } from '@/utils/api/requests';
 
 import { CategoryChips } from '../_components/CategoryChips';
-import { getCatalogFilters } from '../_lib/catalogFilters';
+import { getCachedBrandsOfCategory, getCatalogFilters } from '../_lib/catalogFilters';
 
 interface Props {
   params: Promise<{ id: string }>;
@@ -50,14 +51,19 @@ const CategoryPage = async ({ params, searchParams }: Props) => {
   const page = parsePage((await searchParams)?.page);
   const t = await getTranslations();
   // a category that does not exist is a real 404 (the API answers 4xx; it was a 500 before)
-  const [categoryResponse, brandsResponse] = await Promise.all([
-    orNotFound(getCategoryById({ id })),
-    getBrands()
-  ]);
+  const categoryResponse = await orNotFound(getCategoryById({ id }));
   const category = categoryResponse.data.result;
 
   // a category without a name must not be shown with an empty title and H1
   if (!category?.name) return notFound();
+
+  // only the brands that have products in this category (BLD-539), not all the brands of the shop
+  const itemCategoryIds = category.sub_categories.flatMap((sub) =>
+    (sub.product_item_categories ?? []).map((item) => item.id)
+  );
+  const brands = itemCategoryIds.length
+    ? await getCachedBrandsOfCategory(itemCategoryIds, toLanguage(await getLocale()))
+    : ((await getBrands()).data.result ?? []);
 
   // the page of products (`?page=N`) is in the HTML: the crawler sees the products and their links
   const initialProducts = await getInitialProducts({ category: +id }, page);
@@ -95,10 +101,8 @@ const CategoryPage = async ({ params, searchParams }: Props) => {
               <BannerCarousel bare placement='catalog' />
             </Suspense>
           }
-          attributeCategoryIds={category.sub_categories.flatMap((sub) =>
-            (sub.product_item_categories ?? []).map((item) => item.id)
-          )}
-          filters={getCatalogFilters(t, brandsResponse.data.result ?? [])}
+          attributeCategoryIds={itemCategoryIds}
+          filters={getCatalogFilters(t, brands)}
           initialPage={page}
           initialProducts={initialProducts}
           queries={{ category: +id }}
