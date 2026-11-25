@@ -230,7 +230,6 @@
   "No cards added yet": "Kartalar hali qo'shilmagan",
   "No results found": "Hech qanday natija topilmadi",
   "Older": "Avval eskilari",
-  "Only original products": "Faqat original mahsulotlar",
   "Only {maxValue} left": "Faqat {maxValue} ta qoldi",
   "Order": "Buyurtma",
   "Order address": "Buyurtma manzili",
@@ -360,7 +359,7 @@
     "1": "Keng qurilish materiallari assortimenti doimo mavjud",
     "2": "Qurilish materiallarini Toshkent bo'ylab yetkazib berish",
     "3": "Qaytarish va almashtirish qonun va ofertaga muvofiq",
-    "4": "Faqat original tovarlar"
+    "4": "Yetkazish narxi va muddati to'lovdan oldin ko'rsatiladi"
   },
   "buy in Tashkent, optimal prices in the internet store Buildex": "Toshkentda Buildex internet do'konida optimal narxlarda sotib oling",
   "code": "kod",
@@ -407,13 +406,13 @@
       "default": "Qurilish materiallari Toshkentda — yetkazib berish bilan xarid qiling | Buildex",
       "template": "Toshkentda xarid qiling, eng yaxshi narxlar Buildex internet-do'konida"
     },
-    "description": "Buildex'da qurilish materiallarini xarid qiling: asboblar, elektr, santexnika, mahkamlagichlar va uskunalar. Toshkent bo'ylab 1 kundan yetkazib berish. Ulgurji va chakana.",
+    "description": "Buildex'da qurilish materiallarini xarid qiling: asboblar, elektr, santexnika, mahkamlagichlar va uskunalar. Toshkent bo'ylab yetkazib berish: narxi va muddati manzil bo'yicha hisoblanadi.",
     "page": "{page}-sahifa",
     "pages": {
       "about": "Buildex.uz haqida: kompaniya, qurilish materiallari va asboblarni Toshkentda yetkazib berish bilan sotish.",
       "faq": "Buildex.uz bo'yicha tez-tez beriladigan savollarga javoblar: yetkazib berish, to'lov, qaytarish, olib ketish va yuridik shaxslar bilan ishlash.",
       "news": "Buildex.uz maqolalari: yangi mahsulotlar, aksiyalar va kompaniya e'lonlari.",
-      "brands": "Buildex.uz hamkor brendlari: faqat original qurilish materiallari va asboblar ishlab chiqaruvchilari.",
+      "brands": "Buildex.uz hamkor brendlari: qurilish materiallari va asboblar ishlab chiqaruvchilari.",
       "articles": "Qurilish va ta'mirlash bo'yicha foydali maqolalar va maslahatlar - Buildex.uz.",
       "reviews": "Buildex.uz mahsulotlari va asboblarining sharhlari hamda ko'rib chiqishlari.",
       "delivery": "Toshkent shahri bo'ylab qurilish materiallarini yetkazib berish: shartlar, narxlar va muddatlar.",

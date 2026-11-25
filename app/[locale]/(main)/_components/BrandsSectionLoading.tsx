@@ -18,7 +18,7 @@ export const BrandsSectionLoading = () => {
     <section>
       <BaseLayout>
         <div className='mb-4 flex items-center justify-between gap-3'>
-          <h2 className='text-lg font-bold md:text-2xl'>{t('Only original products')}</h2>
+          <h2 className='text-lg font-bold md:text-2xl'>{t('Brands')}</h2>
           <Skeleton className='h-8 w-28 rounded-md' />
         </div>
 

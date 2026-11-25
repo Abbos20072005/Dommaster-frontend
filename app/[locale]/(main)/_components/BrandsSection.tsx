@@ -33,7 +33,7 @@ export const BrandsSection = async () => {
     <section>
       <BaseLayout>
         <div className='mb-4 flex items-center justify-between gap-3'>
-          <h2 className='text-lg font-bold md:text-2xl'>{t('Only original products')}</h2>
+          <h2 className='text-lg font-bold md:text-2xl'>{t('Brands')}</h2>
           <Button asChild size='sm' variant='muted'>
             <Link href='/brands'>
               {t('View all')}

@@ -230,7 +230,6 @@
   "No cards added yet": "No cards added yet",
   "No results found": "No results found",
   "Older": "Older",
-  "Only original products": "Only original products",
   "Only {maxValue} left": "Only {maxValue} left",
   "Order": "Order",
   "Order address": "Order address",
@@ -360,7 +359,7 @@
     "1": "A wide range of building materials is always in stock",
     "2": "Delivery of building materials in Tashkent",
     "3": "Returns and exchanges according to the law and the offer",
-    "4": "Original goods only"
+    "4": "Delivery price and time are shown before payment"
   },
   "buy in Tashkent, optimal prices in the internet store Buildex": "buy in Tashkent, optimal prices in the internet store Buildex",
   "code": "code",
@@ -407,13 +406,13 @@
       "default": "Building materials in Tashkent — buy with delivery | Buildex",
       "template": "buy in Tashkent, best prices in the Buildex online store"
     },
-    "description": "Buy building materials at Buildex: tools, electrical, plumbing, fasteners and equipment. Delivery in Tashkent from 1 day. Wholesale and retail.",
+    "description": "Buy building materials at Buildex: tools, electrical, plumbing, fasteners and equipment. Delivery in Tashkent: the price and time are calculated by address.",
     "page": "page {page}",
     "pages": {
       "about": "About Buildex.uz: the company, building materials and tools with delivery in Tashkent.",
       "faq": "Answers to frequent questions about Buildex.uz: delivery, payment, returns, pickup and work with legal entities.",
       "news": "Buildex.uz articles: new products, promotions and company announcements.",
-      "brands": "Buildex.uz partner brands: only original building materials and tools from manufacturers.",
+      "brands": "Buildex.uz partner brands: building materials and tools from manufacturers.",
       "articles": "Useful articles and tips on construction and renovation - Buildex.uz.",
       "reviews": "Reviews of Buildex.uz products and tools.",
       "delivery": "Delivery of building materials across Tashkent: terms, prices and timing.",
