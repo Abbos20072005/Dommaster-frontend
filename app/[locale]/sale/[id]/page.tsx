@@ -80,7 +80,7 @@ const SalePage = async ({ params, searchParams }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>{sale.name}</h1>
-        <ProductFilterPaginated filters={filters} queries={{ sale_id: sale.id }} />
+        <ProductFilterPaginated brandsOfResults filters={filters} queries={{ sale_id: sale.id }} />
       </BaseLayout>
     </div>
   );

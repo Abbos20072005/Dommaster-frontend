@@ -38,9 +38,16 @@ interface Props {
   initialPage?: number;
   /** shown in the middle of the product grid (a banner carousel) */
   banner?: React.ReactNode;
+  /**
+   * The brand filter lists only the brands of the found products (a search, a collection), not
+   * all the brands of the shop (BLD-539).
+   */
+  brandsOfResults?: boolean;
 }
 
 const MAX_MERGED_FILTERS = 5;
+// the API returns at most this many products of a page; a list longer than it keeps all brands
+const BRANDS_SAMPLE_SIZE = 1000;
 
 /** Same attribute of several item categories becomes one filter (values summed, range widened). */
 const mergeAttributeFilters = (lists: AttributeFilter[][]): AttributeFilter[] => {
@@ -78,7 +85,8 @@ export const ProductFilterPaginated = ({
   queries,
   initialProducts,
   initialPage = 1,
-  banner
+  banner,
+  brandsOfResults
 }: Props) => {
   const t = useTranslations();
   const pathname = usePathname();
@@ -126,6 +134,55 @@ export const ProductFilterPaginated = ({
       })
   });
 
+  // The brands of the found products: one request for the search / collection itself (without the
+  // price, brand and attribute filters, so the list does not shrink when a brand is chosen).
+  const brandsScope = { q, item_category: filter.item_category ?? undefined, ...queries };
+  const hasBrandsScope = !!brandsOfResults && !!(brandsScope.q || brandsScope.sale_id);
+  const getResultBrandsQuery = useQuery({
+    queryKey: ['resultBrands', brandsScope],
+    enabled: hasBrandsScope,
+    staleTime: 5 * 60 * 1000,
+    queryFn: async () => {
+      const response = await searchProducts({
+        q: brandsScope.q ?? undefined,
+        item_category: brandsScope.item_category,
+        sale_id: brandsScope.sale_id,
+        page: 1,
+        page_size: BRANDS_SAMPLE_SIZE
+      });
+      const { content, totalElements } = response.data.result;
+      // a list longer than the sample: not every brand is known, so none is hidden
+      if (totalElements > content.length) return null;
+      return new Set(content.flatMap((product) => (product.brand ? [product.brand.id] : [])));
+    }
+  });
+  const resultBrandIds = getResultBrandsQuery.data;
+  const brandsPending = hasBrandsScope && getResultBrandsQuery.isPending;
+
+  const visibleFilters = React.useMemo(
+    () =>
+      !hasBrandsScope
+        ? filters
+        : filters
+            // the brand list waits for the brands of the results (not the full list that shrinks)
+            .filter((item) => !(brandsPending && item.request_var === 'brand'))
+            .map((item) =>
+              item.request_var === 'brand' && resultBrandIds
+                ? {
+                    ...item,
+                    filter_items: item.filter_items.filter(
+                      (brand) =>
+                        resultBrandIds.has(Number(brand.value)) ||
+                        String(filter.brand) === brand.value
+                    )
+                  }
+                : item
+            )
+            // no brand in the results: no filter
+            .filter((item) => item.request_var !== 'brand' || item.filter_items.length > 0),
+    [filters, hasBrandsScope, brandsPending, resultBrandIds, filter.brand]
+  );
+
   // Kategoriya bo'yicha sozlangan atribut filtrlari (o'lcham, material, qadoq...)
   const itemCategoryIds = React.useMemo(
     () =>
@@ -156,7 +213,7 @@ export const ProductFilterPaginated = ({
         <Filter
           attributeFilters={attributeFilters}
           defaultValues={filterDefaultValues}
-          filters={filters}
+          filters={visibleFilters}
           hideCategories={hideCategories}
         />
       </aside>
@@ -165,7 +222,7 @@ export const ProductFilterPaginated = ({
           <ProductsSortBySelect />
           <MobileFilterDrawer
             attributeFilters={attributeFilters}
-            filters={filters}
+            filters={visibleFilters}
             hideCategories={hideCategories}
           />
         </div>

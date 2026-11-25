@@ -63,7 +63,7 @@ const SearchPage = async ({ searchParams }: Props) => {
         <h1 className='mb-4 font-bold sm:text-lg md:text-2xl'>
           {q ? t('Search results for: {search}', { search: q }) : t('Catalog')}
         </h1>
-        <ProductFilterPaginated filters={filters} />
+        <ProductFilterPaginated brandsOfResults filters={filters} />
       </BaseLayout>
     </div>
   );
