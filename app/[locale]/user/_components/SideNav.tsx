@@ -51,7 +51,7 @@ const initialsOf = (name?: string) =>
     .map((part) => part[0]?.toUpperCase())
     .join('');
 
-/** +998 90 *** ** 00: the phone is shown with the middle hidden */
+/** +998 90 123 45 00: the whole phone (BLD-543: nothing is hidden) */
 const maskPhone = (phone?: string) => {
   const digits = (phone ?? '').replace(/\D/g, '');
   if (digits.length < 12) return phone ?? '';
