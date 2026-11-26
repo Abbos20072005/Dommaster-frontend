@@ -1,4 +1,11 @@
-import { EditIcon, ListChecksIcon, LogOutIcon, MapPinIcon, UserCircleIcon } from 'lucide-react';
+import {
+  EditIcon,
+  FolderKanbanIcon,
+  ListChecksIcon,
+  LogOutIcon,
+  MapPinIcon,
+  UserCircleIcon
+} from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
@@ -13,12 +20,14 @@ import {
 import { Link, useRouter } from '@/i18n/navigation';
 import { formatPhoneNumber } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
+import { useIsPro } from '@/modules/pro';
 
 interface Props extends React.ComponentProps<typeof DropdownMenuTrigger> {}
 
 export const NavUser = ({ ...props }: Props) => {
   const t = useTranslations();
   const { user, reset } = useAuth();
+  const { isPro } = useIsPro();
   const [open, setOpen] = React.useState(false);
   const router = useRouter();
 
@@ -60,6 +69,14 @@ export const NavUser = ({ ...props }: Props) => {
                 {t('My orders')}
               </Link>
             </DropdownMenuItem>
+            {isPro && (
+              <DropdownMenuItem asChild>
+                <Link href='/user/projects'>
+                  <FolderKanbanIcon />
+                  {t('My projects')}
+                </Link>
+              </DropdownMenuItem>
+            )}
             <DropdownMenuItem asChild>
               <Link href='/user/addresses'>
                 <MapPinIcon />
