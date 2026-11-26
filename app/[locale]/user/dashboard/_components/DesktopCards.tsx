@@ -23,6 +23,7 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useFormatDate } from '@/hooks';
 import { Link } from '@/i18n/navigation';
+import { trackAddToCart } from '@/lib/analytics';
 import { cn, formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useIsPro } from '@/modules/pro';
@@ -123,7 +124,10 @@ export const DesktopCards = () => {
 
   const addToCartMutation = useMutation({
     mutationFn: (product: number) => postCart({ data: { product, quantity: 1 } }),
-    onSuccess: () => {
+    onSuccess: (_data, productId) => {
+      // `add_to_cart` of "buy again"
+      const added = boughtProducts.find((product) => product.id === productId);
+      if (added) void trackAddToCart(added);
       toast.success(t('Added to cart'));
       queryClient.invalidateQueries({ queryKey: ['products'] });
       queryClient.invalidateQueries({ queryKey: ['cart'] });

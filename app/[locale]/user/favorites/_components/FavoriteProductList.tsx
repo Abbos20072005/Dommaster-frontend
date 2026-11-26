@@ -9,6 +9,7 @@ import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import { trackAddedToCart } from '@/lib/analytics';
 import { ProductList } from '@/modules/product';
 import { postCart } from '@/utils/api/requests';
 import { useFavoritesStore } from '@/utils/stores';
@@ -45,6 +46,10 @@ export const FavoriteProductList = () => {
     onSuccess: (results) => {
       const added = results.filter((result) => result.status === 'fulfilled').length;
       if (added) toast.success(t('Added to cart count', { count: added }));
+      // `add_to_cart` of the products that did go to the cart (one event)
+      void trackAddedToCart(
+        addable.filter((_, index) => results[index].status === 'fulfilled').map((product) => ({ product }))
+      );
       queryClient.invalidateQueries({ queryKey: ['products'] });
       queryClient.invalidateQueries({ queryKey: ['cart'] });
     }

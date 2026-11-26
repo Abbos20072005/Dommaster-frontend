@@ -12,7 +12,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Separator } from '@/components/ui/separator';
 import { Link, useRouter } from '@/i18n/navigation';
-import { trackBeginCheckout } from '@/lib/analytics';
+import { trackBeginCheckout, trackPurchaseOnce } from '@/lib/analytics';
 import { formatPrice } from '@/lib/utils';
 import { useAuth } from '@/modules/auth';
 import { useCart } from '@/modules/cart';
@@ -88,7 +88,7 @@ export const PriceCalculationCard = () => {
   React.useEffect(() => {
     if (checkoutTracked.current || !cart || !availableCartItems.length) return;
     checkoutTracked.current = true;
-    trackBeginCheckout(availableCartItems, cart.total_price);
+    void trackBeginCheckout(availableCartItems);
     // the backend funnel: the checked cart items are taken by the backend itself
     sendFunnelEvent({ type: 'checkout_start' });
   }, [cart, availableCartItems]);
@@ -100,6 +100,8 @@ export const PriceCalculationCard = () => {
 
   const paymentHoldMutation = useMutation({
     mutationFn: postPaymentHold,
+    // `purchase`: the order is paid (the hold went through) — once, with the order's own items
+    onSuccess: (_data, variables) => void trackPurchaseOnce(variables.data.order_id),
     // Xato bo'lsa ham buyurtma yaratilgan — qayta "Tasdiqlash" bosib ikkinchi buyurtma
     // yaratilmasligi uchun buyurtma sahifasiga o'tamiz (u yerdan qayta to'lash mumkin)
     onSettled: (_data, _error, variables) => goToOrder(variables.data.order_id),
@@ -123,6 +125,8 @@ export const PriceCalculationCard = () => {
         window.location.href = data.result;
         return;
       }
+      // an order that needs no payment is a purchase at once
+      void trackPurchaseOnce(data.order_id);
       goToOrder(data.order_id);
     },
     meta: {

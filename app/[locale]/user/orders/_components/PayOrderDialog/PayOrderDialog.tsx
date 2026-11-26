@@ -15,6 +15,7 @@ import {
 } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { SavedCardsList } from '@/app/[locale]/checkout/_components/PaymentMethodSelector/components/SavedCardsList';
+import { trackPurchaseOnce } from '@/lib/analytics';
 import { postPaymentHold } from '@/utils/api/requests';
 
 interface Props extends React.ComponentProps<typeof DialogTrigger> {
@@ -30,6 +31,8 @@ export const PayOrderDialog = ({ orderId, children, ...props }: Props) => {
   const payOnlineMutation = useMutation({
     mutationFn: postPaymentHold,
     onSuccess: () => {
+      // `purchase`: an order paid later is a purchase when it is paid (once per order)
+      void trackPurchaseOnce(orderId);
       setOpen(false);
       queryClient.invalidateQueries({ queryKey: ['orders'] });
     }

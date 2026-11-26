@@ -31,7 +31,7 @@ export const useProductCart = (product: Product) => {
     postCartMutation.mutate(
       { data: { product: product.id, quantity } },
       {
-        onSuccess: () => trackAddToCart(product),
+        onSuccess: () => void trackAddToCart(product, quantity),
         onError: () => setCartItemQuantity(product.id, previousQuantity)
       }
     );
