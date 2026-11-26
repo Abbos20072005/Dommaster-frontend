@@ -121,8 +121,23 @@ export const trackBeginCheckout = async (cartItems: CartItem[]) => {
   trackEvent('begin_checkout', { ecommerce: { currency: CURRENCY, value: sumOf(items), items } });
 };
 
+/**
+ * The buyer's phone goes into `purchase` only (BLD-571: PM Expert joins a purchase with a call-back
+ * request by the phone). It is off until `NEXT_PUBLIC_PURCHASE_PHONE=1` is set: that is the switch
+ * to turn the sending on and off without a code change (the legal decision, BLD-568).
+ */
+const SEND_PURCHASE_PHONE = process.env.NEXT_PUBLIC_PURCHASE_PHONE === '1';
+
+/** `+998901234567` (E.164, no spaces) from any way a Uzbek number is written; `null` when it is not one. */
+export const toE164 = (phone?: string | null) => {
+  const digits = (phone ?? '').replace(/\D/g, '');
+  if (digits.length === 9) return `+998${digits}`;
+  return /^998\d{9}$/.test(digits) ? `+${digits}` : null;
+};
+
 /** `purchase` of an order whose items already have their (Russian) names. */
-const trackPurchase = (order: Order) =>
+const trackPurchase = (order: Order) => {
+  const phone = SEND_PURCHASE_PHONE ? toE164(order.customer?.phone_number) : null;
   trackEvent('purchase', {
     ecommerce: {
       transaction_id: String(order.id),
@@ -131,8 +146,12 @@ const trackPurchase = (order: Order) =>
       shipping: Number(order.delivery_price ?? 0),
       coupon: order.promocode?.code,
       items: order.order_items.map((item) => toAnalyticsItem(item.product, item.quantity))
-    }
+    },
+    ...(phone ? { user_data: { phone_number: phone } } : {})
   });
+  // GTM keeps what a push sets for the pushes after it: the phone must not stay for the next events
+  if (phone) window.dataLayer?.push({ user_data: null });
+};
 
 /**
  * `purchase`: once per order, when the order is placed and paid (the Atmos hold went through) or
