@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 
 import { getLocale, getTranslations } from 'next-intl/server';
 
+import { FaqTopicNav } from '@/components/FaqTopicNav';
 import { FaqTopics } from '@/components/FaqTopics';
 import { JsonLd } from '@/components/JsonLd';
 import { BaseLayout, MobileHeader } from '@/components/layout';
@@ -71,22 +72,13 @@ const FaqPage = async () => {
         <h1 className='text-lg font-bold md:text-3xl lg:text-4xl'>{t('FAQ')}</h1>
 
         {topics?.length ? (
-          <>
-            {topics.length > 1 && (
-              <nav aria-label={t('FAQ topics')} className='flex flex-wrap gap-2'>
-                {topics.map((topic) => (
-                  <a
-                    className='border-border hover:border-primary hover:text-primary rounded-full border px-4 py-1.5 text-sm font-medium transition-colors'
-                    href={`#${topic.slug}`}
-                    key={topic.id}
-                  >
-                    {topic.name}
-                  </a>
-                ))}
-              </nav>
-            )}
+          topics.length > 1 ? (
+            <FaqTopicNav topics={topics}>
+              <FaqTopics locale={locale} titles topics={topics} />
+            </FaqTopicNav>
+          ) : (
             <FaqTopics locale={locale} titles topics={topics} />
-          </>
+          )
         ) : (
           <p className='text-muted-foreground text-[15px] leading-7'>{t('FAQ empty')}</p>
         )}
