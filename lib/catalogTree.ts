@@ -11,7 +11,7 @@ export type TreeCategory = Slugged & { subs: TreeSub[] };
 
 /** the languages that have their own slugs; any other locale uses the Russian ones */
 const LANGUAGES = ['ru', 'uz'] as const;
-type Language = (typeof LANGUAGES)[number];
+export type Language = (typeof LANGUAGES)[number];
 
 export const toLanguage = (locale?: string | null): Language => (locale === 'uz' ? 'uz' : 'ru');
 
@@ -21,7 +21,7 @@ const DATES_TTL = 30 * 1000;
 const cache = new Map<string, { at: number; value: Promise<unknown> }>();
 
 /** One request per hour (or per `ttl`) for each key; a failed request is not kept. */
-const cached = <T>(key: string, load: () => Promise<T>, ttl = TTL): Promise<T> => {
+export const cached = <T>(key: string, load: () => Promise<T>, ttl = TTL): Promise<T> => {
   // the products are kept one by one: the memory must not grow without a limit
   if (cache.size > 10000) cache.clear();
   const hit = cache.get(key);

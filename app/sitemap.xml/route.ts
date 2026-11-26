@@ -27,6 +27,7 @@ export async function GET() {
     `${BASE_URL}/sitemaps/static/sitemap.xml`,
     `${BASE_URL}/sitemaps/categories/sitemap.xml`,
     `${BASE_URL}/sitemaps/brands/sitemap.xml`,
+    `${BASE_URL}/sitemaps/filter-pages/sitemap.xml`,
     `${BASE_URL}/sitemaps/news/sitemap.xml`,
     ...Array.from(
       { length: productFiles },

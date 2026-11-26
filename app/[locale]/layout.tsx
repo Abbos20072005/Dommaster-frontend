@@ -20,6 +20,7 @@ import { TelegramWebAppInit } from '@/components/TelegramWebAppInit';
 import { Toaster } from '@/components/ui/sonner';
 import { routing } from '@/i18n/routing';
 import { getCanonicalMetadata } from '@/lib/canonical';
+import { getBrandListingCanonical } from '@/lib/filterPages';
 import { getHreflang } from '@/lib/hreflang';
 import { cn } from '@/lib/utils';
 import { AssistantLauncher } from '@/modules/assistant';
@@ -52,10 +53,18 @@ export async function generateMetadata(): Promise<Metadata> {
   const canonical = getCanonicalMetadata(pathname, search);
   // the same page in the other language (hreflang ru / uz / x-default)
   const hreflang = await getHreflang(pathname, search);
+  // a catalog listing with a brand picked: the filter page of the brand is its canonical, and
+  // one without a page is closed to search engines
+  const brandListing = await getBrandListingCanonical(pathname, search);
 
   return {
     ...canonical,
-    alternates: { ...canonical.alternates, ...hreflang },
+    ...(brandListing && !brandListing.canonical ? { robots: { index: false, follow: true } } : {}),
+    alternates: {
+      ...canonical.alternates,
+      ...(brandListing?.canonical ? { canonical: brandListing.canonical } : {}),
+      ...hreflang
+    },
     metadataBase: new URL(BASE_URL),
     title: {
       default: t('metadata.title.default'),

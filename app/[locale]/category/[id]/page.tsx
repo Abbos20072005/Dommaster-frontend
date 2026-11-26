@@ -29,6 +29,7 @@ import { categoryHref } from '@/lib/urls';
 import { getBrands, getCategoryById } from '@/utils/api/requests';
 
 import { CategoryChips } from '../_components/CategoryChips';
+import { FilterPageLinks } from '../_components/FilterPageLinks';
 import { getCachedBrandsOfCategory, getCatalogFilters } from '../_lib/catalogFilters';
 
 interface Props {
@@ -94,6 +95,7 @@ const CategoryPage = async ({ params, searchParams }: Props) => {
           hrefOf={(sub) => categoryHref(category, sub)}
           items={category.sub_categories}
         />
+        <FilterPageLinks id={+id} level='category' />
         {/* all products of the category, with the price and brand filters */}
         <ProductFilterPaginated
           banner={

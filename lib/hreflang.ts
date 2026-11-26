@@ -7,6 +7,7 @@ import {
   matchCatalogSlugs,
   productSlugById
 } from '@/lib/catalogTree';
+import { matchFilterPage } from '@/lib/filterPages';
 import { splitLocale, withLocale } from '@/lib/localePath';
 import { productIdFromParam } from '@/lib/urls';
 import { BASE_URL } from '@/utils/constants';
@@ -28,8 +29,14 @@ const pathsOf = async (
 ): Promise<Record<'ru' | 'uz', string> | null> => {
   const catalog = /^\/catalog\/(.+)$/.exec(path);
   if (catalog) {
-    const match = await matchCatalogSlugs(catalog[1].split('/').map(decodeURIComponent), locale);
-    if (!match) return null;
+    const slugs = catalog[1].split('/').map(decodeURIComponent);
+    const match = await matchCatalogSlugs(slugs, locale);
+    if (!match) {
+      // a filter landing page (`/catalog/{levels}/{slug}`): the page is asked in both languages;
+      // it has a pair only when both answer to the same slug
+      const [ru, uz] = await Promise.all(LANGUAGES.map((lang) => matchFilterPage(slugs, lang)));
+      return ru && uz ? { ru: ru.path, uz: uz.path } : null;
+    }
     const [ru, uz] = await Promise.all(LANGUAGES.map((lang) => catalogPathByIds(match.ids, lang)));
     return ru && uz ? { ru, uz } : null;
   }

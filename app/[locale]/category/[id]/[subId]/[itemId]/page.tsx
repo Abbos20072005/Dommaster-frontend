@@ -27,6 +27,8 @@ import { categoryMetadata } from '@/lib/categoryMeta';
 import { categoryHref } from '@/lib/urls';
 import { getBrands, getItemCategoryById } from '@/utils/api/requests';
 
+import { FilterPageLinks } from '../../../_components/FilterPageLinks';
+
 interface Props {
   params: Promise<{ id: string; subId: string; itemId: string }>;
   /** `?page=N`: the page of the list, rendered on the server too */
@@ -134,6 +136,7 @@ const ItemCategoryPage = async ({ params, searchParams }: Props) => {
           </BreadcrumbList>
         </Breadcrumb>
         <h1 className='text-lg leading-8 font-bold md:text-2xl lg:text-3xl'>{itemCategory.name}</h1>
+        <FilterPageLinks id={+itemId} level='item_category' />
         <ProductFilterPaginated
           banner={
             <Suspense>
