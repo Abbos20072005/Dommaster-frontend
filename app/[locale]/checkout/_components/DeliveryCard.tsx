@@ -20,6 +20,18 @@ export const DeliveryAddress = () => {
   });
 
   const defaultAddress = getAddressesQuery.data?.data.result.find((address) => address.is_default);
+  // the courier details under the street (the same ones the courier gets with the order)
+  const details = defaultAddress
+    ? [
+        ['Apartment / office', defaultAddress.apartment],
+        ['Entrance', defaultAddress.entrance],
+        ['Floor', defaultAddress.floor],
+        ['Intercom', defaultAddress.intercom]
+      ]
+        .filter(([, value]) => value?.trim())
+        .map(([label, value]) => `${t(label as string)} ${value!.trim()}`)
+        .join(', ')
+    : '';
 
   return (
     <div className='bg-background flex items-center gap-3 rounded-xl p-3'>
@@ -34,10 +46,9 @@ export const DeliveryAddress = () => {
           </div>
         ) : defaultAddress ? (
           <>
-            <p className='truncate text-sm font-semibold'>{defaultAddress.name}</p>
-            <p className='text-muted-foreground line-clamp-2 text-xs'>
-              {defaultAddress.location_name}
-            </p>
+            {/* one address: the street of the map marker, the one the price and the courier use (BLD-553) */}
+            <p className='line-clamp-2 text-sm font-semibold'>{defaultAddress.location_name}</p>
+            {details && <p className='text-muted-foreground line-clamp-2 text-xs'>{details}</p>}
           </>
         ) : (
           <p className='text-muted-foreground text-sm'>{t('Delivery address not specified')}</p>

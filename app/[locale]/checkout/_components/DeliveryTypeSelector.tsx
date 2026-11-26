@@ -137,7 +137,10 @@ export const DeliveryTypeSelector = () => {
                 <div className='min-w-0'>
                   <p className='text-sm'>{t('Delivery price')}</p>
                   <p className='text-muted-foreground text-xs'>
-                    {t('Order will be delivered within 2 hours')}
+                    {/* the time comes from Yandex (`eta`, minutes); without it the operator names it */}
+                    {checkPriceResult.eta > 0
+                      ? t('Delivery time about minutes', { minutes: Math.round(checkPriceResult.eta) })
+                      : t('Delivery time operator will confirm')}
                   </p>
                 </div>
                 <div className='flex shrink-0 items-center gap-1'>
