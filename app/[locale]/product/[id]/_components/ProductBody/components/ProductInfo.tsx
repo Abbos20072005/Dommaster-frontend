@@ -1,10 +1,12 @@
 'use client';
 
-import { CheckIcon, CopyIcon, StarIcon } from 'lucide-react';
+import { CheckIcon, CopyIcon, PhoneIncomingIcon, StarIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
+import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import { CallbackDialog } from '@/modules/callback';
 import { StockStatus } from '@/modules/product';
 
 import type { ProductSectionId } from './ProductSections';
@@ -139,7 +141,13 @@ export const ProductInfo = ({ product, onNavigate }: Props) => {
         </div>
       )}
 
-      <div className='bg-muted rounded-xl p-4 lg:hidden'>
+      <div className='bg-muted grid gap-4 rounded-xl p-4 lg:hidden'>
+        <CallbackDialog location='product'>
+          <Button className='w-full' variant='outline'>
+            <PhoneIncomingIcon />
+            {t('Order a call')}
+          </Button>
+        </CallbackDialog>
         <DeliveryInfo />
       </div>
     </div>

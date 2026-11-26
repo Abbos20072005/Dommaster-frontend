@@ -1,12 +1,13 @@
 'use client';
 
-import { ShoppingCartIcon } from 'lucide-react';
+import { PhoneIncomingIcon, ShoppingCartIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import React from 'react';
 
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
 import { cn, formatPrice } from '@/lib/utils';
+import { CallbackDialog } from '@/modules/callback';
 import { CartCounter, useProductCart } from '@/modules/cart';
 import { PriceUnit, StockStatus } from '@/modules/product';
 import { ProductControl } from '@/modules/product/ProductCard/components/ProductControl/ProductControl';
@@ -66,6 +67,13 @@ export const ProductCart = ({ product }: Props) => {
         <ProductControl product={product} withLabel />
         <ShareButton title={product.name} withLabel />
       </div>
+
+      <CallbackDialog location='product'>
+        <Button className='w-full' variant='outline'>
+          <PhoneIncomingIcon />
+          {t('Order a call')}
+        </Button>
+      </CallbackDialog>
 
       <DeliveryInfo className='border-t pt-4' />
     </aside>

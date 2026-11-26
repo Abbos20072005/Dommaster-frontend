@@ -1,4 +1,4 @@
-import { MessageSquareTextIcon, PhoneCallIcon, SearchIcon } from 'lucide-react';
+import { MessageSquareTextIcon, PhoneCallIcon, PhoneIncomingIcon, SearchIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import Image from 'next/image';
 import React from 'react';
@@ -6,6 +6,7 @@ import React from 'react';
 import { LocaleSwitcher } from '@/components/layout/AppHeader/components/HeaderTop/components';
 import { Button } from '@/components/ui/button';
 import { Link } from '@/i18n/navigation';
+import { CallbackDialog } from '@/modules/callback';
 import { ChatDialog } from '@/modules/chat';
 import { MobileSearch } from '@/modules/search';
 import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
@@ -42,6 +43,11 @@ export const MobileHeader = () => {
               <MessageSquareTextIcon className='size-4' />
             </Button>
           </ChatDialog>
+          <CallbackDialog location='header'>
+            <Button aria-label={t('Order a call')} size='iconSm' variant='muted'>
+              <PhoneIncomingIcon className='size-4' />
+            </Button>
+          </CallbackDialog>
           <Button asChild size='iconSm' variant='muted'>
             <Link href={CONTACT_PHONE_HREF} aria-label={CONTACT_PHONE} className='p-1.5'>
               <PhoneCallIcon className='size-4' />

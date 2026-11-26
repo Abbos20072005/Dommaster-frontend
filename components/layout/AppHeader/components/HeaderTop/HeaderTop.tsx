@@ -11,6 +11,7 @@ import {
   DropdownMenuTrigger
 } from '@/components/ui/dropdown-menu';
 import { Link } from '@/i18n/navigation';
+import { CallbackDialog } from '@/modules/callback';
 import { CONTACT_PHONE, CONTACT_PHONE_HREF } from '@/utils/constants';
 
 import { LocaleSwitcher } from './components';
@@ -92,6 +93,14 @@ export const HeaderTop = () => {
       </div>
       <div className='flex items-center gap-4'>
         <LocaleSwitcher />
+        <CallbackDialog location='header'>
+          <button
+            className='hover:text-secondary text-sm transition-colors'
+            type='button'
+          >
+            {t('Order a call')}
+          </button>
+        </CallbackDialog>
         <Link
           href={CONTACT_PHONE_HREF}
           className='hover:text-secondary text-foreground/70 text-sm font-bold transition-colors'

@@ -1,5 +1,6 @@
 'use client';
 
+import { PhoneIncomingIcon } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 
 import { TermsLinks } from '@/components/TermsLinks';
@@ -8,6 +9,7 @@ import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '@/componen
 import { useRouter } from '@/i18n/navigation';
 import { formatPrice } from '@/lib/utils';
 import { AuthDialog, useAuth } from '@/modules/auth';
+import { CallbackDialog } from '@/modules/callback';
 import { useCart } from '@/modules/cart';
 
 export const CartCalculation = () => {
@@ -48,7 +50,7 @@ export const CartCalculation = () => {
         </div>
         <TermsLinks className='pt-1' />
       </CardContent>
-      <CardFooter className='p-4 pt-0'>
+      <CardFooter className='grid gap-2 p-4 pt-0'>
         {user ? (
           <Button
             className='w-full'
@@ -65,6 +67,12 @@ export const CartCalculation = () => {
             </Button>
           </AuthDialog>
         )}
+        <CallbackDialog location='cart'>
+          <Button className='w-full' variant='outline'>
+            <PhoneIncomingIcon />
+            {t('Order a call')}
+          </Button>
+        </CallbackDialog>
       </CardFooter>
     </Card>
   );
