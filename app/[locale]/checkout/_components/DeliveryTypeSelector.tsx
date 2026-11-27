@@ -137,10 +137,9 @@ export const DeliveryTypeSelector = () => {
                 <div className='min-w-0'>
                   <p className='text-sm'>{t('Delivery price')}</p>
                   <p className='text-muted-foreground text-xs'>
-                    {/* the time comes from Yandex (`eta`, minutes); without it the operator names it */}
-                    {checkPriceResult.eta > 0
-                      ? t('Delivery time about minutes', { minutes: Math.round(checkPriceResult.eta) })
-                      : t('Delivery time operator will confirm')}
+                    {/* never the `eta` of check-price: it is the courier's arrival at our point, not the
+                        delivery to the customer, and it changes on every request (BLD-553, 27.11) */}
+                    {t('Delivery time operator will confirm')}
                   </p>
                 </div>
                 <div className='flex shrink-0 items-center gap-1'>
