@@ -138,6 +138,10 @@ const uz: TrustPageContent = {
       type: 'p',
       text: "5.7. Uchinchi shaxsga berish haqida qonun talab qiladigan yozma xabarnoma tegishli tartib va muddatda yuboriladi. Amaldagi oluvchilar haqida axborot so'rash huquqingiz saqlanadi."
     },
+    {
+      type: 'p',
+      text: "5.8. Reklama samaradorligini baholash uchun biz marketing hamkorimizga telefon raqami va ism (agar ko'rsatilgan bo'lsa), buyurtma ma'lumotlari (raqami, summasi, tarkibi) va reklama belgilarini beramiz. Bu ma'lumotlar faqat reklamani hisobga olish uchun ishlatiladi. Saytga qaysi manbadan kelinganini aniqlash uchun saqlash muddati 90 kun bo'lgan cookie fayli ishlatiladi."
+    },
 
     { type: 'h2', text: '6. Telegramdagi ikki xil foydalanish' },
     {
@@ -309,6 +313,16 @@ export const privacyPage: TrustPageSet = {
     ...uz,
     title: 'Политика конфиденциальности — Buildex',
     description:
-      'Какие данные собирает Buildex, зачем, кому передаёт и сколько хранит. Согласие и удаление аккаунта.'
+      'Какие данные собирает Buildex, зачем, кому передаёт и сколько хранит. Согласие и удаление аккаунта.',
+    // the policy is in Uzbek only for now; the point about the advertising partner (BLD-568) is
+    // already in Russian, put in the same place as in the Uzbek text (after 5.7)
+    blocks: uz.blocks.map((block) =>
+      block.type === 'p' && block.text.startsWith('5.8.')
+        ? {
+            type: 'p' as const,
+            text: '5.8. Для оценки эффективности рекламы мы передаём нашему маркетинговому партнёру номер телефона и имя (если указаны), данные о заказе (номер, сумма, состав) и рекламные метки перехода. Эти данные используются только для учёта рекламы. Для определения источника перехода на сайте используется файл cookie сроком хранения 90 дней.'
+          }
+        : block
+    )
   }
 };

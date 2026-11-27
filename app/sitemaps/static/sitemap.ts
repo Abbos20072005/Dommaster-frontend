@@ -26,7 +26,7 @@ const PAGES: [path: string, lastModified: string][] = [
   ...(LIFTING_ENABLED ? ([['/lifting', '2026-10-27']] as [string, string][]) : []),
   ['/legal-entities', '2026-10-27'],
   ['/oferta', '2026-10-19'],
-  ['/privacy', '2026-10-20'],
+  ['/privacy', '2026-11-27'],
   ['/privacy/partners', '2026-10-20'],
   ['/privacy-request', '2026-10-20'],
   ['/catalog', '2026-11-03'],
