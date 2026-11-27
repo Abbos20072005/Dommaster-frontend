@@ -15,7 +15,9 @@ interface Props {
 }
 
 /** Banners as a slider; one banner is shown as it is, without arrows and looping. */
-export const BannerSlider = ({ banners, priority }: Props) => {
+export const BannerSlider = ({ banners: allBanners, priority }: Props) => {
+  // a banner without a picture is not a slide: an empty `src` is a console error and an empty box
+  const banners = allBanners.filter((banner) => banner.desktop_image || banner.mobile_image);
   if (!banners.length) return null;
 
   return (

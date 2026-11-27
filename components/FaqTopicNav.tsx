@@ -39,7 +39,7 @@ export const FaqTopicNav = ({ topics, children }: Props) => {
                 'hover:border-primary hover:text-primary rounded-full border px-4 py-1.5 text-sm font-medium transition-colors',
                 selected ? 'border-primary bg-primary hover:text-white text-white' : 'border-border'
               )}
-              key={topic.id}
+              key={topic.slug}
               type='button'
               onClick={() => setActive(selected ? null : topic.slug)}
             >
