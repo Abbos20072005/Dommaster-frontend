@@ -69,6 +69,14 @@ jobs:
             printf '\nNEXT_PUBLIC_GTM_ID=GTM-NTZ26TX6\n' >> .env
           fi
 
+          # The phone in the `purchase` event (BLD-571): enabled on 27.11 by the PM decision (BLD-568).
+          # To turn it off, set the value to 0 here and deploy.
+          if grep -q '^NEXT_PUBLIC_PURCHASE_PHONE=' .env 2>/dev/null; then
+            sed -i 's|^NEXT_PUBLIC_PURCHASE_PHONE=.*|NEXT_PUBLIC_PURCHASE_PHONE=1|' .env
+          else
+            printf '\nNEXT_PUBLIC_PURCHASE_PHONE=1\n' >> .env
+          fi
+
           rm -rf .next.prev
           cp -a .next .next.prev
           npm run build
